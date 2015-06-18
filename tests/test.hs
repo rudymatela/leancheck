@@ -1,0 +1,37 @@
+import System.Exit (exitFailure)
+import Data.List (elemIndices)
+
+import Test.Check
+import Test.Check.Invariants
+
+main :: IO ()
+main =
+  case elemIndices False tests of
+    [] -> putStrLn "Tests passed!"
+    is -> do putStrLn ("Failed tests:" ++ show is)
+             exitFailure
+
+tests =
+  [ True
+
+  -- interleave
+  , [1,2,3] \/ [0,0,0] == [1,0,2,0,3,0]
+  , take 3 ([1,2] \/ (0:undefined)) == [1,0,2]
+
+  -- etc
+  , lsNatPairOrd 100
+  , lsNatTripleOrd 200
+  , lsNatQuadrupleOrd 300
+  , lsNatQuintupleOrd 400
+  , lsNatListOrd 500
+
+  -- tests!
+  , counterExample 10 (\x y -> x + y /= (x::Int)) == Just ["0", "0"]
+  , counterExample 10 (\x y -> x + y == (x::Int)) == Just ["0", "1"]
+  , holds 100 (\x -> x == (x::Int))
+  --, fails 100 (\x -> x == (x::Float))  -- NaN != NaN  :-)
+  --, counterExample 100 (\x -> x == (x::Float)) == Just ["NaN"]
+
+  , lsPairEqParams 100
+--  , lsTripleEqParams 100
+  ]
