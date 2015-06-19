@@ -9,4 +9,4 @@ lists of finite lists of same-sized values.  It is somewhat similar to [Feat] in
 that regard.
 
 
-Feat: https://hackage.haskell.org/package/testing-feat
+[Feat]: https://hackage.haskell.org/package/testing-feat
