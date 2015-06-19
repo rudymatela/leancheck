@@ -57,19 +57,19 @@ listingsOfLength n xss = foldr (lsProductWith (:)) [[[]]] (replicate n xss)
 
 
 functionsOn :: [a] -> [[b]] -> [[[(a,b)]]]
-functionsOn as sbs = lsmap (zip as) (listingsOfLength (length as) sbs)
+functionsOn xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
 
 
 lsPartialFunctions :: [[a]] -> [[b]] -> [[[(a,b)]]]
-lsPartialFunctions ass rss = lsConcatMap (`functionsOn` rss) (lsNoDecListsOf ass)
+lsPartialFunctions xss yss = lsConcatMap (`functionsOn` yss) (lsNoDecListsOf xss)
 
 
 lsFunctions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
-lsFunctions ass rss = lsConcatMap (\(r,rss) -> lsmap (\ps -> (ps,r)) $ lsPartialFunctions ass rss) (djs rss)
+lsFunctions xss yss = lsConcatMap (\(r,yss) -> lsmap (\ps -> (ps,r)) $ lsPartialFunctions xss yss) (djs yss)
 
 
 partialFunctions :: [[a]] -> [[b]] -> [[(a,b)]]
-partialFunctions ass = concat . lsPartialFunctions ass
+partialFunctions xss = concat . lsPartialFunctions xss
 
 
 bindingsToFunction' :: Eq a => [(a,b)] -> a -> Maybe b

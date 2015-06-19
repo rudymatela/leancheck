@@ -12,10 +12,10 @@ instance (Eq a, Eq b, Listable a, Listable b) => Listable (a -> b) where
   listing = lsmap pairsToFunction $ functions list listing
 
 functions :: Eq b => [a] -> [[b]] -> [[[(a,b)]]]
-functions as rss = lsmap (zip as . cycle) $ lsPeriodsOfLimit as rss
+functions xs yss = lsmap (zip xs . cycle) $ lsPeriodsOfLimit xs yss
 
 functionsz :: Eq b => [[a]] -> [[b]] -> [[[(a,b)]]]
-functionsz ass = functions (concat ass)
+functionsz xss = functions (concat xss)
 
 
 lsPeriodsOf :: Eq a => [[a]] -> [[[a]]]
@@ -44,6 +44,6 @@ listingsOfLimit (_:ys) xss = [[[]]] ++ lsProductWith (:) xss (listingsOfLimit ys
 
 
 pairsToFunction :: Eq a => [(a,b)] -> (a -> b)
-pairsToFunction ((a,r):ps) a' =  if a' == a
-                                   then r
-                                   else pairsToFunction ps a'
+pairsToFunction ((x,y):ps) x' =  if x' == x
+                                   then y
+                                   else pairsToFunction ps x'
