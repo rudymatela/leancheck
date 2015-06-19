@@ -41,6 +41,9 @@ module Test.Check
   , lsfilter
   , lsConcat
   , lsConcatMap
+
+  -- ** Misc utilities
+  , (\/)
   )
 where
 
