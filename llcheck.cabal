@@ -18,7 +18,7 @@ cabal-version:       >=1.10
 library
   exposed-modules:     Test.Check,
                        Test.Check.Function, Test.Check.FunctionC, Test.Check.FunctionP,
-                       Test.Check.FunctionShow, Test.Check.Debug
+                       Test.Check.FunctionShow, Test.Check.Debug, Test.Types
   other-modules:       Test.Check.Invariants
   -- other-extensions:    
   build-depends:       base
@@ -28,6 +28,13 @@ library
 test-suite test
   type:                exitcode-stdio-1.0
   main-is:             test.hs
+  hs-source-dirs:      ., tests
+  build-depends:       base
+  default-language:    Haskell2010
+
+test-suite types
+  type:                exitcode-stdio-1.0
+  main-is:             test-types.hs
   hs-source-dirs:      ., tests
   build-depends:       base
   default-language:    Haskell2010
