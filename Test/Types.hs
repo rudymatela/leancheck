@@ -24,6 +24,9 @@ import Data.Ratio ((%))
 mapTuple :: (a -> b) -> (a,a) -> (b,b)
 mapTuple f (x,y) = (f x, f y)
 
+mapFst :: (a -> b) -> (a,c) -> (b,c)
+mapFst f (x,y) = (f x,y)
+
 oNewtype :: (a -> b) -> (b -> a) -> (a -> a -> a) -> (b -> b -> b)
 oNewtype con des o = \x y -> con $ des x `o` des y
 
@@ -32,6 +35,9 @@ fNewtype con des f = con . f . des
 
 otNewtype :: (a -> b) -> (b -> a) -> (a -> a -> (a,a)) -> (b -> b -> (b,b))
 otNewtype con des o = \x y -> mapTuple con $ des x `o` des y
+
+readsPrecNewtype :: Read a => (a -> b) -> Int -> String -> [(b,String)]
+readsPrecNewtype con n = map (mapFst con) . readsPrec n
 
 eBoundedFromSomething :: (Show a, Ord a, Bounded a) => String -> (b -> a) -> b -> a
 eBoundedFromSomething caller con n
@@ -57,6 +63,9 @@ newtype Int1 = Int1 { unInt1 :: Int } deriving (Eq, Ord)
 
 instance Show Int1 where
   show = show . unInt1
+
+instance Read Int1 where
+  readsPrec = readsPrecNewtype Int1
 
 instance Num Int1 where
   (+) = oNewtype Int1 unInt1 (+)
@@ -93,6 +102,9 @@ newtype UInt1 = UInt1 { unUInt1 :: Int } deriving (Eq, Ord)
 instance Show UInt1 where
   show = show . unUInt1
 
+instance Read UInt1 where
+  readsPrec = readsPrecNewtype UInt1
+
 instance Num UInt1 where
   (+) = oNewtype UInt1 unUInt1 (+)
   (-) = oNewtype UInt1 unUInt1 (-)
@@ -127,6 +139,9 @@ newtype Int2 = Int2 { unInt2 :: Int } deriving (Eq, Ord)
 
 instance Show Int2 where
   show = show . unInt2
+
+instance Read Int2 where
+  readsPrec = readsPrecNewtype Int2
 
 instance Num Int2 where
   (+) = oNewtype Int2 unInt2 (+)
@@ -163,6 +178,9 @@ newtype UInt2 = UInt2 { unUInt2 :: Int } deriving (Eq, Ord)
 instance Show UInt2 where
   show = show . unUInt2
 
+instance Read UInt2 where
+  readsPrec = readsPrecNewtype UInt2
+
 instance Num UInt2 where
   (+) = oNewtype UInt2 unUInt2 (+)
   (-) = oNewtype UInt2 unUInt2 (-)
@@ -197,6 +215,9 @@ newtype Int3 = Int3 { unInt3 :: Int } deriving (Eq, Ord)
 
 instance Show Int3 where
   show = show . unInt3
+
+instance Read Int3 where
+  readsPrec = readsPrecNewtype Int3
 
 instance Num Int3 where
   (+) = oNewtype Int3 unInt3 (+)
@@ -233,6 +254,9 @@ newtype UInt3 = UInt3 { unUInt3 :: Int } deriving (Eq, Ord)
 instance Show UInt3 where
   show = show . unUInt3
 
+instance Read UInt3 where
+  readsPrec = readsPrecNewtype UInt3
+
 instance Num UInt3 where
   (+) = oNewtype UInt3 unUInt3 (+)
   (-) = oNewtype UInt3 unUInt3 (-)
@@ -268,6 +292,9 @@ newtype Int4 = Int4 { unInt4 :: Int } deriving (Eq, Ord)
 instance Show Int4 where
   show = show . unInt4
 
+instance Read Int4 where
+  readsPrec = readsPrecNewtype Int4
+
 instance Num Int4 where
   (+) = oNewtype Int4 unInt4 (+)
   (-) = oNewtype Int4 unInt4 (-)
@@ -302,6 +329,9 @@ newtype UInt4 = UInt4 { unUInt4 :: Int } deriving (Eq, Ord)
 
 instance Show UInt4 where
   show = show . unUInt4
+
+instance Read UInt4 where
+  readsPrec = readsPrecNewtype UInt4
 
 instance Num UInt4 where
   (+) = oNewtype UInt4 unUInt4 (+)
