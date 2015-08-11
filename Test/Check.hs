@@ -61,13 +61,21 @@ instance Listable () where
   list = [()]
 
 instance Listable Int where
-  list = [0..]
+  list = [0,-1..] \/ [1..]
 
 instance Listable Integer where
-  list = [0..]
+  list = [0,-1..] \/ [1..]
 
 instance Listable Char where
   list = ['a'..'z']
+      \/ [' ','\n']
+      \/ ['A'..'Z']
+      \/ ['0'..'9']
+      \/ ['!'..'/']
+      \/ ['\t']
+      \/ [':'..'@']
+      \/ ['['..'`']
+      \/ ['{'..'~']
 
 instance Listable Bool where
   listing = cons0 False \++/ cons0 True
@@ -165,6 +173,7 @@ cons6 = wcons6 1
 (\/) :: [a] -> [a] -> [a]
 []     \/ ys     = ys
 (x:xs) \/ ys     = x:(ys \/ xs)
+infixr 5 \/
 
 -- | Interleave values of each increasing size
 (\\//) :: [[a]] -> [[a]] -> [[a]]

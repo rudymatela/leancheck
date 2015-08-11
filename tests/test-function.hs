@@ -5,6 +5,7 @@ import Test.Check
 import Test.Check.Function
 import Test.Check.Invariants
 import Test.Check.Debug
+import Test.Types (Nat)
 
 main :: IO ()
 main =
@@ -29,5 +30,5 @@ checkNoDup n = take n (lsNoDupListsOf (listing :: [[Int]]))
 -- TODO: Note: this will fail when a proper Int enumeration is activated (use
 -- Nats here)
 checkCrescent :: Int -> Bool
-checkCrescent n = take n (lsNoDecListsOf (listing :: [[Int]]))
-               == take n ((map . filter) (strictlyOrderedBy compare) (map reverse $ listing :: [[[Int]]]))
+checkCrescent n = take n (lsNoDecListsOf (listing :: [[Nat]]))
+               == take n ((map . filter) (strictlyOrderedBy compare) (map reverse $ listing :: [[[Nat]]]))

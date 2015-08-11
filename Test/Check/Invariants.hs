@@ -7,17 +7,7 @@ where
 import Test.Check
 import Data.List
 import Data.Ord
-
--- For use in testing.
-newtype Nat = N { unN :: Int }
-  deriving (Eq, Ord)
-
--- For this module, 0 is a Natural number: I'm super cereal.
-instance Listable Nat where
-  list = map N [0,1..]
-
-instance Show Nat where
-  show (N x) = show x
+import Test.Types (Nat(..))
 
 -- | check if a list is ordered
 ordered :: Ord a => [a] -> Bool
