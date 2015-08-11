@@ -15,7 +15,7 @@ module Test.Types
   , UInt2
   , UInt3
   , UInt4
-  , Nat(N,unN) -- TODO: Remove export of constructors
+  , Nat
   )
 where
 
@@ -364,11 +364,34 @@ instance Listable UInt4 where
 
 
 -- Natural numbers (including 0)
-newtype Nat = N { unN :: Int }
-  deriving (Eq, Ord)
-
-instance Listable Nat where
-  list = map N [0,1..]
+newtype Nat = Nat { unNat :: Int } deriving (Eq, Ord)
 
 instance Show Nat where
-  show (N x) = show x
+  show (Nat x) = show x
+
+instance Read Nat where
+  readsPrec = readsPrecNewtype Nat
+
+instance Num Nat where
+  (+) = oNewtype Nat unNat (+)
+  (-) = oNewtype Nat unNat (-)
+  (*) = oNewtype Nat unNat (*)
+  abs = fNewtype Nat unNat abs
+  signum = fNewtype Nat unNat signum
+  fromInteger = (Nat . fromInteger)
+
+instance Real Nat where
+  toRational (Nat x) = fromIntegral x % 1
+
+instance Integral Nat where
+  quotRem = otNewtype Nat unNat quotRem
+  toInteger = toInteger . unNat
+
+instance Enum Nat where
+  toEnum   = Nat
+  fromEnum = unNat
+  enumFrom (Nat x) = map Nat [x..]
+  enumFromThen (Nat x) (Nat s) = map Nat [x,s..]
+
+instance Listable Nat where
+  list = [0..]

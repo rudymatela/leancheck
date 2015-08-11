@@ -55,30 +55,30 @@ infixr 9 `lsStrictlyOrderedBy`
 
 lsNatPairOrd :: Int -> Bool
 lsNatPairOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
-  where sum' (N x,N y) = x+y
+  where sum' (x,y) = x+y :: Nat
 
 lsNatTripleOrd :: Int -> Bool
 lsNatTripleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
-  where sum' (N x,N y,N z) = x+y+z
+  where sum' (x,y,z) = x+y+z :: Nat
 
 lsNatQuadrupleOrd :: Int -> Bool
 lsNatQuadrupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
-  where sum' (N x,N y,N z,N w) = x+y+z+w
+  where sum' (x,y,z,w) = x+y+z+w :: Nat
 
 lsNatQuintupleOrd :: Int -> Bool
 lsNatQuintupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
-  where sum' (N x,N y,N z,N w,N v) = x+y+z+w+v
+  where sum' (x,y,z,w,v) = x+y+z+w+v :: Nat
 
 lsNatListOrd :: Int -> Bool
 lsNatListOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
-  where sum' = sum . map ((+1) . unN)
+  where sum' = sum . map (+1) :: [Nat] -> Nat
 
 lsPairEqParams :: Int -> Bool
 lsPairEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
     srs = map (pairToList) $ take n $ list
-    pairToList (x,y) = map unN [y,x]
+    pairToList (x,y) = [y,x :: Nat]
     fail :: Nat -> Nat -> Bool
     fail x y = False
 
@@ -87,7 +87,7 @@ lsTripleEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
     srs = map tripleToList $ take n $ list
-    tripleToList (x,y,z) = map unN [z,y,x]
+    tripleToList (x,y,z) = [z,y,x :: Nat]
     fail :: Nat -> Nat -> Nat -> Bool
     fail x y z = False
 
