@@ -18,8 +18,11 @@ cabal-version:       >=1.10
 library
   exposed-modules:     Test.Check,
                        Test.Types,
-                       Test.Check.Function, Test.Check.FunctionC, Test.Check.FunctionP,
-                       Test.Check.FunctionShow
+                       Test.Check.Function,
+                       Test.Check.Function.ListsOfPairs,
+                       Test.Check.Function.CoListable,
+                       Test.Check.Function.Periodic,
+                       Test.Check.Function.Show
   other-modules:       Test.Check.Invariants
   -- other-extensions:    
   build-depends:       base

@@ -1,6 +1,6 @@
 -- | Periodic function enumeration.
 --   This is just a sketch.
-module Test.Check.FunctionP
+module Test.Check.Function.Periodic
 where
 
 

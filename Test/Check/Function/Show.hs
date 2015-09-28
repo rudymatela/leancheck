@@ -1,6 +1,6 @@
 -- | A show instance for functions.
 --   Avoid re-exporting this, use only for testing your library.
-module Test.Check.FunctionShow () where
+module Test.Check.Function.Show () where
 
 import Test.Check
 import Data.Function (on)
