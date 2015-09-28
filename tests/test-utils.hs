@@ -26,8 +26,6 @@ checkNoDup n = take n (lsNoDupListsOf (listing :: [[Int]]))
             == take n ((map . filter) noDup (map reverse $ listing :: [[[Int]]]))
   where noDup xs = nub (sort xs) == sort xs
 
--- TODO: Note: this will fail when a proper Int enumeration is activated (use
--- Nats here)
 checkCrescent :: Int -> Bool
 checkCrescent n = take n (lsNoDecListsOf (listing :: [[Nat]]))
                == take n ((map . filter) (strictlyOrderedBy compare) (map reverse $ listing :: [[[Nat]]]))
