@@ -4,7 +4,6 @@ import Data.List (elemIndices, sort, nub)
 import Test.Check
 import Test.Check.Function
 import Test.Check.Invariants
-import Test.Check.Debug
 import Test.Types (Nat)
 
 main :: IO ()

@@ -7,7 +7,6 @@ where
 import Test.Check
 import Data.Maybe (fromMaybe)
 import Test.Check.FunctionShow
-import Test.Check.Debug
 
 
 class CoListable a where

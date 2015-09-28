@@ -17,8 +17,9 @@ cabal-version:       >=1.10
 
 library
   exposed-modules:     Test.Check,
+                       Test.Types,
                        Test.Check.Function, Test.Check.FunctionC, Test.Check.FunctionP,
-                       Test.Check.FunctionShow, Test.Check.Debug, Test.Types
+                       Test.Check.FunctionShow
   other-modules:       Test.Check.Invariants
   -- other-extensions:    
   build-depends:       base
