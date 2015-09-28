@@ -2,7 +2,7 @@ import System.Exit (exitFailure)
 import Data.List (elemIndices, sort, nub)
 
 import Test.Check
-import Test.Check.Function
+import Test.Check.Utils
 import Test.Check.Invariants
 import Test.Types (Nat)
 

@@ -40,9 +40,9 @@ test-suite types
   build-depends:       base
   default-language:    Haskell2010
 
-test-suite function
+test-suite utils
   type:                exitcode-stdio-1.0
-  main-is:             test-function.hs
+  main-is:             test-utils.hs
   hs-source-dirs:      ., tests
   build-depends:       base
   default-language:    Haskell2010
