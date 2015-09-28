@@ -18,6 +18,8 @@ tests =
 
   , checkNoDup 12
   , checkCrescent 20
+  , checkLengthListingsOfLength 5 5
+  , checkSizesListingsOfLength 5 5
   ]
 
 -- TODO: Remove map reverse (make actual code consistent)
@@ -29,3 +31,18 @@ checkNoDup n = take n (lsNoDupListsOf (listing :: [[Int]]))
 checkCrescent :: Int -> Bool
 checkCrescent n = take n (lsCrescListsOf (listing :: [[Nat]]))
                == take n ((map . filter) (strictlyOrderedBy compare) (map reverse $ listing :: [[[Nat]]]))
+
+checkLengthListingsOfLength :: Int -> Int -> Bool
+checkLengthListingsOfLength n m = all check [1..m]
+  where check m = all (\xs -> length xs == m)
+                $ concat . take n
+                $ listingsOfLength m natListing
+
+checkSizesListingsOfLength :: Int -> Int -> Bool
+checkSizesListingsOfLength n m = all check [1..m]
+  where check m = orderedBy compare
+                $ map sum . concat . take n
+                $ listingsOfLength m natListing
+   
+natListing :: [[Nat]]
+natListing = listing

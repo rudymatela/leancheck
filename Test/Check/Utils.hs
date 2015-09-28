@@ -1,10 +1,16 @@
+-- | Utilities functions for manipulating listings (sized lists of lists)
 module Test.Check.Utils
-  ( lsNoDupListsOf
+  (
+  -- * Lists
+    lsNoDupListsOf
   , lsCrescListsOf
   , listingsOfLength
-  , functionsOn
-  , lsPartialFunctions
-  , lsFunctions
+
+  -- * Functions
+  -- ** Listing
+  , associations
+  , lsFunctionPairs
+  -- ** Pairs to actual functions
   , partialFunctions
   , bindingsToFunction'
   , totalBindingsToFunction
@@ -84,20 +90,38 @@ ejsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ ejsWith f (xs:xss)
 listingsOfLength :: Int -> [[a]] -> [[[a]]]
 listingsOfLength n xss = foldr (lsProductWith (:)) [[[]]] (replicate n xss)
 
-functionsOn :: [a] -> [[b]] -> [[[(a,b)]]]
-functionsOn xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
+
+-- | Given a list of values (the domain), and a listing of values (the codomain),
+-- return a listing of lists of ordered pairs (associating the domain and codomain)
+associations :: [a] -> [[b]] -> [[[(a,b)]]]
+associations xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
 
 
-lsPartialFunctions :: [[a]] -> [[b]] -> [[[(a,b)]]]
-lsPartialFunctions xss yss = lsConcatMap (`functionsOn` yss) (lsCrescListsOf xss)
+-- | Given two listings, List all possible lists of input-output pairs
+-- representing functions from values in the first listing
+-- to values in the second listing.
+lsFunctionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
+lsFunctionPairs xss yss = lsConcatMap (`associations` yss) (lsCrescListsOf xss)
 
 
-lsFunctions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
-lsFunctions xss yss = lsConcatMap (\(r,yss) -> lsmap (\ps -> (ps,r)) $ lsPartialFunctions xss yss) (djs yss)
+-- | Returns a function given by a list of input-output pairs.
+-- The result is wrapped in a maybe value.
+-- The output for bound inputs is 'Just' a value.
+-- The output for unbound inputs is 'Nothing'.
+pairsToMaybeFunction :: Eq a => [(a,b)] -> a -> Maybe b
+pairsToMaybeFunction []          _ = Nothing
+pairsToMaybeFunction ((a',r):bs) a | a == a'   = Just r
+                                   | otherwise = bindingsToFunction' bs a
+
+-- | Returns a partial function given by a list of input-output pairs.
+--
+-- NOTE: This function *will* return undefined values for unbound inputs.
+pairsToFunction :: Eq a => [(a,b)] -> a -> b
+pairsToFunction bs a = fromMaybe undefined (pairsToMaybeFunction bs a)
 
 
 partialFunctions :: [[a]] -> [[b]] -> [[(a,b)]]
-partialFunctions xss = concat . lsPartialFunctions xss
+partialFunctions xss = concat . lsFunctionPairs xss
 
 
 bindingsToFunction' :: Eq a => [(a,b)] -> a -> Maybe b
