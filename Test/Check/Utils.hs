@@ -1,6 +1,6 @@
 module Test.Check.Utils
   ( lsNoDupListsOf
-  , lsNoDecListsOf
+  , lsCrescListsOf
   , listingsOfLength
   , functionsOn
   , lsPartialFunctions
@@ -46,7 +46,9 @@ djsWith f ([]:xss)     = [] : djsWith (\y yss -> f y ([]:yss)) xss
 djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ djsWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
 -- | Given a listing of values, returns a listing of lists of elements in
--- crescent order (from listing enumeration)
+--   crescent order (from listing enumeration).  If you only care about wether
+--   elements are in returned lists or not, this is the same as listing all the
+--   sets.
 --
 -- > lsNoDecListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
@@ -56,13 +58,15 @@ djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ djsWith (\y (ys:yss) -> f y ((x:y
 -- >   , [[0,2],[3]]
 -- >   , [[0,3],[1,2],[4]]
 -- >   , [[0,1,2],[0,4],[1,3],[5]]
-lsNoDecListsOf :: [[a]] -> [[[a]]]
-lsNoDecListsOf = ([[]]:) . lsConcat . ejsWith (\x xss -> lsmap (x:) (lsNoDecListsOf xss))
+-- >   , ...
+-- >   ]
+lsCrescListsOf :: [[a]] -> [[[a]]]
+lsCrescListsOf = ([[]]:) . lsConcat . ejsWith (\x xss -> lsmap (x:) (lsCrescListsOf xss))
 
 -- | Using a sized list, forms crescent sized pairs of elements and sized lists
 --   of elements.  This is similar to 'djs' differing only that the elements
 --   listed second in the pair are always "greater" (in terms of enumeration) than
---   the first.  Intended only to be used in 'lsNoDecListsOf'.
+--   the first.  Intended only to be used in 'lsCrescListsOf'.
 --
 -- ejs [[1],[2],[3]]  == [[(1,[[],[2],[3]])],[(2,[[],[],[3]])],[(3,[[],[],[]])]]
 -- ejs [[False,True]] == [[(False,[[True]]),(True,[[]])]]
@@ -85,7 +89,7 @@ functionsOn xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
 
 
 lsPartialFunctions :: [[a]] -> [[b]] -> [[[(a,b)]]]
-lsPartialFunctions xss yss = lsConcatMap (`functionsOn` yss) (lsNoDecListsOf xss)
+lsPartialFunctions xss yss = lsConcatMap (`functionsOn` yss) (lsCrescListsOf xss)
 
 
 lsFunctions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
