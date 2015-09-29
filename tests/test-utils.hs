@@ -6,6 +6,15 @@ import Test.Check.Utils
 import Test.Check.Invariants
 import Test.Types (Nat)
 
+
+(==>) :: Bool -> Bool -> Bool
+False ==> _ = True
+_     ==> y = y
+infixr 0 ==>
+
+argTypeOf :: (a -> b) -> a -> (a -> b)
+argTypeOf = const
+
 main :: IO ()
 main =
   case elemIndices False tests of
@@ -20,6 +29,8 @@ tests =
   , checkCrescent 20
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
+
+  , holds 100 (prop `argTypeOf` ('a','b'))
   ]
 
 -- TODO: Remove map reverse (make actual code consistent)
@@ -43,6 +54,10 @@ checkSizesListingsOfLength n m = all check [1..m]
   where check m = orderedBy compare
                 $ map sum . concat . take n
                 $ listingsOfLength m natListing
+
+prop :: (Eq a, Eq b) => (a,b) -> [(a,b)] -> Bool
+prop (x,y) ps = (x,y) `elem` ps
+            ==> pairsToFunction ps x == y
    
 natListing :: [[Nat]]
 natListing = listing

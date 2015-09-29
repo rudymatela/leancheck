@@ -5,6 +5,7 @@ module Test.Check.Utils
     lsNoDupListsOf
   , lsCrescListsOf
   , listingsOfLength
+  , djs
 
   -- * Functions
 
