@@ -7,13 +7,17 @@ module Test.Check.Utils
   , listingsOfLength
 
   -- * Functions
+
   -- ** Listing
   , associations
   , lsFunctionPairs
+  , functionPairs
+
   -- ** Pairs to actual functions
-  , partialFunctions
-  , bindingsToFunction'
-  , totalBindingsToFunction
+  , pairsToMaybeFunction
+  , pairsToFunction
+  , defaultPairsToFunction
+  , defaultFunPairsToFunction
   )
 where
 
@@ -97,11 +101,19 @@ associations :: [a] -> [[b]] -> [[[(a,b)]]]
 associations xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
 
 
--- | Given two listings, List all possible lists of input-output pairs
+-- | Given two listings, list all possible lists of input-output pairs
 -- representing functions from values in the first listing
--- to values in the second listing.
+-- to values in the second listing.  Results are returned in lists of
+-- increasing size.
 lsFunctionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
 lsFunctionPairs xss yss = lsConcatMap (`associations` yss) (lsCrescListsOf xss)
+
+
+-- | Given two listings, list all possible lists of input-output pairs
+-- representing functions from values in the first listing
+-- to values in the second listing.
+functionPairs :: [[a]] -> [[b]] -> [[(a,b)]]
+functionPairs xss = concat . lsFunctionPairs xss
 
 
 -- | Returns a function given by a list of input-output pairs.
@@ -111,7 +123,7 @@ lsFunctionPairs xss yss = lsConcatMap (`associations` yss) (lsCrescListsOf xss)
 pairsToMaybeFunction :: Eq a => [(a,b)] -> a -> Maybe b
 pairsToMaybeFunction []          _ = Nothing
 pairsToMaybeFunction ((a',r):bs) a | a == a'   = Just r
-                                   | otherwise = bindingsToFunction' bs a
+                                   | otherwise = pairsToMaybeFunction bs a
 
 -- | Returns a partial function given by a list of input-output pairs.
 --
@@ -120,15 +132,10 @@ pairsToFunction :: Eq a => [(a,b)] -> a -> b
 pairsToFunction bs a = fromMaybe undefined (pairsToMaybeFunction bs a)
 
 
-partialFunctions :: [[a]] -> [[b]] -> [[(a,b)]]
-partialFunctions xss = concat . lsFunctionPairs xss
+-- | Returns a function given by a list of input-output pairs and a default value.
+defaultPairsToFunction :: Eq a => b -> [(a,b)] -> a -> b
+defaultPairsToFunction r bs a = fromMaybe r (pairsToMaybeFunction bs a)
 
 
-bindingsToFunction' :: Eq a => [(a,b)] -> a -> Maybe b
-bindingsToFunction' []          _ = Nothing
-bindingsToFunction' ((a',r):bs) a | a == a'   = Just r
-                                  | otherwise = bindingsToFunction' bs a
-
-
-totalBindingsToFunction :: Eq a => ([(a,b)],b) -> (a -> b)
-totalBindingsToFunction (bs,r) a = fromMaybe r (bindingsToFunction' bs a)
+defaultFunPairsToFunction :: Eq a => (a -> b) -> [(a,b)] -> a -> b
+defaultFunPairsToFunction f bs a = fromMaybe (f a) (pairsToMaybeFunction bs a)
