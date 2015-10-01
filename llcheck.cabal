@@ -17,6 +17,7 @@ cabal-version:       >=1.10
 
 library
   exposed-modules:     Test.Check,
+                       Test.Check.Utils,
                        Test.Types,
                        Test.Check.Function,
                        Test.Check.Function.ListsOfPairs,
