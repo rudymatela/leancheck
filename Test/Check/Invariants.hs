@@ -73,6 +73,17 @@ lsNatListOrd :: Int -> Bool
 lsNatListOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
   where sum' = sum . map (+1) :: [Nat] -> Nat
 
+lsListsOfStrictlyOrderedBy :: Int
+                           -> (a -> a -> Ordering)
+                           -> [[a]]
+                           -> Bool
+lsListsOfStrictlyOrderedBy n cmp = strictlyOrderedBy cmp . take n . concat
+infixr 9 `lsListsOfStrictlyOrderedBy`
+
+lsListsOfNatOrd :: Int -> Bool
+lsListsOfNatOrd n = lsListsOfStrictlyOrderedBy n (comparing sum' `thn` flip compare) listing
+  where sum' = sum . map (+1) :: [Nat] -> Nat
+
 lsPairEqParams :: Int -> Bool
 lsPairEqParams n = ces == srs
   where

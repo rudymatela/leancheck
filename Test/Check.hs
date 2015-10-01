@@ -249,6 +249,26 @@ zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 lsProduct :: [[a]] -> [[b]] -> [[(a,b)]]
 lsProduct = lsProductWith (,)
 
+-- | Given a listing of values, returns a listing of lists of those values
+--
+-- > lsListsOf [[]] == [[[]]]
+--
+-- > lsListsOf [[x]] == [ [[]]
+-- >                    , [[x]]
+-- >                    , [[x,x]]
+-- >                    , [[x,x,x]]
+-- >                    , ...
+-- >                    ]
+--
+-- > lsListsOf [[x],[y]] == [ [[]]
+-- >                        , [[x]]
+-- >                        , [[y],[x,x]]
+-- >                        , [[x,y],[y,x],[x,x,x]]
+-- >                        , ...
+-- >                        ]
+lsListsOf :: [[a]] -> [[[a]]]
+lsListsOf xss = [[ [] ]] ++ lsProductWith (:) xss (lsListsOf xss)
+
 -- Generates several lists of the same size.
 --
 -- > lsProducts [ lsX, lsY, lsZ ] ==

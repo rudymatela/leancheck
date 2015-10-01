@@ -24,6 +24,7 @@ tests =
   , lsNatQuadrupleOrd 300
   , lsNatQuintupleOrd 400
   , lsNatListOrd 500
+  , lsListsOfNatOrd 500
 
   -- tests!
   , counterExample 10 (\x y -> x + y /= (x::Int)) == Just ["0", "0"]
