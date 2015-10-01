@@ -11,6 +11,7 @@ module Test.Check.Utils
 
   -- ** Listing
   , associations
+  , associations'
   , lsFunctionPairs
   , functionPairs
 
@@ -99,8 +100,13 @@ listingsOfLength n xss = foldr (lsProductWith (:)) [[[]]] (replicate n xss)
 -- | Given a list of values (the domain), and a listing of values (the codomain),
 -- return a listing of lists of ordered pairs (associating the domain and codomain)
 associations :: [a] -> [[b]] -> [[[(a,b)]]]
-associations xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
+associations xs sbs = associations' xs (const sbs)
 
+-- | Given a list of values (the domain)
+--     and a function to create listing of possible values from a domain value,
+-- return a listing of lists of ordered pairs (associating the domain and codomain)
+associations' :: [a] -> (a -> [[b]]) -> [[[(a,b)]]]
+associations' xs f = lsmap (zip xs) (lsProducts (map f xs))
 
 -- | Given two listings, list all possible lists of input-output pairs
 -- representing functions from values in the first listing

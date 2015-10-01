@@ -33,6 +33,10 @@ tests =
   , holds 100 $ ptofApp `argTypeOf` ('a','b')
   , holds 100 $ associationsValues (undefined::Int)  100 `argTypeOf` [undefined::Int]
   , holds 100 $ associationsValues (undefined::Bool) 100 `argTypeOf` [undefined::Bool]
+  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Int] -> [[Int]] -> Bool)
+  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Int] -> [[Bool]] -> Bool)
+  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Bool] -> [[Bool]] -> Bool)
+  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Bool] -> [[Int]] -> Bool)
   ]
 
 -- TODO: Remove map reverse (make actual code consistent)
@@ -61,12 +65,17 @@ ptofApp :: (Ord a, Eq b) => (a,b) -> [(a,b)] -> Bool -- Ord a is just for allUni
 ptofApp (x,y) ps = (x,y) `elem` ps && allUnique (map fst ps)
                ==> pairsToFunction ps x == y
 
-associationsValues :: (Listable b, Listable a, Eq a)
+associationsValues :: (Listable b, Eq a)
                    => b -> Int -> [a] -> Bool
 associationsValues ty n xs = all (\xs' -> map fst xs' == xs)
                            $ take n
                            $ concat
                            $ associations xs (listing `asTypeOf` [[ty]])
+
+associationsNewAndOld :: (Eq a, Eq b) => [a] -> [[b]] -> Bool
+associationsNewAndOld xs yss = associations xs yss == oldAssociations xs yss
+  where oldAssociations xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
+
 
 natListing :: [[Nat]]
 natListing = listing
