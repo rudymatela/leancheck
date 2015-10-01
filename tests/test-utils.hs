@@ -30,7 +30,9 @@ tests =
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
-  , holds 100 (prop `argTypeOf` ('a','b'))
+  , holds 100 $ ptofApp `argTypeOf` ('a','b')
+  , holds 100 $ associationsValues (undefined::Int)  100 `argTypeOf` [undefined::Int]
+  , holds 100 $ associationsValues (undefined::Bool) 100 `argTypeOf` [undefined::Bool]
   ]
 
 -- TODO: Remove map reverse (make actual code consistent)
@@ -55,9 +57,24 @@ checkSizesListingsOfLength n m = all check [1..m]
                 $ map sum . concat . take n
                 $ listingsOfLength m natListing
 
-prop :: (Eq a, Eq b) => (a,b) -> [(a,b)] -> Bool
-prop (x,y) ps = (x,y) `elem` ps
-            ==> pairsToFunction ps x == y
-   
+ptofApp :: (Ord a, Eq b) => (a,b) -> [(a,b)] -> Bool -- Ord a is just for allUnique
+ptofApp (x,y) ps = (x,y) `elem` ps && allUnique (map fst ps)
+               ==> pairsToFunction ps x == y
+
+associationsValues :: (Listable b, Listable a, Eq a)
+                   => b -> Int -> [a] -> Bool
+associationsValues ty n xs = all (\xs' -> map fst xs' == xs)
+                           $ take n
+                           $ concat
+                           $ associations xs (listing `asTypeOf` [[ty]])
+
 natListing :: [[Nat]]
 natListing = listing
+
+allUnique :: Ord a => [a] -> Bool
+allUnique [] = True
+allUnique (x:xs) = x `notElem` xs
+                && allUnique (lesser)
+                && allUnique (greater)
+  where lesser  = filter (< x) xs
+        greater = filter (> x) xs
