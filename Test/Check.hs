@@ -35,6 +35,7 @@ module Test.Check
   , lsProduct
   , lsProductWith
   , lsProduct3With -- might be uneeded
+  , lsProducts
 
   -- ** Manipulating listings
   , lsmap
@@ -274,7 +275,7 @@ lsListsOf xss = [[ [] ]] ++ lsProductWith (:) xss (lsListsOf xss)
 -- > lsProducts [ lsX, lsY, lsZ ] ==
 --
 -- All lists combining elements of series lsX, lsY and lsZ
-lsProducts :: [[[a]]] -> [[[a]]]
+lsProducts :: [ [[a]] ] -> [[ [a] ]]
 lsProducts = foldr (lsProductWith (:)) [[[]]]
 
 lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
