@@ -209,11 +209,14 @@ productWith f (x:xs) ys  =  map (f x) ys ++ productWith f xs ys
 productWithMaybe :: (a->b->Maybe c) -> [a] -> [b] -> [c]
 productWithMaybe f xs ys = catMaybes $ productWith f xs ys
 
--- zipwith' takes neutral elements to operate, so you don't loose elements
--- TODO: Document this
+-- | 'zipwith\'' works similarly to 'zipWith', but takes neutral elements to
+--   operate, so you don't loose elements.
 --
--- > zipWith' (+) 0 0 [1,2,3] [1,2,3,4,5,6]
--- > == [2,4,6,4,5,6]
+-- > zipWith' f z e [x,y] [a,b,c,d] == [f x a, f y b, f z c, f z d]
+--
+-- > zipWith' f z e [x,y,z] [a] == [f x a, f y e, f z e]
+--
+-- > zipWith' (+) 0 0 [1,2,3] [1,2,3,4,5,6] == [2,4,6,4,5,6]
 zipWith' :: (a->b->c) -> a -> b  -> [a] -> [b] -> [c]
 zipWith' _ _  _  []     [] = []
 zipWith' f _  zy xs     [] = map (`f` zy) xs
