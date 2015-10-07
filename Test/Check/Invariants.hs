@@ -16,6 +16,9 @@ ordered = orderedBy compare
 -- ordered [_] = True
 -- ordered (x:y:xs) = x <= y && ordered (y:xs)
 
+strictlyOrdered :: Ord a => [a] -> Bool
+strictlyOrdered = strictlyOrderedBy compare
+
 -- | check if a list is ordered by a given ordering function
 orderedBy :: (a -> a -> Ordering) -> [a] -> Bool
 orderedBy _ [] = True
@@ -54,23 +57,23 @@ lsStrictlyOrderedBy n cmp = strictlyOrderedBy cmp $ take n list
 infixr 9 `lsStrictlyOrderedBy`
 
 lsNatPairOrd :: Int -> Bool
-lsNatPairOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
+lsNatPairOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y) = x+y :: Nat
 
 lsNatTripleOrd :: Int -> Bool
-lsNatTripleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
+lsNatTripleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z) = x+y+z :: Nat
 
 lsNatQuadrupleOrd :: Int -> Bool
-lsNatQuadrupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
+lsNatQuadrupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z,w) = x+y+z+w :: Nat
 
 lsNatQuintupleOrd :: Int -> Bool
-lsNatQuintupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
+lsNatQuintupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z,w,v) = x+y+z+w+v :: Nat
 
 lsNatListOrd :: Int -> Bool
-lsNatListOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` flip compare
+lsNatListOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' = sum . map (+1) :: [Nat] -> Nat
 
 lsListsOfStrictlyOrderedBy :: Int
@@ -81,7 +84,7 @@ lsListsOfStrictlyOrderedBy n cmp = strictlyOrderedBy cmp . take n . concat
 infixr 9 `lsListsOfStrictlyOrderedBy`
 
 lsListsOfNatOrd :: Int -> Bool
-lsListsOfNatOrd n = lsListsOfStrictlyOrderedBy n (comparing sum' `thn` flip compare) listing
+lsListsOfNatOrd n = lsListsOfStrictlyOrderedBy n (comparing sum' `thn` compare) listing
   where sum' = sum . map (+1) :: [Nat] -> Nat
 
 lsPairEqParams :: Int -> Bool
@@ -89,7 +92,7 @@ lsPairEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
     srs = map (pairToList) $ take n $ list
-    pairToList (x,y) = [y,x :: Nat]
+    pairToList (x,y) = [x,y :: Nat]
     fail :: Nat -> Nat -> Bool
     fail x y = False
 
@@ -98,7 +101,11 @@ lsTripleEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
     srs = map tripleToList $ take n $ list
-    tripleToList (x,y,z) = [z,y,x :: Nat]
+    tripleToList (x,y,z) = [x,y,z :: Nat]
     fail :: Nat -> Nat -> Nat -> Bool
     fail x y z = False
 
+lsProductsIsFilterByLength :: Eq a => [[a]] -> Int -> Int -> Bool
+lsProductsIsFilterByLength values m n = concat (take m byProduct) `isPrefixOf` concat byFilter
+  where byProduct = lsProducts $ replicate n values
+        byFilter  = ((==n) . length) `lsfilter` lsListsOf values

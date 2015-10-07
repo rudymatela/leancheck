@@ -64,8 +64,8 @@ djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ djsWith (\y (ys:yss) -> f y ((x:y
 --
 -- > lsNoDecListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
--- >   , [0]
--- >   , [1]
+-- >   , [[0]]
+-- >   , [[1]]
 -- >   , [[0,1],[2]]
 -- >   , [[0,2],[3]]
 -- >   , [[0,3],[1,2],[4]]
@@ -93,6 +93,7 @@ ejsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ ejsWith f (xs:xss)
 
 
 -- | Given a listing, returns a listing of lists of a given length.
+-- TODO: Merge common part of listingsOfLength with lsProducts
 listingsOfLength :: Int -> [[a]] -> [[[a]]]
 listingsOfLength n xss = foldr (lsProductWith (:)) [[[]]] (replicate n xss)
 

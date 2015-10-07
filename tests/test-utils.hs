@@ -42,12 +42,12 @@ tests =
 -- TODO: Remove map reverse (make actual code consistent)
 checkNoDup :: Int -> Bool
 checkNoDup n = take n (lsNoDupListsOf (listing :: [[Int]]))
-            == take n ((map . filter) noDup (map reverse $ listing :: [[[Int]]]))
+            == take n ((map . filter) noDup (listing :: [[[Int]]]))
   where noDup xs = nub (sort xs) == sort xs
 
 checkCrescent :: Int -> Bool
 checkCrescent n = take n (lsCrescListsOf (listing :: [[Nat]]))
-               == take n ((map . filter) (strictlyOrderedBy compare) (map reverse $ listing :: [[[Nat]]]))
+               == take n ((map . filter) strictlyOrdered (listing :: [[[Nat]]]))
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]

@@ -32,6 +32,7 @@ module Test.Check
 
   -- ** Combining listings
   , (\\//), (\++/), (\+:/)
+  , lsListsOf
   , lsProduct
   , lsProductWith
   , lsProduct3With -- might be uneeded
@@ -266,8 +267,8 @@ lsProduct = lsProductWith (,)
 --
 -- > lsListsOf [[x],[y]] == [ [[]]
 -- >                        , [[x]]
--- >                        , [[y],[x,x]]
--- >                        , [[x,y],[y,x],[x,x,x]]
+-- >                        , [[x,x],[y]]
+-- >                        , [[x,x,x],[x,y],[y,x]]
 -- >                        , ...
 -- >                        ]
 lsListsOf :: [[a]] -> [[[a]]]
@@ -284,9 +285,8 @@ lsProducts = foldr (lsProductWith (:)) [[[]]]
 lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 lsProductWith _ _ [] = []
 lsProductWith _ [] _ = []
-lsProductWith f xss (ys:yss) = zs  :  zss \++/ lsProductWith f xss yss
-  where (zs:zss) = map (`pwf` ys) xss
-        pwf      = productWith f
+lsProductWith f (xs:xss) yss = zs  :  zss \++/ lsProductWith f xss yss
+  where (zs:zss) = map (productWith f xs) yss
 
 lsProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
 lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
