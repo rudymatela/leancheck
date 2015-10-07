@@ -34,6 +34,7 @@ tests =
   , counterExample 10 (\x y -> x + y /= (x::Int)) == Just ["0", "0"]
   , counterExample 10 (\x y -> x + y == (x::Int)) == Just ["0", "1"]
   , holds 100 (\x -> x == (x::Int))
+  -- TODO: Listable Float instance, then uncomment tests below
   --, fails 100 (\x -> x == (x::Float))  -- NaN != NaN  :-)
   --, counterExample 100 (\x -> x == (x::Float)) == Just ["NaN"]
 
