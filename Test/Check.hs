@@ -264,7 +264,7 @@ lsProduct = lsProductWith (,)
 -- > lsListsOf [[x],[y]] == [ [[]]
 -- >                        , [[x]]
 -- >                        , [[y],[x,x]]
--- >                        , [[x,y],[y,x],[x,x,x]]
+-- >                        , [[y,x],[x,y],[x,x,x]]
 -- >                        , ...
 -- >                        ]
 lsListsOf :: [[a]] -> [[[a]]]
