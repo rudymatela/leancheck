@@ -38,7 +38,7 @@ tests =
   --, counterExample 100 (\x -> x == (x::Float)) == Just ["NaN"]
 
   , lsPairEqParams 100
---  , lsTripleEqParams 100
+  , lsTripleEqParams 100
 
   , lsProductsIsFilterByLength (listing :: [[ Nat ]])   10 `all` [1..10]
   , lsProductsIsFilterByLength (listing :: [[ Bool ]])   6 `all` [1..10]
