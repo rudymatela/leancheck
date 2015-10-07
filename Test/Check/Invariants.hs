@@ -102,3 +102,7 @@ lsTripleEqParams n = ces == srs
     fail :: Nat -> Nat -> Nat -> Bool
     fail x y z = False
 
+lsProductsIsFilterByLength :: Eq a => [[a]] -> Int -> Int -> Bool
+lsProductsIsFilterByLength values m n = concat (take m byProduct) `isPrefixOf` concat byFilter
+  where byProduct = lsProducts $ replicate n values
+        byFilter  = ((==n) . length) `lsfilter` lsListsOf values

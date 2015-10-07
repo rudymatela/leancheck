@@ -3,6 +3,7 @@ import Data.List (elemIndices)
 
 import Test.Check
 import Test.Check.Invariants
+import Test.Types (Nat)
 
 main :: IO ()
 main =
@@ -38,4 +39,8 @@ tests =
 
   , lsPairEqParams 100
 --  , lsTripleEqParams 100
+
+  , lsProductsIsFilterByLength (listing :: [[ Nat ]])   10 `all` [1..10]
+  , lsProductsIsFilterByLength (listing :: [[ Bool ]])   6 `all` [1..10]
+  , lsProductsIsFilterByLength (listing :: [[ [Nat] ]])  6 `all` [1..10]
   ]
