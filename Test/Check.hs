@@ -32,6 +32,7 @@ module Test.Check
 
   -- ** Combining listings
   , (\\//), (\++/), (\+:/)
+  , lsListsOf
   , lsProduct
   , lsProductWith
   , lsProduct3With -- might be uneeded
