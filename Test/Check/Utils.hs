@@ -93,6 +93,7 @@ ejsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ ejsWith f (xs:xss)
 
 
 -- | Given a listing, returns a listing of lists of a given length.
+-- TODO: Merge common part of listingsOfLength with lsProducts
 listingsOfLength :: Int -> [[a]] -> [[[a]]]
 listingsOfLength n xss = foldr (lsProductWith (:)) [[[]]] (replicate n xss)
 
