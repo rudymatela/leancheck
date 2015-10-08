@@ -52,7 +52,7 @@ See (ghci):
 Current differences from SmallCheck/QuickCheck
 ----------------------------------------------
 
-There is no `*****check` function that prints results.
+There is no `quickCheck/smallCheck/depthCheck` function that prints results.
 You either have to use `holds` and `counterExample`,
 which are not wrapped in an IO () thus only return the results without
 printing.
@@ -89,16 +89,17 @@ So, for example:
 
 	take 5 (list :: [(Int,Int)]) -- > [(0,0),(0,1),(1,0),(0,-1),(1,1)]
 
-The list function can be used to debug your custom instances.  For recursive
+The `list` function can be used to debug your custom instances.  For recursive
 types, take care with the order of the constructors or your listing function
-might become non-terminating: put non-recursive constructors first.
+might become non-terminating: put non-recursive constructors first in your
+listing definition.
 
 
 More information / extra functions
 ----------------------------------
 
-`Listable` class instances are very customizable: check source comments or
-haddock documentation for details.
+`Listable` class instances are more customizable than what is described here:
+check source comments or haddock documentation for details.
 
 
 Building / Installing
@@ -106,22 +107,22 @@ Building / Installing
 
 * To build:
 
-	$ cabal build
+	cabal build
 
 
 * To install:
 
-	$ cabal install
+	cabal install
 
 
 * To reference in a cabal sandbox:
 
-	$ cabal sandbox add-source ../path/to/llcheck
+	cabal sandbox add-source ../path/to/llcheck
 
 
 * To use the files directly in your project:
 
-	$ cp -r Test ../path/to/your-project
+	cp -r Test ../path/to/your-project
 
 
 This was tested on GHC 7.10.  This library does not use any fancy extensions:
