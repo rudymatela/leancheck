@@ -105,24 +105,21 @@ check source comments or haddock documentation for details.
 Building / Installing
 ---------------------
 
-* To build:
+To build:
 
-	cabal build
+	$ cabal build
 
+To install:
 
-* To install:
+	$ cabal install
 
-	cabal install
+To reference in a cabal sandbox:
 
+	$ cabal sandbox add-source ../path/to/llcheck
 
-* To reference in a cabal sandbox:
+To use the files directly in your project:
 
-	cabal sandbox add-source ../path/to/llcheck
-
-
-* To use the files directly in your project:
-
-	cp -r Test ../path/to/your-project
+	$ cp -r Test ../path/to/your-project
 
 
 This was tested on GHC 7.10.  This library does not use any fancy extensions:
