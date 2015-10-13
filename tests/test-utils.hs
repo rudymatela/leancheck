@@ -7,11 +7,6 @@ import Test.Check.Invariants
 import Test.Types (Nat)
 
 
-(==>) :: Bool -> Bool -> Bool
-False ==> _ = True
-_     ==> y = y
-infixr 0 ==>
-
 argTypeOf :: (a -> b) -> a -> (a -> b)
 argTypeOf = const
 

@@ -46,6 +46,7 @@ module Test.Check
 
   -- ** Misc utilities
   , (\/)
+  , (==>)
   )
 where
 
@@ -350,3 +351,8 @@ uncurry5 f (x,y,z,w,v) = f x y z w v
 
 uncurry6 :: (a->b->c->d->e->f->g) -> (a,b,c,d,e,f) -> g
 uncurry6 f (x,y,z,w,v,u) = f x y z w v u
+
+(==>) :: Bool -> Bool -> Bool
+False ==> _ = True
+True  ==> p = p
+infixr 0 ==>
