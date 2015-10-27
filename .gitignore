@@ -4,3 +4,5 @@ idx/
 dist/
 log/
 *.swp
+*.o
+*.hi
