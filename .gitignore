@@ -6,3 +6,7 @@ log/
 *.swp
 *.o
 *.hi
+tests/test
+tests/test-operators
+tests/test-types
+tests/test-utils
