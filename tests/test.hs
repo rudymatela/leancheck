@@ -27,6 +27,7 @@ tests =
   , lsNatTripleOrd 200
   , lsNatQuadrupleOrd 300
   , lsNatQuintupleOrd 400
+  , lsNatSixtupleOrd 500
   , lsNatListOrd 500
   , lsListsOfNatOrd 500
 

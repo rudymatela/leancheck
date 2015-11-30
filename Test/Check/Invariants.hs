@@ -72,6 +72,10 @@ lsNatQuintupleOrd :: Int -> Bool
 lsNatQuintupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z,w,v) = x+y+z+w+v :: Nat
 
+lsNatSixtupleOrd :: Int -> Bool
+lsNatSixtupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
+  where sum' (x,y,z,w,v,u) = x+y+z+w+v+u :: Nat
+
 lsNatListOrd :: Int -> Bool
 lsNatListOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' = sum . map (+1) :: [Nat] -> Nat
