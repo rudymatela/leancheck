@@ -3,7 +3,7 @@ import System.Exit (exitFailure)
 import Data.List (elemIndices)
 
 import Test.Most
-import Test.Check.Invariants
+import Test.Check.Invariants (strictlyOrdered)
 
 main :: IO ()
 main =
