@@ -1,5 +1,5 @@
 # Makefile for llcheck
-TESTS = tests/test tests/test-operators tests/test-types tests/test-utils
+TESTS = tests/test tests/test-operators tests/test-types tests/test-utils tests/test-most
 OBJS = $(shell find Test -name \*.hs | sed -e 's/.hs$$/.o/')
 GHCIMPORTDIRS = .
 
@@ -16,6 +16,7 @@ test: all $(TESTS)
 	./tests/test-operators
 	./tests/test-types
 	./tests/test-utils
+	./tests/test-most
 
 clean: clean-hi-o
 	rm -f $(TESTS)
