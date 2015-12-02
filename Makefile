@@ -1,8 +1,7 @@
 # Makefile for llcheck
-
-OBJS = $(shell find Test -name \*.hs | sed -e 's/hs$$/o/')
-INFS = $(shell find Test -name \*.hs | sed -e 's/hs$$/hi/')
 TESTS = tests/test tests/test-operators tests/test-types tests/test-utils
+OBJS = $(shell find Test -name \*.hs | sed -e 's/.hs$$/.o/')
+GHCIMPORTDIRS = .
 
 %.o: %.hs
 	ghc $<
@@ -10,7 +9,7 @@ TESTS = tests/test tests/test-operators tests/test-types tests/test-utils
 %: %.hs
 	ghc $<
 
-all: $(OBJS) $(INFS)
+all: $(OBJS)
 
 test: all $(TESTS)
 	./tests/test
@@ -18,6 +17,7 @@ test: all $(TESTS)
 	./tests/test-types
 	./tests/test-utils
 
-clean:
-	rm -f $(OBJS) $(INFS) $(TESTS)
-	rm -f tests/*.hi tests/*.o
+clean: clean-hi-o
+	rm -f $(TESTS)
+
+include mk/haskell.mk
