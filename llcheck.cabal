@@ -20,6 +20,7 @@ library
                        Test.Check.Utils,
                        Test.Types,
                        Test.Operators,
+                       Test.Most,
                        Test.Check.Function,
                        Test.Check.Function.ListsOfPairs,
                        Test.Check.Function.CoListable,
@@ -55,6 +56,13 @@ test-suite utils
 test-suite operators
   type:                exitcode-stdio-1.0
   main-is:             test-operators.hs
+  hs-source-dirs:      ., tests
+  build-depends:       base
+  default-language:    Haskell2010
+
+test-suite most
+  type:                exitcode-stdio-1.0
+  main-is:             test-most.hs
   hs-source-dirs:      ., tests
   build-depends:       base
   default-language:    Haskell2010
