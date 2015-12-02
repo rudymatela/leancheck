@@ -1,8 +1,13 @@
 -- | Utilities functions for manipulating listings (sized lists of lists)
 module Test.Check.Utils
   (
+  -- * Extra constructors
+    consFromSOrderedList
+  , consFromSet
+  , consFromNoDupList
+
   -- * Lists
-    lsNoDupListsOf
+  , lsNoDupListsOf
   , lsCrescListsOf
   , listingsOfLength
   , djs
@@ -25,6 +30,15 @@ where
 
 import Test.Check
 import Data.Maybe (fromMaybe)
+
+consFromSOrderedList :: Listable a => ([a] -> b) -> [[b]]
+consFromSOrderedList f = lsmap f (lsCrescListsOf listing)
+
+consFromSet :: Listable a => ([a] -> b) -> [[b]]
+consFromSet = consFromSOrderedList
+
+consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
+consFromNoDupList f = lsmap f (lsNoDupListsOf listing)
 
 -- | Given a listing of values, returns a listing of lists of no repeated
 -- elements.
