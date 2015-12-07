@@ -12,6 +12,7 @@ module Test.Most
   , module Test.Check.Utils
   , module Test.Operators
   , module Test.Types
+  , module Test.Check.Derive
   )
 where
 
@@ -19,3 +20,4 @@ import Test.Check
 import Test.Check.Utils
 import Test.Operators
 import Test.Types
+import Test.Check.Derive
