@@ -5,8 +5,11 @@ module Test.Check
   -- * Checking and testing
     holds
   , fails
+  , exists
   , counterExample
   , counterExamples
+  , witness
+  , witnesses
   , Testable
 
   -- * Listing test values
@@ -422,39 +425,56 @@ lsConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
 lsConcatMap f = lsConcat . lsmap f
 
 class Testable a where
-  blindTest :: a -> [[Bool]]
-  test      :: a -> [[Maybe [String]]]
+  lsResults   :: a -> [[Bool]]
+  lsArguments :: a -> [[[String]]]
 
 instance Testable Bool where
-  blindTest p = [[p]]
-  test p = [[if p
-               then Nothing
-               else Just []]]
+  lsResults   p = [[p]]
+  lsArguments p = [[[]]]
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
-  blindTest p = lsConcatMap (blindTest . p) listing
-  test      p = lsConcatMap (\x -> (fmap (show x:)) `lsmap` test (p x)) listing
+  lsResults   p = lsConcatMap (lsResults . p) listing
+  lsArguments p = lsConcatMap (\x -> (show x:) `lsmap` lsArguments (p x)) listing
 
-results :: Testable a => a -> [Maybe [String]]
-results = concat . test
+results :: Testable a => a -> [Bool]
+results = concat . lsResults
+
+arguments :: Testable a => a -> [[String]]
+arguments = concat . lsArguments
+
+resultArguments :: Testable a => a -> [(Bool,[String])]
+resultArguments p = zip (results p) (arguments p)
 
 
 -- | Returns the list of all counterexamples for a given property.
 counterExamples :: Testable a => Int -> a -> [[String]]
-counterExamples n = catMaybes . take n . results
+counterExamples n = map snd . filter (not . fst) . take n . resultArguments
 
 -- | For a given property, returns 'Just' the string description of the first
 --   counterexample or 'Nothing'.
 counterExample :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
 
+-- | Returns the list of all witnesses for a given property.
+witnesses :: Testable a => Int -> a -> [[String]]
+witnesses n = map snd . filter (fst) . take n . resultArguments
+
+-- | For a given property up to some values,
+--   returns Just the first witness or Nothing.
+witness :: Testable a => Int -> a -> Maybe [String]
+witness n = listToMaybe . witnesses n
+
 -- | Check if a property holds up to some values.
 holds :: Testable a => Int -> a -> Bool
-holds n = and . take n . concat . blindTest
+holds n = and . take n . results
 
 -- | Check if a property fails up to some value in the enumeration.
 fails :: Testable a => Int -> a -> Bool
-fails n prop = not (holds n prop)
+fails n = not . holds n
+
+-- | Check if there exists an assignment of values that makes the property true.
+exists :: Testable a => Int -> a -> Bool
+exists n = or . take n . results
 
 uncurry3 :: (a->b->c->d) -> (a,b,c) -> d
 uncurry3 f (x,y,z) = f x y z
