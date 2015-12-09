@@ -423,20 +423,20 @@ lsConcatMap f = lsConcat . lsmap f
 
 class Testable a where
   blindTest :: a -> [[Bool]]
-  test      :: [String] -> a -> [[Maybe [String]]]
+  test      :: a -> [[Maybe [String]]]
 
 instance Testable Bool where
   blindTest p = [[p]]
-  test   ss p = [[if p
-                    then Nothing
-                    else Just ss]]
+  test p = [[if p
+               then Nothing
+               else Just []]]
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
   blindTest p = lsConcatMap (blindTest . p) listing
-  test   ss p = lsConcatMap (\x -> test (ss ++ [show x]) (p x)) listing
+  test      p = lsConcatMap (\x -> (fmap (show x:)) `lsmap` test (p x)) listing
 
 results :: Testable a => a -> [Maybe [String]]
-results = concat . test []
+results = concat . test
 
 
 -- | Returns the list of all counterexamples for a given property.
