@@ -107,7 +107,7 @@ typeConNames ty = do
         simplify (InfixC  _ n _) = (n,2)
 
 newNames :: [String] -> Q [Name]
-newNames ss = traverse newName ss
+newNames ss = mapM newName ss
 
 newVarTs :: Int -> Q [Type]
 newVarTs n = newNames (take n . map (:[]) . cycle $ ['a'..'z'])
