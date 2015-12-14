@@ -3,12 +3,6 @@ TESTS = tests/test tests/test-operators tests/test-types tests/test-utils tests/
 OBJS = $(shell find Test -name \*.hs | sed -e 's/.hs$$/.o/')
 GHCIMPORTDIRS = .
 
-%.o: %.hs
-	ghc $<
-
-%: %.hs
-	ghc $<
-
 all: $(OBJS)
 
 test: all $(TESTS)
