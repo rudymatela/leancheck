@@ -18,4 +18,9 @@ test: all $(TESTS)
 clean: clean-hi-o
 	rm -f $(TESTS)
 
+legacy-test: # needs ghc-7.8 and ghc-7.6 installed as such
+	make clean && make test GHC=ghc-7.8           && \
+	make clean && make test GHC=ghc-7.6 GHCFLAGS= && \
+	make clean
+
 include mk/haskell.mk
