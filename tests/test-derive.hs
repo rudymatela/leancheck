@@ -1,5 +1,8 @@
 {-# LANGUAGE TemplateHaskell #-}
 import Test.Check.Derive
+import Test.Check
+import System.Exit (exitFailure)
+import Data.List (elemIndices)
 
 data D0       = D0                    deriving Show
 data D1 a     = D1 a                  deriving Show
@@ -24,6 +27,32 @@ deriveListableN ''Maybe
 deriveListableN ''Either
 -}
 
--- Horray, this compiles and runs!
-main = putStrLn "Tests passed"
--- TODO: Add some tests here.  At least check for termination.
+main :: IO ()
+main =
+  case elemIndices False (tests 100) of
+    [] -> putStrLn "Tests passed!"
+    is -> do putStrLn ("Failed tests:" ++ show is)
+             exitFailure
+
+tests n =
+  [ True
+
+  , map unD0 list ==| list
+  , map unD1 list ==| (list :: [Int])
+  , map unD2 list ==| (list :: [(Int,Int)])
+  , map unD3 list ==| (list :: [(Int,Int,Int)])
+
+  , map unD1 list == (list :: [()])
+  , map unD2 list == (list :: [((),())])
+  , map unD3 list == (list :: [((),(),())])
+
+  , map unD1 list == (list :: [Bool])
+  , map unD2 list == (list :: [(Bool,Bool)])
+  , map unD3 list == (list :: [(Bool,Bool,Bool)])
+  ]
+  where
+  xs ==| ys = take n xs == take n ys
+  unD0 (D0)       = ()
+  unD1 (D1 x)     = (x)
+  unD2 (D2 x y)   = (x,y)
+  unD3 (D3 x y z) = (x,y,z)
