@@ -1,4 +1,4 @@
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TemplateHaskell, CPP #-}
 -- Experimental module for deriving Listable instances
 --
 -- Needs GHC and Template Haskell (tested on GHC 7.10)
@@ -37,7 +37,11 @@ canDeriveListable t = return True -- TODO: Fix this, check type-cons instances
 reallyDeriveListable :: Type -> DecsQ
 reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
+#if __GLASGOW_HASKELL__ >= 710
   let cxt = sequence $ [[t| Listable $(return v) |] | v <- vs]
+#else
+  let cxt = sequence $ [classP ''Listable [return v] | v <- vs]
+#endif
   [d| instance Listable $(return nt)
         where listing = $(conse =<< typeConNames t) |]
     `appendInstancesCxtQ` cxt
@@ -59,9 +63,14 @@ normalizeType t = do
   vs <- newVarTs ar
   return (foldl AppT t vs, vs)
 
+normalizeType' :: Type -> Q Type
+normalizeType' t = do
+  ar <- typeArity t
+  return (foldl AppT t (replicate ar (TupleT 0)))
+
 isInstanceA :: Name -> Type -> Q Bool
 isInstanceA cl ty = do
-  (nty,_) <- normalizeType ty
+  nty <- normalizeType' ty
   isInstance cl [nty]
 
 typeArity :: Type -> Q Int
