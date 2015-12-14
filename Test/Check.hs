@@ -438,7 +438,7 @@ instance Testable Bool where
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
   lsResults   p = lsConcatMap (lsResults . p) listing
-  lsArguments p = lsConcatMap (\x -> (show x:) `lsmap` lsArguments (p x)) listing
+  lsArguments p = lsConcatMap (\x -> (showsPrec 11 x "":) `lsmap` lsArguments (p x)) listing
 
 results :: Testable a => a -> [Bool]
 results = concat . lsResults
