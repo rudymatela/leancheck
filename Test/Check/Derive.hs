@@ -22,9 +22,9 @@ deriveListable :: Type -> DecsQ
 deriveListable t = do
   is <- isInstanceA ''Listable t
   if is
-    then do reportWarning $ "Instancce Listable "
+    then do reportWarning $ "Instance Listable "
                          ++ pprint t
-                         ++ " already exists"
+                         ++ " already exists, skipping derivation"
             return []
     else do cd <- canDeriveListable t
             when (not cd) (fail $ "Unable to derive Listable "
