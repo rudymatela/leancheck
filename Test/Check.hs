@@ -12,6 +12,10 @@ module Test.Check
   , witnesses
   , Testable
 
+  , results
+  , arguments
+  , resultArguments
+
   -- * Listing test values
   , Listable(..)
 
