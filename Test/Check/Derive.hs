@@ -13,6 +13,11 @@ import Language.Haskell.TH
 import Test.Check
 import Control.Monad (when, liftM2)
 
+#if __GLASGOW_HASKELL__ < 706
+-- reportWarning was only introduced in GHC 7.6 / TH 2.8
+reportWarning :: String -> Q ()
+reportWarning = report False
+#endif
 -- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 
 deriveListableN :: Name -> DecsQ
