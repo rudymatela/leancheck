@@ -18,9 +18,10 @@ test: all $(TESTS)
 clean: clean-hi-o
 	rm -f $(TESTS)
 
-legacy-test: # needs ghc-7.8 and ghc-7.6 installed as such
-	make clean && make test GHC=ghc-7.8           && \
-	make clean && make test GHC=ghc-7.6 GHCFLAGS= && \
+legacy-test: # needs ghc-7.8, ghc-7.6 and ghc-7.4 installed as such
+	make clean && make test GHC=ghc-7.8 GHCFLAGS="-Werror -dynamic"
+	make clean && make test GHC=ghc-7.6 GHCFLAGS=-Werror
+	make clean && make test GHC=ghc-7.4 GHCFLAGS=-Werror
 	make clean
 
 include mk/haskell.mk
