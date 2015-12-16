@@ -18,7 +18,7 @@
 
 # GHC Parameters
 GHCIMPORTDIRS ?=
-GHCFLAGS ?= -i$(GHCIMPORTDIRS)
+GHCFLAGS ?=
 GHC ?= ghc
 
 # Makefile where to keep the dependencies
@@ -35,7 +35,7 @@ LISTHS ?= find \( -path "./dist" -o -path "./Setup.hs" \) -prune \
 
 
 # Implicit rules
-GHCCMD = $(GHC) $(GHCFLAGS)
+GHCCMD = $(GHC) -i$(GHCIMPORTDIRS) $(GHCFLAGS)
 
 %.hi %.o: %.hs
 	$(GHCCMD) $< && touch $@
