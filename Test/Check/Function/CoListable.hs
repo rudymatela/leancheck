@@ -37,15 +37,15 @@ instance (CoListable a, CoListable b) => CoListable (Either a b) where
 
 instance (CoListable a) => CoListable [a] where
   coListing rss = lsmap const rss
-            \+:/ lsProductWith (\y f  xs -> case xs of []      -> y
-                                                       (x:xs') -> f x xs') rss (coListing (coListing rss))
+             \+:/ lsProductWith (\y f  xs -> case xs of []      -> y
+                                                        (x:xs') -> f x xs') rss (coListing (coListing rss))
 
 
 instance CoListable Int where
   coListing rss = lsmap const rss
-            \+:/ lsProduct3With (\f g z  i -> if i > 0 then f (i-1)
-                                         else if i < 0 then g (i+1)
-                                              else z) (coListing rss) (coListing rss) rss
+             \+:/ lsProduct3With (\f g z  i -> if i > 0 then f (i-1)
+                                          else if i < 0 then g (i+1)
+                                               else z) (coListing rss) (coListing rss) rss
 
 
 alts0 :: [[a]] -> [[a]]
