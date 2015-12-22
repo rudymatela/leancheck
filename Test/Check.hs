@@ -99,6 +99,24 @@ instance Listable Char where
       \/ ['['..'`']
       \/ ['{'..'~']
 
+
+-- The position of Infinity in the enumeration is arbitrary.
+lsFractional :: Fractional a => [[a]]
+lsFractional = lsProductWith (+) lsFractionalParts
+                                 (lsmap (fromIntegral) (listing::[[Integer]]))
+          \++/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
+  where lsFractionalParts :: Fractional a => [[a]]
+        lsFractionalParts = [0]
+                          : [ [fromIntegral a / fromIntegral b]
+                            | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
+
+-- Note that this instance ignores NaN's.
+instance Listable Float where
+  listing = lsFractional
+
+instance Listable Double where
+  listing = lsFractional
+
 instance Listable Bool where
   listing = cons0 False \++/ cons0 True
 
