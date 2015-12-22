@@ -50,7 +50,7 @@ module Test.Check
   , wcons12
 
   -- ** Combining listings
-  , (\\//), (\++/), (\+:/)
+  , (\\//), (\++/)
   , lsListsOf
   , lsProduct
   , lsProductWith
@@ -327,11 +327,6 @@ infixr 5 \/
 (\++/) :: [[a]] -> [[a]] -> [[a]]
 (\++/) = zipWith' (++) [] []
 
-(\+:/) :: [[a]] -> [[a]] -> [[a]]
-xss \+:/ yss = xss \++/ ([]:yss)
-
-infixr 9 \+:/ -- TODO: remove this (uneeded)
-
 (\\://) :: [[a]] -> [[a]] -> [[a]]
 xss \\:// yss = zipWith' (\/) [] [] xss ([]:yss)
 
@@ -442,6 +437,7 @@ lsProductMaybeWith f xss (ys:yss) = zs  :  zss \++/ lsProductMaybeWith f xss yss
 
 lsConcat :: [[ [[a]] ]] -> [[a]]
 lsConcat = foldr (\+:/) [] . map (foldr (\++/) [])
+  where xss \+:/ yss = xss \++/ ([]:yss)
 
 lsConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
 lsConcatMap f = lsConcat . lsmap f

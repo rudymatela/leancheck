@@ -8,6 +8,11 @@ import Test.Check
 import Data.Maybe (fromMaybe)
 
 
+(\+:/) :: [[a]] -> [[a]] -> [[a]]
+xss \+:/ yss = xss \++/ ([]:yss)
+infixr 9 \+:/
+
+
 class CoListable a where
   coListing :: [[b]] -> [[a -> b]]
 
