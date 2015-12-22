@@ -34,7 +34,6 @@ tests =
   , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Bool] -> [[Int]] -> Bool)
   ]
 
--- TODO: Remove map reverse (make actual code consistent)
 checkNoDup :: Int -> Bool
 checkNoDup n = take n (lsNoDupListsOf (listing :: [[Int]]))
             == take n ((map . filter) noDup (listing :: [[[Int]]]))
