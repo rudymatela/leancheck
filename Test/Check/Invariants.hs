@@ -1,7 +1,22 @@
 -- | Some invariants over Test.Check functions
 --   You should be importing this ONLY to test 'Check.hs' itself.
 module Test.Check.Invariants
--- TODO: export things explictly
+  ( lsNatPairOrd
+  , lsNatTripleOrd
+  , lsNatQuadrupleOrd
+  , lsNatQuintupleOrd
+  , lsNatSixtupleOrd
+  , lsNatListOrd
+  , lsListsOfNatOrd
+  , lsPairEqParams
+  , lsTripleEqParams
+  , lsProductsIsFilterByLength
+
+  , ordered
+  , orderedBy
+  , strictlyOrdered
+  , strictlyOrderedBy
+  )
 where
 
 import Test.Check
