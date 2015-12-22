@@ -19,7 +19,7 @@ module Test.Check
   -- * Listing test values
   , Listable(..)
 
-  -- ** Unweighed listing constructors
+  -- ** Default-weighed listing constructors
   , cons0
   , cons1
   , cons2
@@ -34,7 +34,7 @@ module Test.Check
   , cons11
   , cons12
 
-  -- ** Weighed listing constructors
+  -- ** Custom-weighed listing constructors
   , wcons0
   , wcons1
   , wcons2
