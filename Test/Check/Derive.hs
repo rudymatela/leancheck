@@ -4,7 +4,6 @@
 -- Needs GHC and Template Haskell (tested on GHC 7.4, 7.6, 7.8 and 7.10)
 module Test.Check.Derive
   ( deriveListable
-  , deriveListableType
   , module Test.Check
   )
 where
@@ -20,28 +19,25 @@ reportWarning = report False
 #endif
 
 deriveListable :: Name -> DecsQ
-deriveListable = deriveListableType . ConT
-
-deriveListableType :: Type -> DecsQ
-deriveListableType t = do
-  is <- isInstanceA ''Listable t
+deriveListable t = do
+  is <- t `isInstanceOf` ''Listable
   if is
     then do reportWarning $ "Instance Listable "
-                         ++ pprint t
+                         ++ show t
                          ++ " already exists, skipping derivation"
             return []
-    else do cd <- canDeriveListableType t
+    else do cd <- canDeriveListable t
             when (not cd) (fail $ "Unable to derive Listable "
-                               ++ pprint t)
-            reallyDeriveListableType t
+                               ++ show t)
+            reallyDeriveListable t
 
-canDeriveListableType :: Type -> Q Bool
-canDeriveListableType t = return True -- TODO: Fix this, check type-cons instances
+canDeriveListable :: Name -> Q Bool
+canDeriveListable t = return True -- TODO: Fix this, check type-cons instances
 
 -- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 #if __GLASGOW_HASKELL__ >= 708
-reallyDeriveListableType :: Type -> DecsQ
-reallyDeriveListableType t = do
+reallyDeriveListable :: Name -> DecsQ
+reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
 #if __GLASGOW_HASKELL__ >= 710
   let cxt = sequence $ [[t| Listable $(return v) |] | v <- vs]
@@ -56,8 +52,8 @@ reallyDeriveListableType t = do
           [| $(varE consN) $(conE n) |]
         conse = foldr1 (\e1 e2 -> [| $e1 \++/ $e2 |]) . map (uncurry cone)
 #else
-reallyDeriveListableType :: Type -> DecsQ
-reallyDeriveListableType t = do
+reallyDeriveListable :: Name -> DecsQ
+reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
   cxt <- sequence $ [classP ''Listable [return v] | v <- vs]
   listingE <- conse =<< typeConNames t
@@ -79,11 +75,11 @@ reallyDeriveListableType t = do
 --
 -- > data DT a b c ... = ...
 -- > normalizeType [t|DT|] == Q (DT a b c ..., [a, b, c, ...])
-normalizeType :: Type -> Q (Type, [Type])
+normalizeType :: Name -> Q (Type, [Type])
 normalizeType t = do
   ar <- typeArity t
   vs <- newVarTs ar
-  return (foldl AppT t vs, vs)
+  return (foldl AppT (ConT t) vs, vs)
   where
     newNames :: [String] -> Q [Name]
     newNames ss = mapM newName ss
@@ -91,18 +87,20 @@ normalizeType t = do
     newVarTs n = newNames (take n . map (:[]) . cycle $ ['a'..'z'])
              >>= return . map VarT
 
-normalizeType' :: Type -> Q Type
-normalizeType' t = do
+-- > normalizeTypeUnits ''Int    === [t| Int |]
+-- > normalizeTypeUnits ''Maybe  === [t| Maybe () |]
+-- > normalizeTypeUnits ''Either === [t| Either () () |]
+normalizeTypeUnits :: Name -> Q Type
+normalizeTypeUnits t = do
   ar <- typeArity t
-  return (foldl AppT t (replicate ar (TupleT 0)))
+  return (foldl AppT (ConT t) (replicate ar (TupleT 0)))
 
-isInstanceA :: Name -> Type -> Q Bool
-isInstanceA cl ty = do
-  nty <- normalizeType' ty
-  isInstance cl [nty]
-
-typeArity :: Type -> Q Int
-typeArity (ConT nm) = typeNameArity nm
+-- Given a type name and a class name,
+-- returns whether the type is an instance of that class.
+isInstanceOf :: Name -> Name -> Q Bool
+isInstanceOf tn cl = do
+  ty <- normalizeTypeUnits tn
+  isInstance cl [ty]
 
 -- | Given a type name, return the number of arguments of that type.
 -- Examples in partially broken TH:
@@ -115,18 +113,18 @@ typeArity (ConT nm) = typeNameArity nm
 --
 -- This works for Data's and Newtype's and it is useful when generating
 -- typeclass instances.
-typeNameArity :: Name -> Q Int
-typeNameArity nm = do
-  ti <- reify nm
+typeArity :: Name -> Q Int
+typeArity t = do
+  ti <- reify t
   return . length $ case ti of
     TyConI (DataD    _ _ ks _ _) -> ks
     TyConI (NewtypeD _ _ ks _ _) -> ks
     _                            -> error $ "error (arity): symbol "
-                                         ++ show nm
+                                         ++ show t
                                          ++ " is not a newtype or data"
 
-typeCons :: Type -> Q [Con]
-typeCons (ConT nm) = do
+typeCons :: Name -> Q [Con]
+typeCons nm = do
   ti <- reify nm
   return $ case ti of
     TyConI (DataD    _ _ _ cs _) -> cs
@@ -135,9 +133,9 @@ typeCons (ConT nm) = do
               ++ show nm
               ++ " is neither newtype nor data"
 
-typeConNames :: Type -> Q [(Name,Int)]
-typeConNames ty = do
-  cons <- typeCons ty
+typeConNames :: Name -> Q [(Name,Int)]
+typeConNames t = do
+  cons <- typeCons t
   return $ map simplify cons
   where simplify (NormalC n ts)  = (n,length ts)
         simplify (RecC    n ts)  = (n,length ts)
