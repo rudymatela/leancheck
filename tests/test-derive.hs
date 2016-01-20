@@ -12,19 +12,19 @@ data C1 a     =           C11 a | C10 deriving Show
 data C2 a b   = C22 a b | C21 a | C20 deriving Show
 data I a b    = a :+ b                deriving Show
 
-deriveListableN ''D0
-deriveListableN ''D1
-deriveListableN ''D2
-deriveListableN ''D3
-deriveListableN ''C1
-deriveListableN ''C2
-deriveListableN ''I
+deriveListable ''D0
+deriveListable ''D1
+deriveListable ''D2
+deriveListable ''D3
+deriveListable ''C1
+deriveListable ''C2
+deriveListable ''I
 
 -- Those should have no effect (instance already exists):
 {- uncommenting those should generate warnings
-deriveListableN ''Bool
-deriveListableN ''Maybe
-deriveListableN ''Either
+deriveListable ''Bool
+deriveListable ''Maybe
+deriveListable ''Either
 -}
 
 main :: IO ()

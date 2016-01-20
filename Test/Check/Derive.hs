@@ -4,7 +4,7 @@
 -- Needs GHC and Template Haskell (tested on GHC 7.4, 7.6, 7.8 and 7.10)
 module Test.Check.Derive
   ( deriveListable
-  , deriveListableN
+  , deriveListableType
   , module Test.Check
   )
 where
@@ -18,30 +18,30 @@ import Control.Monad (when, liftM2)
 reportWarning :: String -> Q ()
 reportWarning = report False
 #endif
--- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 
-deriveListableN :: Name -> DecsQ
-deriveListableN = deriveListable . ConT
+deriveListable :: Name -> DecsQ
+deriveListable = deriveListableType . ConT
 
-deriveListable :: Type -> DecsQ
-deriveListable t = do
+deriveListableType :: Type -> DecsQ
+deriveListableType t = do
   is <- isInstanceA ''Listable t
   if is
     then do reportWarning $ "Instance Listable "
                          ++ pprint t
                          ++ " already exists, skipping derivation"
             return []
-    else do cd <- canDeriveListable t
+    else do cd <- canDeriveListableType t
             when (not cd) (fail $ "Unable to derive Listable "
                                ++ pprint t)
-            reallyDeriveListable t
+            reallyDeriveListableType t
 
-canDeriveListable :: Type -> Q Bool
-canDeriveListable t = return True -- TODO: Fix this, check type-cons instances
+canDeriveListableType :: Type -> Q Bool
+canDeriveListableType t = return True -- TODO: Fix this, check type-cons instances
 
+-- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 #if __GLASGOW_HASKELL__ >= 708
-reallyDeriveListable :: Type -> DecsQ
-reallyDeriveListable t = do
+reallyDeriveListableType :: Type -> DecsQ
+reallyDeriveListableType t = do
   (nt,vs) <- normalizeType t
 #if __GLASGOW_HASKELL__ >= 710
   let cxt = sequence $ [[t| Listable $(return v) |] | v <- vs]
@@ -56,8 +56,8 @@ reallyDeriveListable t = do
           [| $(varE consN) $(conE n) |]
         conse = foldr1 (\e1 e2 -> [| $e1 \++/ $e2 |]) . map (uncurry cone)
 #else
-reallyDeriveListable :: Type -> DecsQ
-reallyDeriveListable t = do
+reallyDeriveListableType :: Type -> DecsQ
+reallyDeriveListableType t = do
   (nt,vs) <- normalizeType t
   cxt <- sequence $ [classP ''Listable [return v] | v <- vs]
   listingE <- conse =<< typeConNames t
