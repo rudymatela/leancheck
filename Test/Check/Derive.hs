@@ -84,6 +84,12 @@ normalizeType t = do
   ar <- typeArity t
   vs <- newVarTs ar
   return (foldl AppT t vs, vs)
+  where
+    newNames :: [String] -> Q [Name]
+    newNames ss = mapM newName ss
+    newVarTs :: Int -> Q [Type]
+    newVarTs n = newNames (take n . map (:[]) . cycle $ ['a'..'z'])
+             >>= return . map VarT
 
 normalizeType' :: Type -> Q Type
 normalizeType' t = do
@@ -136,13 +142,6 @@ typeConNames ty = do
   where simplify (NormalC n ts)  = (n,length ts)
         simplify (RecC    n ts)  = (n,length ts)
         simplify (InfixC  _ n _) = (n,2)
-
-newNames :: [String] -> Q [Name]
-newNames ss = mapM newName ss
-
-newVarTs :: Int -> Q [Type]
-newVarTs n = newNames (take n . map (:[]) . cycle $ ['a'..'z'])
-         >>= return . map VarT
 
 -- Append to instance contexts in a declaration.
 --
