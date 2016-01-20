@@ -144,8 +144,11 @@ newVarTs :: Int -> Q [Type]
 newVarTs n = newNames (take n . map (:[]) . cycle $ ['a'..'z'])
          >>= return . map VarT
 
--- > [t| instance Eq a => TypeClass Type a where foo = goo |]
+-- Append to instance contexts in a declaration.
+--
+-- > [t| instance Eq a => TyCl (Ty a) where foo = goo |]
 -- >   `appendInstancesCxtQ` sequence [[| Eq b |], [| Eq c |]]
+-- > == [t| instance (Eq a, Eq b, Eq c) => TyCl (Ty a) where foo = goo |]
 appendInstancesCxtQ :: DecsQ -> Q Cxt -> DecsQ
 appendInstancesCxtQ = liftM2 $ \ds c -> map (`ac` c) ds
   where ac (InstanceD c ts ds) c' = InstanceD (c++c') ts ds
