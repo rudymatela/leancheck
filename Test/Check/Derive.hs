@@ -50,7 +50,7 @@ reallyDeriveListable t = do
   let cxt = sequence $ [classP ''Listable [return v] | v <- vs]
 #endif
   [d| instance Listable $(return nt)
-        where listing = $(conse =<< typeConNames t) |]
+        where listing = $(conse =<< typeCons t) |]
     `appendInstancesCxtQ` cxt
   where cone n arity = do
           (Just consN) <- lookupValueName $ "cons" ++ show arity
@@ -61,7 +61,7 @@ reallyDeriveListable :: Name -> DecsQ
 reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
   cxt <- sequence $ [classP ''Listable [return v] | v <- vs]
-  listingE <- conse =<< typeConNames t
+  listingE <- conse =<< typeCons t
   return [ InstanceD
              cxt
              (AppT (ConT ''Listable) nt)
@@ -137,23 +137,17 @@ typeArity t = do
                                          ++ show t
                                          ++ " is not a newtype or data"
 
--- Given a type name, returns a list of its type constructors.
-typeCons :: Name -> Q [Con]
-typeCons nm = do
-  ti <- reify nm
-  return $ case ti of
+-- Given a type name, returns a list of its type constructor names tupled with
+-- the number of arguments they take.
+typeCons :: Name -> Q [(Name,Int)]
+typeCons t = do
+  ti <- reify t
+  return . map simplify $ case ti of
     TyConI (DataD    _ _ _ cs _) -> cs
     TyConI (NewtypeD _ _ _ c  _) -> [c]
     _ -> error $ "error (typeConstructors): symbol "
-              ++ show nm
+              ++ show t
               ++ " is neither newtype nor data"
-
--- Given a type name, returns a list of its type constructor names, tupled with
--- the number of arguments they take.
-typeConNames :: Name -> Q [(Name,Int)]
-typeConNames t = do
-  cons <- typeCons t
-  return $ map simplify cons
   where simplify (NormalC n ts)  = (n,length ts)
         simplify (RecC    n ts)  = (n,length ts)
         simplify (InfixC  _ n _) = (n,2)
