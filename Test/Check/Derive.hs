@@ -18,6 +18,7 @@ reportWarning :: String -> Q ()
 reportWarning = report False
 #endif
 
+-- | Derives a Listable instance for a given type ('Name').
 deriveListable :: Name -> DecsQ
 deriveListable t = do
   is <- t `isInstanceOf` ''Listable
@@ -31,6 +32,10 @@ deriveListable t = do
                                ++ show t)
             reallyDeriveListable t
 
+-- | Checks whether it is possible to derive a Listable instance.
+--
+-- For example, it is not possible if there are is no Listable instance for a
+-- type in one of the constructors.
 canDeriveListable :: Name -> Q Bool
 canDeriveListable t = return True -- TODO: Fix this, check type-cons instances
 
@@ -71,9 +76,16 @@ reallyDeriveListable t = do
 
 -- * Template haskell utilities
 
+-- Normalizes a type by applying it to necessary type variables, making it
+-- accept "zero" parameters.  The normalized type is tupled with a list of
+-- necessary type variables.
+--
 -- Suppose:
 --
 -- > data DT a b c ... = ...
+--
+-- Then, in pseudo-TH:
+--
 -- > normalizeType [t|DT|] == Q (DT a b c ..., [a, b, c, ...])
 normalizeType :: Name -> Q (Type, [Type])
 normalizeType t = do
@@ -87,6 +99,8 @@ normalizeType t = do
     newVarTs n = newNames (take n . map (:[]) . cycle $ ['a'..'z'])
              >>= return . map VarT
 
+-- Normalizes a type by applying it to units (`()`) while possible.
+--
 -- > normalizeTypeUnits ''Int    === [t| Int |]
 -- > normalizeTypeUnits ''Maybe  === [t| Maybe () |]
 -- > normalizeTypeUnits ''Either === [t| Either () () |]
@@ -102,13 +116,13 @@ isInstanceOf tn cl = do
   ty <- normalizeTypeUnits tn
   isInstance cl [ty]
 
--- | Given a type name, return the number of arguments of that type.
+-- | Given a type name, return the number of arguments taken by that type.
 -- Examples in partially broken TH:
 --
 -- > arity ''Int        === Q 0
 -- > arity ''Int->Int   === Q 0
--- > arity Maybe        === Q 1
--- > arity Either       === Q 2
+-- > arity ''Maybe      === Q 1
+-- > arity ''Either     === Q 2
 -- > arity ''Int->      === Q 1
 --
 -- This works for Data's and Newtype's and it is useful when generating
@@ -123,6 +137,7 @@ typeArity t = do
                                          ++ show t
                                          ++ " is not a newtype or data"
 
+-- Given a type name, returns a list of its type constructors.
 typeCons :: Name -> Q [Con]
 typeCons nm = do
   ti <- reify nm
@@ -133,6 +148,8 @@ typeCons nm = do
               ++ show nm
               ++ " is neither newtype nor data"
 
+-- Given a type name, returns a list of its type constructor names, tupled with
+-- the number of arguments they take.
 typeConNames :: Name -> Q [(Name,Int)]
 typeConNames t = do
   cons <- typeCons t
