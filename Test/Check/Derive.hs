@@ -45,13 +45,12 @@ reallyDeriveListable :: Name -> DecsQ
 reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
 #if __GLASGOW_HASKELL__ >= 710
-  let cxt = sequence $ [[t| Listable $(return v) |] | v <- vs]
+  cxt <- sequence $ [[t| Listable $(return v) |] | v <- vs]
 #else
-  let cxt = sequence $ [classP ''Listable [return v] | v <- vs]
+  cxt <- sequence $ [classP ''Listable [return v] | v <- vs]
 #endif
-  [d| instance Listable $(return nt)
-        where listing = $(conse =<< typeCons t) |]
-    `appendInstancesCxtQ` cxt
+  cxt |=>| [d| instance Listable $(return nt)
+                 where listing = $(conse =<< typeCons t) |]
   where cone n arity = do
           (Just consN) <- lookupValueName $ "cons" ++ show arity
           [| $(varE consN) $(conE n) |]
@@ -154,10 +153,10 @@ typeCons t = do
 
 -- Append to instance contexts in a declaration.
 --
--- > [t| instance Eq a => TyCl (Ty a) where foo = goo |]
--- >   `appendInstancesCxtQ` sequence [[| Eq b |], [| Eq c |]]
--- > == [t| instance (Eq a, Eq b, Eq c) => TyCl (Ty a) where foo = goo |]
-appendInstancesCxtQ :: DecsQ -> Q Cxt -> DecsQ
-appendInstancesCxtQ = liftM2 $ \ds c -> map (`ac` c) ds
+-- > sequence [[|Eq b|],[|Eq c|]] |=>| [t|instance Eq a => Cl (Ty a) where f=g|]
+-- > == [t| instance (Eq a, Eq b, Eq c) => Cl (Ty a) where f = g |]
+(|=>|) :: Cxt -> DecsQ -> DecsQ
+c |=>| qds = do ds <- qds
+                return $ map (`ac` c) ds
   where ac (InstanceD c ts ds) c' = InstanceD (c++c') ts ds
         ac d                   _  = d
