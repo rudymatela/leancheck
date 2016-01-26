@@ -40,7 +40,6 @@ canDeriveListable :: Name -> Q Bool
 canDeriveListable t = return True -- TODO: Fix this, check type-cons instances
 
 -- TODO: Somehow check if the enumeration has repetitions, then warn the user.
-#if __GLASGOW_HASKELL__ >= 708
 reallyDeriveListable :: Name -> DecsQ
 reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
@@ -49,28 +48,21 @@ reallyDeriveListable t = do
 #else
   cxt <- sequence $ [classP ''Listable [return v] | v <- vs]
 #endif
+#if __GLASGOW_HASKELL__ >= 708
   cxt |=>| [d| instance Listable $(return nt)
                  where listing = $(conse =<< typeCons t) |]
-  where cone n arity = do
-          (Just consN) <- lookupValueName $ "cons" ++ show arity
-          [| $(varE consN) $(conE n) |]
-        conse = foldr1 (\e1 e2 -> [| $e1 \++/ $e2 |]) . map (uncurry cone)
 #else
-reallyDeriveListable :: Name -> DecsQ
-reallyDeriveListable t = do
-  (nt,vs) <- normalizeType t
-  cxt <- sequence $ [classP ''Listable [return v] | v <- vs]
   listingE <- conse =<< typeCons t
   return [ InstanceD
              cxt
              (AppT (ConT ''Listable) nt)
              [ValD (VarP 'listing) (NormalB listingE) []]
          ]
+#endif
   where cone n arity = do
           (Just consN) <- lookupValueName $ "cons" ++ show arity
           [| $(varE consN) $(conE n) |]
         conse = foldr1 (\e1 e2 -> [| $e1 \++/ $e2 |]) . map (uncurry cone)
-#endif
 
 
 -- * Template haskell utilities
