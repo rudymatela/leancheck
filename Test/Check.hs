@@ -62,6 +62,7 @@ module Test.Check
   , lsfilter
   , lsConcat
   , lsConcatMap
+  , toListing
 
   -- ** Misc utilities
   , (\/)
@@ -192,6 +193,9 @@ lsmap = map . map
 
 lsfilter :: (a -> Bool) -> [[a]] -> [[a]]
 lsfilter f = map (filter f)
+
+toListing :: [a] -> [[a]]
+toListing xs = map (:[]) xs
 
 -- TODO: Just thinking: maybe have rcons and cons, where r is for recursive.
 -- Generally, when a constructor is not allowed to be applied recursively (like
