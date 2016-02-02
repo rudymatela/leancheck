@@ -1,3 +1,22 @@
+-- | A simple property-based testing library based on
+--   enumeration of values via lists of lists.
+--
+-- In the context of this library,
+-- a __property__ is a function returning a 'Bool'
+-- that should return 'True' for all input values.
+--
+-- To check if a property holds by testing a thousand values, you simply do:
+--
+-- > holds 1000 property  -- yield True when Ok, False otherwise
+--
+-- For example:
+--
+-- > holds $ \xs -> length (sort xs) == length (xs::[Int])
+--
+-- Arguments of properties should be instances of the 'Listable' typeclass.
+-- 'Listable' instances are provided for the most common Haskell types.
+-- New instances are easily defined
+-- (see the 'Listable's documentation for more info).
 module Test.Check
   ( module Test.Check.Basic
   , module Test.Check.Utils
