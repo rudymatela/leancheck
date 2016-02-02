@@ -347,6 +347,9 @@ uncurry4 f (x,y,z,w) = f x y z w
 uncurry5 :: (a->b->c->d->e->f) -> (a,b,c,d,e) -> f
 uncurry5 f (x,y,z,w,v) = f x y z w v
 
+-- | Boolean implication.  Use this for defining conditional properties:
+--
+-- > prop_something x y = condition x y ==> something x y
 (==>) :: Bool -> Bool -> Bool
 False ==> _ = True
 True  ==> p = p
