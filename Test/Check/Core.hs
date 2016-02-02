@@ -53,7 +53,8 @@ module Test.Check.Core
   , wcons5
 
   -- ** Combining listings
-  , (\\//), (\++/)
+  , (\++/), (\\//)
+  , (>++<)
   , lsProduct
   , lsProductWith
 
@@ -79,12 +80,36 @@ where
 
 import Data.Maybe (listToMaybe)
 
--- | Minimal complete definition: listing or list
+
+-- | A type is 'Listable' when there exists a function that
+--   is able to list (ideally all of) its values.
+--
+-- Ideally, this type should be defined by a 'listing' function that
+-- returns a (possibly infinite) list of finite sub-lists:
+--   the first sub-list contains elements of size 0,
+--   the second sub-list contains elements of size 1
+--   and so on.
+-- Size here is defined by the implementor of the type-class instance.
+-- From here on, __listing__ is used to refer to this concept.
+--
+-- For algebraic data types, the general form for 'listing' is:
+--
+-- > listing = consN ConstructorA
+-- >      \++/ consN ConstructorB
+-- >      \++/ consN ConstructorC
+-- >      \++/ ...
+--
+-- When defined by 'list', each sub-list in 'listing' is a singleton list
+-- (each element of 'list' has +1 size).
+--
+-- The function 'Test.Check.Derive.deriveListable' from "Test.Check.Derive"
+-- can automatically derive instances of this typeclass.
 class Listable a where
   listing :: [[a]]
   list :: [a]
   listing = toListing list
   list = concat listing
+  {-# MINIMAL list | listing #-}
 
 -- | Takes a list of values @xs@ and transform it into a 'Listing' on which each
 --   size is occupied by a single element from @xs@. 
@@ -113,24 +138,6 @@ instance Listable Char where
       \/ ['['..'`']
       \/ ['{'..'~']
 
-
--- The position of Infinity in the enumeration is arbitrary.
-lsFractional :: Fractional a => [[a]]
-lsFractional = lsProductWith (+) lsFractionalParts
-                                 (lsmap (fromIntegral) (listing::[[Integer]]))
-          \++/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
-  where lsFractionalParts :: Fractional a => [[a]]
-        lsFractionalParts = [0]
-                          : [ [fromIntegral a / fromIntegral b]
-                            | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
-
--- Note that this instance ignores NaN's.
-instance Listable Float where
-  listing = lsFractional
-
-instance Listable Double where
-  listing = lsFractional
-
 instance Listable Bool where
   listing = cons0 False \++/ cons0 True
 
@@ -158,17 +165,42 @@ instance (Listable a) => Listable [a] where
   listing = cons0 []
        \++/ cons2 (:)
 
+-- The position of Infinity in the enumeration is arbitrary.
+lsFractional :: Fractional a => [[a]]
+lsFractional = lsProductWith (+) lsFractionalParts
+                                 (lsmap (fromIntegral) (listing::[[Integer]]))
+          \++/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
+  where lsFractionalParts :: Fractional a => [[a]]
+        lsFractionalParts = [0]
+                          : [ [fromIntegral a / fromIntegral b]
+                            | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
+
+-- Note that this instance ignores NaN's.
+instance Listable Float where
+  listing = lsFractional
+
+instance Listable Double where
+  listing = lsFractional
+
+
+-- | 'map' over a listing
 lsmap :: (a -> b) -> [[a]] -> [[b]]
 lsmap = map . map
 
+-- | 'filter' a listing
 lsfilter :: (a -> Bool) -> [[a]] -> [[a]]
 lsfilter f = map (filter f)
 
--- TODO: Just thinking: maybe have rcons and cons, where r is for recursive.
--- Generally, when a constructor is not allowed to be applied recursively (like
--- Just), it can add "zero" to size.  E.g.: Just
---
--- When it is recursive, it has to add "one" to size.  E.g.: Peano, (:)
+-- | 'concat' a listing
+lsConcat :: [[ [[a]] ]] -> [[a]]
+lsConcat = foldr (\+:/) [] . map (foldr (\++/) [])
+  where xss \+:/ yss = xss \++/ ([]:yss)
+
+-- | 'concatMap' a listing
+lsConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
+lsConcatMap f = lsConcat . lsmap f
+
+
 wcons0 :: Int -> a -> [[a]]
 wcons0 w x = replicate w [] ++ [[x]]
 
@@ -246,16 +278,15 @@ zipWith' f _  zy xs     [] = map (`f` zy) xs
 zipWith' f zx _  []     ys = map (f zx) ys
 zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 
-
--- | Interleave values of each increasing size
-(\\//) :: [[a]] -> [[a]] -> [[a]]
-(\\//) = zipWith' (\/) [] []
-
--- | Append values of each increasing size
+-- | Combine two listings by appending values of each increasing size.
 (\++/) :: [[a]] -> [[a]] -> [[a]]
 (\++/) = zipWith' (++) [] []
 
--- | Sized product of two lists.
+-- | Combine two listings by interleaving values of each increasing size.
+(\\//) :: [[a]] -> [[a]] -> [[a]]
+(\\//) = zipWith' (\/) [] []
+
+-- | Take the product of two listings.
 --
 -- > lsProduct [[0]..] [[0]..]
 -- > == [  [(0,0)]
@@ -265,7 +296,7 @@ zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 -- >    ...
 -- >    ]
 --
--- In terms of ><, 'lsProduct' is:
+-- In terms of '(><)', 'lsProduct' is:
 --
 -- > lsProduct [xs] [ys] = [xs><ys]
 -- > lsProduct [xs0,xs1] [ys0] = [xs0><ys0, xs1><ys0]
@@ -282,8 +313,13 @@ zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 -- >                           , xs2 >< ys1 ++ xs1 >< ys2
 -- >                           , xs2 >< ys2
 -- >                           ]
+-- > lsProduct ...
 lsProduct :: [[a]] -> [[b]] -> [[(a,b)]]
 lsProduct = lsProductWith (,)
+
+-- | Infix shorthand for 'lsProduct'
+(>++<) :: [[a]] -> [[b]] -> [[(a,b)]]
+(>++<) = lsProduct
 
 lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 lsProductWith _ _ [] = []
@@ -291,12 +327,6 @@ lsProductWith _ [] _ = []
 lsProductWith f (xs:xss) yss = zs  :  zss \++/ lsProductWith f xss yss
   where (zs:zss) = map (productWith f xs) yss
 
-lsConcat :: [[ [[a]] ]] -> [[a]]
-lsConcat = foldr (\+:/) [] . map (foldr (\++/) [])
-  where xss \+:/ yss = xss \++/ ([]:yss)
-
-lsConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
-lsConcatMap f = lsConcat . lsmap f
 
 class Testable a where
   lsResults   :: a -> [[Bool]]
@@ -310,12 +340,15 @@ instance (Testable b, Show a, Listable a) => Testable (a->b) where
   lsResults   p = lsConcatMap (lsResults . p) listing
   lsArguments p = lsConcatMap (\x -> (showsPrec 11 x "":) `lsmap` lsArguments (p x)) listing
 
+-- List boolean results of a 'Testable' property.
 results :: Testable a => a -> [Bool]
 results = concat . lsResults
 
+-- List string representations of arguments of a 'Testable' property.
 arguments :: Testable a => a -> [[String]]
 arguments = concat . lsArguments
 
+-- List results and arguments of a 'Testable' property.
 resultArguments :: Testable a => a -> [(Bool,[String])]
 resultArguments p = zip (results p) (arguments p)
 
@@ -338,11 +371,15 @@ witnesses n = map snd . filter (fst) . take n . resultArguments
 witness :: Testable a => Int -> a -> Maybe [String]
 witness n = listToMaybe . witnesses n
 
--- | Check if a property holds for a given number of test values.
+-- | Does a property __hold__ for a given number of test values?
+--
+-- > holds 1000 $ \xs -> length (sort xs) == length xs
 holds :: Testable a => Int -> a -> Bool
 holds n = and . take n . results
 
--- | Check if a property fails for a given number of test values.
+-- | Does a property __fail__ for a given number of test values?
+--
+-- > fails 1000 $ \xs -> xs ++ ys == ys ++ xs
 fails :: Testable a => Int -> a -> Bool
 fails n = not . holds n
 
