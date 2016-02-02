@@ -83,8 +83,31 @@ module Test.Check
   -- ** Automatically deriving Listable instances
   , deriveListable
 
-  -- ** Other modules
-  , module Test.Check.Utils
+  -- ** Extra constructors
+  , consFromList
+  , consFromStrictlyAscendingList
+  , consFromSet
+  , consFromNoDupList
+
+  -- ** Products of listings
+  , lsProduct3With
+  , lsProductMaybeWith
+
+  -- * Listing lists
+  , lsListsOf
+  , lsStrictlyAscendingListsOf
+  , lsNoDupListsOf
+  , lsProducts
+  , listingsOfLength
+
+  -- ** Listings of Functions
+  , lsAssociations
+  , lsFunctionPairs
+  , functionPairs
+  , pairsToMaybeFunction
+  , pairsToFunction
+  , defaultPairsToFunction
+  , defaultFunPairsToFunction
 
   -- ** Misc utilities
   , (\/)

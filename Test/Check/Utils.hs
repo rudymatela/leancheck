@@ -2,7 +2,8 @@
 module Test.Check.Utils
   (
   -- * Extra listing constructors
-    consFromStrictlyAscendingList
+    consFromList
+  , consFromStrictlyAscendingList
   , consFromSet
   , consFromNoDupList
 
@@ -39,8 +40,11 @@ where
 import Test.Check.Basic
 import Data.Maybe (fromMaybe, catMaybes)
 
+consFromList :: Listable a => ([a] -> b) -> [[b]]
+consFromList = (`lsmap` lsListsOf listing)
+
 consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
-consFromStrictlyAscendingList f = lsmap f (lsCrescListsOf listing)
+consFromStrictlyAscendingList = (`lsmap` lsStrictlyAscendingListsOf listing)
 
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
 consFromSet = consFromStrictlyAscendingList
