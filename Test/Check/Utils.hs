@@ -10,6 +10,8 @@ module Test.Check.Utils
   , lsProduct3With
 
   -- * Lists
+  , lsListsOf
+  , lsProducts
   , lsNoDupListsOf
   , lsCrescListsOf
   , listingsOfLength
@@ -45,6 +47,35 @@ consFromSet = consFromSOrderedList
 
 consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
 consFromNoDupList f = lsmap f (lsNoDupListsOf listing)
+
+
+-- | Given a listing of values, returns a listing of lists of those values
+--
+-- > lsListsOf [[]] == [[[]]]
+--
+-- > lsListsOf [[x]] == [ [[]]
+-- >                    , [[x]]
+-- >                    , [[x,x]]
+-- >                    , [[x,x,x]]
+-- >                    , ...
+-- >                    ]
+--
+-- > lsListsOf [[x],[y]] == [ [[]]
+-- >                        , [[x]]
+-- >                        , [[x,x],[y]]
+-- >                        , [[x,x,x],[x,y],[y,x]]
+-- >                        , ...
+-- >                        ]
+lsListsOf :: [[a]] -> [[[a]]]
+lsListsOf xss = [[ [] ]] ++ lsProductWith (:) xss (lsListsOf xss)
+
+-- | Generates several lists of the same size.
+--
+-- > lsProducts [ lsX, lsY, lsZ ] ==
+--
+-- All lists combining elements of listings lsX, lsY and lsZ
+lsProducts :: [ [[a]] ] -> [[ [a] ]]
+lsProducts = foldr (lsProductWith (:)) [[[]]]
 
 -- | Given a listing of values, returns a listing of lists of no repeated
 -- elements.

@@ -37,10 +37,8 @@ module Test.Check.Core
 
   -- ** Combining listings
   , (\\//), (\++/)
-  , lsListsOf
   , lsProduct
   , lsProductWith
-  , lsProducts
 
   -- ** Manipulating listings
   , lsmap
@@ -59,11 +57,17 @@ import Data.Maybe (catMaybes, listToMaybe)
 
 -- | Minimal complete definition: listing or list
 class Listable a where
-  listing:: [[a]]
+  listing :: [[a]]
   list :: [a]
-  listing = map (:[]) list
+  listing = toListing list
   list = concat listing
 
+-- | Takes a list of values @xs@ and transform it into a 'Listing' on which each
+--   size is occupied by a single element from @xs@. 
+--
+-- To convert back to a list, just 'concat'.
+toListing :: [a] -> [[a]]
+toListing xs = map (:[]) xs
 
 instance Listable () where
   list = [()]
@@ -135,9 +139,6 @@ lsmap = map . map
 
 lsfilter :: (a -> Bool) -> [[a]] -> [[a]]
 lsfilter f = map (filter f)
-
-toListing :: [a] -> [[a]]
-toListing xs = map (:[]) xs
 
 -- TODO: Just thinking: maybe have rcons and cons, where r is for recursive.
 -- Generally, when a constructor is not allowed to be applied recursively (like
@@ -264,34 +265,6 @@ zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 -- >                           ]
 lsProduct :: [[a]] -> [[b]] -> [[(a,b)]]
 lsProduct = lsProductWith (,)
-
--- | Given a listing of values, returns a listing of lists of those values
---
--- > lsListsOf [[]] == [[[]]]
---
--- > lsListsOf [[x]] == [ [[]]
--- >                    , [[x]]
--- >                    , [[x,x]]
--- >                    , [[x,x,x]]
--- >                    , ...
--- >                    ]
---
--- > lsListsOf [[x],[y]] == [ [[]]
--- >                        , [[x]]
--- >                        , [[x,x],[y]]
--- >                        , [[x,x,x],[x,y],[y,x]]
--- >                        , ...
--- >                        ]
-lsListsOf :: [[a]] -> [[[a]]]
-lsListsOf xss = [[ [] ]] ++ lsProductWith (:) xss (lsListsOf xss)
-
--- Generates several lists of the same size.
---
--- > lsProducts [ lsX, lsY, lsZ ] ==
---
--- All lists combining elements of listings lsX, lsY and lsZ
-lsProducts :: [ [[a]] ] -> [[ [a] ]]
-lsProducts = foldr (lsProductWith (:)) [[[]]]
 
 lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 lsProductWith _ _ [] = []
