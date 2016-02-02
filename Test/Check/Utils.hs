@@ -24,8 +24,7 @@ module Test.Check.Utils
   -- * Functions
 
   -- ** Listing
-  , associations
-  , associations'
+  , lsAssociations
   , lsFunctionPairs
   , functionPairs
 
@@ -139,7 +138,9 @@ djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ djsWith (\y (ys:yss) -> f y ((x:y
 -- >   , ...
 -- >   ]
 lsStrictlyAscendingListsOf :: [[a]] -> [[[a]]]
-lsStrictlyAscendingListsOf = ([[]]:) . lsConcat . ejsWith (\x xss -> lsmap (x:) (lsStrictlyAscendingListsOf xss))
+lsStrictlyAscendingListsOf = ([[]]:)
+                           . lsConcat
+                           . ejsWith (\x xss -> lsmap (x:) (lsStrictlyAscendingListsOf xss))
 
 -- Deprecated name
 lsCrescListsOf :: [[a]] -> [[[a]]]
@@ -172,21 +173,16 @@ listingsOfLength n xss = lsProducts (replicate n xss)
 --
 -- This can be viewed as a list of functional left-total relations between values
 -- in the domain and codomain.
-associations :: [a] -> [[b]] -> [[[(a,b)]]]
-associations xs sbs = associations' xs (const sbs)
-
--- | Given a list of values (the domain)
---     and a function to create listing of possible values from a domain value,
--- return a listing of lists of ordered pairs (associating the domain and codomain)
-associations' :: [a] -> (a -> [[b]]) -> [[[(a,b)]]]
-associations' xs f = lsmap (zip xs) (lsProducts (map f xs))
+lsAssociations :: [a] -> [[b]] -> [[ [(a,b)] ]]
+lsAssociations xs sbs = zip xs `lsmap` lsProducts (const sbs `map` xs)
 
 -- | Given two listings, list all possible lists of input-output pairs
 -- representing functions from values in the first listing
 -- to values in the second listing.  Results are returned in lists of
 -- increasing size.
 lsFunctionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
-lsFunctionPairs xss yss = lsConcatMap (`associations` yss) (lsCrescListsOf xss)
+lsFunctionPairs xss yss = lsConcatMap (`lsAssociations` yss)
+                                      (lsStrictlyAscendingListsOf xss)
 
 
 -- | Given two listings, list all possible lists of input-output pairs
