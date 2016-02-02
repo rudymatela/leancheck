@@ -4,12 +4,11 @@
 -- Needs GHC and Template Haskell (tested on GHC 7.4, 7.6, 7.8 and 7.10)
 module Test.Check.Derive
   ( deriveListable
-  , module Test.Check
   )
 where
 
 import Language.Haskell.TH
-import Test.Check
+import Test.Check.Core
 import Control.Monad (when, liftM2)
 
 #if __GLASGOW_HASKELL__ < 706

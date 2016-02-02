@@ -28,7 +28,7 @@ module Test.Check.Utils
   )
 where
 
-import Test.Check
+import Test.Check.Core
 import Data.Maybe (fromMaybe)
 
 consFromSOrderedList :: Listable a => ([a] -> b) -> [[b]]
