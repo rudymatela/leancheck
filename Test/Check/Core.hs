@@ -102,6 +102,10 @@ import Data.Maybe (listToMaybe)
 --
 -- The function 'Test.Check.Derive.deriveListable' from "Test.Check.Derive"
 -- can automatically derive instances of this typeclass.
+--
+-- A 'Listable' instance for functions is also available but is not exported by
+-- default.  Import "Test.Check.Function" for that.
+-- ("Test.Check.Function.Show" for a Show instance for functions)
 class Listable a where
   listing :: [[a]]
   list :: [a]
