@@ -40,7 +40,6 @@ module Test.Check.Core
   , lsListsOf
   , lsProduct
   , lsProductWith
-  , lsProduct3With -- might be uneeded
   , lsProducts
 
   -- ** Manipulating listings
@@ -299,9 +298,6 @@ lsProductWith _ _ [] = []
 lsProductWith _ [] _ = []
 lsProductWith f (xs:xss) yss = zs  :  zss \++/ lsProductWith f xss yss
   where (zs:zss) = map (productWith f xs) yss
-
-lsProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
-lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
 
 lsProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
 lsProductMaybeWith _ _ [] = []

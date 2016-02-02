@@ -6,6 +6,9 @@ module Test.Check.Utils
   , consFromSet
   , consFromNoDupList
 
+  -- * Other
+  , lsProduct3With
+
   -- * Lists
   , lsNoDupListsOf
   , lsCrescListsOf
@@ -30,6 +33,9 @@ where
 
 import Test.Check.Basic
 import Data.Maybe (fromMaybe)
+
+lsProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
+lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
 
 consFromSOrderedList :: Listable a => ([a] -> b) -> [[b]]
 consFromSOrderedList f = lsmap f (lsCrescListsOf listing)

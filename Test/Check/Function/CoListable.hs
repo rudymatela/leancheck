@@ -5,6 +5,7 @@ where
 
 
 import Test.Check
+import Test.Check.Utils
 import Data.Maybe (fromMaybe)
 
 
