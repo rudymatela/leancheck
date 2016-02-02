@@ -95,6 +95,7 @@ module Test.Check
 
   -- * Listing lists
   , lsListsOf
+  , lsSetsOf
   , lsStrictlyAscendingListsOf
   , lsNoDupListsOf
   , lsProducts

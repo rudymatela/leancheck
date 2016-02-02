@@ -14,6 +14,7 @@ module Test.Check.Utils
   -- * Listing lists
   , lsListsOf
   , lsStrictlyAscendingListsOf
+  , lsSetsOf
   , lsNoDupListsOf
   , lsProducts
   , listingsOfLength
@@ -40,19 +41,28 @@ where
 import Test.Check.Basic
 import Data.Maybe (fromMaybe, catMaybes)
 
+-- | Given a constructor for a type that takes a list, return a listing for
+--   that type.
 consFromList :: Listable a => ([a] -> b) -> [[b]]
 consFromList = (`lsmap` lsListsOf listing)
 
+-- | Given a constructor for a type that takes a list with strictly ascending
+--   elements, return a listing for that type (e.g.: a Set type).
 consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
 consFromStrictlyAscendingList = (`lsmap` lsStrictlyAscendingListsOf listing)
 
+-- | Given a constructor for a type that takes a list with strictly ascending
+--   elements, return a listing for that type (e.g.: a Set type).
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
 consFromSet = consFromStrictlyAscendingList
 
+-- | Given a constructor for a type that takes a list with no duplicate
+--   elements, return a listing for that type.
 consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
 consFromNoDupList f = lsmap f (lsNoDupListsOf listing)
 
 
+-- | Like 'lsProduct', but on 3 listings.
 lsProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
 lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
 
@@ -145,6 +155,11 @@ lsStrictlyAscendingListsOf :: [[a]] -> [[[a]]]
 lsStrictlyAscendingListsOf = ([[]]:)
                            . lsConcat
                            . ejsWith (\x xss -> lsmap (x:) (lsStrictlyAscendingListsOf xss))
+
+-- | Returns a listing of sets represented as lists of values (no sets are
+--   repeated).  Shorthand for 'lsStrictlyAscendingListsOf'.
+lsSetsOf :: [[a]] -> [[[a]]]
+lsSetsOf = lsStrictlyAscendingListsOf
 
 -- Deprecated name
 lsCrescListsOf :: [[a]] -> [[[a]]]
