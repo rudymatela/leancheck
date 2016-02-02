@@ -51,6 +51,8 @@ module Test.Check.Core
   , (==>)
 
   -- ** Misc utilities
+  -- | Not intended for use by Test.Check users.
+  --   Those are exported here for use in other submodules (and testing).
   , (\/)
   , (><)
   , productWith
