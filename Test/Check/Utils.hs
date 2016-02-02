@@ -1,21 +1,24 @@
 -- | Utilities functions for manipulating listings (sized lists of lists)
 module Test.Check.Utils
   (
-  -- * Extra constructors
-    consFromSOrderedList
+  -- * Extra listing constructors
+    consFromStrictlyAscendingList
   , consFromSet
   , consFromNoDupList
 
-  -- * Other
+  -- * Listing products
   , lsProduct3With
   , lsProductMaybeWith
 
-  -- * Lists
+  -- * Listing lists
   , lsListsOf
-  , lsProducts
+  , lsStrictlyAscendingListsOf
   , lsNoDupListsOf
-  , lsCrescListsOf
+  , lsProducts
   , listingsOfLength
+
+  -- Deprecated:
+  , lsCrescListsOf
   , djs
 
   -- * Functions
@@ -37,6 +40,16 @@ where
 import Test.Check.Basic
 import Data.Maybe (fromMaybe, catMaybes)
 
+consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
+consFromStrictlyAscendingList f = lsmap f (lsCrescListsOf listing)
+
+consFromSet :: Listable a => ([a] -> b) -> [[b]]
+consFromSet = consFromStrictlyAscendingList
+
+consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
+consFromNoDupList f = lsmap f (lsNoDupListsOf listing)
+
+
 lsProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
 lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
 
@@ -49,15 +62,6 @@ lsProductMaybeWith f xss (ys:yss) = zs  :  zss \++/ lsProductMaybeWith f xss yss
 
 productWithMaybe :: (a->b->Maybe c) -> [a] -> [b] -> [c]
 productWithMaybe f xs ys = catMaybes $ productWith f xs ys
-
-consFromSOrderedList :: Listable a => ([a] -> b) -> [[b]]
-consFromSOrderedList f = lsmap f (lsCrescListsOf listing)
-
-consFromSet :: Listable a => ([a] -> b) -> [[b]]
-consFromSet = consFromSOrderedList
-
-consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
-consFromNoDupList f = lsmap f (lsNoDupListsOf listing)
 
 
 -- | Given a listing of values, returns a listing of lists of those values
@@ -124,7 +128,7 @@ djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ djsWith (\y (ys:yss) -> f y ((x:y
 --   elements are in returned lists or not, this is the same as listing all the
 --   sets.
 --
--- > lsNoDecListsOf [[0],[1],[2],...] ==
+-- > lsStrictlyAscendingListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
 -- >   , [[0]]
 -- >   , [[1]]
@@ -134,8 +138,12 @@ djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ djsWith (\y (ys:yss) -> f y ((x:y
 -- >   , [[0,1,2],[0,4],[1,3],[5]]
 -- >   , ...
 -- >   ]
+lsStrictlyAscendingListsOf :: [[a]] -> [[[a]]]
+lsStrictlyAscendingListsOf = ([[]]:) . lsConcat . ejsWith (\x xss -> lsmap (x:) (lsStrictlyAscendingListsOf xss))
+
+-- Deprecated name
 lsCrescListsOf :: [[a]] -> [[[a]]]
-lsCrescListsOf = ([[]]:) . lsConcat . ejsWith (\x xss -> lsmap (x:) (lsCrescListsOf xss))
+lsCrescListsOf = lsStrictlyAscendingListsOf
 
 -- | Using a sized list, forms crescent sized pairs of elements and sized lists
 --   of elements.  This is similar to 'djs' differing only that the elements
@@ -160,7 +168,10 @@ listingsOfLength n xss = lsProducts (replicate n xss)
 
 
 -- | Given a list of values (the domain), and a listing of values (the codomain),
--- return a listing of lists of ordered pairs (associating the domain and codomain)
+-- return a listing of lists of ordered pairs (associating the domain and codomain).
+--
+-- This can be viewed as a list of functional left-total relations between values
+-- in the domain and codomain.
 associations :: [a] -> [[b]] -> [[[(a,b)]]]
 associations xs sbs = associations' xs (const sbs)
 
