@@ -1,5 +1,10 @@
 -- | Simple property-based testing library based on
 --   enumeration of values via lists of lists.
+--
+-- This module exports "Test.Check.Core" functionality along with instances and
+-- functions for further tuple and constructor arities.
+--
+-- For the complete list of functions, see "Test.Check".
 module Test.Check.Basic
   ( module Test.Check.Core
 
