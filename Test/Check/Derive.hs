@@ -8,7 +8,7 @@ module Test.Check.Derive
 where
 
 import Language.Haskell.TH
-import Test.Check.Core
+import Test.Check.Basic
 import Control.Monad (when, liftM2)
 
 #if __GLASGOW_HASKELL__ < 706

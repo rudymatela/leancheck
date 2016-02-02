@@ -4,7 +4,7 @@ module Test.Check.Function.Periodic
 where
 
 
-import Test.Check.Core
+import Test.Check.Basic
 import Data.List (inits)
 
 
