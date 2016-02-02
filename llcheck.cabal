@@ -6,7 +6,8 @@
 --   Test.Check.Derive
 --   template-haskell
 --   and the test-suite derive
--- 2. On Test.Most, you should comment out the Test.Check.Derive module
+-- 2. On Test.Most, comment out the Test.Check.Derive module
+-- 3. On Test.Check, comment out Test.Check.Derive and deriveListable
 --
 -- I could ultimately add a flag to deactivate that, but I do not want to make
 -- this cabal file too complicated.
@@ -28,11 +29,13 @@ cabal-version:       >=1.10
 library
   exposed-modules: Test.Check
                  , Test.Check.Utils
+                 , Test.Check.Basic
+                 , Test.Check.Core
+                 , Test.Check.Derive
                  , Test.Types
                  , Test.Operators
                  , Test.Most
                  , Test.Check.Function
-                 , Test.Check.Derive
                  , Test.Check.Function.ListsOfPairs
                  , Test.Check.Function.CoListable
                  , Test.Check.Function.Periodic
@@ -47,28 +50,28 @@ test-suite test
   type:                exitcode-stdio-1.0
   main-is:             test.hs
   hs-source-dirs:      ., tests
-  build-depends:       base
+  build-depends:       base, template-haskell
   default-language:    Haskell2010
 
 test-suite types
   type:                exitcode-stdio-1.0
   main-is:             test-types.hs
   hs-source-dirs:      ., tests
-  build-depends:       base
+  build-depends:       base, template-haskell
   default-language:    Haskell2010
 
 test-suite utils
   type:                exitcode-stdio-1.0
   main-is:             test-utils.hs
   hs-source-dirs:      ., tests
-  build-depends:       base
+  build-depends:       base, template-haskell
   default-language:    Haskell2010
 
 test-suite operators
   type:                exitcode-stdio-1.0
   main-is:             test-operators.hs
   hs-source-dirs:      ., tests
-  build-depends:       base
+  build-depends:       base, template-haskell
   default-language:    Haskell2010
 
 test-suite most
