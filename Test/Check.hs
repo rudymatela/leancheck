@@ -18,9 +18,84 @@
 -- New instances are easily defined
 -- (see the 'Listable's documentation for more info).
 module Test.Check
-  ( module Test.Check.Basic
+  (
+  -- * Checking and testing
+    holds
+  , fails
+  , exists
+
+  -- ** Boolean (property) operators
+  , (==>)
+
+  -- ** Counterexamples and witnesses
+  , counterExample
+  , counterExamples
+  , witness
+  , witnesses
+
+  -- * Listing test values
+  , Listable(..)
+
+  -- ** Default-weighed listing constructors
+  , cons0
+  , cons1
+  , cons2
+  , cons3
+  , cons4
+  , cons5
+  , cons6
+  , cons7
+  , cons8
+  , cons9
+  , cons10
+  , cons11
+  , cons12
+
+  -- ** Custom-weighed listing constructors
+  , wcons0
+  , wcons1
+  , wcons2
+  , wcons3
+  , wcons4
+  , wcons5
+  , wcons6
+  , wcons7
+  , wcons8
+  , wcons9
+  , wcons10
+  , wcons11
+  , wcons12
+
+  -- ** Combining listings
+  , (\++/)
+  , (\\//)
+  , (>++<)
+  , lsProduct
+  , lsProductWith
+
+  -- ** Manipulating listings
+  , lsmap
+  , lsfilter
+  , lsConcat
+  , lsConcatMap
+  , toListing
+
+  -- ** Automatically deriving Listable instances
+  , deriveListable
+
+  -- ** Other modules
   , module Test.Check.Utils
-  , module Test.Check.Derive
+
+  -- ** Misc utilities
+  , (\/)
+  , (><)
+  , productWith
+
+  -- * Test results
+  , Testable
+  , results
+  , arguments
+  , resultArguments
   )
 where
 
