@@ -60,7 +60,9 @@ module Test.Check.Core
 
   -- ** Manipulating listings
   , lsmap
+  , lsMap
   , lsfilter
+  , lsFilter
   , lsConcat
   , lsConcatMap
   , toListing
@@ -189,9 +191,17 @@ instance Listable Double where
 lsmap :: (a -> b) -> [[a]] -> [[b]]
 lsmap = map . map
 
+-- | 'map' over a listing (alias)
+lsMap :: (a -> b) -> [[a]] -> [[b]]
+lsMap = lsmap
+
 -- | 'filter' a listing
 lsfilter :: (a -> Bool) -> [[a]] -> [[a]]
 lsfilter f = map (filter f)
+
+-- | 'filter' a listing (alias)
+lsFilter :: (a -> Bool) -> [[a]] -> [[a]]
+lsFilter = lsfilter
 
 -- | 'concat' a listing
 lsConcat :: [[ [[a]] ]] -> [[a]]

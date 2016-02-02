@@ -75,7 +75,9 @@ module Test.Check
 
   -- ** Manipulating listings
   , lsmap
+  , lsMap
   , lsfilter
+  , lsFilter
   , lsConcat
   , lsConcatMap
   , toListing
