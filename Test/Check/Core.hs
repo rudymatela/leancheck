@@ -56,6 +56,7 @@ module Test.Check.Core
   , (\/)
   , (><)
   , productWith
+  , zipWith'
   )
 where
 
@@ -195,29 +196,27 @@ cons5 = wcons5 1
 
 -- | Lazily interleaves two lists, switching between elements of the two.
 --   Union/sum of the elements in the lists.
+--
+-- > [x,y,z] \/ [a,b,c] == [x,a,y,b,z,c]
 (\/) :: [a] -> [a] -> [a]
 []     \/ ys     = ys
 (x:xs) \/ ys     = x:(ys \/ xs)
 infixr 5 \/
 
--- | Interleave values of each increasing size
-(\\//) :: [[a]] -> [[a]] -> [[a]]
-(\\//) = zipWith' (\/) [] []
-
--- | Append values of each increasing size
-(\++/) :: [[a]] -> [[a]] -> [[a]]
-(\++/) = zipWith' (++) [] []
-
+-- | Product of two lists.
+--
+-- > [x,y] >< [a,b] = [(x,a),(x,b),(y,a),(y,b)]
 (><) :: [a] -> [b] -> [(a,b)]
 []     ><  _  = []
 (x:xs) >< ys = map ((,) x) ys ++ xs >< ys
 
+-- | Product of two lists by a given function.
 productWith :: (a->b->c) -> [a] -> [b] -> [c]
 productWith _ []     _   =  []
 productWith f (x:xs) ys  =  map (f x) ys ++ productWith f xs ys
 
 -- | 'zipwith\'' works similarly to 'zipWith', but takes neutral elements to
---   operate, so you don't loose elements.
+--   operate when one of the lists is exhausted, so, you don't loose elements.
 --
 -- > zipWith' f z e [x,y] [a,b,c,d] == [f x a, f y b, f z c, f z d]
 --
@@ -229,6 +228,15 @@ zipWith' _ _  _  []     [] = []
 zipWith' f _  zy xs     [] = map (`f` zy) xs
 zipWith' f zx _  []     ys = map (f zx) ys
 zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
+
+
+-- | Interleave values of each increasing size
+(\\//) :: [[a]] -> [[a]] -> [[a]]
+(\\//) = zipWith' (\/) [] []
+
+-- | Append values of each increasing size
+(\++/) :: [[a]] -> [[a]] -> [[a]]
+(\++/) = zipWith' (++) [] []
 
 -- | Sized product of two lists.
 --
