@@ -206,15 +206,6 @@ infixr 5 \/
 (\++/) :: [[a]] -> [[a]] -> [[a]]
 (\++/) = zipWith' (++) [] []
 
-(\\://) :: [[a]] -> [[a]] -> [[a]]
-xss \\:// yss = zipWith' (\/) [] [] xss ([]:yss)
-
--- Is this one is commutative?
--- Can I keep tail, to remove the empty list at the start??
--- How does this apply when building custom instances??
-(\\:://) :: [[a]] -> [[a]] -> [[a]]
-xss \\::// yss = tail $ zipWith' (\/) [] [] ([]:xss) ([]:yss)
-
 (><) :: [a] -> [b] -> [(a,b)]
 []     ><  _  = []
 (x:xs) >< ys = map ((,) x) ys ++ xs >< ys
