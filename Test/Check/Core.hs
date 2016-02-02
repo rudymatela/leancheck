@@ -1,5 +1,22 @@
--- | Very simple property-based testing library based on enumeration of values
---   via lists of lists.
+-- | Simple property-based testing library based on
+--   enumeration of values via lists of lists.
+--
+-- This is the core module of the library, with the most basic definitions.  If
+-- you are looking just to use the library, import and see "Test.Check".
+--
+-- If you want to understand how the code works, this is the place to start.
+--
+--
+-- Other important modules:
+--
+-- "Test.Check.Basic" re-exports (almost) everything from this module
+--         along with constructors and instances for further arities.
+--
+-- "Test.Check.Utils" re-exports "Test.Check.Basic"
+--         along with functions for advanced Listable instance definitions.
+--
+-- "Test.Check" re-exports "Test.Check.Utils"
+--   along with a TH function to automatically derive Listable instances.
 module Test.Check.Core
   (
   -- * Checking and testing
@@ -321,11 +338,11 @@ witnesses n = map snd . filter (fst) . take n . resultArguments
 witness :: Testable a => Int -> a -> Maybe [String]
 witness n = listToMaybe . witnesses n
 
--- | Check if a property holds up to some values.
+-- | Check if a property holds for a given number of test values.
 holds :: Testable a => Int -> a -> Bool
 holds n = and . take n . results
 
--- | Check if a property fails up to some value in the enumeration.
+-- | Check if a property fails for a given number of test values.
 fails :: Testable a => Int -> a -> Bool
 fails n = not . holds n
 
