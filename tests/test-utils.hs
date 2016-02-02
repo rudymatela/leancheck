@@ -64,10 +64,10 @@ associationsValues :: (Listable b, Eq a)
 associationsValues ty n xs = all (\xs' -> map fst xs' == xs)
                            $ take n
                            $ concat
-                           $ associations xs (listing `asTypeOf` [[ty]])
+                           $ lsAssociations xs (listing `asTypeOf` [[ty]])
 
 associationsNewAndOld :: (Eq a, Eq b) => [a] -> [[b]] -> Bool
-associationsNewAndOld xs yss = associations xs yss == oldAssociations xs yss
+associationsNewAndOld xs yss = lsAssociations xs yss == oldAssociations xs yss
   where oldAssociations xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
 
 
