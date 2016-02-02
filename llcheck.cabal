@@ -26,17 +26,17 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Test.Check,
-                       Test.Check.Utils,
-                       Test.Types,
-                       Test.Operators,
-                       Test.Most,
-                       Test.Check.Function,
-                       Test.Check.Derive,
-                       Test.Check.Function.ListsOfPairs,
-                       Test.Check.Function.CoListable,
-                       Test.Check.Function.Periodic,
-                       Test.Check.Function.Show
+  exposed-modules: Test.Check
+                 , Test.Check.Utils
+                 , Test.Types
+                 , Test.Operators
+                 , Test.Most
+                 , Test.Check.Function
+                 , Test.Check.Derive
+                 , Test.Check.Function.ListsOfPairs
+                 , Test.Check.Function.CoListable
+                 , Test.Check.Function.Periodic
+                 , Test.Check.Function.Show
   other-modules:       Test.Check.Invariants
   -- other-extensions:    
   build-depends:       base, template-haskell
