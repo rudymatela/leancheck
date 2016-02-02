@@ -47,13 +47,17 @@ module Test.Check.Core
   , lsConcatMap
   , toListing
 
+  -- ** Boolean (property) operators
+  , (==>)
+
   -- ** Misc utilities
   , (\/)
-  , (==>)
+  , (><)
+  , productWith
   )
 where
 
-import Data.Maybe (catMaybes, listToMaybe)
+import Data.Maybe (listToMaybe)
 
 -- | Minimal complete definition: listing or list
 class Listable a where
@@ -219,9 +223,6 @@ productWith :: (a->b->c) -> [a] -> [b] -> [c]
 productWith _ []     _   =  []
 productWith f (x:xs) ys  =  map (f x) ys ++ productWith f xs ys
 
-productWithMaybe :: (a->b->Maybe c) -> [a] -> [b] -> [c]
-productWithMaybe f xs ys = catMaybes $ productWith f xs ys
-
 -- | 'zipwith\'' works similarly to 'zipWith', but takes neutral elements to
 --   operate, so you don't loose elements.
 --
@@ -271,13 +272,6 @@ lsProductWith _ _ [] = []
 lsProductWith _ [] _ = []
 lsProductWith f (xs:xss) yss = zs  :  zss \++/ lsProductWith f xss yss
   where (zs:zss) = map (productWith f xs) yss
-
-lsProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
-lsProductMaybeWith _ _ [] = []
-lsProductMaybeWith _ [] _ = []
-lsProductMaybeWith f xss (ys:yss) = zs  :  zss \++/ lsProductMaybeWith f xss yss
-  where (zs:zss) = map (`pwf` ys) xss
-        pwf      = productWithMaybe f
 
 lsConcat :: [[ [[a]] ]] -> [[a]]
 lsConcat = foldr (\+:/) [] . map (foldr (\++/) [])

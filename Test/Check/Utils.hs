@@ -8,6 +8,7 @@ module Test.Check.Utils
 
   -- * Other
   , lsProduct3With
+  , lsProductMaybeWith
 
   -- * Lists
   , lsListsOf
@@ -34,10 +35,20 @@ module Test.Check.Utils
 where
 
 import Test.Check.Basic
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromMaybe, catMaybes)
 
 lsProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
 lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
+
+lsProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
+lsProductMaybeWith _ _ [] = []
+lsProductMaybeWith _ [] _ = []
+lsProductMaybeWith f xss (ys:yss) = zs  :  zss \++/ lsProductMaybeWith f xss yss
+  where (zs:zss) = map (`pwf` ys) xss
+        pwf      = productWithMaybe f
+
+productWithMaybe :: (a->b->Maybe c) -> [a] -> [b] -> [c]
+productWithMaybe f xs ys = catMaybes $ productWith f xs ys
 
 consFromSOrderedList :: Listable a => ([a] -> b) -> [[b]]
 consFromSOrderedList f = lsmap f (lsCrescListsOf listing)
