@@ -1,5 +1,5 @@
--- | Very simple property-based testing library based on enumeration of values
---   via lists of lists.
+-- | Simple property-based testing library based on
+--   enumeration of values via lists of lists.
 module Test.Check.Basic
   ( module Test.Check.Core
 
@@ -21,7 +21,7 @@ module Test.Check.Basic
   )
 where
 
-import Test.Check.Core
+import Test.Check.Core hiding (zipWith')
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
