@@ -38,4 +38,4 @@ do
 	echo "$obj: $deps"
 	grep -q "main" "$fn" && echo "$bin:   $deps"
 	rm -f tmp.mk
-done
+done | sort
