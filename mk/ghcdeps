@@ -31,7 +31,8 @@ do
 	       grep "hs$" |
 	       sed -e "s/.*: //" |
 	       tac |
-	       tr '\n' ' '`"
+	       tr '\n' ' ' |
+	       sed -e "s/ $//"`"
 	obj=`echo $fn | sed -e 's,^\./,,;s/\.hs$/.o/'`
 	bin=`echo $fn | sed -e 's,^\./,,;s/\.hs$//'`
 	echo "$obj: $deps"
