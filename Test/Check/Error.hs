@@ -5,6 +5,7 @@
 -- specialized to catch errors (see the explicit export list below).
 --
 -- This module is unsafe, it uses `unsafePerformIO` to catch errors.
+{-# LANGUAGE CPP #-}
 module Test.Check.Error
   ( holds
   , fails
@@ -24,6 +25,10 @@ module Test.Check.Error
   , module Test.Check
   )
 where
+
+#if __GLASGOW_HASKELL__ <= 704
+import Prelude hiding (catch)
+#endif
 
 import Test.Check hiding
   ( holds
