@@ -32,6 +32,7 @@ library
                  , Test.Check.Basic
                  , Test.Check.Core
                  , Test.Check.Derive
+                 , Test.Check.Error
                  , Test.Types
                  , Test.Operators
                  , Test.Most
@@ -84,6 +85,13 @@ test-suite most
 test-suite derive
   type:                exitcode-stdio-1.0
   main-is:             test-most.hs
+  hs-source-dirs:      ., tests
+  build-depends:       base, template-haskell
+  default-language:    Haskell2010
+
+test-suite error
+  type:                exitcode-stdio-1.0
+  main-is:             test-error.hs
   hs-source-dirs:      ., tests
   build-depends:       base, template-haskell
   default-language:    Haskell2010
