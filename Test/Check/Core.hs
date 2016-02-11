@@ -324,6 +324,7 @@ lsProduct = lsProductWith (,)
 -- | Infix shorthand for 'lsProduct'
 (>++<) :: [[a]] -> [[b]] -> [[(a,b)]]
 (>++<) = lsProduct
+infixr 8 >++<
 
 lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 lsProductWith _ _ [] = []
