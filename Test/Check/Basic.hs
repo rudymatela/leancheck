@@ -15,14 +15,6 @@ module Test.Check.Basic
   , cons10
   , cons11
   , cons12
-
-  , wcons6
-  , wcons7
-  , wcons8
-  , wcons9
-  , wcons10
-  , wcons11
-  , wcons12
   )
 where
 
@@ -71,77 +63,41 @@ instance (Listable a, Listable b, Listable c, Listable d,
                             (x,y,z,w,v,u,r,s,t,o,p,q))
                           listing listing
 
-wcons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
-       => Int -> (a -> b -> c -> d -> e -> f -> g) -> [[g]]
-wcons6 w f = replicate w [] ++ lsmap (uncurry6 f) listing
-
-wcons7 :: (Listable a, Listable b, Listable c, Listable d,
-           Listable e, Listable f, Listable g)
-       => Int -> (a -> b -> c -> d -> e -> f -> g -> h) -> [[h]]
-wcons7 w f = replicate w [] ++ lsmap (uncurry7 f) listing
-
-wcons8 :: (Listable a, Listable b, Listable c, Listable d,
-           Listable e, Listable f, Listable g, Listable h)
-       => Int -> (a -> b -> c -> d -> e -> f -> g -> h -> i) -> [[i]]
-wcons8 w f = replicate w [] ++ lsmap (uncurry8 f) listing
-
-wcons9 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
-           Listable f, Listable g, Listable h, Listable i)
-       => Int -> (a -> b -> c -> d -> e -> f -> g -> h -> i -> j) -> [[j]]
-wcons9 w f = replicate w [] ++ lsmap (uncurry9 f) listing
-
-wcons10 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
-            Listable f, Listable g, Listable h, Listable i, Listable j)
-        => Int -> (a->b->c->d->e->f->g->h->i->j->k) -> [[k]]
-wcons10 w f = replicate w [] ++ lsmap (uncurry10 f) listing
-
-wcons11 :: (Listable a, Listable b, Listable c, Listable d,
-            Listable e, Listable f, Listable g, Listable h,
-            Listable i, Listable j, Listable k)
-        => Int -> (a->b->c->d->e->f->g->h->i->j->k->l) -> [[l]]
-wcons11 w f = replicate w [] ++ lsmap (uncurry11 f) listing
-
-wcons12 :: (Listable a, Listable b, Listable c, Listable d,
-            Listable e, Listable f, Listable g, Listable h,
-            Listable i, Listable j, Listable k, Listable l)
-        => Int -> (a->b->c->d->e->f->g->h->i->j->k->l->m) -> [[m]]
-wcons12 w f = replicate w [] ++ lsmap (uncurry12 f) listing
-
 cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]
-cons6 = wcons6 1
+cons6 f = lsmap (uncurry6 f) listing `ofWeight` 1
 
 cons7 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g)
       => (a -> b -> c -> d -> e -> f -> g -> h) -> [[h]]
-cons7 = wcons7 1
+cons7 f = lsmap (uncurry7 f) listing `ofWeight` 1
 
 cons8 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i) -> [[i]]
-cons8 = wcons8 1
+cons8 f = lsmap (uncurry8 f) listing `ofWeight` 1
 
 cons9 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j) -> [[j]]
-cons9 = wcons9 1
+cons9 f = lsmap (uncurry9 f) listing `ofWeight` 1
 
 cons10 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
            Listable f, Listable g, Listable h, Listable i, Listable j)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k) -> [[k]]
-cons10 = wcons10 1
+cons10 f = lsmap (uncurry10 f) listing `ofWeight` 1
 
 cons11 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l) -> [[l]]
-cons11 = wcons11 1
+cons11 f = lsmap (uncurry11 f) listing `ofWeight` 1
 
 cons12 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k, Listable l)
        => (a->b->c->d->e->f->g->h->i->j->k->l->m) -> [[m]]
-cons12 = wcons12 1
+cons12 f = lsmap (uncurry12 f) listing `ofWeight` 1
 
 uncurry6 :: (a->b->c->d->e->f->g) -> (a,b,c,d,e,f) -> g
 uncurry6 f (x,y,z,w,v,u) = f x y z w v u

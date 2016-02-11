@@ -36,7 +36,7 @@ module Test.Check.Core
   -- * Listing test values
   , Listable(..)
 
-  -- ** Default-weighed listing constructors
+  -- ** Listing constructors
   , cons0
   , cons1
   , cons2
@@ -44,13 +44,7 @@ module Test.Check.Core
   , cons4
   , cons5
 
-  -- ** Custom-weighed listing constructors
-  , wcons0
-  , wcons1
-  , wcons2
-  , wcons3
-  , wcons4
-  , wcons5
+  , ofWeight
 
   -- ** Combining listings
   , (\++/), (\\//)
@@ -149,7 +143,8 @@ instance Listable a => Listable (Maybe a) where
   listing = cons0 Nothing \++/ cons1 Just
 
 instance (Listable a, Listable b) => Listable (Either a b) where
-  listing = wcons1 0 Left \\// wcons1 0 Right
+  listing = cons1 Left  `ofWeight` 0
+       \\// cons1 Right `ofWeight` 0
 
 instance (Listable a, Listable b) => Listable (a,b) where
   listing = lsProduct listing listing
@@ -213,47 +208,42 @@ lsConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
 lsConcatMap f = lsConcat . lsmap f
 
 
-wcons0 :: Int -> a -> [[a]]
-wcons0 w x = replicate w [] ++ [[x]]
-
-wcons1 :: Listable a => Int -> (a -> b) -> [[b]]
-wcons1 w f = replicate w [] ++ lsmap f listing
-
-wcons2 :: (Listable a, Listable b) => Int -> (a -> b -> c) -> [[c]]
-wcons2 w f = replicate w [] ++ lsmap (uncurry f) listing
-
-wcons3 :: (Listable a, Listable b, Listable c)
-       => Int -> (a -> b -> c -> d) -> [[d]]
-wcons3 w f = replicate w [] ++ lsmap (uncurry3 f) listing
-
-wcons4 :: (Listable a, Listable b, Listable c, Listable d)
-       => Int -> (a -> b -> c -> d -> e) -> [[e]]
-wcons4 w f = replicate w [] ++ lsmap (uncurry4 f) listing
-
-wcons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
-       => Int -> (a -> b -> c -> d -> e -> f) -> [[f]]
-wcons5 w f = replicate w [] ++ lsmap (uncurry5 f) listing
-
+-- | Takes a constructor with no arguments and return a listing (with a single value).
+--   This value, by default, has size/weight 0.
 cons0 :: a -> [[a]]
-cons0 = wcons0 0
+cons0 x = [[x]]
 
+-- | Takes a constructor with one argument and return a listing.
+--   This value, by default, has size/weight 1.
 cons1 :: Listable a => (a -> b) -> [[b]]
-cons1 = wcons1 1
+cons1 f = lsmap f listing `ofWeight` 1
 
+-- | Takes a constructor with two arguments and return a listing.
+--   This value, by default, has size/weight 1.
 cons2 :: (Listable a, Listable b) => (a -> b -> c) -> [[c]]
-cons2 = wcons2 1
+cons2 f = lsmap (uncurry f) listing `ofWeight` 1
 
 cons3 :: (Listable a, Listable b, Listable c) => (a -> b -> c -> d) -> [[d]]
-cons3 = wcons3 1
+cons3 f = lsmap (uncurry3 f) listing `ofWeight` 1
 
 cons4 :: (Listable a, Listable b, Listable c, Listable d)
       => (a -> b -> c -> d -> e) -> [[e]]
-cons4 = wcons4 1
+cons4 f = lsmap (uncurry4 f) listing `ofWeight` 1
 
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
-cons5 = wcons5 1
+cons5 f = lsmap (uncurry5 f) listing `ofWeight` 1
 
+-- | Resets the weight of a constructor (or listing)
+-- Typically used as an infix constructor when defining Listable instances:
+--
+-- > cons<N> `ofWeight` W
+--
+-- Be careful: do not apply @`ofWeight` 0@ to recursive data structure
+-- constructors.  In general this will make the list of size 0 infinite,
+-- breaking the listing invariant.
+ofWeight :: [[a]] -> Int -> [[a]]
+ofWeight xss w = replicate w [] ++ dropWhile null xss
 
 -- | Lazily interleaves two lists, switching between elements of the two.
 --   Union/sum of the elements in the lists.

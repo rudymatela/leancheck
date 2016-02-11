@@ -36,7 +36,7 @@ module Test.Check
   -- * Listing test values
   , Listable(..)
 
-  -- ** Default-weighed listing constructors
+  -- ** Listing constructors
   , cons0
   , cons1
   , cons2
@@ -50,21 +50,6 @@ module Test.Check
   , cons10
   , cons11
   , cons12
-
-  -- ** Custom-weighed listing constructors
-  , wcons0
-  , wcons1
-  , wcons2
-  , wcons3
-  , wcons4
-  , wcons5
-  , wcons6
-  , wcons7
-  , wcons8
-  , wcons9
-  , wcons10
-  , wcons11
-  , wcons12
 
   -- ** Combining listings
   , (\++/)
