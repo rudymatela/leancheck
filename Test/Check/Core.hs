@@ -243,7 +243,11 @@ cons5 f = lsmap (uncurry5 f) listing `ofWeight` 1
 -- constructors.  In general this will make the list of size 0 infinite,
 -- breaking the listing invariant.
 ofWeight :: [[a]] -> Int -> [[a]]
-ofWeight xss w = replicate w [] ++ dropWhile null xss
+ofWeight xss w = dropWhile null xss `addWeight` w
+
+-- | Adds to the weight of a constructor (or listing)
+addWeight :: [[a]] -> Int -> [[a]]
+addWeight xss w = replicate w [] ++ xss
 
 -- | Lazily interleaves two lists, switching between elements of the two.
 --   Union/sum of the elements in the lists.
