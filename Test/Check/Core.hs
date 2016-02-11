@@ -333,8 +333,8 @@ infixr 8 >++<
 lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 lsProductWith _ _ [] = []
 lsProductWith _ [] _ = []
-lsProductWith f (xs:xss) yss = zs  :  zss \++/ lsProductWith f xss yss
-  where (zs:zss) = map (productWith f xs) yss
+lsProductWith f (xs:xss) yss = map (productWith f xs) yss
+                          \++/ lsProductWith f xss yss `addWeight` 1
 
 
 class Testable a where
