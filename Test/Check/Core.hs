@@ -283,10 +283,12 @@ zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 -- | Combine two listings by appending values of each increasing size.
 (\++/) :: [[a]] -> [[a]] -> [[a]]
 (\++/) = zipWith' (++) [] []
+infixr 7 \++/
 
 -- | Combine two listings by interleaving values of each increasing size.
 (\\//) :: [[a]] -> [[a]] -> [[a]]
 (\\//) = zipWith' (\/) [] []
+infixr 7 \\//
 
 -- | Take the product of two listings.
 --
