@@ -216,23 +216,23 @@ cons0 x = [[x]]
 -- | Takes a constructor with one argument and return a listing.
 --   This value, by default, has size/weight 1.
 cons1 :: Listable a => (a -> b) -> [[b]]
-cons1 f = lsmap f listing `ofWeight` 1
+cons1 f = lsmap f listing `addWeight` 1
 
 -- | Takes a constructor with two arguments and return a listing.
 --   This value, by default, has size/weight 1.
 cons2 :: (Listable a, Listable b) => (a -> b -> c) -> [[c]]
-cons2 f = lsmap (uncurry f) listing `ofWeight` 1
+cons2 f = lsmap (uncurry f) listing `addWeight` 1
 
 cons3 :: (Listable a, Listable b, Listable c) => (a -> b -> c -> d) -> [[d]]
-cons3 f = lsmap (uncurry3 f) listing `ofWeight` 1
+cons3 f = lsmap (uncurry3 f) listing `addWeight` 1
 
 cons4 :: (Listable a, Listable b, Listable c, Listable d)
       => (a -> b -> c -> d -> e) -> [[e]]
-cons4 f = lsmap (uncurry4 f) listing `ofWeight` 1
+cons4 f = lsmap (uncurry4 f) listing `addWeight` 1
 
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
-cons5 f = lsmap (uncurry5 f) listing `ofWeight` 1
+cons5 f = lsmap (uncurry5 f) listing `addWeight` 1
 
 -- | Resets the weight of a constructor (or listing)
 -- Typically used as an infix constructor when defining Listable instances:
