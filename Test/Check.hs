@@ -105,8 +105,6 @@ module Test.Check
   -- * Test results
   , Testable
   , results
-  , arguments
-  , resultArguments
   )
 where
 

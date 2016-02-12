@@ -30,8 +30,6 @@ module Test.Check.Core
   , Testable
 
   , results
-  , arguments
-  , resultArguments
 
   -- * Listing test values
   , Listable(..)
@@ -338,33 +336,27 @@ lsProductWith f (xs:xss) yss = map (productWith f xs) yss
 
 
 class Testable a where
-  lsResults   :: a -> [[Bool]]
-  lsArguments :: a -> [[[String]]]
+  lsResults   :: a -> [[([String],Bool)]]
 
 instance Testable Bool where
-  lsResults   p = [[p]]
-  lsArguments p = [[[]]]
+  lsResults p = [[([],p)]]
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
-  lsResults   p = lsConcatMap (lsResults . p) listing
-  lsArguments p = lsConcatMap (\x -> (showsPrec 11 x "":) `lsmap` lsArguments (p x)) listing
+  lsResults p = lsConcatMap lsResultsFor listing
+    where lsResultsFor x = mapFst (showsPrec 11 x "":) `lsmap` lsResults (p x)
+          mapFst f (x,y) = (f x, y)
 
--- List boolean results of a 'Testable' property.
-results :: Testable a => a -> [Bool]
+-- | List all results of a 'Testable' property.
+-- Each results is composed by a list of strings and a boolean.
+-- The list of strings represents the arguments applied to the function.
+-- The boolean tells whether the property holds for that selection of argument.
+-- This list is usually infinite.
+results :: Testable a => a -> [([String],Bool)]
 results = concat . lsResults
-
--- List string representations of arguments of a 'Testable' property.
-arguments :: Testable a => a -> [[String]]
-arguments = concat . lsArguments
-
--- List results and arguments of a 'Testable' property.
-resultArguments :: Testable a => a -> [(Bool,[String])]
-resultArguments p = zip (results p) (arguments p)
-
 
 -- | Lists all counter-examples for a number of tests to a property,
 counterExamples :: Testable a => Int -> a -> [[String]]
-counterExamples n = map snd . filter (not . fst) . take n . resultArguments
+counterExamples n = map fst . filter (not . snd) . take n . results
 
 -- | For a number of tests to a property,
 --   returns Just the first counter-example or Nothing.
@@ -373,7 +365,7 @@ counterExample n = listToMaybe . counterExamples n
 
 -- | Lists all witnesses for a number of tests to a property,
 witnesses :: Testable a => Int -> a -> [[String]]
-witnesses n = map snd . filter (fst) . take n . resultArguments
+witnesses n = map fst . filter (snd) . take n . results
 
 -- | For a number of tests to a property,
 --   returns Just the first witness or Nothing.
@@ -384,7 +376,7 @@ witness n = listToMaybe . witnesses n
 --
 -- > holds 1000 $ \xs -> length (sort xs) == length xs
 holds :: Testable a => Int -> a -> Bool
-holds n = and . take n . results
+holds n = and . take n . map snd . results
 
 -- | Does a property __fail__ for a number of test values?
 --
@@ -394,7 +386,7 @@ fails n = not . holds n
 
 -- | There __exists__ and assignment of values that satisfy a property?
 exists :: Testable a => Int -> a -> Bool
-exists n = or . take n . results
+exists n = or . take n . map snd . results
 
 uncurry3 :: (a->b->c->d) -> (a,b,c) -> d
 uncurry3 f (x,y,z) = f x y z

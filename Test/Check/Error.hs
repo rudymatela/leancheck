@@ -15,7 +15,6 @@ module Test.Check.Error
   , witness
   , witnesses
   , results
-  , resultArguments
 
   , errorToNothing
   , errorToFalse
@@ -39,7 +38,6 @@ import Test.Check hiding
   , witness
   , witnesses
   , results
-  , resultArguments
   )
 
 import qualified Test.Check as C
@@ -105,18 +103,16 @@ errorToTrue p = case errorToNothing p of
 holds,fails,exists :: Testable a => Int -> a -> Bool
 holds n = errorToFalse . C.holds n
 fails n = errorToTrue  . C.fails n
-exists n = or . take n . results
+exists n = or . take n . map snd . results
 
 counterExample,witness :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
 witness        n = listToMaybe . witnesses n
 
 counterExamples,witnesses :: Testable a => Int -> a -> [[String]]
-counterExamples n = map snd . filter (not . fst) . take n . resultArguments
-witnesses       n = map snd . filter (fst)       . take n . resultArguments
+counterExamples n = map fst . filter (not . snd) . take n . results
+witnesses       n = map fst . filter (snd)       . take n . results
 
-results :: Testable a => a -> [Bool]
-results = map errorToFalse . C.results
-
-resultArguments :: Testable a => a -> [(Bool,[String])]
-resultArguments p = zip (results p) (arguments p)
+results :: Testable a => a -> [([String],Bool)]
+results = map (mapSnd errorToFalse) . C.results
+  where mapSnd f (x,y) = (x,f y)
