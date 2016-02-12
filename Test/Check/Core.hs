@@ -362,37 +362,37 @@ resultArguments :: Testable a => a -> [(Bool,[String])]
 resultArguments p = zip (results p) (arguments p)
 
 
--- | Returns the list of all counterexamples for a given property.
+-- | Lists all counter-examples for a number of tests to a property,
 counterExamples :: Testable a => Int -> a -> [[String]]
 counterExamples n = map snd . filter (not . fst) . take n . resultArguments
 
--- | For a given property, returns 'Just' the string description of the first
---   counterexample or 'Nothing'.
+-- | For a number of tests to a property,
+--   returns Just the first counter-example or Nothing.
 counterExample :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
 
--- | Returns the list of all witnesses for a given property.
+-- | Lists all witnesses for a number of tests to a property,
 witnesses :: Testable a => Int -> a -> [[String]]
 witnesses n = map snd . filter (fst) . take n . resultArguments
 
--- | For a given property up to some values,
+-- | For a number of tests to a property,
 --   returns Just the first witness or Nothing.
 witness :: Testable a => Int -> a -> Maybe [String]
 witness n = listToMaybe . witnesses n
 
--- | Does a property __hold__ for a given number of test values?
+-- | Does a property __hold__ for a number of test values?
 --
 -- > holds 1000 $ \xs -> length (sort xs) == length xs
 holds :: Testable a => Int -> a -> Bool
 holds n = and . take n . results
 
--- | Does a property __fail__ for a given number of test values?
+-- | Does a property __fail__ for a number of test values?
 --
 -- > fails 1000 $ \xs -> xs ++ ys == ys ++ xs
 fails :: Testable a => Int -> a -> Bool
 fails n = not . holds n
 
--- | Check if there exists an assignment of values that makes the property true.
+-- | There __exists__ and assignment of values that satisfy a property?
 exists :: Testable a => Int -> a -> Bool
 exists n = or . take n . results
 
