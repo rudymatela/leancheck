@@ -6,14 +6,21 @@ TESTS = tests/test           \
         tests/test-most      \
         tests/test-operators \
         tests/test-types
-OBJS = $(shell find Test -name \*.hs | sed -e 's/.hs$$/.o/')
+ALLOBJS = $(shell find Test -name \*.hs | sed -e 's/.hs$$/.o/')
+OBJS = Test/Check.o \
+       Test/Most.o \
+       Test/Check/Function.o \
+       Test/Check/Function/Show.o \
+       Test/Check/Error.o
 GHCIMPORTDIRS = .
 # -dynamic is needed only for Test/Check/Derive.hs and tests/test-derive.hs
 GHCFLAGS = -dynamic
 
 all: $(OBJS)
 
-test: all $(TESTS)
+all-all: $(ALLOBJS)
+
+test: all-all $(TESTS)
 	./tests/test
 	./tests/test-utils
 	./tests/test-derive
