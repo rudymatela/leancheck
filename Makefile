@@ -44,4 +44,7 @@ legacy-test-via-cabal: # needs similarly named cabal wrappers
 	cabal clean && cabal-ghc-7.4 test
 	cabal clean
 
+hlint:
+	hlint .
+
 include mk/haskell.mk
