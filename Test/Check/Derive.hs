@@ -9,7 +9,7 @@ where
 
 import Language.Haskell.TH
 import Test.Check.Basic
-import Control.Monad (unless, liftM2)
+import Control.Monad (unless, liftM, liftM2)
 
 #if __GLASGOW_HASKELL__ < 706
 -- reportWarning was only introduced in GHC 7.6 / TH 2.8
@@ -84,10 +84,10 @@ normalizeType t = do
   return (foldl AppT (ConT t) vs, vs)
   where
     newNames :: [String] -> Q [Name]
-    newNames ss = mapM newName ss
+    newNames = mapM newName
     newVarTs :: Int -> Q [Type]
-    newVarTs n = newNames (take n . map (:[]) . cycle $ ['a'..'z'])
-             >>= return . map VarT
+    newVarTs n = liftM (map VarT)
+               $ newNames (take n . map (:[]) $ cycle ['a'..'z'])
 
 -- Normalizes a type by applying it to units (`()`) while possible.
 --
