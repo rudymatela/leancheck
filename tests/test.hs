@@ -45,8 +45,8 @@ tests =
   , holds          50 (\x -> x + 1 /= (x::Int))
   , counterExample 50 (\x -> x + 1 /= (x::Float))  == Just ["Infinity"]
   , counterExample 50 (\x -> x + 1 /= (x::Double)) == Just ["Infinity"]
-  , allUnique (take 100 $ list :: [Float])
-  , allUnique (take 500 $ list :: [Double])
+  , allUnique (take 100 list :: [Float])
+  , allUnique (take 500 list :: [Double])
 
   , lsPairEqParams 100
   , lsTripleEqParams 100
@@ -59,7 +59,5 @@ tests =
 allUnique :: Ord a => [a] -> Bool
 allUnique [] = True
 allUnique (x:xs) = x `notElem` xs
-                && allUnique (lesser)
-                && allUnique (greater)
-  where lesser  = filter (< x) xs
-        greater = filter (> x) xs
+                && allUnique (filter (< x) xs)
+                && allUnique (filter (> x) xs)

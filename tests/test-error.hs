@@ -6,7 +6,7 @@ import Test.Types (Nat)
 import Data.List (sort)
 
 main :: IO ()
-main = do
+main =
   case elemIndices False (tests 100) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
@@ -36,11 +36,11 @@ tests n =
   ]
 
 prop_sortMinE :: [Nat] -> Bool
-prop_sortMinE = \xs -> head (sort xs) == minimum (xs::[Nat])
+prop_sortMinE xs = head (sort xs) == minimum (xs::[Nat])
 
 prop_sortMin :: [Nat] -> Bool
-prop_sortMin = \xs -> not (null xs)
-                  ==> head (sort xs) == minimum (xs::[Nat])
+prop_sortMin xs = not (null xs)
+              ==> head (sort xs) == minimum (xs::[Nat])
 
 someNumbers :: Int -> Bool
 someNumbers  2 = True
