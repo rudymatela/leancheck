@@ -47,6 +47,7 @@ legacy-test-via-cabal: # needs similarly named cabal wrappers
 hlint:
 	hlint \
 	  --ignore "Use import/export shortcut" \
+	  --ignore "Redundant bracket" \
 	  .
 
 include mk/haskell.mk
