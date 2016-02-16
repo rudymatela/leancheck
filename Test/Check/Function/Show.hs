@@ -28,7 +28,7 @@ limit3 eq [x,y] = Nothing
 limit3 eq [x,y,z] = Nothing
 limit3 eq (x:y:z:xs) = if x `eq` y && y `eq` z
                          then Just [x{-,y,z-}]
-                         else fmap (x:) $ limit3 eq (y:z:xs)
+                         else (x:) `fmap` limit3 eq (y:z:xs)
 
 functionToPairs :: (Listable a) => (a -> b) -> [(a,b)]
 functionToPairs f = map (\a -> (a,f a)) list

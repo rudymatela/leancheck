@@ -55,7 +55,7 @@ ifNotEq :: Ordering -> Ordering -> Ordering
 ifNotEq EQ p = p
 ifNotEq  o _ = o
 
-thn :: (a->a->Ordering) -> (a->a->Ordering) -> (a->a->Ordering)
+thn :: (a->a->Ordering) -> (a->a->Ordering) -> a -> a -> Ordering
 thn cmp1 cmp2 x y = (x `cmp1` y) `ifNotEq` (x `cmp2` y)
 infixr 9 `thn`
 
@@ -110,7 +110,7 @@ lsPairEqParams :: Int -> Bool
 lsPairEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
-    srs = map (pairToList) $ take n $ list
+    srs = map pairToList $ take n list
     pairToList (x,y) = [x,y :: Nat]
     fail :: Nat -> Nat -> Bool
     fail x y = False
@@ -119,7 +119,7 @@ lsTripleEqParams :: Int -> Bool
 lsTripleEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
-    srs = map tripleToList $ take n $ list
+    srs = map tripleToList $ take n list
     tripleToList (x,y,z) = [x,y,z :: Nat]
     fail :: Nat -> Nat -> Nat -> Bool
     fail x y z = False

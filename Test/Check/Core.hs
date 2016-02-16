@@ -165,7 +165,7 @@ instance (Listable a) => Listable [a] where
 -- The position of Infinity in the enumeration is arbitrary.
 lsFractional :: Fractional a => [[a]]
 lsFractional = lsProductWith (+) lsFractionalParts
-                                 (lsmap (fromIntegral) (listing::[[Integer]]))
+                                 (lsmap fromIntegral (listing::[[Integer]]))
           \++/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
   where lsFractionalParts :: Fractional a => [[a]]
         lsFractionalParts = [0]
@@ -365,7 +365,7 @@ counterExample n = listToMaybe . counterExamples n
 
 -- | Lists all witnesses for a number of tests to a property,
 witnesses :: Testable a => Int -> a -> [[String]]
-witnesses n = map fst . filter (snd) . take n . results
+witnesses n = map fst . filter snd . take n . results
 
 -- | For a number of tests to a property,
 --   returns Just the first witness or Nothing.

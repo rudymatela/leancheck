@@ -111,7 +111,7 @@ witness        n = listToMaybe . witnesses n
 
 counterExamples,witnesses :: Testable a => Int -> a -> [[String]]
 counterExamples n = map fst . filter (not . snd) . take n . results
-witnesses       n = map fst . filter (snd)       . take n . results
+witnesses       n = map fst . filter snd         . take n . results
 
 results :: Testable a => a -> [([String],Bool)]
 results = map (mapSnd errorToFalse) . C.results

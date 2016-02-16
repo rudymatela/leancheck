@@ -9,7 +9,7 @@ where
 
 import Language.Haskell.TH
 import Test.Check.Basic
-import Control.Monad (when, liftM2)
+import Control.Monad (unless, liftM2)
 
 #if __GLASGOW_HASKELL__ < 706
 -- reportWarning was only introduced in GHC 7.6 / TH 2.8
@@ -27,8 +27,8 @@ deriveListable t = do
                          ++ " already exists, skipping derivation"
             return []
     else do cd <- canDeriveListable t
-            when (not cd) (fail $ "Unable to derive Listable "
-                               ++ show t)
+            unless cd (fail $ "Unable to derive Listable "
+                           ++ show t)
             reallyDeriveListable t
 
 -- | Checks whether it is possible to derive a Listable instance.
@@ -43,9 +43,9 @@ reallyDeriveListable :: Name -> DecsQ
 reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
 #if __GLASGOW_HASKELL__ >= 710
-  cxt <- sequence $ [[t| Listable $(return v) |] | v <- vs]
+  cxt <- sequence [[t| Listable $(return v) |] | v <- vs]
 #else
-  cxt <- sequence $ [classP ''Listable [return v] | v <- vs]
+  cxt <- sequence [classP ''Listable [return v] | v <- vs]
 #endif
 #if __GLASGOW_HASKELL__ >= 708
   cxt |=>| [d| instance Listable $(return nt)

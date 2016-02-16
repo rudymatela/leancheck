@@ -378,7 +378,7 @@ instance Num Nat where
   (*) = oNewtype Nat unNat (*)
   abs = fNewtype Nat unNat abs
   signum = fNewtype Nat unNat signum
-  fromInteger = (Nat . fromInteger)
+  fromInteger = Nat . fromInteger
 
 instance Real Nat where
   toRational (Nat x) = fromIntegral x % 1
