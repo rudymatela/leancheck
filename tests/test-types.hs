@@ -1,8 +1,7 @@
 import System.Exit (exitFailure)
-import Data.List (elemIndices)
+import Data.List (elemIndices,delete)
 import Test.Types
 import Test.Check (list)
-import Data.List (delete)
 
 main :: IO ()
 main =

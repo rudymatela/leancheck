@@ -1,5 +1,5 @@
 import System.Exit (exitFailure)
-import Data.List (elemIndices)
+import Data.List (elemIndices,sort)
 
 import Test.Check.Error
 import Test.Types (Nat)

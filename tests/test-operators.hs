@@ -1,9 +1,7 @@
 import System.Exit (exitFailure)
-import Data.List (elemIndices)
+import Data.List (elemIndices,sort)
 import Test.Check
 import Test.Operators
-
-import Data.List (sort)
 
 
 argTypeOf :: (a -> b) -> a -> (a -> b)
