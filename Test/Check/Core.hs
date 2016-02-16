@@ -112,7 +112,7 @@ class Listable a where
 --
 -- To convert back to a list, just 'concat'.
 toListing :: [a] -> [[a]]
-toListing xs = map (:[]) xs
+toListing = map (:[])
 
 instance Listable () where
   list = [()]
