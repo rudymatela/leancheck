@@ -97,6 +97,10 @@ module Test.Check
   , defaultPairsToFunction
   , defaultFunPairsToFunction
 
+  -- ** Listing values
+  , lsFractional
+  , listIntegral
+
   -- ** Misc utilities
   , (\/)
   , (><)

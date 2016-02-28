@@ -19,7 +19,7 @@ module Test.Types
   )
 where
 
-import Test.Check (Listable(..),(\/))
+import Test.Check (Listable(..), listIntegral)
 import Data.Ratio ((%))
 
 mapTuple :: (a -> b) -> (a,a) -> (b,b)
@@ -170,7 +170,7 @@ instance Enum Int2 where
   enumFromThen = boundedEnumFromThen
 
 instance Listable Int2 where
-  list = [0,-1..] \/ [1..]
+  list = listIntegral
 
 
 -- Two-bit unsigned integer: 0, 1, 2, 3
@@ -246,7 +246,7 @@ instance Enum Int3 where
   enumFromThen = boundedEnumFromThen
 
 instance Listable Int3 where
-  list = [0,-1..] \/ [1..]
+  list = listIntegral
 
 
 -- Three-bit unsigned integer: 0, 1, 2, 3, 4, 5, 6, 7
@@ -322,7 +322,7 @@ instance Enum Int4 where
   enumFromThen = boundedEnumFromThen
 
 instance Listable Int4 where
-  list = [0,-1..] \/ [1..]
+  list = listIntegral
 
 
 -- Four-bit unsigned integer: 0, ..., 15

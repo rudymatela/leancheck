@@ -67,6 +67,8 @@ module Test.Check.Core
   , (><)
   , productWith
   , zipWith'
+  , listIntegral
+  , lsFractional
   )
 where
 
@@ -117,11 +119,14 @@ toListing = map (:[])
 instance Listable () where
   list = [()]
 
+listIntegral :: (Enum a, Num a) => [a]
+listIntegral = [0,-1..] \/ [1..]
+
 instance Listable Int where
-  list = [0,-1..] \/ [1..]
+  list = listIntegral
 
 instance Listable Integer where
-  list = [0,-1..] \/ [1..]
+  list = listIntegral
 
 instance Listable Char where
   list = ['a'..'z']
