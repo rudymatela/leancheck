@@ -10,7 +10,7 @@ import Data.Maybe (fromMaybe)
 
 
 (\+:/) :: [[a]] -> [[a]] -> [[a]]
-xss \+:/ yss = xss \++/ ([]:yss)
+xss \+:/ yss = xss \/ ([]:yss)
 infixr 9 \+:/
 
 

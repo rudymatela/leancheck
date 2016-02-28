@@ -69,7 +69,7 @@ lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
 lsProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
 lsProductMaybeWith _ _ [] = []
 lsProductMaybeWith _ [] _ = []
-lsProductMaybeWith f xss (ys:yss) = zs  :  zss \++/ lsProductMaybeWith f xss yss
+lsProductMaybeWith f xss (ys:yss) = zs  :  zss \/ lsProductMaybeWith f xss yss
   where (zs:zss) = map (`pwf` ys) xss
         pwf      = productWithMaybe f
 
@@ -134,7 +134,7 @@ djsWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 djsWith f []           = []
 djsWith f [[]]         = []
 djsWith f ([]:xss)     = [] : djsWith (\y yss -> f y ([]:yss)) xss
-djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ djsWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
+djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ djsWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
 -- | Given a listing of values, returns a listing of lists of elements in
 --   crescent order (from listing enumeration).  If you only care about wether
@@ -179,7 +179,7 @@ ejsWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 ejsWith f []           = []
 ejsWith f [[]]         = []
 ejsWith f ([]:xss)     = [] : ejsWith (\y yss -> f y ([]:yss)) xss
-ejsWith f ((x:xs):xss) = [[f x (xs:xss)]] \++/ ejsWith f (xs:xss)
+ejsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ ejsWith f (xs:xss)
 
 
 -- | Given a listing, returns a listing of lists of a given length.

@@ -52,9 +52,9 @@ module Test.Check
   , cons12
 
   -- ** Combining listings
-  , (\++/)
+  , (\/)
   , (\\//)
-  , (>++<)
+  , (><)
   , lsProduct
   , lsProductWith
 
@@ -102,8 +102,8 @@ module Test.Check
   , listIntegral
 
   -- ** Misc utilities
-  , (\/)
-  , (><)
+  , (+|)
+  , (>:<)
   , productWith
 
   -- * Test results

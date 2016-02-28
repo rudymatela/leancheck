@@ -61,7 +61,7 @@ reallyDeriveListable t = do
   where cone n arity = do
           (Just consN) <- lookupValueName $ "cons" ++ show arity
           [| $(varE consN) $(conE n) |]
-        conse = foldr1 (\e1 e2 -> [| $e1 \++/ $e2 |]) . map (uncurry cone)
+        conse = foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
 
 
 -- * Template haskell utilities

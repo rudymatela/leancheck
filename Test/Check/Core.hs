@@ -45,8 +45,8 @@ module Test.Check.Core
   , ofWeight
 
   -- ** Combining listings
-  , (\++/), (\\//)
-  , (>++<)
+  , (\/), (\\//)
+  , (><)
   , lsProduct
   , lsProductWith
 
@@ -63,8 +63,8 @@ module Test.Check.Core
   , (==>)
 
   -- ** Misc utilities
-  , (\/)
-  , (><)
+  , (+|)
+  , (>:<)
   , productWith
   , zipWith'
   , listIntegral
@@ -89,9 +89,9 @@ import Data.Maybe (listToMaybe)
 -- For algebraic data types, the general form for 'listing' is:
 --
 -- > listing = consN ConstructorA
--- >      \++/ consN ConstructorB
--- >      \++/ consN ConstructorC
--- >      \++/ ...
+-- >        \/ consN ConstructorB
+-- >        \/ consN ConstructorC
+-- >        \/ ...
 --
 -- When defined by 'list', each sub-list in 'listing' is a singleton list
 -- (each element of 'list' has +1 size).
@@ -120,7 +120,7 @@ instance Listable () where
   list = [()]
 
 listIntegral :: (Enum a, Num a) => [a]
-listIntegral = [0,-1..] \/ [1..]
+listIntegral = [0,-1..] +| [1..]
 
 instance Listable Int where
   list = listIntegral
@@ -130,20 +130,20 @@ instance Listable Integer where
 
 instance Listable Char where
   list = ['a'..'z']
-      \/ [' ','\n']
-      \/ ['A'..'Z']
-      \/ ['0'..'9']
-      \/ ['!'..'/']
-      \/ ['\t']
-      \/ [':'..'@']
-      \/ ['['..'`']
-      \/ ['{'..'~']
+      +| [' ','\n']
+      +| ['A'..'Z']
+      +| ['0'..'9']
+      +| ['!'..'/']
+      +| ['\t']
+      +| [':'..'@']
+      +| ['['..'`']
+      +| ['{'..'~']
 
 instance Listable Bool where
-  listing = cons0 False \++/ cons0 True
+  listing = cons0 False \/ cons0 True
 
 instance Listable a => Listable (Maybe a) where
-  listing = cons0 Nothing \++/ cons1 Just
+  listing = cons0 Nothing \/ cons1 Just
 
 instance (Listable a, Listable b) => Listable (Either a b) where
   listing = cons1 Left  `ofWeight` 0
@@ -165,13 +165,13 @@ instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
 
 instance (Listable a) => Listable [a] where
   listing = cons0 []
-       \++/ cons2 (:)
+         \/ cons2 (:)
 
 -- The position of Infinity in the enumeration is arbitrary.
 lsFractional :: Fractional a => [[a]]
 lsFractional = lsProductWith (+) lsFractionalParts
                                  (lsmap fromIntegral (listing::[[Integer]]))
-          \++/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
+            \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
   where lsFractionalParts :: Fractional a => [[a]]
         lsFractionalParts = [0]
                           : [ [fromIntegral a / fromIntegral b]
@@ -203,8 +203,8 @@ lsFilter = lsfilter
 
 -- | 'concat' a listing
 lsConcat :: [[ [[a]] ]] -> [[a]]
-lsConcat = foldr (\+:/) [] . map (foldr (\++/) [])
-  where xss \+:/ yss = xss \++/ ([]:yss)
+lsConcat = foldr (\+:/) [] . map (foldr (\/) [])
+  where xss \+:/ yss = xss \/ ([]:yss)
 
 -- | 'concatMap' a listing
 lsConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
@@ -255,18 +255,18 @@ addWeight xss w = replicate w [] ++ xss
 -- | Lazily interleaves two lists, switching between elements of the two.
 --   Union/sum of the elements in the lists.
 --
--- > [x,y,z] \/ [a,b,c] == [x,a,y,b,z,c]
-(\/) :: [a] -> [a] -> [a]
-[]     \/ ys     = ys
-(x:xs) \/ ys     = x:(ys \/ xs)
-infixr 5 \/
+-- > [x,y,z] +| [a,b,c] == [x,a,y,b,z,c]
+(+|) :: [a] -> [a] -> [a]
+[]     +| ys = ys
+(x:xs) +| ys = x:(ys +| xs)
+infixr 5 +|
 
 -- | Product of two lists.
 --
--- > [x,y] >< [a,b] = [(x,a),(x,b),(y,a),(y,b)]
-(><) :: [a] -> [b] -> [(a,b)]
-[]     ><  _  = []
-(x:xs) >< ys = map ((,) x) ys ++ xs >< ys
+-- > [x,y] >:< [a,b] = [(x,a),(x,b),(y,a),(y,b)]
+(>:<) :: [a] -> [b] -> [(a,b)]
+[]     >:<  _ = []
+(x:xs) >:< ys = map ((,) x) ys ++ xs >:< ys
 
 -- | Product of two lists by a given function.
 productWith :: (a->b->c) -> [a] -> [b] -> [c]
@@ -288,13 +288,13 @@ zipWith' f zx _  []     ys = map (f zx) ys
 zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 
 -- | Combine two listings by appending values of each increasing size.
-(\++/) :: [[a]] -> [[a]] -> [[a]]
-(\++/) = zipWith' (++) [] []
-infixr 7 \++/
+(\/) :: [[a]] -> [[a]] -> [[a]]
+(\/) = zipWith' (++) [] []
+infixr 7 \/
 
 -- | Combine two listings by interleaving values of each increasing size.
 (\\//) :: [[a]] -> [[a]] -> [[a]]
-(\\//) = zipWith' (\/) [] []
+(\\//) = zipWith' (+|) [] []
 infixr 7 \\//
 
 -- | Take the product of two listings.
@@ -307,37 +307,37 @@ infixr 7 \\//
 -- >    ...
 -- >    ]
 --
--- In terms of '(><)', 'lsProduct' is:
+-- In terms of '(>:<)', 'lsProduct' is:
 --
--- > lsProduct [xs] [ys] = [xs><ys]
--- > lsProduct [xs0,xs1] [ys0] = [xs0><ys0, xs1><ys0]
--- > lsProduct [xs0,xs1] [ys0,ys1] = [xs0><ys0, xs1><ys0++xs0><ys1, xs1><ys1]
+-- > lsProduct [xs] [ys] = [xs>:<ys]
+-- > lsProduct [xs0,xs1] [ys0] = [xs0>:<ys0, xs1>:<ys0]
+-- > lsProduct [xs0,xs1] [ys0,ys1] = [xs0>:<ys0, xs1>:<ys0++xs0>:<ys1, xs1>:<ys1]
 -- > lsProduct [xs0,xs1,xs2] [ys0,ys1] =
--- >                           [ xs0 >< ys0
--- >                           , xs1 >< ys0 ++ xs0 >< ys1
--- >                           , xs2 >< ys0 ++ xs1 >< ys1
+-- >                           [ xs0 >:< ys0
+-- >                           , xs1 >:< ys0 ++ xs0 >:< ys1
+-- >                           , xs2 >:< ys0 ++ xs1 >:< ys1
 -- >                           ]
 -- > lsProduct [xs0,xs1,xs2] [ys0,ys1,ys2] =
--- >                           [ xs0 >< ys0
--- >                           , xs1 >< ys0 ++ xs0 >< ys1
--- >                           , xs2 >< ys0 ++ xs1 >< ys1 ++ xs0 >< ys2
--- >                           , xs2 >< ys1 ++ xs1 >< ys2
--- >                           , xs2 >< ys2
+-- >                           [ xs0 >:< ys0
+-- >                           , xs1 >:< ys0 ++ xs0 >:< ys1
+-- >                           , xs2 >:< ys0 ++ xs1 >:< ys1 ++ xs0 >:< ys2
+-- >                           , xs2 >:< ys1 ++ xs1 >:< ys2
+-- >                           , xs2 >:< ys2
 -- >                           ]
 -- > lsProduct ...
 lsProduct :: [[a]] -> [[b]] -> [[(a,b)]]
 lsProduct = lsProductWith (,)
 
 -- | Infix shorthand for 'lsProduct'
-(>++<) :: [[a]] -> [[b]] -> [[(a,b)]]
-(>++<) = lsProduct
-infixr 8 >++<
+(><) :: [[a]] -> [[b]] -> [[(a,b)]]
+(><) = lsProduct
+infixr 8 ><
 
 lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 lsProductWith _ _ [] = []
 lsProductWith _ [] _ = []
 lsProductWith f (xs:xss) yss = map (productWith f xs) yss
-                          \++/ lsProductWith f xss yss `addWeight` 1
+                            \/ lsProductWith f xss yss `addWeight` 1
 
 
 class Testable a where
