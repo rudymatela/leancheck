@@ -25,6 +25,12 @@ tests =
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
+  , lsProductMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
+  , lsProductMaybeWith (flip ($))
+                       [[1],[2],[3],[4]]
+                       [[const Nothing],[Just]]
+       == [[],[1],[2],[3],[4]]
+
   , holds 100 $ ptofApp `argTypeOf` ('a','b')
   , holds 100 $ associationsValues (undefined::Int)  100 `argTypeOf` [undefined::Int]
   , holds 100 $ associationsValues (undefined::Bool) 100 `argTypeOf` [undefined::Bool]
