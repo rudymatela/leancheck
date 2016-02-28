@@ -43,6 +43,7 @@ module Test.Check.Core
   , cons5
 
   , ofWeight
+  , addWeight
 
   -- ** Combining listings
   , (\/), (\\//)

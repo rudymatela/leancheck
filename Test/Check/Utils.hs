@@ -69,9 +69,8 @@ lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
 lsProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
 lsProductMaybeWith _ _ [] = []
 lsProductMaybeWith _ [] _ = []
-lsProductMaybeWith f xss (ys:yss) = zs  :  zss \/ lsProductMaybeWith f xss yss
-  where (zs:zss) = map (`pwf` ys) xss
-        pwf      = productWithMaybe f
+lsProductMaybeWith f (xs:xss) yss = map (productWithMaybe f xs) yss
+                                 \/ lsProductMaybeWith f xss yss `addWeight` 1
 
 productWithMaybe :: (a->b->Maybe c) -> [a] -> [b] -> [c]
 productWithMaybe f xs ys = catMaybes $ productWith f xs ys
