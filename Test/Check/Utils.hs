@@ -19,8 +19,9 @@ module Test.Check.Utils
   , tProducts
   , tListsOfLength 
 
-  -- Deprecated:
-  , djs
+  -- * Choices
+  , tChoices
+  , tStrictlyAscendingChoices
 
   -- * Functions
 
@@ -115,7 +116,7 @@ tProducts = foldr (tProductWith (:)) [[[]]]
 -- >   , ...
 -- >   ]
 tNoDupListsOf :: [[a]] -> [[[a]]]
-tNoDupListsOf = ([[]]:) . tConcat . djsWith (\x xss -> tmap (x:) (tNoDupListsOf xss))
+tNoDupListsOf = ([[]]:) . tConcat . tChoicesWith (\x xss -> tmap (x:) (tNoDupListsOf xss))
 
 -- | Using a sized list, forms disjoint sized pairs of elements and sized lists
 -- of elements.
@@ -125,14 +126,15 @@ tNoDupListsOf = ([[]]:) . tConcat . djsWith (\x xss -> tmap (x:) (tNoDupListsOf 
 --
 -- The returned list is sized by the extracted element.
 -- This is intended only to be used in 'tsNoDupListsOf'
-djs :: [[a]] -> [[(a,[[a]])]]
-djs = djsWith (,)
+tChoices :: [[a]] -> [[(a,[[a]])]]
+tChoices = tChoicesWith (,)
 
-djsWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-djsWith f []           = []
-djsWith f [[]]         = []
-djsWith f ([]:xss)     = [] : djsWith (\y yss -> f y ([]:yss)) xss
-djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ djsWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
+tChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
+tChoicesWith f []           = []
+tChoicesWith f [[]]         = []
+tChoicesWith f ([]:xss)     = [] : tChoicesWith (\y yss -> f y ([]:yss)) xss
+tChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
+                           \/ tChoicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
 -- | Given tiers of values,
 --   returns tiers of lists of elements in crescent order
@@ -153,7 +155,7 @@ djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ djsWith (\y (ys:yss) -> f y ((x:ys)
 tStrictlyAscendingListsOf :: [[a]] -> [[[a]]]
 tStrictlyAscendingListsOf = ([[]]:)
                           . tConcat
-                          . ejsWith (\x xss -> tmap (x:) (tStrictlyAscendingListsOf xss))
+                          . tStrictlyAscendingChoicesWith (\x xss -> tmap (x:) (tStrictlyAscendingListsOf xss))
 
 -- | Returns tiers of sets represented as lists of values (no repeated sets).
 --   Shorthand for 'tsStrictlyAscendingListsOf'.
@@ -163,18 +165,19 @@ tSetsOf = tStrictlyAscendingListsOf
 -- | Using a sized list, forms crescent sized pairs of elements and sized lists
 --   of elements.  This is similar to 'djs' differing only that the elements
 --   listed second in the pair are always "greater" (in terms of enumeration) than
---   the first.  Intended only to be used in 'tsCrescListsOf'.
+--   the first.
 --
--- ejs [[1],[2],[3]]  == [[(1,[[],[2],[3]])],[(2,[[],[],[3]])],[(3,[[],[],[]])]]
--- ejs [[False,True]] == [[(False,[[True]]),(True,[[]])]]
-ejs :: [[a]] -> [[(a,[[a]])]]
-ejs = ejsWith (,)
+-- tStrictlyAscendingChoices [[1],[2],[3]]  == [[(1,[[],[2],[3]])],[(2,[[],[],[3]])],[(3,[[],[],[]])]]
+-- tStrictlyAscendingChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
+tStrictlyAscendingChoices :: [[a]] -> [[(a,[[a]])]]
+tStrictlyAscendingChoices = tStrictlyAscendingChoicesWith (,)
 
-ejsWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-ejsWith f []           = []
-ejsWith f [[]]         = []
-ejsWith f ([]:xss)     = [] : ejsWith (\y yss -> f y ([]:yss)) xss
-ejsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ ejsWith f (xs:xss)
+tStrictlyAscendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
+tStrictlyAscendingChoicesWith f []           = []
+tStrictlyAscendingChoicesWith f [[]]         = []
+tStrictlyAscendingChoicesWith f ([]:xss)     = [] : tStrictlyAscendingChoicesWith (\y yss -> f y ([]:yss)) xss
+tStrictlyAscendingChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
+                                            \/ tStrictlyAscendingChoicesWith f (xs:xss)
 
 
 -- | Given tiers, returns tiers of lists of a given length.
