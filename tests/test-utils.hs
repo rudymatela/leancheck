@@ -4,11 +4,9 @@ import Data.List (elemIndices, sort, nub)
 import Test.Check
 import Test.Check.Invariants
 import Test.Operators
+import Test.TypeBinding
 import Test.Types (Nat)
 
-
-argTypeOf :: (a -> b) -> a -> (a -> b)
-argTypeOf = const
 
 main :: IO ()
 main =
@@ -31,13 +29,13 @@ tests =
                        [[const Nothing],[Just]]
        == [[],[1],[2],[3],[4]]
 
-  , holds 100 $ ptofApp `argTypeOf` ('a','b')
-  , holds 100 $ associationsValues (undefined::Int)  100 `argTypeOf` [undefined::Int]
-  , holds 100 $ associationsValues (undefined::Bool) 100 `argTypeOf` [undefined::Bool]
-  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Int] -> [[Int]] -> Bool)
-  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Int] -> [[Bool]] -> Bool)
-  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Bool] -> [[Bool]] -> Bool)
-  , holds 500 $ associationsNewAndOld `asTypeOf` (undefined :: [Bool] -> [[Int]] -> Bool)
+  , holds 100 $ ptofApp ->: (char,char)
+  , holds 100 $ associationsValues int  100 ->: [int]
+  , holds 100 $ associationsValues bool 100 ->: [bool]
+  , holds 500 $ associationsNewAndOld -: [int]  >- [[int]]  >- und
+  , holds 500 $ associationsNewAndOld -: [int]  >- [[bool]] >- und
+  , holds 500 $ associationsNewAndOld -: [bool] >- [[bool]] >- und
+  , holds 500 $ associationsNewAndOld -: [bool] >- [[int]]  >- und
   ]
 
 checkNoDup :: Int -> Bool

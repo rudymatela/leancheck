@@ -2,10 +2,8 @@ import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 import Test.Check
 import Test.Operators
+import Test.TypeBinding
 
-
-argTypeOf :: (a -> b) -> a -> (a -> b)
-argTypeOf = const
 
 main :: IO ()
 main =
@@ -19,57 +17,56 @@ tests n =
   [ True
 
   , holds n $ (not . not) === id
-  , fails n $ abs === (* (-1))             `argTypeOf` (undefined :: Int)
-  , holds n $ (+) ==== (\x y -> sum [x,y]) `argTypeOf` (undefined :: Int)
-  , fails n $ (+) ==== (*)                 `argTypeOf` (undefined :: Int)
+  , fails n $ abs === (* (-1))             ->: int
+  , holds n $ (+) ==== (\x y -> sum [x,y]) ->: int
+  , fails n $ (+) ==== (*)                 ->: int
 
-  , holds n $ const True  &&& const True  `argTypeOf` (undefined :: Bool)
-  , fails n $ const False &&& const True  `argTypeOf` (undefined :: Int)
-  , holds n $ const False ||| const True  `argTypeOf` (undefined :: Int)
-  , fails n $ const False ||| const False `argTypeOf` (undefined :: Int)
+  , holds n $ const True  &&& const True  ->: bool
+  , fails n $ const False &&& const True  ->: int
+  , holds n $ const False ||| const True  ->: int
+  , fails n $ const False ||| const False ->: int
 
-  , holds n $ commutative (+)  `argTypeOf` (undefined :: Int)
-  , holds n $ commutative (*)  `argTypeOf` (undefined :: Int)
-  , holds n $ commutative (++) `argTypeOf` (undefined :: [()])
+  , holds n $ commutative (+)  ->: int
+  , holds n $ commutative (*)  ->: int
+  , holds n $ commutative (++) ->: [()]
   , holds n $ commutative (&&)
   , holds n $ commutative (||)
-  , fails n $ commutative (-)  `argTypeOf` (undefined :: Int)
-  , fails n $ commutative (++) `argTypeOf` (undefined :: [Bool])
+  , fails n $ commutative (-)  ->: int
+  , fails n $ commutative (++) ->: [bool]
   , fails n $ commutative (==>)
 
-  , holds n $ associative (+)  `argTypeOf` (undefined :: Int)
-  , holds n $ associative (*)  `argTypeOf` (undefined :: Int)
-  , holds n $ associative (++) `argTypeOf` (undefined :: [Int])
+  , holds n $ associative (+)  ->: int
+  , holds n $ associative (*)  ->: int
+  , holds n $ associative (++) ->: [int]
   , holds n $ associative (&&)
   , holds n $ associative (||)
-  , fails n $ associative (-)  `argTypeOf` (undefined :: Int)
+  , fails n $ associative (-)  ->: int
   , fails n $ associative (==>)
 
-  , holds n $ distributive (*) (+) `argTypeOf` (undefined :: Int)
-  , fails n $ distributive (+) (*) `argTypeOf` (undefined :: Int)
+  , holds n $ distributive (*) (+) ->: int
+  , fails n $ distributive (+) (*) ->: int
 
-  , holds n $ transitive (==) `argTypeOf` (undefined :: Bool)
-  , holds n $ transitive (<)  `argTypeOf` (undefined :: Bool)
-  , holds n $ transitive (<=) `argTypeOf` (undefined :: Bool)
-  , fails n $ transitive (/=) `argTypeOf` (undefined :: Bool)
-  , holds n $ transitive (==) `argTypeOf` (undefined :: Int)
-  , holds n $ transitive (<)  `argTypeOf` (undefined :: Int)
-  , holds n $ transitive (<=) `argTypeOf` (undefined :: Int)
-  , fails n $ transitive (/=) `argTypeOf` (undefined :: Int)
+  , holds n $ transitive (==) ->: bool
+  , holds n $ transitive (<)  ->: bool
+  , holds n $ transitive (<=) ->: bool
+  , fails n $ transitive (/=) ->: bool
+  , holds n $ transitive (==) ->: int
+  , holds n $ transitive (<)  ->: int
+  , holds n $ transitive (<=) ->: int
+  , fails n $ transitive (/=) ->: int
 
-  , holds n $ idempotent id   `argTypeOf` (undefined :: Int)
-  , holds n $ idempotent abs  `argTypeOf` (undefined :: Int)
-  , holds n $ idempotent sort `argTypeOf` (undefined :: [Bool])
+  , holds n $ idempotent id   ->: int
+  , holds n $ idempotent abs  ->: int
+  , holds n $ idempotent sort ->: [bool]
   , fails n $ idempotent not
 
-  , holds n $ identity id   `argTypeOf` (undefined :: Int)
-  , holds n $ identity (+0) `argTypeOf` (undefined :: Int)
-  , holds n $ identity sort `argTypeOf` (undefined :: [()])
+  , holds n $ identity id   ->: int
+  , holds n $ identity (+0) ->: int
+  , holds n $ identity sort ->: [()]
   , holds n $ identity (not . not)
   , fails n $ identity not
 
   , holds n $ notIdentity not
-  , fails n $ notIdentity abs    `argTypeOf` (undefined :: Int)
-  , fails n $ notIdentity negate `argTypeOf` (undefined :: Int)
+  , fails n $ notIdentity abs    ->: int
+  , fails n $ notIdentity negate ->: int
   ]
-
