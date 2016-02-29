@@ -15,6 +15,10 @@ module Test.Operators
   , idempotent
   , identity
   , notIdentity
+
+  -- * Ternary comparison operators
+  , (=$), ($=)
+  , (=|), (|=)
   )
 where
 
@@ -79,3 +83,36 @@ notIdentity = (not .) . identity
 --        function something == function somethingElse
 --        someList =|n|= someOtherList
 --        take n someList == take n someOtherList
+
+-- | Equal under.  A ternary operator.
+--
+-- > x =$ f $= y  =  f x = f y
+--
+-- > [1,2,3,4,5] =$  take 2    $= [1,2,4,8,16] -- > True
+-- > [1,2,3,4,5] =$  take 3    $= [1,2,4,8,16] -- > False
+-- >     [1,2,3] =$    sort    $= [3,2,1]      -- > True
+-- >          42 =$ (`mod` 10) $= 16842        -- > True
+-- >          42 =$ (`mod`  9) $= 16842        -- > False
+-- >         'a' =$  isLetter  $= 'b'          -- > True
+-- >         'a' =$  isLetter  $= '1'          -- > False
+(=$) :: Eq b => a -> (a -> b) -> a -> Bool
+(x =$ f) y = f x == f y
+infixl 4 =$
+
+($=) :: (a -> Bool) -> a -> Bool
+($=) = ($)
+infixl 4 $=
+
+-- | Check if two lists are equal for @n@ values.
+--
+-- > xs =| n |= ys  =  take n xs == take n ys
+--
+-- > [1,2,3,4,5] =| 2 |= [1,2,4,8,16] -- > True
+-- > [1,2,3,4,5] =| 3 |= [1,2,4,8,16] -- > False
+(=|) :: Eq a => [a] -> Int -> [a] -> Bool
+xs =| n = xs =$ take n
+infixl 4 =|
+
+(|=) :: (a -> Bool) -> a -> Bool
+(|=) = ($)
+infixl 4 |=

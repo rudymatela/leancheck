@@ -2,8 +2,8 @@ import System.Exit (exitFailure)
 import Data.List (elemIndices, sort, nub)
 
 import Test.Check
-import Test.Check.Utils
 import Test.Check.Invariants
+import Test.Operators
 import Test.Types (Nat)
 
 
@@ -41,13 +41,13 @@ tests =
   ]
 
 checkNoDup :: Int -> Bool
-checkNoDup n = take n (tNoDupListsOf (tiers :: [[Int]]))
-            == take n ((map . filter) noDup (tiers :: [[[Int]]]))
+checkNoDup n = tNoDupListsOf (tiers :: [[Int]])
+       =| n |= (map . filter) noDup (tiers :: [[[Int]]])
   where noDup xs = nub (sort xs) == sort xs
 
 checkCrescent :: Int -> Bool
-checkCrescent n = take n (tSetsOf (tiers :: [[Nat]]))
-               == take n ((map . filter) strictlyOrdered (tiers :: [[[Nat]]]))
+checkCrescent n = tSetsOf (tiers :: [[Nat]])
+          =| n |= (map . filter) strictlyOrdered (tiers :: [[[Nat]]])
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]

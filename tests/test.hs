@@ -4,6 +4,7 @@ import Data.List (elemIndices)
 import Test.Check
 import Test.Check.Invariants
 import Test.Types (Nat)
+import Test.Operators
 
 main :: IO ()
 main =
@@ -18,9 +19,7 @@ tests =
   -- interleave
   , [1,2,3] +| [0,0,0] == [1,0,2,0,3,0]
   , take 3 ([1,2] +| (0:undefined)) == [1,0,2]
-  , let n = 100
-        xs === ys = take n xs == take n ys
-    in  ([0,2..] +| [1,3..]) === [0,1..]
+  , [0,2..] +| [1,3..] =| 100 |= [0,1..]
 
   -- etc
   , tNatPairOrd 100
@@ -30,7 +29,7 @@ tests =
   , tNatSixtupleOrd 500
   , tNatListOrd 500
   , tListsOfNatOrd 500
-  , take 10 (tListsOf (tiers::[[Nat]])) == take 10 tiers
+  , tListsOf (tiers::[[Nat]]) =| 10 |= tiers
 
   -- tests!
   , counterExample 10 (\x y -> x + y /= (x::Int)) == Just ["0", "0"]

@@ -3,6 +3,7 @@ import Test.Check.Derive
 import Test.Check
 import System.Exit (exitFailure)
 import Data.List (elemIndices)
+import Test.Operators
 
 data D0       = D0                    deriving Show
 data D1 a     = D1 a                  deriving Show
@@ -37,10 +38,10 @@ main =
 tests n =
   [ True
 
-  , map unD0 list ==| list
-  , map unD1 list ==| (list :: [Int])
-  , map unD2 list ==| (list :: [(Int,Int)])
-  , map unD3 list ==| (list :: [(Int,Int,Int)])
+  , map unD0 list =| n |= list
+  , map unD1 list =| n |= (list :: [Int])
+  , map unD2 list =| n |= (list :: [(Int,Int)])
+  , map unD3 list =| n |= (list :: [(Int,Int,Int)])
 
   , map unD1 list == (list :: [()])
   , map unD2 list == (list :: [((),())])
@@ -51,7 +52,6 @@ tests n =
   , map unD3 list == (list :: [(Bool,Bool,Bool)])
   ]
   where
-  xs ==| ys = take n xs == take n ys
   unD0 (D0)       = ()
   unD1 (D1 x)     = (x)
   unD2 (D2 x y)   = (x,y)
