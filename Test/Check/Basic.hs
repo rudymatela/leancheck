@@ -65,39 +65,39 @@ instance (Listable a, Listable b, Listable c, Listable d,
 
 cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]
-cons6 f = lsmap (uncurry6 f) listing `ofWeight` 1
+cons6 f = lsmap (uncurry6 f) listing `addWeight` 1
 
 cons7 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g)
       => (a -> b -> c -> d -> e -> f -> g -> h) -> [[h]]
-cons7 f = lsmap (uncurry7 f) listing `ofWeight` 1
+cons7 f = lsmap (uncurry7 f) listing `addWeight` 1
 
 cons8 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i) -> [[i]]
-cons8 f = lsmap (uncurry8 f) listing `ofWeight` 1
+cons8 f = lsmap (uncurry8 f) listing `addWeight` 1
 
 cons9 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j) -> [[j]]
-cons9 f = lsmap (uncurry9 f) listing `ofWeight` 1
+cons9 f = lsmap (uncurry9 f) listing `addWeight` 1
 
 cons10 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
            Listable f, Listable g, Listable h, Listable i, Listable j)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k) -> [[k]]
-cons10 f = lsmap (uncurry10 f) listing `ofWeight` 1
+cons10 f = lsmap (uncurry10 f) listing `addWeight` 1
 
 cons11 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l) -> [[l]]
-cons11 f = lsmap (uncurry11 f) listing `ofWeight` 1
+cons11 f = lsmap (uncurry11 f) listing `addWeight` 1
 
 cons12 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k, Listable l)
        => (a->b->c->d->e->f->g->h->i->j->k->l->m) -> [[m]]
-cons12 f = lsmap (uncurry12 f) listing `ofWeight` 1
+cons12 f = lsmap (uncurry12 f) listing `addWeight` 1
 
 uncurry6 :: (a->b->c->d->e->f->g) -> (a,b,c,d,e,f) -> g
 uncurry6 f (x,y,z,w,v,u) = f x y z w v u
