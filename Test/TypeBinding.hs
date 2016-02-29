@@ -17,7 +17,7 @@ undefinedOf fn = error $ "Test.TypeBinding." ++ fn
 -- > Char -> Char
 (-:) :: a -> a -> a
 (-:) = asTypeOf -- const
-infixl 0 -:
+infixl 1 -:
 
 -- | Type restricted version of const
 -- that forces the argument of its first argument
@@ -26,7 +26,7 @@ infixl 0 -:
 -- > f ->: int == f -: int >- und
 (->:) :: (a -> b) -> a -> (a -> b)
 (->:) = const
-infixl 0 ->:
+infixl 1 ->:
 
 -- | Type restricted version of const
 -- that forces the argument of the result of its first argument
@@ -35,14 +35,14 @@ infixl 0 ->:
 -- > f ->>: int == f -: und >- int >- und
 (->>:) :: (a -> b -> c) -> b -> (a -> b -> c)
 (->>:) = const
-infixl 0 ->>:
+infixl 1 ->>:
 
 -- | Type restricted version of const
 -- that forces the argument of the result of the result of its first argument
 -- to have the same type as the second.
 (->>>:) :: (a -> b -> c -> d) -> c -> (a -> b -> c -> d)
 (->>>:) = const
-infixl 0 ->>>:
+infixl 1 ->>>:
 
 -- Returns an undefined functional value
 -- that takes an argument of the type of its first argument
