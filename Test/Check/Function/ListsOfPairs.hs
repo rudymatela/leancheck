@@ -5,12 +5,12 @@ import Test.Check
 import Test.Check.Utils
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
-  listing = lsmap (uncurry $ flip defaultPairsToFunction)
-          $ lsFunctions list listing
+  tiers = tmap (uncurry $ flip defaultPairsToFunction)
+        $ tFunctions list tiers
 
 
-lsFunctions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
-lsFunctions xss yss =
-  lsConcatMap
-    (\(r,yss) -> lsmap (\ps -> (ps,r)) $ lsFunctionPairs xss yss)
+tFunctions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
+tFunctions xss yss =
+  tConcatMap
+    (\(r,yss) -> tmap (\ps -> (ps,r)) $ tFunctionPairs xss yss)
     (djs yss)

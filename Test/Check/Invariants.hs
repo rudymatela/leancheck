@@ -1,16 +1,16 @@
 -- | Some invariants over Test.Check functions
 --   You should be importing this ONLY to test 'Check.hs' itself.
 module Test.Check.Invariants
-  ( lsNatPairOrd
-  , lsNatTripleOrd
-  , lsNatQuadrupleOrd
-  , lsNatQuintupleOrd
-  , lsNatSixtupleOrd
-  , lsNatListOrd
-  , lsListsOfNatOrd
-  , lsPairEqParams
-  , lsTripleEqParams
-  , lsProductsIsFilterByLength
+  ( tNatPairOrd
+  , tNatTripleOrd
+  , tNatQuadrupleOrd
+  , tNatQuintupleOrd
+  , tNatSixtupleOrd
+  , tNatListOrd
+  , tListsOfNatOrd
+  , tPairEqParams
+  , tTripleEqParams
+  , tProductsIsFilterByLength
 
   , ordered
   , orderedBy
@@ -60,54 +60,54 @@ thn cmp1 cmp2 x y = (x `cmp1` y) `ifNotEq` (x `cmp2` y)
 infixr 9 `thn`
 
 
--- | checks if the first 'n' elements of the listing are ordered by 'cmp'.
+-- | checks if the first 'n' elements on tiers are ordered by 'cmp'.
 --
 -- > (n `seriesOrderedBy`) comparing (id :: Type)
-lsOrderedBy :: Listable a => Int -> (a -> a -> Ordering) -> Bool
-lsOrderedBy n cmp = orderedBy cmp $ take n list
-infixr 9 `lsOrderedBy`
+tOrderedBy :: Listable a => Int -> (a -> a -> Ordering) -> Bool
+tOrderedBy n cmp = orderedBy cmp $ take n list
+infixr 9 `tOrderedBy`
 
-lsStrictlyOrderedBy :: Listable a => Int -> (a -> a -> Ordering) -> Bool
-lsStrictlyOrderedBy n cmp = strictlyOrderedBy cmp $ take n list
-infixr 9 `lsStrictlyOrderedBy`
+tStrictlyOrderedBy :: Listable a => Int -> (a -> a -> Ordering) -> Bool
+tStrictlyOrderedBy n cmp = strictlyOrderedBy cmp $ take n list
+infixr 9 `tStrictlyOrderedBy`
 
-lsNatPairOrd :: Int -> Bool
-lsNatPairOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
+tNatPairOrd :: Int -> Bool
+tNatPairOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y) = x+y :: Nat
 
-lsNatTripleOrd :: Int -> Bool
-lsNatTripleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
+tNatTripleOrd :: Int -> Bool
+tNatTripleOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z) = x+y+z :: Nat
 
-lsNatQuadrupleOrd :: Int -> Bool
-lsNatQuadrupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
+tNatQuadrupleOrd :: Int -> Bool
+tNatQuadrupleOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z,w) = x+y+z+w :: Nat
 
-lsNatQuintupleOrd :: Int -> Bool
-lsNatQuintupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
+tNatQuintupleOrd :: Int -> Bool
+tNatQuintupleOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z,w,v) = x+y+z+w+v :: Nat
 
-lsNatSixtupleOrd :: Int -> Bool
-lsNatSixtupleOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
+tNatSixtupleOrd :: Int -> Bool
+tNatSixtupleOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z,w,v,u) = x+y+z+w+v+u :: Nat
 
-lsNatListOrd :: Int -> Bool
-lsNatListOrd n = n `lsStrictlyOrderedBy`  comparing sum' `thn` compare
+tNatListOrd :: Int -> Bool
+tNatListOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' = sum . map (+1) :: [Nat] -> Nat
 
-lsListsOfStrictlyOrderedBy :: Int
+tListsOfStrictlyOrderedBy :: Int
                            -> (a -> a -> Ordering)
                            -> [[a]]
                            -> Bool
-lsListsOfStrictlyOrderedBy n cmp = strictlyOrderedBy cmp . take n . concat
-infixr 9 `lsListsOfStrictlyOrderedBy`
+tListsOfStrictlyOrderedBy n cmp = strictlyOrderedBy cmp . take n . concat
+infixr 9 `tListsOfStrictlyOrderedBy`
 
-lsListsOfNatOrd :: Int -> Bool
-lsListsOfNatOrd n = lsListsOfStrictlyOrderedBy n (comparing sum' `thn` compare) listing
+tListsOfNatOrd :: Int -> Bool
+tListsOfNatOrd n = tListsOfStrictlyOrderedBy n (comparing sum' `thn` compare) tiers
   where sum' = sum . map (+1) :: [Nat] -> Nat
 
-lsPairEqParams :: Int -> Bool
-lsPairEqParams n = ces == srs
+tPairEqParams :: Int -> Bool
+tPairEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
     srs = map pairToList $ take n list
@@ -115,8 +115,8 @@ lsPairEqParams n = ces == srs
     fail :: Nat -> Nat -> Bool
     fail x y = False
 
-lsTripleEqParams :: Int -> Bool
-lsTripleEqParams n = ces == srs
+tTripleEqParams :: Int -> Bool
+tTripleEqParams n = ces == srs
   where
     ces = map (map read) $ counterExamples n fail
     srs = map tripleToList $ take n list
@@ -124,7 +124,7 @@ lsTripleEqParams n = ces == srs
     fail :: Nat -> Nat -> Nat -> Bool
     fail x y z = False
 
-lsProductsIsFilterByLength :: Eq a => [[a]] -> Int -> Int -> Bool
-lsProductsIsFilterByLength values m n = concat (take m byProduct) `isPrefixOf` concat byFilter
-  where byProduct = lsProducts $ replicate n values
-        byFilter  = ((==n) . length) `lsfilter` lsListsOf values
+tProductsIsFilterByLength :: Eq a => [[a]] -> Int -> Int -> Bool
+tProductsIsFilterByLength values m n = concat (take m byProduct) `isPrefixOf` concat byFilter
+  where byProduct = tProducts $ replicate n values
+        byFilter  = ((==n) . length) `tfilter` tListsOf values

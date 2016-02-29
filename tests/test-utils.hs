@@ -25,8 +25,8 @@ tests =
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
-  , lsProductMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
-  , lsProductMaybeWith (flip ($))
+  , tProductMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
+  , tProductMaybeWith (flip ($))
                        [[1],[2],[3],[4]]
                        [[const Nothing],[Just]]
        == [[],[1],[2],[3],[4]]
@@ -41,25 +41,25 @@ tests =
   ]
 
 checkNoDup :: Int -> Bool
-checkNoDup n = take n (lsNoDupListsOf (listing :: [[Int]]))
-            == take n ((map . filter) noDup (listing :: [[[Int]]]))
+checkNoDup n = take n (tNoDupListsOf (tiers :: [[Int]]))
+            == take n ((map . filter) noDup (tiers :: [[[Int]]]))
   where noDup xs = nub (sort xs) == sort xs
 
 checkCrescent :: Int -> Bool
-checkCrescent n = take n (lsCrescListsOf (listing :: [[Nat]]))
-               == take n ((map . filter) strictlyOrdered (listing :: [[[Nat]]]))
+checkCrescent n = take n (tSetsOf (tiers :: [[Nat]]))
+               == take n ((map . filter) strictlyOrdered (tiers :: [[[Nat]]]))
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]
   where check m = all (\xs -> length xs == m)
                 $ concat . take n
-                $ listingsOfLength m natListing
+                $ tListsOfLength m natTiers
 
 checkSizesListingsOfLength :: Int -> Int -> Bool
 checkSizesListingsOfLength n m = all check [1..m]
   where check m = orderedBy compare
                 $ map sum . concat . take n
-                $ listingsOfLength m natListing
+                $ tListsOfLength m natTiers
 
 ptofApp :: (Ord a, Eq b) => (a,b) -> [(a,b)] -> Bool -- Ord a is just for allUnique
 ptofApp (x,y) ps = (x,y) `elem` ps && allUnique (map fst ps)
@@ -70,15 +70,15 @@ associationsValues :: (Listable b, Eq a)
 associationsValues ty n xs = all (\xs' -> map fst xs' == xs)
                            $ take n
                            $ concat
-                           $ lsAssociations xs (listing `asTypeOf` [[ty]])
+                           $ tAssociations xs (tiers `asTypeOf` [[ty]])
 
 associationsNewAndOld :: (Eq a, Eq b) => [a] -> [[b]] -> Bool
-associationsNewAndOld xs yss = lsAssociations xs yss == oldAssociations xs yss
-  where oldAssociations xs sbs = lsmap (zip xs) (listingsOfLength (length xs) sbs)
+associationsNewAndOld xs yss = tAssociations xs yss == oldAssociations xs yss
+  where oldAssociations xs sbs = tmap (zip xs) (tListsOfLength (length xs) sbs)
 
 
-natListing :: [[Nat]]
-natListing = listing
+natTiers :: [[Nat]]
+natTiers = tiers
 
 allUnique :: Ord a => [a] -> Bool
 allUnique [] = True

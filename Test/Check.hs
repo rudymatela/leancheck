@@ -51,21 +51,20 @@ module Test.Check
   , cons11
   , cons12
 
-  -- ** Combining listings
+  -- ** Combining tiers
   , (\/)
   , (\\//)
   , (><)
-  , lsProduct
-  , lsProductWith
+  , tProduct
+  , tProductWith
 
-  -- ** Manipulating listings
-  , lsmap
-  , lsMap
-  , lsfilter
-  , lsFilter
-  , lsConcat
-  , lsConcatMap
-  , toListing
+  -- ** Manipulating tiers
+  , tmap
+  , tfilter
+  , tFilter
+  , tConcat
+  , tConcatMap
+  , toTiers
 
   -- ** Automatically deriving Listable instances
   , deriveListable
@@ -76,29 +75,28 @@ module Test.Check
   , consFromSet
   , consFromNoDupList
 
-  -- ** Products of listings
-  , lsProduct3With
-  , lsProductMaybeWith
+  -- ** Products of tiers
+  , tProduct3With
+  , tProductMaybeWith
 
   -- * Listing lists
-  , lsListsOf
-  , lsSetsOf
-  , lsStrictlyAscendingListsOf
-  , lsNoDupListsOf
-  , lsProducts
-  , listingsOfLength
+  , tListsOf
+  , tSetsOf
+  , tStrictlyAscendingListsOf
+  , tNoDupListsOf
+  , tProducts
+  , tListsOfLength
 
-  -- ** Listings of Functions
-  , lsAssociations
-  , lsFunctionPairs
-  , functionPairs
+  -- ** Tiers of Functions
+  , tAssociations
+  , tFunctionPairs
   , pairsToMaybeFunction
   , pairsToFunction
   , defaultPairsToFunction
   , defaultFunPairsToFunction
 
   -- ** Listing values
-  , lsFractional
+  , tFractional
   , listIntegral
 
   -- ** Misc utilities

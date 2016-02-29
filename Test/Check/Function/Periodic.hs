@@ -5,24 +5,25 @@ where
 
 
 import Test.Check.Basic
+import Test.Check.Utils (tListsOf)
 import Data.List (inits)
 
 
 instance (Eq a, Eq b, Listable a, Listable b) => Listable (a -> b) where
-  listing = lsmap pairsToFunction $ functions list listing
+  tiers = tmap pairsToFunction $ functions list tiers
 
 functions :: Eq b => [a] -> [[b]] -> [[[(a,b)]]]
-functions xs yss = lsmap (zip xs . cycle) $ lsPeriodsOfLimit xs yss
+functions xs yss = tmap (zip xs . cycle) $ lsPeriodsOfLimit xs yss
 
 functionsz :: Eq b => [[a]] -> [[b]] -> [[[(a,b)]]]
 functionsz xss = functions (concat xss)
 
 
 lsPeriodsOf :: Eq a => [[a]] -> [[[a]]]
-lsPeriodsOf xss = map (filter isPeriod) (listingsOf xss)
+lsPeriodsOf xss = map (filter isPeriod) (tListsOf xss)
 
 lsPeriodsOfLimit :: Eq a => [b] -> [[a]] -> [[[a]]]
-lsPeriodsOfLimit ys xss = map (filter isPeriod) (listingsOfLimit ys xss)
+lsPeriodsOfLimit ys xss = map (filter isPeriod) (tiersOfLimit ys xss)
 
 
 isPeriod :: Eq a => [a] -> Bool
@@ -35,12 +36,9 @@ xs `isPeriodOf` ys = length ys `mod` length xs == 0
                   && and (zipWith (==) (cycle xs) ys)
 
 
-listingsOf :: [[a]] -> [[[a]]]
-listingsOf xss = [[[]]] ++ lsProductWith (:) xss (listingsOf xss)
-
-listingsOfLimit :: [b] -> [[a]] -> [[[a]]]
-listingsOfLimit     [] xss = [[[]]]
-listingsOfLimit (_:ys) xss = [[[]]] ++ lsProductWith (:) xss (listingsOfLimit ys xss)
+tiersOfLimit :: [b] -> [[a]] -> [[[a]]]
+tiersOfLimit     [] xss = [[[]]]
+tiersOfLimit (_:ys) xss = [[[]]] ++ tProductWith (:) xss (tiersOfLimit ys xss)
 
 
 pairsToFunction :: Eq a => [(a,b)] -> (a -> b)

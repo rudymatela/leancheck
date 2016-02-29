@@ -6,9 +6,9 @@ llcheck
 **The API is very likely to change in the near future**
 
 llcheck is a simple enumerative property-based testing library.  It works by
-producing *listings* of test values, which are essentially (possibly infinite)
-lists of finite lists of same-sized values.  It is somewhat similar to [Feat] in
-that regard.
+producing *tiers* of test values, which are essentially (possibly infinite)
+lists of finite lists of same-and-increasingly-sized values.  It is similar to
+[Feat] in that regard.
 
 In this README, lines ending with `-- >` indicate expected return values.
 
@@ -70,15 +70,15 @@ Custom `Listable` instances are created similarly to SmallCheck:
 	            | MyConsD String
 
 	instance Listable MyType where
-	    listing = cons0 MyConsA
-	         \++/ cons1 MyConsB
-	         \++/ cons2 MyConsC
-	         \++/ cons1 MyConsD
+	  tiers = cons0 MyConsA
+	       \/ cons1 MyConsB
+	       \/ cons2 MyConsC
+	       \/ cons1 MyConsD
 
-The type of listing is simply an infinite list of lists.
-Each list has values of increasing size.
+The tiers function return a potentially infinite list of finite sub-lists (tiers).
+Each tier has values of increasing size.
 
-	listing :: Listable a => [[a]]
+	tiers :: Listable a => [[a]]
 
 For convenience, there is also the function `list`,
 which returns an infinite list of values of the bound type:
@@ -89,10 +89,7 @@ So, for example:
 
 	take 5 (list :: [(Int,Int)]) -- > [(0,0),(0,1),(1,0),(0,-1),(1,1)]
 
-The `list` function can be used to debug your custom instances.  For recursive
-types, take care with the order of the constructors or your listing function
-might become non-terminating: put non-recursive constructors first in your
-listing definition.
+The `list` function can be used to debug your custom instances.
 
 
 More information / extra functions

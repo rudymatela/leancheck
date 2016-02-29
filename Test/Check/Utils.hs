@@ -1,34 +1,32 @@
--- | Utilities functions for manipulating listings (sized lists of lists)
+-- | Utilities functions for manipulating tiers (sized lists of lists)
 module Test.Check.Utils
   (
-  -- * Extra listing constructors
+  -- * Additional constructors
     consFromList
   , consFromStrictlyAscendingList
   , consFromSet
   , consFromNoDupList
 
-  -- * Listing products
-  , lsProduct3With
-  , lsProductMaybeWith
+  -- * Products
+  , tProduct3With
+  , tProductMaybeWith
 
-  -- * Listing lists
-  , lsListsOf
-  , lsStrictlyAscendingListsOf
-  , lsSetsOf
-  , lsNoDupListsOf
-  , lsProducts
-  , listingsOfLength
+  -- * Tiers of lists
+  , tListsOf
+  , tStrictlyAscendingListsOf
+  , tSetsOf
+  , tNoDupListsOf
+  , tProducts
+  , tListsOfLength 
 
   -- Deprecated:
-  , lsCrescListsOf
   , djs
 
   -- * Functions
 
   -- ** Listing
-  , lsAssociations
-  , lsFunctionPairs
-  , functionPairs
+  , tAssociations
+  , tFunctionPairs
 
   -- ** Pairs to actual functions
   , pairsToMaybeFunction
@@ -41,74 +39,74 @@ where
 import Test.Check.Basic
 import Data.Maybe (fromMaybe, catMaybes)
 
--- | Given a constructor for a type that takes a list, return a listing for
---   that type.
+-- | Given a constructor for a type that takes a list,
+--   return tiers for that type.
 consFromList :: Listable a => ([a] -> b) -> [[b]]
-consFromList = (`lsmap` lsListsOf listing)
+consFromList = (`tmap` tListsOf tiers)
 
 -- | Given a constructor for a type that takes a list with strictly ascending
---   elements, return a listing for that type (e.g.: a Set type).
+--   elements, return tiers of that type (e.g.: a Set type).
 consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
-consFromStrictlyAscendingList = (`lsmap` lsStrictlyAscendingListsOf listing)
+consFromStrictlyAscendingList = (`tmap` tStrictlyAscendingListsOf tiers)
 
--- | Given a constructor for a type that takes a list with strictly ascending
---   elements, return a listing for that type (e.g.: a Set type).
+-- | Given a constructor for a type that takes a set of elements (as a list)
+--   return tiers of that type (e.g.: a Set type).
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
 consFromSet = consFromStrictlyAscendingList
 
 -- | Given a constructor for a type that takes a list with no duplicate
---   elements, return a listing for that type.
+--   elements, return tiers of that type.
 consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
-consFromNoDupList f = lsmap f (lsNoDupListsOf listing)
+consFromNoDupList f = tmap f (tNoDupListsOf tiers)
 
 
--- | Like 'lsProduct', but on 3 listings.
-lsProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
-lsProduct3With f xss yss zss = lsProductWith ($) (lsProductWith f xss yss) zss
+-- | Like 'tsProduct', but over 3 lists of tiers.
+tProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
+tProduct3With f xss yss zss = tProductWith ($) (tProductWith f xss yss) zss
 
-lsProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
-lsProductMaybeWith _ _ [] = []
-lsProductMaybeWith _ [] _ = []
-lsProductMaybeWith f (xs:xss) yss = map (productWithMaybe f xs) yss
-                                 \/ lsProductMaybeWith f xss yss `addWeight` 1
+-- | Take the product of lists of tiers by a function returning a maybe value.
+tProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
+tProductMaybeWith _ _ [] = []
+tProductMaybeWith _ [] _ = []
+tProductMaybeWith f (xs:xss) yss = map (productWithMaybe f xs) yss
+                                \/ tProductMaybeWith f xss yss `addWeight` 1
 
 productWithMaybe :: (a->b->Maybe c) -> [a] -> [b] -> [c]
 productWithMaybe f xs ys = catMaybes $ productWith f xs ys
 
 
--- | Given a listing of values, returns a listing of lists of those values
+-- | Given tiers of values, returns tiers of lists of those values
 --
--- > lsListsOf [[]] == [[[]]]
+-- > tListsOf [[]] == [[[]]]
 --
--- > lsListsOf [[x]] == [ [[]]
+-- > tListsOf [[x]] == [ [[]]
 -- >                    , [[x]]
 -- >                    , [[x,x]]
 -- >                    , [[x,x,x]]
 -- >                    , ...
 -- >                    ]
 --
--- > lsListsOf [[x],[y]] == [ [[]]
+-- > tListsOf [[x],[y]] == [ [[]]
 -- >                        , [[x]]
 -- >                        , [[x,x],[y]]
 -- >                        , [[x,x,x],[x,y],[y,x]]
 -- >                        , ...
 -- >                        ]
-lsListsOf :: [[a]] -> [[[a]]]
-lsListsOf xss = cons0 []
-             \/ lsProductWith (:) xss (lsListsOf xss) `addWeight` 1
+tListsOf :: [[a]] -> [[[a]]]
+tListsOf xss = cons0 []
+            \/ tProductWith (:) xss (tListsOf xss) `addWeight` 1
 
 -- | Generates several lists of the same size.
 --
--- > lsProducts [ lsX, lsY, lsZ ] ==
+-- > tProducts [ xss, yss, zss ] ==
 --
--- All lists combining elements of listings lsX, lsY and lsZ
-lsProducts :: [ [[a]] ] -> [[ [a] ]]
-lsProducts = foldr (lsProductWith (:)) [[[]]]
+-- Tiers of all lists combining elements of tiers: xss, yss and zss 
+tProducts :: [ [[a]] ] -> [[ [a] ]]
+tProducts = foldr (tProductWith (:)) [[[]]]
 
--- | Given a listing of values, returns a listing of lists of no repeated
--- elements.
+-- | Given tiers of values, returns tiers of lists with no repeated elements.
 --
--- > lsNoDupListsOf [[0],[1],[2],...] ==
+-- > tNoDupListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
 -- >   , [[0]]
 -- >   , [[1]]
@@ -116,8 +114,8 @@ lsProducts = foldr (lsProductWith (:)) [[[]]]
 -- >   , [[0,2],[2,0],[3]]
 -- >   , ...
 -- >   ]
-lsNoDupListsOf :: [[a]] -> [[[a]]]
-lsNoDupListsOf = ([[]]:) . lsConcat . djsWith (\x xss -> lsmap (x:) (lsNoDupListsOf xss))
+tNoDupListsOf :: [[a]] -> [[[a]]]
+tNoDupListsOf = ([[]]:) . tConcat . djsWith (\x xss -> tmap (x:) (tNoDupListsOf xss))
 
 -- | Using a sized list, forms disjoint sized pairs of elements and sized lists
 -- of elements.
@@ -126,7 +124,7 @@ lsNoDupListsOf = ([[]]:) . lsConcat . djsWith (\x xss -> lsmap (x:) (lsNoDupList
 -- > djs [[1],[2],[3]]  == [[(1,[[],[2],[3]])],[(2,[[1],[],[3]])],[(3,[[1],[2],[]])]]
 --
 -- The returned list is sized by the extracted element.
--- This is intended only to be used in 'lsNoDupListsOf'
+-- This is intended only to be used in 'tsNoDupListsOf'
 djs :: [[a]] -> [[(a,[[a]])]]
 djs = djsWith (,)
 
@@ -136,12 +134,13 @@ djsWith f [[]]         = []
 djsWith f ([]:xss)     = [] : djsWith (\y yss -> f y ([]:yss)) xss
 djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ djsWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
--- | Given a listing of values, returns a listing of lists of elements in
---   crescent order (from listing enumeration).  If you only care about wether
---   elements are in returned lists or not, this is the same as listing all the
---   sets.
+-- | Given tiers of values,
+--   returns tiers of lists of elements in crescent order
+--                              (from tiered enumeration).
+--   If you only care about whether elements are in returned lists,
+--   this returns the tiers of all sets of values.
 --
--- > lsStrictlyAscendingListsOf [[0],[1],[2],...] ==
+-- > tStrictlyAscendingListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
 -- >   , [[0]]
 -- >   , [[1]]
@@ -151,24 +150,20 @@ djsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ djsWith (\y (ys:yss) -> f y ((x:ys)
 -- >   , [[0,1,2],[0,4],[1,3],[5]]
 -- >   , ...
 -- >   ]
-lsStrictlyAscendingListsOf :: [[a]] -> [[[a]]]
-lsStrictlyAscendingListsOf = ([[]]:)
-                           . lsConcat
-                           . ejsWith (\x xss -> lsmap (x:) (lsStrictlyAscendingListsOf xss))
+tStrictlyAscendingListsOf :: [[a]] -> [[[a]]]
+tStrictlyAscendingListsOf = ([[]]:)
+                          . tConcat
+                          . ejsWith (\x xss -> tmap (x:) (tStrictlyAscendingListsOf xss))
 
--- | Returns a listing of sets represented as lists of values (no sets are
---   repeated).  Shorthand for 'lsStrictlyAscendingListsOf'.
-lsSetsOf :: [[a]] -> [[[a]]]
-lsSetsOf = lsStrictlyAscendingListsOf
-
--- Deprecated name
-lsCrescListsOf :: [[a]] -> [[[a]]]
-lsCrescListsOf = lsStrictlyAscendingListsOf
+-- | Returns tiers of sets represented as lists of values (no repeated sets).
+--   Shorthand for 'tsStrictlyAscendingListsOf'.
+tSetsOf :: [[a]] -> [[[a]]]
+tSetsOf = tStrictlyAscendingListsOf
 
 -- | Using a sized list, forms crescent sized pairs of elements and sized lists
 --   of elements.  This is similar to 'djs' differing only that the elements
 --   listed second in the pair are always "greater" (in terms of enumeration) than
---   the first.  Intended only to be used in 'lsCrescListsOf'.
+--   the first.  Intended only to be used in 'tsCrescListsOf'.
 --
 -- ejs [[1],[2],[3]]  == [[(1,[[],[2],[3]])],[(2,[[],[],[3]])],[(3,[[],[],[]])]]
 -- ejs [[False,True]] == [[(False,[[True]]),(True,[[]])]]
@@ -182,34 +177,24 @@ ejsWith f ([]:xss)     = [] : ejsWith (\y yss -> f y ([]:yss)) xss
 ejsWith f ((x:xs):xss) = [[f x (xs:xss)]] \/ ejsWith f (xs:xss)
 
 
--- | Given a listing, returns a listing of lists of a given length.
-listingsOfLength :: Int -> [[a]] -> [[[a]]]
-listingsOfLength n xss = lsProducts (replicate n xss)
+-- | Given tiers, returns tiers of lists of a given length.
+tListsOfLength :: Int -> [[a]] -> [[[a]]]
+tListsOfLength n xss = tProducts (replicate n xss)
 
 
--- | Given a list of values (the domain), and a listing of values (the codomain),
--- return a listing of lists of ordered pairs (associating the domain and codomain).
+-- | Given a list of domain values, and tiers of codomain values,
+-- return tiers of lists of ordered pairs of domain and codomain values.
 --
--- This can be viewed as a list of functional left-total relations between values
--- in the domain and codomain.
-lsAssociations :: [a] -> [[b]] -> [[ [(a,b)] ]]
-lsAssociations xs sbs = zip xs `lsmap` lsProducts (const sbs `map` xs)
+-- Technically: tiers of left-total functional relations.
+tAssociations :: [a] -> [[b]] -> [[ [(a,b)] ]]
+tAssociations xs sbs = zip xs `tmap` tProducts (const sbs `map` xs)
 
--- | Given two listings, list all possible lists of input-output pairs
--- representing functions from values in the first listing
--- to values in the second listing.  Results are returned in lists of
--- increasing size.
-lsFunctionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
-lsFunctionPairs xss yss = lsConcatMap (`lsAssociations` yss)
-                                      (lsStrictlyAscendingListsOf xss)
-
-
--- | Given two listings, list all possible lists of input-output pairs
--- representing functions from values in the first listing
--- to values in the second listing.
-functionPairs :: [[a]] -> [[b]] -> [[(a,b)]]
-functionPairs xss = concat . lsFunctionPairs xss
-
+-- | Given tiers of input values and tiers of output values,
+-- return tiers with all possible lists of input-output pairs.
+-- Those represent functional relations.
+tFunctionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
+tFunctionPairs xss yss = tConcatMap (`tAssociations` yss)
+                                    (tStrictlyAscendingListsOf xss)
 
 -- | Returns a function given by a list of input-output pairs.
 -- The result is wrapped in a maybe value.

@@ -23,14 +23,14 @@ tests =
     in  ([0,2..] +| [1,3..]) === [0,1..]
 
   -- etc
-  , lsNatPairOrd 100
-  , lsNatTripleOrd 200
-  , lsNatQuadrupleOrd 300
-  , lsNatQuintupleOrd 400
-  , lsNatSixtupleOrd 500
-  , lsNatListOrd 500
-  , lsListsOfNatOrd 500
-  , take 10 (lsListsOf (listing::[[Nat]])) == take 10 listing
+  , tNatPairOrd 100
+  , tNatTripleOrd 200
+  , tNatQuadrupleOrd 300
+  , tNatQuintupleOrd 400
+  , tNatSixtupleOrd 500
+  , tNatListOrd 500
+  , tListsOfNatOrd 500
+  , take 10 (tListsOf (tiers::[[Nat]])) == take 10 tiers
 
   -- tests!
   , counterExample 10 (\x y -> x + y /= (x::Int)) == Just ["0", "0"]
@@ -49,12 +49,12 @@ tests =
   , allUnique (take 100 list :: [Float])
   , allUnique (take 500 list :: [Double])
 
-  , lsPairEqParams 100
-  , lsTripleEqParams 100
+  , tPairEqParams 100
+  , tTripleEqParams 100
 
-  , lsProductsIsFilterByLength (listing :: [[ Nat ]])   10 `all` [1..10]
-  , lsProductsIsFilterByLength (listing :: [[ Bool ]])   6 `all` [1..10]
-  , lsProductsIsFilterByLength (listing :: [[ [Nat] ]])  6 `all` [1..10]
+  , tProductsIsFilterByLength (tiers :: [[ Nat ]])   10 `all` [1..10]
+  , tProductsIsFilterByLength (tiers :: [[ Bool ]])   6 `all` [1..10]
+  , tProductsIsFilterByLength (tiers :: [[ [Nat] ]])  6 `all` [1..10]
   ]
 
 allUnique :: Ord a => [a] -> Bool

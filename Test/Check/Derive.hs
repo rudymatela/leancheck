@@ -49,13 +49,13 @@ reallyDeriveListable t = do
 #endif
 #if __GLASGOW_HASKELL__ >= 708
   cxt |=>| [d| instance Listable $(return nt)
-                 where listing = $(conse =<< typeCons t) |]
+                 where tiers = $(conse =<< typeCons t) |]
 #else
-  listingE <- conse =<< typeCons t
+  tiersE <- conse =<< typeCons t
   return [ InstanceD
              cxt
              (AppT (ConT ''Listable) nt)
-             [ValD (VarP 'listing) (NormalB listingE) []]
+             [ValD (VarP 'tiers) (NormalB tiersE) []]
          ]
 #endif
   where cone n arity = do

@@ -34,7 +34,7 @@ module Test.Check.Core
   -- * Listing test values
   , Listable(..)
 
-  -- ** Listing constructors
+  -- ** Constructing lists of tiers
   , cons0
   , cons1
   , cons2
@@ -45,20 +45,19 @@ module Test.Check.Core
   , ofWeight
   , addWeight
 
-  -- ** Combining listings
+  -- ** Combining lists of tiers
   , (\/), (\\//)
   , (><)
-  , lsProduct
-  , lsProductWith
+  , tProduct
+  , tProductWith
 
-  -- ** Manipulating listings
-  , lsmap
-  , lsMap
-  , lsfilter
-  , lsFilter
-  , lsConcat
-  , lsConcatMap
-  , toListing
+  -- ** Manipulating lists of tiers
+  , tmap
+  , tfilter
+  , tFilter
+  , tConcat
+  , tConcatMap
+  , toTiers
 
   -- ** Boolean (property) operators
   , (==>)
@@ -69,7 +68,7 @@ module Test.Check.Core
   , productWith
   , zipWith'
   , listIntegral
-  , lsFractional
+  , tFractional
   )
 where
 
@@ -79,22 +78,21 @@ import Data.Maybe (listToMaybe)
 -- | A type is 'Listable' when there exists a function that
 --   is able to list (ideally all of) its values.
 --
--- Ideally, this type should be defined by a 'listing' function that
--- returns a (possibly infinite) list of finite sub-lists:
+-- Ideally, this type should be defined by a 'tiers' function that
+-- returns a (possibly infinite) list of finite sub-lists (tiers):
 --   the first sub-list contains elements of size 0,
 --   the second sub-list contains elements of size 1
 --   and so on.
 -- Size here is defined by the implementor of the type-class instance.
--- From here on, __listing__ is used to refer to this concept.
 --
--- For algebraic data types, the general form for 'listing' is:
+-- For algebraic data types, the general form for 'tiers' is:
 --
--- > listing = consN ConstructorA
--- >        \/ consN ConstructorB
--- >        \/ consN ConstructorC
--- >        \/ ...
+-- > tiers = consN ConstructorA
+-- >      \/ consN ConstructorB
+-- >      \/ consN ConstructorC
+-- >      \/ ...
 --
--- When defined by 'list', each sub-list in 'listing' is a singleton list
+-- When defined by 'list', each sub-list in 'tiers' is a singleton list
 -- (each element of 'list' has +1 size).
 --
 -- The function 'Test.Check.Derive.deriveListable' from "Test.Check.Derive"
@@ -104,18 +102,18 @@ import Data.Maybe (listToMaybe)
 -- default.  Import "Test.Check.Function" for that.
 -- ("Test.Check.Function.Show" for a Show instance for functions)
 class Listable a where
-  listing :: [[a]]
+  tiers :: [[a]]
   list :: [a]
-  listing = toListing list
-  list = concat listing
-  {-# MINIMAL list | listing #-}
+  tiers = toTiers list
+  list = concat tiers
+  {-# MINIMAL list | tiers #-}
 
--- | Takes a list of values @xs@ and transform it into a 'Listing' on which each
---   size is occupied by a single element from @xs@. 
+-- | Takes a list of values @xs@ and transform it into tiers on which each
+--   tier is occupied by a single element from @xs@.
 --
 -- To convert back to a list, just 'concat'.
-toListing :: [a] -> [[a]]
-toListing = map (:[])
+toTiers :: [a] -> [[a]]
+toTiers = map (:[])
 
 instance Listable () where
   list = [()]
@@ -141,115 +139,111 @@ instance Listable Char where
       +| ['{'..'~']
 
 instance Listable Bool where
-  listing = cons0 False \/ cons0 True
+  tiers = cons0 False \/ cons0 True
 
 instance Listable a => Listable (Maybe a) where
-  listing = cons0 Nothing \/ cons1 Just
+  tiers = cons0 Nothing \/ cons1 Just
 
 instance (Listable a, Listable b) => Listable (Either a b) where
-  listing = cons1 Left  `ofWeight` 0
-       \\// cons1 Right `ofWeight` 0
+  tiers = cons1 Left  `ofWeight` 0
+     \\// cons1 Right `ofWeight` 0
 
 instance (Listable a, Listable b) => Listable (a,b) where
-  listing = lsProduct listing listing
+  tiers = tProduct tiers tiers
 
 instance (Listable a, Listable b, Listable c) => Listable (a,b,c) where
-  listing = lsProductWith (\x (y,z) -> (x,y,z)) listing listing
+  tiers = tProductWith (\x (y,z) -> (x,y,z)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d) =>
          Listable (a,b,c,d) where
-  listing = lsProductWith (\x (y,z,w) -> (x,y,z,w)) listing listing
+  tiers = tProductWith (\x (y,z,w) -> (x,y,z,w)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
          Listable (a,b,c,d,e) where
-  listing = lsProductWith (\x (y,z,w,v) -> (x,y,z,w,v)) listing listing
+  tiers = tProductWith (\x (y,z,w,v) -> (x,y,z,w,v)) tiers tiers
 
 instance (Listable a) => Listable [a] where
-  listing = cons0 []
-         \/ cons2 (:)
+  tiers = cons0 []
+       \/ cons2 (:)
 
 -- The position of Infinity in the enumeration is arbitrary.
-lsFractional :: Fractional a => [[a]]
-lsFractional = lsProductWith (+) lsFractionalParts
-                                 (lsmap fromIntegral (listing::[[Integer]]))
+tFractional :: Fractional a => [[a]]
+tFractional = tProductWith (+) tFractionalParts
+                               (tmap fromIntegral (tiers::[[Integer]]))
             \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
-  where lsFractionalParts :: Fractional a => [[a]]
-        lsFractionalParts = [0]
-                          : [ [fromIntegral a / fromIntegral b]
-                            | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
+  where tFractionalParts :: Fractional a => [[a]]
+        tFractionalParts = [0]
+                         : [ [fromIntegral a / fromIntegral b]
+                           | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
 
 -- Note that this instance ignores NaN's.
 instance Listable Float where
-  listing = lsFractional
+  tiers = tFractional
 
 instance Listable Double where
-  listing = lsFractional
+  tiers = tFractional
 
 
--- | 'map' over a listing
-lsmap :: (a -> b) -> [[a]] -> [[b]]
-lsmap = map . map
+-- | 'map' over tiers
+tmap :: (a -> b) -> [[a]] -> [[b]]
+tmap = map . map
 
--- | 'map' over a listing (alias)
-lsMap :: (a -> b) -> [[a]] -> [[b]]
-lsMap = lsmap
+-- | 'filter' tiers
+tfilter :: (a -> Bool) -> [[a]] -> [[a]]
+tfilter f = map (filter f)
 
--- | 'filter' a listing
-lsfilter :: (a -> Bool) -> [[a]] -> [[a]]
-lsfilter f = map (filter f)
+-- | 'filter' tiers
+tFilter :: (a -> Bool) -> [[a]] -> [[a]]
+tFilter = tfilter
 
--- | 'filter' a listing (alias)
-lsFilter :: (a -> Bool) -> [[a]] -> [[a]]
-lsFilter = lsfilter
-
--- | 'concat' a listing
-lsConcat :: [[ [[a]] ]] -> [[a]]
-lsConcat = foldr (\+:/) [] . map (foldr (\/) [])
+-- | 'concat' tiers of tiers
+tConcat :: [[ [[a]] ]] -> [[a]]
+tConcat = foldr (\+:/) [] . map (foldr (\/) [])
   where xss \+:/ yss = xss \/ ([]:yss)
 
--- | 'concatMap' a listing
-lsConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
-lsConcatMap f = lsConcat . lsmap f
+-- | 'concatMap' over tiers
+tConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
+tConcatMap f = tConcat . tmap f
 
 
--- | Takes a constructor with no arguments and return a listing (with a single value).
+-- | Takes a constructor with no arguments and return tiers (with a single value).
 --   This value, by default, has size/weight 0.
 cons0 :: a -> [[a]]
 cons0 x = [[x]]
 
--- | Takes a constructor with one argument and return a listing.
+-- | Takes a constructor with one argument and return tiers of that value.
 --   This value, by default, has size/weight 1.
 cons1 :: Listable a => (a -> b) -> [[b]]
-cons1 f = lsmap f listing `addWeight` 1
+cons1 f = tmap f tiers `addWeight` 1
 
--- | Takes a constructor with two arguments and return a listing.
+-- | Takes a constructor with two arguments and return tiers of that value.
 --   This value, by default, has size/weight 1.
 cons2 :: (Listable a, Listable b) => (a -> b -> c) -> [[c]]
-cons2 f = lsmap (uncurry f) listing `addWeight` 1
+cons2 f = tmap (uncurry f) tiers `addWeight` 1
 
 cons3 :: (Listable a, Listable b, Listable c) => (a -> b -> c -> d) -> [[d]]
-cons3 f = lsmap (uncurry3 f) listing `addWeight` 1
+cons3 f = tmap (uncurry3 f) tiers `addWeight` 1
 
 cons4 :: (Listable a, Listable b, Listable c, Listable d)
       => (a -> b -> c -> d -> e) -> [[e]]
-cons4 f = lsmap (uncurry4 f) listing `addWeight` 1
+cons4 f = tmap (uncurry4 f) tiers `addWeight` 1
 
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
-cons5 f = lsmap (uncurry5 f) listing `addWeight` 1
+cons5 f = tmap (uncurry5 f) tiers `addWeight` 1
 
--- | Resets the weight of a constructor (or listing)
+-- | Resets the weight of a constructor (or tiers)
 -- Typically used as an infix constructor when defining Listable instances:
 --
 -- > cons<N> `ofWeight` W
 --
 -- Be careful: do not apply @`ofWeight` 0@ to recursive data structure
 -- constructors.  In general this will make the list of size 0 infinite,
--- breaking the listing invariant.
+-- breaking the tier invariant (each tier must be finite).
 ofWeight :: [[a]] -> Int -> [[a]]
 ofWeight xss w = dropWhile null xss `addWeight` w
 
--- | Adds to the weight of a constructor (or listing)
+-- | Adds to the weight of tiers of a constructor
 addWeight :: [[a]] -> Int -> [[a]]
 addWeight xss w = replicate w [] ++ xss
 
@@ -288,19 +282,19 @@ zipWith' f _  zy xs     [] = map (`f` zy) xs
 zipWith' f zx _  []     ys = map (f zx) ys
 zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
 
--- | Combine two listings by appending values of each increasing size.
+-- | Combine two lists of tiers by appending values of each increasing size.
 (\/) :: [[a]] -> [[a]] -> [[a]]
 (\/) = zipWith' (++) [] []
 infixr 7 \/
 
--- | Combine two listings by interleaving values of each increasing size.
+-- | Combine two lists of tiers by interleaving values of each increasing size.
 (\\//) :: [[a]] -> [[a]] -> [[a]]
 (\\//) = zipWith' (+|) [] []
 infixr 7 \\//
 
--- | Take the product of two listings.
+-- | Take a tiered product of lists of tiers.
 --
--- > lsProduct [[0]..] [[0]..]
+-- > tProduct [[0]..] [[0]..]
 -- > == [  [(0,0)]
 -- >    ,  [(1,0),(0,1)]
 -- >    ,  [(2,0),(1,1),(0,2)]
@@ -308,48 +302,48 @@ infixr 7 \\//
 -- >    ...
 -- >    ]
 --
--- In terms of '(>:<)', 'lsProduct' is:
+-- In terms of '(>:<)', 'tsProduct' is:
 --
--- > lsProduct [xs] [ys] = [xs>:<ys]
--- > lsProduct [xs0,xs1] [ys0] = [xs0>:<ys0, xs1>:<ys0]
--- > lsProduct [xs0,xs1] [ys0,ys1] = [xs0>:<ys0, xs1>:<ys0++xs0>:<ys1, xs1>:<ys1]
--- > lsProduct [xs0,xs1,xs2] [ys0,ys1] =
--- >                           [ xs0 >:< ys0
--- >                           , xs1 >:< ys0 ++ xs0 >:< ys1
--- >                           , xs2 >:< ys0 ++ xs1 >:< ys1
--- >                           ]
--- > lsProduct [xs0,xs1,xs2] [ys0,ys1,ys2] =
--- >                           [ xs0 >:< ys0
--- >                           , xs1 >:< ys0 ++ xs0 >:< ys1
--- >                           , xs2 >:< ys0 ++ xs1 >:< ys1 ++ xs0 >:< ys2
--- >                           , xs2 >:< ys1 ++ xs1 >:< ys2
--- >                           , xs2 >:< ys2
--- >                           ]
--- > lsProduct ...
-lsProduct :: [[a]] -> [[b]] -> [[(a,b)]]
-lsProduct = lsProductWith (,)
+-- > tProduct [xs] [ys] = [xs>:<ys]
+-- > tProduct [xs0,xs1] [ys0] = [xs0>:<ys0, xs1>:<ys0]
+-- > tProduct [xs0,xs1] [ys0,ys1] = [xs0>:<ys0, xs1>:<ys0++xs0>:<ys1, xs1>:<ys1]
+-- > tProduct [xs0,xs1,xs2] [ys0,ys1] =
+-- >   [ xs0 >:< ys0
+-- >   , xs1 >:< ys0 ++ xs0 >:< ys1
+-- >   , xs2 >:< ys0 ++ xs1 >:< ys1
+-- >   ]
+-- > tProduct [xs0,xs1,xs2] [ys0,ys1,ys2] =
+-- >   [ xs0 >:< ys0
+-- >   , xs1 >:< ys0 ++ xs0 >:< ys1
+-- >   , xs2 >:< ys0 ++ xs1 >:< ys1 ++ xs0 >:< ys2
+-- >   , xs2 >:< ys1 ++ xs1 >:< ys2
+-- >   , xs2 >:< ys2
+-- >   ]
+-- > tProduct ...
+tProduct :: [[a]] -> [[b]] -> [[(a,b)]]
+tProduct = tProductWith (,)
 
--- | Infix shorthand for 'lsProduct'
+-- | Infix shorthand for 'tsProduct'
 (><) :: [[a]] -> [[b]] -> [[(a,b)]]
-(><) = lsProduct
+(><) = tProduct
 infixr 8 ><
 
-lsProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
-lsProductWith _ _ [] = []
-lsProductWith _ [] _ = []
-lsProductWith f (xs:xss) yss = map (productWith f xs) yss
-                            \/ lsProductWith f xss yss `addWeight` 1
+tProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
+tProductWith _ _ [] = []
+tProductWith _ [] _ = []
+tProductWith f (xs:xss) yss = map (productWith f xs) yss
+                           \/ tProductWith f xss yss `addWeight` 1
 
 
 class Testable a where
-  lsResults   :: a -> [[([String],Bool)]]
+  tResults   :: a -> [[([String],Bool)]]
 
 instance Testable Bool where
-  lsResults p = [[([],p)]]
+  tResults p = [[([],p)]]
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
-  lsResults p = lsConcatMap lsResultsFor listing
-    where lsResultsFor x = mapFst (showsPrec 11 x "":) `lsmap` lsResults (p x)
+  tResults p = tConcatMap tResultsFor tiers
+    where tResultsFor x = mapFst (showsPrec 11 x "":) `tmap` tResults (p x)
           mapFst f (x,y) = (f x, y)
 
 -- | List all results of a 'Testable' property.
@@ -358,7 +352,7 @@ instance (Testable b, Show a, Listable a) => Testable (a->b) where
 -- The boolean tells whether the property holds for that selection of argument.
 -- This list is usually infinite.
 results :: Testable a => a -> [([String],Bool)]
-results = concat . lsResults
+results = concat . tResults
 
 -- | Lists all counter-examples for a number of tests to a property,
 counterExamples :: Testable a => Int -> a -> [[String]]
