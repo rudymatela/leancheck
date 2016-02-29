@@ -30,6 +30,7 @@ tests =
   , lsNatSixtupleOrd 500
   , lsNatListOrd 500
   , lsListsOfNatOrd 500
+  , take 10 (lsListsOf (listing::[[Nat]])) == take 10 listing
 
   -- tests!
   , counterExample 10 (\x y -> x + y /= (x::Int)) == Just ["0", "0"]
