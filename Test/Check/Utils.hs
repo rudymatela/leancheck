@@ -94,7 +94,8 @@ productWithMaybe f xs ys = catMaybes $ productWith f xs ys
 -- >                        , ...
 -- >                        ]
 lsListsOf :: [[a]] -> [[[a]]]
-lsListsOf xss = [[ [] ]] ++ lsProductWith (:) xss (lsListsOf xss)
+lsListsOf xss = cons0 []
+             \/ lsProductWith (:) xss (lsListsOf xss) `addWeight` 1
 
 -- | Generates several lists of the same size.
 --
