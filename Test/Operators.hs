@@ -75,3 +75,7 @@ identity f = f === id
 notIdentity :: Eq a => (a -> a) -> a -> Bool
 notIdentity = (not .) . identity
 
+-- TODO:  something =$ function $= somethingElse
+--        function something == function somethingElse
+--        someList =|n|= someOtherList
+--        take n someList == take n someOtherList
