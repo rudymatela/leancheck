@@ -38,6 +38,7 @@ Test/Check/Function.o: \
   Test/Check/Core.hs
 Test/Check/Function/Periodic.o: \
   Test/Check/Function/Periodic.hs \
+  Test/Check/Utils.hs \
   Test/Check/Basic.hs \
   Test/Check/Core.hs
 Test/Check/Function/Show.o: \
@@ -87,6 +88,7 @@ Test/Operators.o: \
   Test/Check/Core.hs
 tests/test-derive.o: \
   tests/test-derive.hs \
+  Test/Operators.hs \
   Test/Check.hs \
   Test/Check/Derive.hs \
   Test/Check/Utils.hs \
@@ -94,6 +96,7 @@ tests/test-derive.o: \
   Test/Check/Core.hs
 tests/test-derive: \
   tests/test-derive.hs \
+  Test/Operators.hs \
   Test/Check.hs \
   Test/Check/Derive.hs \
   Test/Check/Utils.hs \
@@ -141,6 +144,8 @@ tests/test-most: \
   Test/Check/Core.hs
 tests/test-operators.o: \
   tests/test-operators.hs \
+  Test/TypeBinding.hs \
+  Test/Types.hs \
   Test/Operators.hs \
   Test/Check.hs \
   Test/Check/Derive.hs \
@@ -149,6 +154,8 @@ tests/test-operators.o: \
   Test/Check/Core.hs
 tests/test-operators: \
   tests/test-operators.hs \
+  Test/TypeBinding.hs \
+  Test/Types.hs \
   Test/Operators.hs \
   Test/Check.hs \
   Test/Check/Derive.hs \
@@ -157,6 +164,7 @@ tests/test-operators: \
   Test/Check/Core.hs
 tests/test.o: \
   tests/test.hs \
+  Test/Operators.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
   Test/Check.hs \
@@ -166,6 +174,7 @@ tests/test.o: \
   Test/Check/Core.hs
 tests/test: \
   tests/test.hs \
+  Test/Operators.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
   Test/Check.hs \
@@ -191,20 +200,32 @@ tests/test-types: \
   Test/Check/Core.hs
 tests/test-utils.o: \
   tests/test-utils.hs \
+  Test/TypeBinding.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
+  Test/Operators.hs \
   Test/Check.hs \
-  Test/Check/Utils.hs \
   Test/Check/Derive.hs \
+  Test/Check/Utils.hs \
   Test/Check/Basic.hs \
   Test/Check/Core.hs
 tests/test-utils: \
   tests/test-utils.hs \
+  Test/TypeBinding.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
+  Test/Operators.hs \
   Test/Check.hs \
-  Test/Check/Utils.hs \
   Test/Check/Derive.hs \
+  Test/Check/Utils.hs \
+  Test/Check/Basic.hs \
+  Test/Check/Core.hs
+Test/TypeBinding.o: \
+  Test/TypeBinding.hs \
+  Test/Types.hs \
+  Test/Check.hs \
+  Test/Check/Derive.hs \
+  Test/Check/Utils.hs \
   Test/Check/Basic.hs \
   Test/Check/Core.hs
 Test/Types.o: \
