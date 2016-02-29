@@ -4,6 +4,7 @@ idx/
 dist/
 log/
 *.swp
+*.swo
 *.o
 *.hi
 *.dyn_hi
