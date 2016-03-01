@@ -35,6 +35,7 @@ library
                  , Test.Check.Error
                  , Test.Types
                  , Test.Operators
+                 , Test.TypeBinding
                  , Test.Most
                  , Test.Check.Function
                  , Test.Check.Function.ListsOfPairs
