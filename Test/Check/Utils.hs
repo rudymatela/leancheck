@@ -118,17 +118,20 @@ tProducts = foldr (tProductWith (:)) [[[]]]
 tNoDupListsOf :: [[a]] -> [[[a]]]
 tNoDupListsOf = ([[]]:) . tConcat . tChoicesWith (\x xss -> tmap (x:) (tNoDupListsOf xss))
 
--- | Using a sized list, forms disjoint sized pairs of elements and sized lists
--- of elements.
+-- | Lists tiers of all choices of values from tiers.
+-- Choices are pairs of values and tiers excluding that value.
 --
--- > djs [[False,True]] == [[(False,[[True]]),(True,[[False]])]]
--- > djs [[1],[2],[3]]  == [[(1,[[],[2],[3]])],[(2,[[1],[],[3]])],[(3,[[1],[2],[]])]]
+-- > tChoices [[False,True]] == [[(False,[[True]]),(True,[[False]])]]
+-- > tChoices [[1],[2],[3]]
+-- >   == [ [(1,[[],[2],[3]])]
+-- >      , [(2,[[1],[],[3]])]
+-- >      , [(3,[[1],[2],[]])] ]
 --
--- The returned list is sized by the extracted element.
--- This is intended only to be used in 'tsNoDupListsOf'
+-- Each choice is sized by the extracted element.
 tChoices :: [[a]] -> [[(a,[[a]])]]
 tChoices = tChoicesWith (,)
 
+-- | Like 'tChoices', but allows a custom function.
 tChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 tChoicesWith f []           = []
 tChoicesWith f [[]]         = []
@@ -162,16 +165,19 @@ tStrictlyAscendingListsOf = ([[]]:)
 tSetsOf :: [[a]] -> [[[a]]]
 tSetsOf = tStrictlyAscendingListsOf
 
--- | Using a sized list, forms crescent sized pairs of elements and sized lists
---   of elements.  This is similar to 'djs' differing only that the elements
---   listed second in the pair are always "greater" (in terms of enumeration) than
---   the first.
+-- | Like 'tChoices', but paired tiers are always strictly ascending (in terms
+--   of enumeration).
 --
--- tStrictlyAscendingChoices [[1],[2],[3]]  == [[(1,[[],[2],[3]])],[(2,[[],[],[3]])],[(3,[[],[],[]])]]
--- tStrictlyAscendingChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
+-- > tStrictlyAscendingChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
+-- > tStrictlyAscendingChoices [[1],[2],[3]]
+-- >   == [ [(1,[[],[2],[3]])]
+-- >      , [(2,[[],[],[3]])]
+-- >      , [(3,[[],[],[]])]
+-- >      ]
 tStrictlyAscendingChoices :: [[a]] -> [[(a,[[a]])]]
 tStrictlyAscendingChoices = tStrictlyAscendingChoicesWith (,)
 
+-- | Like 'tStrictlyAscendingChoices' but customized by a function.
 tStrictlyAscendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 tStrictlyAscendingChoicesWith f []           = []
 tStrictlyAscendingChoicesWith f [[]]         = []
