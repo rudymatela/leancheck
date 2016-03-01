@@ -335,6 +335,13 @@ tProductWith f (xs:xss) yss = map (productWith f xs) yss
                            \/ tProductWith f xss yss `addWeight` 1
 
 
+-- | 'Testable' values are functions
+--   of 'Listable' arguments that return boolean values,
+--   e.g.:
+--
+-- * @ Bool @
+-- * @ Int -> Bool @
+-- * @ Listable a => a -> a -> Bool @
 class Testable a where
   tResults   :: a -> [[([String],Bool)]]
 
