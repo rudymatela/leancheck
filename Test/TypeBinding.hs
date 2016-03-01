@@ -1,3 +1,12 @@
+-- | Infix operators for type binding via dummy values
+--
+-- *                    as type of: '(-:)'
+-- *           argument as type of: '(-:>)'
+-- *             result as type of: '(->:)'
+-- * argument of result as type of: '(->:>)'
+-- *   result of result as type of: '(->>:)'
+-- * argument of result of result as type of: '(->>:>)'
+-- *   result of result of result as type of: '(->>>:)'
 module Test.TypeBinding where
 
 import Test.Types
@@ -24,25 +33,25 @@ infixl 1 -:
 -- to have the same type as the second.
 --
 -- > f ->: int == f -: int >- und
-(->:) :: (a -> b) -> a -> (a -> b)
-(->:) = const
-infixl 1 ->:
+(-:>) :: (a -> b) -> a -> (a -> b)
+(-:>) = const
+infixl 1 -:>
 
 -- | Type restricted version of const
 -- that forces the argument of the result of its first argument
 -- to have the same type as the second.
 --
 -- > f ->>: int == f -: und >- int >- und
-(->>:) :: (a -> b -> c) -> b -> (a -> b -> c)
-(->>:) = const
-infixl 1 ->>:
+(->:>) :: (a -> b -> c) -> b -> (a -> b -> c)
+(->:>) = const
+infixl 1 ->:>
 
 -- | Type restricted version of const
 -- that forces the argument of the result of the result of its first argument
 -- to have the same type as the second.
-(->>>:) :: (a -> b -> c -> d) -> c -> (a -> b -> c -> d)
-(->>>:) = const
-infixl 1 ->>>:
+(->>:>) :: (a -> b -> c -> d) -> c -> (a -> b -> c -> d)
+(->>:>) = const
+infixl 1 ->>:>
 
 -- Returns an undefined functional value
 -- that takes an argument of the type of its first argument

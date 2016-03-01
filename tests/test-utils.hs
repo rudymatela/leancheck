@@ -29,9 +29,9 @@ tests =
                        [[const Nothing],[Just]]
        == [[],[1],[2],[3],[4]]
 
-  , holds 100 $ ptofApp ->: (char,char)
-  , holds 100 $ associationsValues int  100 ->: [int]
-  , holds 100 $ associationsValues bool 100 ->: [bool]
+  , holds 100 $ ptofApp -:> (char,char)
+  , holds 100 $ associationsValues int  100 -:> [int]
+  , holds 100 $ associationsValues bool 100 -:> [bool]
   , holds 500 $ associationsNewAndOld -: [int]  >- [[int]]  >- und
   , holds 500 $ associationsNewAndOld -: [int]  >- [[bool]] >- und
   , holds 500 $ associationsNewAndOld -: [bool] >- [[bool]] >- und
