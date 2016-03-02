@@ -1,11 +1,11 @@
-llcheck
-=======
+LeanCheck
+=========
 
 **This is a work in progress.  Come back after a while.**
 
 **The API is very likely to change in the near future**
 
-llcheck is a simple enumerative property-based testing library.  It works by
+LeanCheck is a simple enumerative property-based testing library.  It works by
 producing *tiers* of test values, which are essentially (possibly infinite)
 lists of finite lists of same-and-increasingly-sized values.  It is similar to
 [Feat] in that regard.
@@ -61,7 +61,7 @@ printing.
 Testing for custom types
 ------------------------
 
-llcheck works on all types that are `Listable`.
+LeanCheck works on all types that are `Listable`.
 Custom `Listable` instances are created similarly to SmallCheck:
 
 	data MyType = MyConsA
@@ -112,7 +112,7 @@ To install:
 
 To reference in a cabal sandbox:
 
-	$ cabal sandbox add-source ../path/to/llcheck
+	$ cabal sandbox add-source ../path/to/leancheck
 
 To use the files directly in your project:
 

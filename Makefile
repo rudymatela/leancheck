@@ -1,4 +1,4 @@
-# Makefile for llcheck
+# Makefile for LeanCheck
 TESTS = tests/test           \
         tests/test-utils     \
         tests/test-derive    \
