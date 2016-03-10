@@ -18,7 +18,7 @@ module Test.Check.Basic
   )
 where
 
-import Test.Check.Core hiding (zipWith')
+import Test.Check.Core
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
