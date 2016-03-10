@@ -5,6 +5,7 @@ import Test.Check
 import Test.Check.Invariants
 import Test.Types (Nat)
 import Test.Operators
+import Test.TypeBinding
 
 main :: IO ()
 main =
@@ -54,6 +55,11 @@ tests =
   , tProductsIsFilterByLength (tiers :: [[ Nat ]])   10 `all` [1..10]
   , tProductsIsFilterByLength (tiers :: [[ Bool ]])   6 `all` [1..10]
   , tProductsIsFilterByLength (tiers :: [[ [Nat] ]])  6 `all` [1..10]
+
+  , holds 100 $  (\/)  ==== zipWith' (++) [] [] -:> [[uint2]]
+  , holds 100 $  (\/)  ==== zipWith' (++) [] [] -:> [[bool]]
+  , holds 100 $ (\\//) ==== zipWith' (+|) [] [] -:> [[uint2]]
+  , holds 100 $ (\\//) ==== zipWith' (+|) [] [] -:> [[bool]]
   ]
 
 allUnique :: Ord a => [a] -> Bool
@@ -61,3 +67,18 @@ allUnique [] = True
 allUnique (x:xs) = x `notElem` xs
                 && allUnique (filter (< x) xs)
                 && allUnique (filter (> x) xs)
+
+
+-- | 'zipwith\'' works similarly to 'zipWith', but takes neutral elements to
+--   operate when one of the lists is exhausted, so, you don't loose elements.
+--
+-- > zipWith' f z e [x,y] [a,b,c,d] == [f x a, f y b, f z c, f z d]
+--
+-- > zipWith' f z e [x,y,z] [a] == [f x a, f y e, f z e]
+--
+-- > zipWith' (+) 0 0 [1,2,3] [1,2,3,4,5,6] == [2,4,6,4,5,6]
+zipWith' :: (a->b->c) -> a -> b  -> [a] -> [b] -> [c]
+zipWith' _ _  _  []     [] = []
+zipWith' f _  zy xs     [] = map (`f` zy) xs
+zipWith' f zx _  []     ys = map (f zx) ys
+zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys

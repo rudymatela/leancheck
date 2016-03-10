@@ -66,7 +66,6 @@ module Test.Check.Core
   , (+|)
   , (>:<)
   , productWith
-  , zipWith'
   , listIntegral
   , tFractional
   )
@@ -268,28 +267,22 @@ productWith :: (a->b->c) -> [a] -> [b] -> [c]
 productWith _ []     _   =  []
 productWith f (x:xs) ys  =  map (f x) ys ++ productWith f xs ys
 
--- | 'zipwith\'' works similarly to 'zipWith', but takes neutral elements to
---   operate when one of the lists is exhausted, so, you don't loose elements.
+-- | Append tiers.
 --
--- > zipWith' f z e [x,y] [a,b,c,d] == [f x a, f y b, f z c, f z d]
---
--- > zipWith' f z e [x,y,z] [a] == [f x a, f y e, f z e]
---
--- > zipWith' (+) 0 0 [1,2,3] [1,2,3,4,5,6] == [2,4,6,4,5,6]
-zipWith' :: (a->b->c) -> a -> b  -> [a] -> [b] -> [c]
-zipWith' _ _  _  []     [] = []
-zipWith' f _  zy xs     [] = map (`f` zy) xs
-zipWith' f zx _  []     ys = map (f zx) ys
-zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
-
--- | Combine two lists of tiers by appending values of each increasing size.
+-- > [xs,ys,zs,...] \/ [as,bs,cs,...] = [xs++as,ys++bs,zs++cs,...]
 (\/) :: [[a]] -> [[a]] -> [[a]]
-(\/) = zipWith' (++) [] []
+xss \/ []  = xss
+[]  \/ yss = yss
+(xs:xss) \/ (ys:yss) = (xs ++ ys) : xss \/ yss
 infixr 7 \/
 
--- | Combine two lists of tiers by interleaving values of each increasing size.
+-- | Interleave tiers.  When in doubt, use @\/@ instead.
+--
+-- > [xs,ys,zs,...] \/ [as,bs,cs,...] = [xs+|as,ys+|bs,zs+|cs,...]
 (\\//) :: [[a]] -> [[a]] -> [[a]]
-(\\//) = zipWith' (+|) [] []
+xss \\// []  = xss
+[]  \\// yss = yss
+(xs:xss) \\// (ys:yss) = (xs +| ys) : xss \\// yss
 infixr 7 \\//
 
 -- | Take a tiered product of lists of tiers.
