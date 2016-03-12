@@ -28,6 +28,16 @@ where
 import Test.Check (Listable(..), listIntegral)
 import Data.Ratio ((%))
 
+narrowU :: Int -> Int -> Int
+narrowU w i = i `mod` 2^w
+
+narrowS :: Int -> Int -> Int
+narrowS w i = let l  = 2^w
+                  i' = i `mod` l
+              in if i' < 2^(w-1)
+                   then i'
+                   else i' - l
+
 mapTuple :: (a -> b) -> (a,a) -> (b,b)
 mapTuple f (x,y) = (f x, f y)
 
@@ -46,17 +56,6 @@ otNewtype con des o = \x y -> mapTuple con $ des x `o` des y
 readsPrecNewtype :: Read a => (a -> b) -> Int -> String -> [(b,String)]
 readsPrecNewtype con n = map (mapFst con) . readsPrec n
 
-eBoundedFromSomething :: (Show a, Ord a, Bounded a) => String -> (b -> a) -> b -> a
-eBoundedFromSomething caller con n
-    | x > maxBound || x < minBound = error
-                                   $ "Test.Types.boundedToEnum("
-                                  ++ caller ++ "): out of bounds"
-    | otherwise = x
-  where x = con n
-
-boundedFromSomething :: (Show a, Ord a, Bounded a) => (b -> a) -> b -> a
-boundedFromSomething = eBoundedFromSomething "??"
-
 boundedEnumFrom :: (Ord a,Bounded a,Enum a) => a -> [a]
 boundedEnumFrom x = [x..maxBound]
 
@@ -68,25 +67,28 @@ boundedEnumFromThen x y | x > y     = [x,y..minBound]
 -- Single-bit signed integer: -1, 0
 newtype Int1 = Int1 { unInt1 :: Int } deriving (Eq, Ord)
 
+int1 :: Int -> Int1
+int1 = Int1 . narrowS 1
+
 instance Show Int1 where
   show = show . unInt1
 
 instance Read Int1 where
-  readsPrec = readsPrecNewtype Int1
+  readsPrec = readsPrecNewtype int1
 
 instance Num Int1 where
-  (+) = oNewtype Int1 unInt1 (+)
-  (-) = oNewtype Int1 unInt1 (-)
-  (*) = oNewtype Int1 unInt1 (*)
-  abs = fNewtype Int1 unInt1 abs
-  signum = fNewtype Int1 unInt1 signum
-  fromInteger = eBoundedFromSomething "Int1.fromInteger" (Int1 . fromInteger)
+  (+) = oNewtype int1 unInt1 (+)
+  (-) = oNewtype int1 unInt1 (-)
+  (*) = oNewtype int1 unInt1 (*)
+  abs = fNewtype int1 unInt1 abs
+  signum = fNewtype int1 unInt1 signum
+  fromInteger = int1 . fromInteger
 
 instance Real Int1 where
   toRational (Int1 x) = fromIntegral x % 1
 
 instance Integral Int1 where
-  quotRem = otNewtype Int1 unInt1 quotRem
+  quotRem = otNewtype int1 unInt1 quotRem
   toInteger = toInteger . unInt1
 
 instance Bounded Int1 where
@@ -94,7 +96,7 @@ instance Bounded Int1 where
   minBound = Int1 (-1)
 
 instance Enum Int1 where
-  toEnum   = eBoundedFromSomething "Int1.toEnum" Int1
+  toEnum   = int1
   fromEnum = unInt1
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen
@@ -106,25 +108,28 @@ instance Listable Int1 where
 -- Single-bit unsigned integer: 0, 1
 newtype Word1 = Word1 { unWord1 :: Int } deriving (Eq, Ord)
 
+word1 :: Int -> Word1
+word1 = Word1 . narrowU 1
+
 instance Show Word1 where
   show = show . unWord1
 
 instance Read Word1 where
-  readsPrec = readsPrecNewtype Word1
+  readsPrec = readsPrecNewtype word1
 
 instance Num Word1 where
-  (+) = oNewtype Word1 unWord1 (+)
-  (-) = oNewtype Word1 unWord1 (-)
-  (*) = oNewtype Word1 unWord1 (*)
-  abs = fNewtype Word1 unWord1 abs
-  signum = fNewtype Word1 unWord1 signum
-  fromInteger = eBoundedFromSomething "Word1.fromInteger" (Word1 . fromInteger)
+  (+) = oNewtype word1 unWord1 (+)
+  (-) = oNewtype word1 unWord1 (-)
+  (*) = oNewtype word1 unWord1 (*)
+  abs = fNewtype word1 unWord1 abs
+  signum = fNewtype word1 unWord1 signum
+  fromInteger = word1 . fromInteger
 
 instance Real Word1 where
   toRational (Word1 x) = fromIntegral x % 1
 
 instance Integral Word1 where
-  quotRem = otNewtype Word1 unWord1 quotRem
+  quotRem = otNewtype word1 unWord1 quotRem
   toInteger = toInteger . unWord1
 
 instance Bounded Word1 where
@@ -132,7 +137,7 @@ instance Bounded Word1 where
   minBound = Word1 0
 
 instance Enum Word1 where
-  toEnum   = eBoundedFromSomething "Word1.toEnum" Word1
+  toEnum   = word1
   fromEnum = unWord1
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen
@@ -144,25 +149,28 @@ instance Listable Word1 where
 -- Two-bit signed integer: -2, -1, 0, 1
 newtype Int2 = Int2 { unInt2 :: Int } deriving (Eq, Ord)
 
+int2 :: Int -> Int2
+int2 = Int2 . narrowS 2
+
 instance Show Int2 where
   show = show . unInt2
 
 instance Read Int2 where
-  readsPrec = readsPrecNewtype Int2
+  readsPrec = readsPrecNewtype int2
 
 instance Num Int2 where
-  (+) = oNewtype Int2 unInt2 (+)
-  (-) = oNewtype Int2 unInt2 (-)
-  (*) = oNewtype Int2 unInt2 (*)
-  abs = fNewtype Int2 unInt2 abs
-  signum = fNewtype Int2 unInt2 signum
-  fromInteger = eBoundedFromSomething "Int2.fromInteger" (Int2 . fromInteger)
+  (+) = oNewtype int2 unInt2 (+)
+  (-) = oNewtype int2 unInt2 (-)
+  (*) = oNewtype int2 unInt2 (*)
+  abs = fNewtype int2 unInt2 abs
+  signum = fNewtype int2 unInt2 signum
+  fromInteger = int2 . fromInteger
 
 instance Real Int2 where
   toRational (Int2 x) = fromIntegral x % 1
 
 instance Integral Int2 where
-  quotRem = otNewtype Int2 unInt2 quotRem
+  quotRem = otNewtype int2 unInt2 quotRem
   toInteger = toInteger . unInt2
 
 instance Bounded Int2 where
@@ -170,7 +178,7 @@ instance Bounded Int2 where
   minBound = Int2 (-2)
 
 instance Enum Int2 where
-  toEnum   = eBoundedFromSomething "Int2.toEnum" Int2
+  toEnum   = int2
   fromEnum = unInt2
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen
@@ -182,25 +190,28 @@ instance Listable Int2 where
 -- Two-bit unsigned integer: 0, 1, 2, 3
 newtype Word2 = Word2 { unWord2 :: Int } deriving (Eq, Ord)
 
+word2 :: Int -> Word2
+word2 = Word2 . narrowU 2
+
 instance Show Word2 where
   show = show . unWord2
 
 instance Read Word2 where
-  readsPrec = readsPrecNewtype Word2
+  readsPrec = readsPrecNewtype word2
 
 instance Num Word2 where
-  (+) = oNewtype Word2 unWord2 (+)
-  (-) = oNewtype Word2 unWord2 (-)
-  (*) = oNewtype Word2 unWord2 (*)
-  abs = fNewtype Word2 unWord2 abs
-  signum = fNewtype Word2 unWord2 signum
-  fromInteger = eBoundedFromSomething "Word2.fromInteger" (Word2 . fromInteger)
+  (+) = oNewtype word2 unWord2 (+)
+  (-) = oNewtype word2 unWord2 (-)
+  (*) = oNewtype word2 unWord2 (*)
+  abs = fNewtype word2 unWord2 abs
+  signum = fNewtype word2 unWord2 signum
+  fromInteger = word2 . fromInteger
 
 instance Real Word2 where
   toRational (Word2 x) = fromIntegral x % 1
 
 instance Integral Word2 where
-  quotRem = otNewtype Word2 unWord2 quotRem
+  quotRem = otNewtype word2 unWord2 quotRem
   toInteger = toInteger . unWord2
 
 instance Bounded Word2 where
@@ -208,7 +219,7 @@ instance Bounded Word2 where
   minBound = Word2 0
 
 instance Enum Word2 where
-  toEnum   = eBoundedFromSomething "Word2.toEnum" Word2
+  toEnum   = word2
   fromEnum = unWord2
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen
@@ -220,25 +231,28 @@ instance Listable Word2 where
 -- Three-bit signed integer: -4, -3, -2, -1, 0, 1, 2, 3
 newtype Int3 = Int3 { unInt3 :: Int } deriving (Eq, Ord)
 
+int3 :: Int -> Int3
+int3 = Int3 . narrowS 3
+
 instance Show Int3 where
   show = show . unInt3
 
 instance Read Int3 where
-  readsPrec = readsPrecNewtype Int3
+  readsPrec = readsPrecNewtype int3
 
 instance Num Int3 where
-  (+) = oNewtype Int3 unInt3 (+)
-  (-) = oNewtype Int3 unInt3 (-)
-  (*) = oNewtype Int3 unInt3 (*)
-  abs = fNewtype Int3 unInt3 abs
-  signum = fNewtype Int3 unInt3 signum
-  fromInteger = eBoundedFromSomething "Int3.fromInteger" (Int3 . fromInteger)
+  (+) = oNewtype int3 unInt3 (+)
+  (-) = oNewtype int3 unInt3 (-)
+  (*) = oNewtype int3 unInt3 (*)
+  abs = fNewtype int3 unInt3 abs
+  signum = fNewtype int3 unInt3 signum
+  fromInteger = int3 . fromInteger
 
 instance Real Int3 where
   toRational (Int3 x) = fromIntegral x % 1
 
 instance Integral Int3 where
-  quotRem = otNewtype Int3 unInt3 quotRem
+  quotRem = otNewtype int3 unInt3 quotRem
   toInteger = toInteger . unInt3
 
 instance Bounded Int3 where
@@ -246,7 +260,7 @@ instance Bounded Int3 where
   minBound = Int3 (-4)
 
 instance Enum Int3 where
-  toEnum   = eBoundedFromSomething "Int3.toEnum" Int3
+  toEnum   = int3
   fromEnum = unInt3
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen
@@ -258,25 +272,28 @@ instance Listable Int3 where
 -- Three-bit unsigned integer: 0, 1, 2, 3, 4, 5, 6, 7
 newtype Word3 = Word3 { unWord3 :: Int } deriving (Eq, Ord)
 
+word3 :: Int -> Word3
+word3 = Word3 . narrowU 3
+
 instance Show Word3 where
   show = show . unWord3
 
 instance Read Word3 where
-  readsPrec = readsPrecNewtype Word3
+  readsPrec = readsPrecNewtype word3
 
 instance Num Word3 where
-  (+) = oNewtype Word3 unWord3 (+)
-  (-) = oNewtype Word3 unWord3 (-)
-  (*) = oNewtype Word3 unWord3 (*)
-  abs = fNewtype Word3 unWord3 abs
-  signum = fNewtype Word3 unWord3 signum
-  fromInteger = eBoundedFromSomething "Word3.fromInteger" (Word3 . fromInteger)
+  (+) = oNewtype word3 unWord3 (+)
+  (-) = oNewtype word3 unWord3 (-)
+  (*) = oNewtype word3 unWord3 (*)
+  abs = fNewtype word3 unWord3 abs
+  signum = fNewtype word3 unWord3 signum
+  fromInteger = word3 . fromInteger
 
 instance Real Word3 where
   toRational (Word3 x) = fromIntegral x % 1
 
 instance Integral Word3 where
-  quotRem = otNewtype Word3 unWord3 quotRem
+  quotRem = otNewtype word3 unWord3 quotRem
   toInteger = toInteger . unWord3
 
 instance Bounded Word3 where
@@ -284,7 +301,7 @@ instance Bounded Word3 where
   minBound = Word3 0
 
 instance Enum Word3 where
-  toEnum   = eBoundedFromSomething "Word3.toEnum" Word3
+  toEnum   = word3
   fromEnum = unWord3
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen
@@ -296,25 +313,28 @@ instance Listable Word3 where
 -- Four-bit signed integers: -8, ..., 7
 newtype Int4 = Int4 { unInt4 :: Int } deriving (Eq, Ord)
 
+int4 :: Int -> Int4
+int4 = Int4 . narrowS 4
+
 instance Show Int4 where
   show = show . unInt4
 
 instance Read Int4 where
-  readsPrec = readsPrecNewtype Int4
+  readsPrec = readsPrecNewtype int4
 
 instance Num Int4 where
-  (+) = oNewtype Int4 unInt4 (+)
-  (-) = oNewtype Int4 unInt4 (-)
-  (*) = oNewtype Int4 unInt4 (*)
-  abs = fNewtype Int4 unInt4 abs
-  signum = fNewtype Int4 unInt4 signum
-  fromInteger = eBoundedFromSomething "Int4.fromInteger" (Int4 . fromInteger)
+  (+) = oNewtype int4 unInt4 (+)
+  (-) = oNewtype int4 unInt4 (-)
+  (*) = oNewtype int4 unInt4 (*)
+  abs = fNewtype int4 unInt4 abs
+  signum = fNewtype int4 unInt4 signum
+  fromInteger = int4 . fromInteger
 
 instance Real Int4 where
   toRational (Int4 x) = fromIntegral x % 1
 
 instance Integral Int4 where
-  quotRem = otNewtype Int4 unInt4 quotRem
+  quotRem = otNewtype int4 unInt4 quotRem
   toInteger = toInteger . unInt4
 
 instance Bounded Int4 where
@@ -322,7 +342,7 @@ instance Bounded Int4 where
   minBound = Int4 (-8)
 
 instance Enum Int4 where
-  toEnum   = eBoundedFromSomething "Int4.toEnum" Int4
+  toEnum   = int4
   fromEnum = unInt4
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen
@@ -334,6 +354,9 @@ instance Listable Int4 where
 -- Four-bit unsigned integer: 0, ..., 15
 newtype Word4 = Word4 { unWord4 :: Int } deriving (Eq, Ord)
 
+word4 :: Int -> Word4
+word4 = Word4 . narrowU 4
+
 instance Show Word4 where
   show = show . unWord4
 
@@ -341,18 +364,18 @@ instance Read Word4 where
   readsPrec = readsPrecNewtype Word4
 
 instance Num Word4 where
-  (+) = oNewtype Word4 unWord4 (+)
-  (-) = oNewtype Word4 unWord4 (-)
-  (*) = oNewtype Word4 unWord4 (*)
-  abs = fNewtype Word4 unWord4 abs
-  signum = fNewtype Word4 unWord4 signum
-  fromInteger = eBoundedFromSomething "Word4.fromInteger" (Word4 . fromInteger)
+  (+) = oNewtype word4 unWord4 (+)
+  (-) = oNewtype word4 unWord4 (-)
+  (*) = oNewtype word4 unWord4 (*)
+  abs = fNewtype word4 unWord4 abs
+  signum = fNewtype word4 unWord4 signum
+  fromInteger = word4 . fromInteger
 
 instance Real Word4 where
   toRational (Word4 x) = fromIntegral x % 1
 
 instance Integral Word4 where
-  quotRem = otNewtype Word4 unWord4 quotRem
+  quotRem = otNewtype word4 unWord4 quotRem
   toInteger = toInteger . unWord4
 
 instance Bounded Word4 where
@@ -360,7 +383,7 @@ instance Bounded Word4 where
   minBound = Word4 0
 
 instance Enum Word4 where
-  toEnum   = eBoundedFromSomething "Word4.toEnum" Word4
+  toEnum   = word4
   fromEnum = unWord4
   enumFrom = boundedEnumFrom
   enumFromThen = boundedEnumFromThen

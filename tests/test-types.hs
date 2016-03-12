@@ -1,7 +1,7 @@
 import System.Exit (exitFailure)
 import Data.List (elemIndices,delete)
 import Test.Types
-import Test.Check (list)
+import Test.Check (list,fails)
 
 main :: IO ()
 main =
@@ -42,6 +42,19 @@ tests =
   , [minBound..maxBound :: UInt2] == unsignedRange 2
   , [minBound..maxBound :: UInt3] == unsignedRange 3
   , [minBound..maxBound :: UInt4] == unsignedRange 4
+
+
+  -- abs minBound == minBound
+  , fails 100 (\i -> abs i > (0::Int1))
+  , fails 100 (\i -> abs i > (0::Int2))
+  , fails 100 (\i -> abs i > (0::Int3))
+  , fails 100 (\i -> abs i > (0::Int4))
+
+  -- maxBound + 1 == minBound
+  , fails 100 (\i -> i + 1 < (i::Int1))
+  , fails 100 (\i -> i + 1 < (i::Int2))
+  , fails 100 (\i -> i + 1 < (i::Int3))
+  , fails 100 (\i -> i + 1 < (i::Int4))
   ]
 
 
