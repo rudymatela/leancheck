@@ -1,12 +1,23 @@
 -- | Types to aid in property-based testing.
---
--- NOTE: On these types, due to the way Haskell desugars negation, you cannot
--- write the lower bounds for types with negative values (Int1,Int2,Int3,Int4)
--- directly: see NegativeLiterals extension for a through explanation of this
--- issue.
 module Test.Types
   (
   -- * Integer types
+  --
+  -- | Small-width integer types to aid in property-based testing.
+  -- Sometimes it is useful to limit the possibilities of enumerated values
+  -- when testing polymorphic functions, these types allow that.
+  --
+  -- The signed integer types @IntN@ are of limited bit width @N@
+  -- bounded by @-2^(N-1)@ to @2^(N-1)-1@.
+  -- The unsigned integer types @WordN@ are of limited bit width @N@
+  -- bounded by @0@ to @2^N-1@.
+  --
+  -- Operations are closed and modulo @2^N@.  e.g.:
+  --
+  -- > maxBound + 1      = minBound
+  -- > read "2"          = -2 :: Int2
+  -- > abs minBound      = minBound
+  -- > negate n          = 2^N - n :: WordN
     Int1
   , Int2
   , Int3
@@ -24,6 +35,9 @@ module Test.Types
   , UInt4
   )
 where
+-- TODO: Add Nat modulo N types: Nat1, Nat2, Nat3, Nat4, Nat5, Nat6, Nat7, Nat8
+--       Yes Nat modulo N!  Not Nat modulo 2^N (we already have Word)
+-- TODO: Add Ix and Bits instances
 
 import Test.Check (Listable(..), listIntegral)
 import Data.Ratio ((%))
@@ -64,7 +78,7 @@ boundedEnumFromThen x y | x > y     = [x,y..minBound]
                         | otherwise = [x,y..maxBound]
 
 
--- Single-bit signed integer: -1, 0
+-- | Single-bit signed integers: -1, 0
 newtype Int1 = Int1 { unInt1 :: Int } deriving (Eq, Ord)
 
 int1 :: Int -> Int1
@@ -105,7 +119,7 @@ instance Listable Int1 where
   list = [0,minBound]
 
 
--- Single-bit unsigned integer: 0, 1
+-- | Single-bit unsigned integer: 0, 1
 newtype Word1 = Word1 { unWord1 :: Int } deriving (Eq, Ord)
 
 word1 :: Int -> Word1
@@ -146,7 +160,7 @@ instance Listable Word1 where
   list = [0,maxBound]
 
 
--- Two-bit signed integer: -2, -1, 0, 1
+-- | Two-bit signed integers: -2, -1, 0, 1
 newtype Int2 = Int2 { unInt2 :: Int } deriving (Eq, Ord)
 
 int2 :: Int -> Int2
@@ -187,7 +201,7 @@ instance Listable Int2 where
   list = listIntegral
 
 
--- Two-bit unsigned integer: 0, 1, 2, 3
+-- | Two-bit unsigned integers: 0, 1, 2, 3
 newtype Word2 = Word2 { unWord2 :: Int } deriving (Eq, Ord)
 
 word2 :: Int -> Word2
@@ -228,7 +242,7 @@ instance Listable Word2 where
   list = [0..]
 
 
--- Three-bit signed integer: -4, -3, -2, -1, 0, 1, 2, 3
+-- | Three-bit signed integers: -4, -3, -2, -1, 0, 1, 2, 3
 newtype Int3 = Int3 { unInt3 :: Int } deriving (Eq, Ord)
 
 int3 :: Int -> Int3
@@ -269,7 +283,7 @@ instance Listable Int3 where
   list = listIntegral
 
 
--- Three-bit unsigned integer: 0, 1, 2, 3, 4, 5, 6, 7
+-- | Three-bit unsigned integers: 0, 1, 2, 3, 4, 5, 6, 7
 newtype Word3 = Word3 { unWord3 :: Int } deriving (Eq, Ord)
 
 word3 :: Int -> Word3
@@ -310,7 +324,8 @@ instance Listable Word3 where
   list = [0..]
 
 
--- Four-bit signed integers: -8, ..., 7
+-- | Four-bit signed integers:
+-- -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7
 newtype Int4 = Int4 { unInt4 :: Int } deriving (Eq, Ord)
 
 int4 :: Int -> Int4
@@ -351,7 +366,8 @@ instance Listable Int4 where
   list = listIntegral
 
 
--- Four-bit unsigned integer: 0, ..., 15
+-- | Four-bit unsigned integers:
+-- 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
 newtype Word4 = Word4 { unWord4 :: Int } deriving (Eq, Ord)
 
 word4 :: Int -> Word4
@@ -392,7 +408,10 @@ instance Listable Word4 where
   list = [0..]
 
 
--- Natural numbers (including 0)
+-- | Natural numbers (including 0): 0, 1, 2, 3, 4, 5, 6, 7, ...
+--
+-- Internally, this type is represented as an 'Int'.
+-- So, it is limited by the 'maxBound' of 'Int'.
 newtype Nat = Nat { unNat :: Int } deriving (Eq, Ord)
 
 instance Show Nat where
