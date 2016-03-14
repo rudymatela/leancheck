@@ -5,6 +5,7 @@ TESTS = tests/test           \
         tests/test-error     \
         tests/test-most      \
         tests/test-operators \
+        tests/test-funshow   \
         tests/test-types
 ALLOBJS = $(shell find Test -name \*.hs | sed -e 's/.hs$$/.o/')
 OBJS = Test/Check.o \
@@ -27,6 +28,7 @@ test: all-all $(TESTS)
 	./tests/test-error
 	./tests/test-most
 	./tests/test-operators
+	./tests/test-funshow
 	./tests/test-types
 
 clean: clean-hi-o

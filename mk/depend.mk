@@ -44,6 +44,11 @@ Test/Check/Function/Periodic.o: \
 Test/Check/Function/Show.o: \
   Test/Check/Function/Show.hs \
   Test/Check/ShowFunction.hs \
+  Test/Check/Error.hs \
+  Test/Check.hs \
+  Test/Check/Derive.hs \
+  Test/Check/Utils.hs \
+  Test/Check/Basic.hs \
   Test/Check/Core.hs
 Test/Check/Invariants.o: \
   Test/Check/Invariants.hs \
@@ -61,6 +66,11 @@ Test/Check.o: \
   Test/Check/Core.hs
 Test/Check/ShowFunction.o: \
   Test/Check/ShowFunction.hs \
+  Test/Check/Error.hs \
+  Test/Check.hs \
+  Test/Check/Derive.hs \
+  Test/Check/Utils.hs \
+  Test/Check/Basic.hs \
   Test/Check/Core.hs
 Test/Check/Utils.o: \
   Test/Check/Utils.hs \
@@ -115,6 +125,30 @@ tests/test-error: \
   tests/test-error.hs \
   Test/Types.hs \
   Test/Check/Error.hs \
+  Test/Check.hs \
+  Test/Check/Derive.hs \
+  Test/Check/Utils.hs \
+  Test/Check/Basic.hs \
+  Test/Check/Core.hs
+tests/test-funshow.o: \
+  tests/test-funshow.hs \
+  Test/Check/Function/Show.hs \
+  Test/Check/ShowFunction.hs \
+  Test/Check/Error.hs \
+  Test/TypeBinding.hs \
+  Test/Types.hs \
+  Test/Check.hs \
+  Test/Check/Derive.hs \
+  Test/Check/Utils.hs \
+  Test/Check/Basic.hs \
+  Test/Check/Core.hs
+tests/test-funshow: \
+  tests/test-funshow.hs \
+  Test/Check/Function/Show.hs \
+  Test/Check/ShowFunction.hs \
+  Test/Check/Error.hs \
+  Test/TypeBinding.hs \
+  Test/Types.hs \
   Test/Check.hs \
   Test/Check/Derive.hs \
   Test/Check/Utils.hs \

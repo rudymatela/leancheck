@@ -8,13 +8,14 @@ module Test.Check.ShowFunction
   , bindings
   )
 where
--- TODO: (ShowFunction) allow showing of undefined values
 -- TODO: (ShowFunction) document exported functions
 
 import Test.Check.Core
+import Test.Check.Error (errorToNothing)
 import Data.List
+import Data.Maybe
 
-type Binding = ([String], String)
+type Binding = ([String], Maybe String)
 
 class ShowFunction a where
   tBindings :: a -> [[Binding]]
@@ -25,7 +26,7 @@ bindings = concat . tBindings
 
 -- instances for (algebraic/numeric) data types --
 tBindingsShow :: Show a => a -> [[Binding]]
-tBindingsShow x = [[ ([],show x) ]]
+tBindingsShow x = [[([],errorToNothing $ show x)]]
 
 instance ShowFunction ()   where tBindings = tBindingsShow
 instance ShowFunction Bool where tBindings = tBindingsShow
@@ -53,40 +54,53 @@ showTuple :: [String] -> String
 showTuple [x] = x
 showTuple xs  = paren $ intercalate "," xs
 
-showBindingsOf :: ShowFunction a => a -> [String]
-showBindingsOf = map showBinding . bindings
-  where showBinding (as,r) = showTuple as ++ " -> " ++ r
+showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
+showNBindingsOf m n f = take n bs
+                     ++ ["..." | length bs' >= m || length bs > n]
+  where bs' = take m $ bindings f
+        bs = [ showTuple as ++ " -> " ++ r
+             | (as, Just r) <- bs' ]
 
-showNBindingsOf :: ShowFunction a => Int -> a -> [String]
-showNBindingsOf n f =
-  if length bs > n
-    then take n bs ++ ["..."]
-    else bs
-  where bs = take (n+1) $ showBindingsOf f
+isValue :: ShowFunction a => a -> Bool
+isValue f = case bindings f of
+              [([],_)] -> True
+              _        -> False
 
 showValueOf :: ShowFunction a => a -> String
-showValueOf = snd . head . bindings
+showValueOf x = case snd . head . bindings $ x of
+                  Nothing -> "undefined"
+                  Just x' -> x'
 
 showFunction :: ShowFunction a => Int -> a -> String
-showFunction = showFunctionL False
+showFunction n = showFunctionL False (n*n+1) n
 
 showFunctionLine :: ShowFunction a => Int -> a -> String
-showFunctionLine = showFunctionL True
+showFunctionLine n = showFunctionL True (n*n+1) n
+
+-- | isUndefined checks if a function is totally undefined.
+-- When it is not possible to check all values, it returns false
+isUndefined :: ShowFunction a => Int -> a -> Bool
+isUndefined m f = length bs < m && all (isNothing . snd) bs
+  where bs = take m $ bindings f
 
 -- The first boolean parameter tells if we are showing
 -- the function on a single line
-showFunctionL :: ShowFunction a => Bool -> Int -> a -> String
-showFunctionL singleLine n f =
-  if null vs
-    then showValueOf f
-    else lambdaPat ++ casePat ++ (if singleLine then " " ++ bsS else "\n" ++ bsM)
-  where vs = varnamesFor f
-        bs = showNBindingsOf n f
-        lambdaPat = "\\" ++ unwords vs ++ " -> "
-        casePat = "case " ++ showTuple vs ++ " of"
-        bsS = intercalate "; " bs
-        bsM = unlines (map (replicate (length lambdaPat + 2) ' ' ++) bs)
-
+showFunctionL :: ShowFunction a => Bool -> Int -> Int -> a -> String
+showFunctionL singleLine m n f | isValue f = showValueOf f
+showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
+  where
+    vs = varnamesFor f
+    lambdaPat = "\\" ++ unwords vs ++ " -> "
+    casePat = "case " ++ showTuple vs ++ " of"
+    bs = showNBindingsOf m n f
+    sep | singleLine = " "
+        | otherwise = "\n"
+    cases | singleLine = intercalate "; " bs
+          | otherwise  = unlines
+                       $ (replicate (length lambdaPat + 2) ' ' ++) `map` bs
+    caseExp = if isUndefined m f
+                then "undefined"
+                else casePat ++ sep ++ cases
 
 -- instances for further tuples --
 instance (Show a, Show b, Show c)
