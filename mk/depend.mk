@@ -43,10 +43,7 @@ Test/Check/Function/Periodic.o: \
   Test/Check/Core.hs
 Test/Check/Function/Show.o: \
   Test/Check/Function/Show.hs \
-  Test/Check.hs \
-  Test/Check/Derive.hs \
-  Test/Check/Utils.hs \
-  Test/Check/Basic.hs \
+  Test/Check/ShowFunction.hs \
   Test/Check/Core.hs
 Test/Check/Invariants.o: \
   Test/Check/Invariants.hs \
@@ -61,6 +58,9 @@ Test/Check.o: \
   Test/Check/Derive.hs \
   Test/Check/Utils.hs \
   Test/Check/Basic.hs \
+  Test/Check/Core.hs
+Test/Check/ShowFunction.o: \
+  Test/Check/ShowFunction.hs \
   Test/Check/Core.hs
 Test/Check/Utils.o: \
   Test/Check/Utils.hs \
@@ -165,6 +165,7 @@ tests/test-operators: \
 tests/test.o: \
   tests/test.hs \
   Test/Operators.hs \
+  Test/TypeBinding.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
   Test/Check.hs \
@@ -175,6 +176,7 @@ tests/test.o: \
 tests/test: \
   tests/test.hs \
   Test/Operators.hs \
+  Test/TypeBinding.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
   Test/Check.hs \
