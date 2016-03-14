@@ -1,11 +1,27 @@
 -- | This module exports the 'ShowFunction' typeclass,
 --   its instances and related functions.
+--
+-- Using this module, it is possible to implement
+-- a Show instance for functions:
+--
+-- > import Test.Check.ShowFunction
+-- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
+-- >   show = showFunction 8
+--
+-- This shows functions as a case pattern with up to 8 cases.
+--
+-- The module
+-- @Test.Check.Function.Show@ ('Test.Check.Function.Show')
+-- exports an instance like the one above.
 module Test.Check.ShowFunction
-  ( ShowFunction
-  , Listable
-  , showFunction
+  ( showFunction
   , showFunctionLine
+  , Binding
   , bindings
+  , ShowFunction (..)
+  , tBindingsShow
+  -- * Re-exports
+  , Listable
   )
 where
 -- TODO: (ShowFunction) document exported functions
@@ -15,16 +31,36 @@ import Test.Check.Error (errorToNothing)
 import Data.List
 import Data.Maybe
 
+-- | A functional binding in a showable format.
 type Binding = ([String], Maybe String)
 
+-- | 'ShowFunction' values are those for which
+--   we can return a list of functional bindings.
+--
+-- As a user, you probably want 'showFunction' and 'showFunctionLine'.
+--
+-- Non functional instances should be defined by:
+--
+-- > instance ShowFunction Ty where tBindings = tBindingsShow
 class ShowFunction a where
   tBindings :: a -> [[Binding]]
 
+-- | Given a 'ShowFunction' value, return a list of bindings
+--   for printing.  Examples:
+--
+-- > bindings True == [([],True)]
+-- > bindings (id::Int) == [(["0"],"0"), (["1"],"1"), (["-1"],"-1"), ...
+-- > bindings (&&) == [ (["False","False"], "False")
+-- >                  , (["False","True"], "False")
+-- >                  , (["True","False"], "False")
+-- >                  , (["True","True"], "True")
+-- >                  ]
 bindings :: ShowFunction a => a -> [Binding]
 bindings = concat . tBindings
 
 
 -- instances for (algebraic/numeric) data types --
+-- | A default implementation of tBindings for already 'Show'-able types.
 tBindingsShow :: Show a => a -> [[Binding]]
 tBindingsShow x = [[([],errorToNothing $ show x)]]
 
@@ -71,9 +107,30 @@ showValueOf x = case snd . head . bindings $ x of
                   Nothing -> "undefined"
                   Just x' -> x'
 
+-- | Given a number of patterns to show, shows a 'ShowFunction' value.
+--
+-- > showFunction undefined True == "True"
+-- > showFunction 3 (id::Int) == "\\x -> case x of\n\
+-- >                              \        0 -> 0\n\
+-- >                              \        1 -> 1\n\
+-- >                              \        -1 -> -1\n\
+-- >                              \        ...\n"
+-- > showFunction 4 (&&) == "\\x y -> case (x,y) of\n\
+-- >                         \          (False,False) -> False\n\
+-- >                         \          (False,True) -> False\n\
+-- >                         \          (True,False) -> False\n\
+-- >                         \          (True,True) -> True\n"
+--
+-- This can be used as an implementation of show for functions:
+--
+-- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
+-- >   show = showFunction 8
 showFunction :: ShowFunction a => Int -> a -> String
 showFunction n = showFunctionL False (n*n+1) n
 
+-- | Same as showFunction, but has no line breaks.
+--
+-- > showFunction 2 (id::Int) == "\\x -> case x of 0 -> 0; 1 -> 1; ..."
 showFunctionLine :: ShowFunction a => Int -> a -> String
 showFunctionLine n = showFunctionL True (n*n+1) n
 

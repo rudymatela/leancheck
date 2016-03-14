@@ -1,5 +1,5 @@
 import System.Exit (exitFailure)
-import Data.List (elemIndices)
+import Data.List (elemIndices,sort)
 import Test.Check.ShowFunction
 import Test.Check.Function.Show
 import Test.TypeBinding
@@ -37,6 +37,20 @@ tests =
     ++ "          (0,1) -> 1\n"
     ++ "          (1,0) -> 1\n"
     ++ "          ...\n"
+  , showFunction 3 ((++) -:> [int])
+    == "\\x y -> case (x,y) of\n"
+    ++ "          ([],[]) -> []\n"
+    ++ "          ([],[0]) -> [0]\n"
+    ++ "          ([0],[]) -> [0]\n"
+    ++ "          ...\n"
+  , showFunction 4 (sort -:> [char])
+    == "\\x -> case x of\n"
+    ++ "        \"\" -> \"\"\n"
+    ++ "        \"a\" -> \"a\"\n"
+    ++ "        \"aa\" -> \"aa\"\n"
+    ++ "        \" \" -> \" \"\n"
+    ++ "        ...\n"
+
 
   -- fully defined, finite --
   , showFunction 1 not
