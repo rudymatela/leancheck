@@ -24,7 +24,6 @@ module Test.Check.ShowFunction
   , Listable
   )
 where
--- TODO: (ShowFunction) document exported functions
 
 import Test.Check.Core
 import Test.Check.Error (errorToNothing)
