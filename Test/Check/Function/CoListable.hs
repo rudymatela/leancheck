@@ -4,7 +4,7 @@ module Test.Check.Function.CoListable
 where
 
 
-import Test.Check
+import Test.Check.Core
 import Test.Check.Utils
 import Data.Maybe (fromMaybe)
 
