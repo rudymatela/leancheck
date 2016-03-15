@@ -1,4 +1,5 @@
 -- | QuickCheck-like interface to LeanCheck
+{-# LANGUAGE CPP #-}
 module Test.Check.IO
   ( check
   , checkFor
@@ -6,6 +7,10 @@ module Test.Check.IO
   , checkResultFor
   )
 where
+
+#if __GLASGOW_HASKELL__ <= 704
+import Prelude hiding (catch)
+#endif
 
 import Test.Check.Core
 import Data.Maybe (listToMaybe)
