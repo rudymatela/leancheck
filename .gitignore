@@ -10,6 +10,7 @@ log/
 *.dyn_hi
 *.dyn_o
 tests/test
+tests/test-io
 tests/test-operators
 tests/test-types
 tests/test-utils

@@ -107,9 +107,12 @@ module Test.Check
   -- * Test results
   , Testable
   , results
+
+  , module Test.Check.IO
   )
 where
 
 import Test.Check.Basic
 import Test.Check.Utils
 import Test.Check.Derive
+import Test.Check.IO

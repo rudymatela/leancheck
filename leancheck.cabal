@@ -32,6 +32,7 @@ library
                  , Test.Check.Core
                  , Test.Check.Derive
                  , Test.Check.Error
+                 , Test.Check.IO
                  , Test.Types
                  , Test.Operators
                  , Test.TypeBinding
