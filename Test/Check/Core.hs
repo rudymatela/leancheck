@@ -259,13 +259,11 @@ infixr 5 +|
 --
 -- > [x,y] >:< [a,b] = [(x,a),(x,b),(y,a),(y,b)]
 (>:<) :: [a] -> [b] -> [(a,b)]
-[]     >:<  _ = []
-(x:xs) >:< ys = map ((,) x) ys ++ xs >:< ys
+xs >:< ys = [(x,y) | x <- xs, y <- ys]
 
 -- | Product of two lists by a given function.
 productWith :: (a->b->c) -> [a] -> [b] -> [c]
-productWith _ []     _   =  []
-productWith f (x:xs) ys  =  map (f x) ys ++ productWith f xs ys
+productWith f xs ys = [x `f` y | x <- xs, y <- ys]
 
 -- | Append tiers.
 --

@@ -22,6 +22,11 @@ tests =
   , take 3 ([1,2] +| (0:undefined)) == [1,0,2]
   , [0,2..] +| [1,3..] =| 100 |= [0,1..]
 
+  -- list product
+  , [1,2] >:< [3,4] == [(1,3),(1,4),(2,3),(2,4)]
+  , productWith (+) [10,20,30] [1,2,3] == [11,12,13,21,22,23,31,32,33]
+  , holds 99 (\xs ys -> xs >:< ys == productWith (,) (xs::[Bool]) (ys::[Bool]))
+
   -- etc
   , tNatPairOrd 100
   , tNatTripleOrd 200
