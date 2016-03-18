@@ -44,6 +44,7 @@ module Test.Check.Core
 
   , ofWeight
   , addWeight
+  , suchThat
 
   -- ** Combining lists of tiers
   , (\/), (\\//)
@@ -242,6 +243,12 @@ ofWeight xss w = dropWhile null xss `addWeight` w
 -- | Adds to the weight of tiers of a constructor
 addWeight :: [[a]] -> Int -> [[a]]
 addWeight xss w = replicate w [] ++ xss
+
+-- | Tiers of values that follow a property
+--
+-- > cons<N> `suchThat` condition
+suchThat :: [[a]] -> (a->Bool) -> [[a]]
+suchThat = flip tfilter
 
 -- | Lazily interleaves two lists, switching between elements of the two.
 --   Union/sum of the elements in the lists.

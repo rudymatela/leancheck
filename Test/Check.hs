@@ -51,6 +51,10 @@ module Test.Check
   , cons11
   , cons12
 
+  , ofWeight
+  , addWeight
+  , suchThat
+
   -- ** Combining tiers
   , (\/)
   , (\\//)
