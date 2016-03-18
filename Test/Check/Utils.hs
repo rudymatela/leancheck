@@ -16,7 +16,7 @@ module Test.Check.Utils
   , strictlyAscendingListsOf
   , setsOf
   , noDupListsOf
-  , tProducts
+  , products
   , listsOfLength 
 
   -- * Choices
@@ -97,11 +97,11 @@ listsOf xss = cons0 []
 
 -- | Generates several lists of the same size.
 --
--- > tProducts [ xss, yss, zss ] ==
+-- > products [ xss, yss, zss ] ==
 --
 -- Tiers of all lists combining elements of tiers: xss, yss and zss 
-tProducts :: [ [[a]] ] -> [[ [a] ]]
-tProducts = foldr (productWith (:)) [[[]]]
+products :: [ [[a]] ] -> [[ [a] ]]
+products = foldr (productWith (:)) [[[]]]
 
 -- | Given tiers of values, returns tiers of lists with no repeated elements.
 --
@@ -130,7 +130,7 @@ noDupListsOf =
 choices :: [[a]] -> [[(a,[[a]])]]
 choices = choicesWith (,)
 
--- | Like 'tChoices', but allows a custom function.
+-- | Like 'choices', but allows a custom function.
 choicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 choicesWith f []           = []
 choicesWith f [[]]         = []
@@ -188,7 +188,7 @@ strictlyAscendingChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
 
 -- | Given tiers, returns tiers of lists of a given length.
 listsOfLength :: Int -> [[a]] -> [[[a]]]
-listsOfLength n xss = tProducts (replicate n xss)
+listsOfLength n xss = products (replicate n xss)
 
 
 -- | Given a list of domain values, and tiers of codomain values,
@@ -196,7 +196,7 @@ listsOfLength n xss = tProducts (replicate n xss)
 --
 -- Technically: tiers of left-total functional relations.
 tAssociations :: [a] -> [[b]] -> [[ [(a,b)] ]]
-tAssociations xs sbs = zip xs `tmap` tProducts (const sbs `map` xs)
+tAssociations xs sbs = zip xs `tmap` products (const sbs `map` xs)
 
 -- | Given tiers of input values and tiers of output values,
 -- return tiers with all possible lists of input-output pairs.

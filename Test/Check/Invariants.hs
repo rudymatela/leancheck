@@ -126,5 +126,5 @@ tTripleEqParams n = ces == srs
 
 tProductsIsFilterByLength :: Eq a => [[a]] -> Int -> Int -> Bool
 tProductsIsFilterByLength values m n = concat (take m byProduct) `isPrefixOf` concat byFilter
-  where byProduct = tProducts $ replicate n values
+  where byProduct = products $ replicate n values
         byFilter  = ((==n) . length) `tfilter` listsOf values
