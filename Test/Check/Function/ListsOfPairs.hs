@@ -6,11 +6,11 @@ import Test.Check.Utils
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
   tiers = tmap (uncurry $ flip defaultPairsToFunction)
-        $ tFunctions list tiers
+        $ functions list tiers
 
 
-tFunctions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
-tFunctions xss yss =
+functions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
+functions xss yss =
   tConcatMap
-    (\(r,yss) -> tmap (\ps -> (ps,r)) $ tFunctionPairs xss yss)
+    (\(r,yss) -> tmap (\ps -> (ps,r)) $ functionPairs xss yss)
     (choices yss)

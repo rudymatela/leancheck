@@ -87,8 +87,8 @@ module Test.Check
   , listsOfLength
 
   -- ** Tiers of Functions
-  , tAssociations
-  , tFunctionPairs
+  , associations
+  , functionPairs
   , pairsToMaybeFunction
   , pairsToFunction
   , defaultPairsToFunction

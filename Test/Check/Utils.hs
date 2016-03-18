@@ -26,8 +26,8 @@ module Test.Check.Utils
   -- * Functions
 
   -- ** Listing
-  , tAssociations
-  , tFunctionPairs
+  , associations
+  , functionPairs
 
   -- ** Pairs to actual functions
   , pairsToMaybeFunction
@@ -195,14 +195,14 @@ listsOfLength n xss = products (replicate n xss)
 -- return tiers of lists of ordered pairs of domain and codomain values.
 --
 -- Technically: tiers of left-total functional relations.
-tAssociations :: [a] -> [[b]] -> [[ [(a,b)] ]]
-tAssociations xs sbs = zip xs `tmap` products (const sbs `map` xs)
+associations :: [a] -> [[b]] -> [[ [(a,b)] ]]
+associations xs sbs = zip xs `tmap` products (const sbs `map` xs)
 
 -- | Given tiers of input values and tiers of output values,
 -- return tiers with all possible lists of input-output pairs.
 -- Those represent functional relations.
-tFunctionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
-tFunctionPairs xss yss = tConcatMap (`tAssociations` yss)
+functionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
+functionPairs xss yss = tConcatMap (`associations` yss)
                                     (strictlyAscendingListsOf xss)
 
 -- | Returns a function given by a list of input-output pairs.
