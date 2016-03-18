@@ -79,7 +79,7 @@ module Test.Check
   , productMaybeWith
 
   -- * Listing lists
-  , tListsOf
+  , listsOf
   , tSetsOf
   , tStrictlyAscendingListsOf
   , tNoDupListsOf

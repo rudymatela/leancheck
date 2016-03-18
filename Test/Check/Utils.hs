@@ -12,7 +12,7 @@ module Test.Check.Utils
   , productMaybeWith
 
   -- * Tiers of lists
-  , tListsOf
+  , listsOf
   , tStrictlyAscendingListsOf
   , tSetsOf
   , tNoDupListsOf
@@ -43,7 +43,7 @@ import Data.Maybe (fromMaybe, catMaybes)
 -- | Given a constructor for a type that takes a list,
 --   return tiers for that type.
 consFromList :: Listable a => ([a] -> b) -> [[b]]
-consFromList = (`tmap` tListsOf tiers)
+consFromList = (`tmap` listsOf tiers)
 
 -- | Given a constructor for a type that takes a list with strictly ascending
 --   elements, return tiers of that type (e.g.: a Set type).
@@ -76,24 +76,24 @@ productMaybeWith f (xs:xss) yss = map (xs **) yss
 
 -- | Given tiers of values, returns tiers of lists of those values
 --
--- > tListsOf [[]] == [[[]]]
+-- > listsOf [[]] == [[[]]]
 --
--- > tListsOf [[x]] == [ [[]]
--- >                    , [[x]]
--- >                    , [[x,x]]
--- >                    , [[x,x,x]]
--- >                    , ...
--- >                    ]
+-- > listsOf [[x]] == [ [[]]
+-- >                  , [[x]]
+-- >                  , [[x,x]]
+-- >                  , [[x,x,x]]
+-- >                  , ...
+-- >                  ]
 --
--- > tListsOf [[x],[y]] == [ [[]]
--- >                        , [[x]]
--- >                        , [[x,x],[y]]
--- >                        , [[x,x,x],[x,y],[y,x]]
--- >                        , ...
--- >                        ]
-tListsOf :: [[a]] -> [[[a]]]
-tListsOf xss = cons0 []
-            \/ productWith (:) xss (tListsOf xss) `addWeight` 1
+-- > listsOf [[x],[y]] == [ [[]]
+-- >                      , [[x]]
+-- >                      , [[x,x],[y]]
+-- >                      , [[x,x,x],[x,y],[y,x]]
+-- >                      , ...
+-- >                      ]
+listsOf :: [[a]] -> [[[a]]]
+listsOf xss = cons0 []
+           \/ productWith (:) xss (listsOf xss) `addWeight` 1
 
 -- | Generates several lists of the same size.
 --

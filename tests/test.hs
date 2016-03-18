@@ -30,7 +30,7 @@ tests =
   , tNatSixtupleOrd 500
   , tNatListOrd 500
   , tListsOfNatOrd 500
-  , tListsOf (tiers::[[Nat]]) =| 10 |= tiers
+  , listsOf (tiers::[[Nat]]) =| 10 |= tiers
 
   -- tests!
   , counterExample 10 (\x y -> x + y /= (x::Int)) == Just ["0", "0"]

@@ -5,7 +5,7 @@ where
 
 
 import Test.Check.Basic
-import Test.Check.Utils (tListsOf)
+import Test.Check.Utils (listsOf)
 import Data.List (inits)
 
 
@@ -20,7 +20,7 @@ functionsz xss = functions (concat xss)
 
 
 lsPeriodsOf :: Eq a => [[a]] -> [[[a]]]
-lsPeriodsOf xss = map (filter isPeriod) (tListsOf xss)
+lsPeriodsOf xss = map (filter isPeriod) (listsOf xss)
 
 lsPeriodsOfLimit :: Eq a => [b] -> [[a]] -> [[[a]]]
 lsPeriodsOfLimit ys xss = map (filter isPeriod) (tiersOfLimit ys xss)
