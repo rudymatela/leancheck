@@ -63,10 +63,9 @@ module Test.Check
 
   -- ** Manipulating tiers
   , tmap
-  , tfilter
-  , tFilter
-  , tConcat
-  , tConcatMap
+  , filterT
+  , concatT
+  , concatMapT
   , toTiers
 
   -- ** Automatically deriving Listable instances

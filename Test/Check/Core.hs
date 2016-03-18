@@ -53,10 +53,9 @@ module Test.Check.Core
 
   -- ** Manipulating lists of tiers
   , tmap
-  , tfilter
-  , tFilter
-  , tConcat
-  , tConcatMap
+  , filterT
+  , concatT
+  , concatMapT
   , toTiers
 
   -- ** Boolean (property) operators
@@ -186,21 +185,17 @@ tmap :: (a -> b) -> [[a]] -> [[b]]
 tmap = map . map
 
 -- | 'filter' tiers
-tfilter :: (a -> Bool) -> [[a]] -> [[a]]
-tfilter f = map (filter f)
-
--- | 'filter' tiers
-tFilter :: (a -> Bool) -> [[a]] -> [[a]]
-tFilter = tfilter
+filterT :: (a -> Bool) -> [[a]] -> [[a]]
+filterT f = map (filter f)
 
 -- | 'concat' tiers of tiers
-tConcat :: [[ [[a]] ]] -> [[a]]
-tConcat = foldr (\+:/) [] . map (foldr (\/) [])
+concatT :: [[ [[a]] ]] -> [[a]]
+concatT = foldr (\+:/) [] . map (foldr (\/) [])
   where xss \+:/ yss = xss \/ ([]:yss)
 
 -- | 'concatMap' over tiers
-tConcatMap :: (a -> [[b]]) -> [[a]] -> [[b]]
-tConcatMap f = tConcat . tmap f
+concatMapT :: (a -> [[b]]) -> [[a]] -> [[b]]
+concatMapT f = concatT . tmap f
 
 
 -- | Takes a constructor with no arguments and return tiers (with a single value).
@@ -248,7 +243,7 @@ addWeight xss w = replicate w [] ++ xss
 --
 -- > cons<N> `suchThat` condition
 suchThat :: [[a]] -> (a->Bool) -> [[a]]
-suchThat = flip tfilter
+suchThat = flip filterT
 
 -- | Lazily interleaves two lists, switching between elements of the two.
 --   Union/sum of the elements in the lists.
@@ -323,7 +318,7 @@ instance Testable Bool where
   tResults p = [[([],p)]]
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
-  tResults p = tConcatMap tResultsFor tiers
+  tResults p = concatMapT tResultsFor tiers
     where tResultsFor x = mapFst (showsPrec 11 x "":) `tmap` tResults (p x)
           mapFst f (x,y) = (f x, y)
 

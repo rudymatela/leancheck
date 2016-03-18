@@ -11,6 +11,6 @@ instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
 
 functions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
 functions xss yss =
-  tConcatMap
+  concatMapT
     (\(r,yss) -> tmap (\ps -> (ps,r)) $ functionPairs xss yss)
     (choices yss)

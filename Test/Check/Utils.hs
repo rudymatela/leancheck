@@ -115,7 +115,7 @@ products = foldr (productWith (:)) [[[]]]
 -- >   ]
 noDupListsOf :: [[a]] -> [[[a]]]
 noDupListsOf =
-  ([[]]:) . tConcat . choicesWith (\x xss -> tmap (x:) (noDupListsOf xss))
+  ([[]]:) . concatT . choicesWith (\x xss -> tmap (x:) (noDupListsOf xss))
 
 -- | Lists tiers of all choices of values from tiers.
 -- Choices are pairs of values and tiers excluding that value.
@@ -156,7 +156,7 @@ choicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
 -- >   ]
 strictlyAscendingListsOf :: [[a]] -> [[[a]]]
 strictlyAscendingListsOf =
-  ([[]]:) . tConcat .
+  ([[]]:) . concatT .
   strictlyAscendingChoicesWith
     (\x xss -> tmap (x:) (strictlyAscendingListsOf xss))
 
@@ -202,8 +202,8 @@ associations xs sbs = zip xs `tmap` products (const sbs `map` xs)
 -- return tiers with all possible lists of input-output pairs.
 -- Those represent functional relations.
 functionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
-functionPairs xss yss = tConcatMap (`associations` yss)
-                                    (strictlyAscendingListsOf xss)
+functionPairs xss yss = concatMapT (`associations` yss)
+                                   (strictlyAscendingListsOf xss)
 
 -- | Returns a function given by a list of input-output pairs.
 -- The result is wrapped in a maybe value.
