@@ -82,7 +82,7 @@ module Test.Check
   , listsOf
   , setsOf
   , strictlyAscendingListsOf
-  , tNoDupListsOf
+  , noDupListsOf
   , tProducts
   , tListsOfLength
 

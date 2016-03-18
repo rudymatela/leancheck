@@ -15,7 +15,7 @@ module Test.Check.Utils
   , listsOf
   , strictlyAscendingListsOf
   , setsOf
-  , tNoDupListsOf
+  , noDupListsOf
   , tProducts
   , tListsOfLength 
 
@@ -58,7 +58,7 @@ consFromSet = (`tmap` setsOf tiers)
 -- | Given a constructor for a type that takes a list with no duplicate
 --   elements, return tiers of that type.
 consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
-consFromNoDupList f = tmap f (tNoDupListsOf tiers)
+consFromNoDupList f = tmap f (noDupListsOf tiers)
 
 
 -- | Like 'tsProduct', but over 3 lists of tiers.
@@ -105,7 +105,7 @@ tProducts = foldr (productWith (:)) [[[]]]
 
 -- | Given tiers of values, returns tiers of lists with no repeated elements.
 --
--- > tNoDupListsOf [[0],[1],[2],...] ==
+-- > noDupListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
 -- >   , [[0]]
 -- >   , [[1]]
@@ -113,8 +113,9 @@ tProducts = foldr (productWith (:)) [[[]]]
 -- >   , [[0,2],[2,0],[3]]
 -- >   , ...
 -- >   ]
-tNoDupListsOf :: [[a]] -> [[[a]]]
-tNoDupListsOf = ([[]]:) . tConcat . tChoicesWith (\x xss -> tmap (x:) (tNoDupListsOf xss))
+noDupListsOf :: [[a]] -> [[[a]]]
+noDupListsOf =
+  ([[]]:) . tConcat . tChoicesWith (\x xss -> tmap (x:) (noDupListsOf xss))
 
 -- | Lists tiers of all choices of values from tiers.
 -- Choices are pairs of values and tiers excluding that value.

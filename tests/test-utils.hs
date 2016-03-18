@@ -38,7 +38,7 @@ tests =
   ]
 
 checkNoDup :: Int -> Bool
-checkNoDup n = tNoDupListsOf (tiers :: [[Int]])
+checkNoDup n = noDupListsOf (tiers :: [[Int]])
        =| n |= (map . filter) noDup (tiers :: [[[Int]]])
   where noDup xs = nub (sort xs) == sort xs
 
