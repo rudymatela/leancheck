@@ -314,14 +314,14 @@ productWith f (xs:xss) yss = map (xs **) yss
 -- * @ Int -> Bool @
 -- * @ Listable a => a -> a -> Bool @
 class Testable a where
-  tResults   :: a -> [[([String],Bool)]]
+  resultiers :: a -> [[([String],Bool)]]
 
 instance Testable Bool where
-  tResults p = [[([],p)]]
+  resultiers p = [[([],p)]]
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
-  tResults p = concatMapT tResultsFor tiers
-    where tResultsFor x = mapFst (showsPrec 11 x "":) `tmap` tResults (p x)
+  resultiers p = concatMapT resultiersFor tiers
+    where resultiersFor x = mapFst (showsPrec 11 x "":) `tmap` resultiers (p x)
           mapFst f (x,y) = (f x, y)
 
 -- | List all results of a 'Testable' property.
@@ -330,7 +330,7 @@ instance (Testable b, Show a, Listable a) => Testable (a->b) where
 -- The boolean tells whether the property holds for that selection of argument.
 -- This list is usually infinite.
 results :: Testable a => a -> [([String],Bool)]
-results = concat . tResults
+results = concat . resultiers
 
 -- | Lists all counter-examples for a number of tests to a property,
 counterExamples :: Testable a => Int -> a -> [[String]]
