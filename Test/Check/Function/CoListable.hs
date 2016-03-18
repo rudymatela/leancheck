@@ -44,9 +44,9 @@ instance (CoListable a) => CoListable [a] where
 
 instance CoListable Int where
   coListing rss = tmap const rss
-             \+:/ tProduct3With (\f g z  i -> if i > 0 then f (i-1)
-                                         else if i < 0 then g (i+1)
-                                              else z) (coListing rss) (coListing rss) rss
+             \+:/ product3With (\f g z  i -> if i > 0 then f (i-1)
+                                        else if i < 0 then g (i+1)
+                                             else z) (coListing rss) (coListing rss) rss
 
 
 alts0 :: [[a]] -> [[a]]

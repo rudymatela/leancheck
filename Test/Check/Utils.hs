@@ -8,8 +8,8 @@ module Test.Check.Utils
   , consFromNoDupList
 
   -- * Products
-  , tProduct3With
-  , tProductMaybeWith
+  , product3With
+  , productMaybeWith
 
   -- * Tiers of lists
   , tListsOf
@@ -62,15 +62,15 @@ consFromNoDupList f = tmap f (tNoDupListsOf tiers)
 
 
 -- | Like 'tsProduct', but over 3 lists of tiers.
-tProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
-tProduct3With f xss yss zss = productWith ($) (productWith f xss yss) zss
+product3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
+product3With f xss yss zss = productWith ($) (productWith f xss yss) zss
 
 -- | Take the product of lists of tiers by a function returning a maybe value.
-tProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
-tProductMaybeWith _ _ [] = []
-tProductMaybeWith _ [] _ = []
-tProductMaybeWith f (xs:xss) yss = map (xs **) yss
-                                \/ tProductMaybeWith f xss yss `addWeight` 1
+productMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
+productMaybeWith _ _ [] = []
+productMaybeWith _ [] _ = []
+productMaybeWith f (xs:xss) yss = map (xs **) yss
+                               \/ productMaybeWith f xss yss `addWeight` 1
   where xs ** ys = catMaybes [ f x y | x <- xs, y <- ys ]
 
 

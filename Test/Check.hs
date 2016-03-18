@@ -75,8 +75,8 @@ module Test.Check
   , consFromNoDupList
 
   -- ** Products of tiers
-  , tProduct3With
-  , tProductMaybeWith
+  , product3With
+  , productMaybeWith
 
   -- * Listing lists
   , tListsOf

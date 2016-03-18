@@ -23,11 +23,10 @@ tests =
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
-  , tProductMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
-  , tProductMaybeWith (flip ($))
-                       [[1],[2],[3],[4]]
-                       [[const Nothing],[Just]]
-       == [[],[1],[2],[3],[4]]
+  , productMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
+  , productMaybeWith (flip ($))
+                     [[1],[2],[3],[4]]
+                     [[const Nothing],[Just]] == [[],[1],[2],[3],[4]]
 
   , holds 100 $ ptofApp -:> (char,char)
   , holds 100 $ associationsValues int  100 -:> [int]
