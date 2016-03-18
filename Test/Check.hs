@@ -55,8 +55,7 @@ module Test.Check
   , (\/)
   , (\\//)
   , (><)
-  , tProduct
-  , tProductWith
+  , productWith
 
   -- ** Manipulating tiers
   , tmap

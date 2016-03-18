@@ -23,23 +23,23 @@ instance CoListable () where
 
 
 instance CoListable Bool where
-  coListing rs = tProductWith (\r1 r2  b -> if b then r1 else r2) rs rs
+  coListing rs = productWith (\r1 r2  b -> if b then r1 else r2) rs rs
 
 
 instance CoListable a => CoListable (Maybe a) where
-  coListing rs = tProductWith (\z f  m -> case m of Nothing -> z
-                                                    Just x  -> f x) rs (coListing rs)
+  coListing rs = productWith (\z f  m -> case m of Nothing -> z
+                                                   Just x  -> f x) rs (coListing rs)
 
 
 instance (CoListable a, CoListable b) => CoListable (Either a b) where
-  coListing rs = tProductWith (\f g  e -> case e of Left x  -> f x
-                                                    Right x -> g x) (coListing rs) (coListing rs)
+  coListing rs = productWith (\f g  e -> case e of Left x  -> f x
+                                                   Right x -> g x) (coListing rs) (coListing rs)
 
 
 instance (CoListable a) => CoListable [a] where
   coListing rss = tmap const rss
-             \+:/ tProductWith (\y f  xs -> case xs of []      -> y
-                                                       (x:xs') -> f x xs') rss (coListing (coListing rss))
+             \+:/ productWith (\y f  xs -> case xs of []      -> y
+                                                      (x:xs') -> f x xs') rss (coListing (coListing rss))
 
 
 instance CoListable Int where

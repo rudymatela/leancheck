@@ -23,45 +23,45 @@ import Test.Check.Core
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
          Listable (a,b,c,d,e,f) where
-  tiers = tProductWith (\x (y,z,w,v,u) -> (x,y,z,w,v,u)) tiers tiers
+  tiers = productWith (\x (y,z,w,v,u) -> (x,y,z,w,v,u)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g) =>
          Listable (a,b,c,d,e,f,g) where
-  tiers = tProductWith (\x (y,z,w,v,u,r) -> (x,y,z,w,v,u,r)) tiers tiers
+  tiers = productWith (\x (y,z,w,v,u,r) -> (x,y,z,w,v,u,r)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h) =>
          Listable (a,b,c,d,e,f,g,h) where
-  tiers = tProductWith (\x (y,z,w,v,u,r,s) -> (x,y,z,w,v,u,r,s))
-                       tiers tiers
+  tiers = productWith (\x (y,z,w,v,u,r,s) -> (x,y,z,w,v,u,r,s))
+                      tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i) =>
          Listable (a,b,c,d,e,f,g,h,i) where
-  tiers = tProductWith (\x (y,z,w,v,u,r,s,t) -> (x,y,z,w,v,u,r,s,t))
-                       tiers tiers
+  tiers = productWith (\x (y,z,w,v,u,r,s,t) -> (x,y,z,w,v,u,r,s,t))
+                      tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i, Listable j) =>
          Listable (a,b,c,d,e,f,g,h,i,j) where
-  tiers = tProductWith (\x (y,z,w,v,u,r,s,t,o) -> (x,y,z,w,v,u,r,s,t,o))
-                       tiers tiers
+  tiers = productWith (\x (y,z,w,v,u,r,s,t,o) -> (x,y,z,w,v,u,r,s,t,o))
+                      tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h,
           Listable i, Listable j, Listable k) =>
          Listable (a,b,c,d,e,f,g,h,i,j,k) where
-  tiers = tProductWith (\x (y,z,w,v,u,r,s,t,o,p) -> (x,y,z,w,v,u,r,s,t,o,p))
-                       tiers tiers
+  tiers = productWith (\x (y,z,w,v,u,r,s,t,o,p) -> (x,y,z,w,v,u,r,s,t,o,p))
+                      tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h,
           Listable i, Listable j, Listable k, Listable l) =>
          Listable (a,b,c,d,e,f,g,h,i,j,k,l) where
-  tiers = tProductWith (\x (y,z,w,v,u,r,s,t,o,p,q) ->
-                            (x,y,z,w,v,u,r,s,t,o,p,q))
-                       tiers tiers
+  tiers = productWith (\x (y,z,w,v,u,r,s,t,o,p,q) ->
+                        (x,y,z,w,v,u,r,s,t,o,p,q))
+                      tiers tiers
 
 cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]

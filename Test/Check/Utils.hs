@@ -63,7 +63,7 @@ consFromNoDupList f = tmap f (tNoDupListsOf tiers)
 
 -- | Like 'tsProduct', but over 3 lists of tiers.
 tProduct3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
-tProduct3With f xss yss zss = tProductWith ($) (tProductWith f xss yss) zss
+tProduct3With f xss yss zss = productWith ($) (productWith f xss yss) zss
 
 -- | Take the product of lists of tiers by a function returning a maybe value.
 tProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
@@ -93,7 +93,7 @@ tProductMaybeWith f (xs:xss) yss = map (xs **) yss
 -- >                        ]
 tListsOf :: [[a]] -> [[[a]]]
 tListsOf xss = cons0 []
-            \/ tProductWith (:) xss (tListsOf xss) `addWeight` 1
+            \/ productWith (:) xss (tListsOf xss) `addWeight` 1
 
 -- | Generates several lists of the same size.
 --
@@ -101,7 +101,7 @@ tListsOf xss = cons0 []
 --
 -- Tiers of all lists combining elements of tiers: xss, yss and zss 
 tProducts :: [ [[a]] ] -> [[ [a] ]]
-tProducts = foldr (tProductWith (:)) [[[]]]
+tProducts = foldr (productWith (:)) [[[]]]
 
 -- | Given tiers of values, returns tiers of lists with no repeated elements.
 --

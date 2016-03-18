@@ -38,7 +38,7 @@ xs `isPeriodOf` ys = length ys `mod` length xs == 0
 
 tiersOfLimit :: [b] -> [[a]] -> [[[a]]]
 tiersOfLimit     [] xss = [[[]]]
-tiersOfLimit (_:ys) xss = [[[]]] ++ tProductWith (:) xss (tiersOfLimit ys xss)
+tiersOfLimit (_:ys) xss = [[[]]] ++ productWith (:) xss (tiersOfLimit ys xss)
 
 
 pairsToFunction :: Eq a => [(a,b)] -> (a -> b)

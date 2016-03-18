@@ -48,8 +48,7 @@ module Test.Check.Core
   -- ** Combining lists of tiers
   , (\/), (\\//)
   , (><)
-  , tProduct
-  , tProductWith
+  , productWith
 
   -- ** Manipulating lists of tiers
   , tmap
@@ -146,18 +145,18 @@ instance (Listable a, Listable b) => Listable (Either a b) where
      \\// cons1 Right `ofWeight` 0
 
 instance (Listable a, Listable b) => Listable (a,b) where
-  tiers = tProduct tiers tiers
+  tiers = tiers >< tiers
 
 instance (Listable a, Listable b, Listable c) => Listable (a,b,c) where
-  tiers = tProductWith (\x (y,z) -> (x,y,z)) tiers tiers
+  tiers = productWith (\x (y,z) -> (x,y,z)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d) =>
          Listable (a,b,c,d) where
-  tiers = tProductWith (\x (y,z,w) -> (x,y,z,w)) tiers tiers
+  tiers = productWith (\x (y,z,w) -> (x,y,z,w)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
          Listable (a,b,c,d,e) where
-  tiers = tProductWith (\x (y,z,w,v) -> (x,y,z,w,v)) tiers tiers
+  tiers = productWith (\x (y,z,w,v) -> (x,y,z,w,v)) tiers tiers
 
 instance (Listable a) => Listable [a] where
   tiers = cons0 []
@@ -165,7 +164,7 @@ instance (Listable a) => Listable [a] where
 
 -- The position of Infinity in the enumeration is arbitrary.
 tFractional :: Fractional a => [[a]]
-tFractional = tProductWith (+) tFractionalParts
+tFractional = productWith (+) tFractionalParts
                                (tmap fromIntegral (tiers::[[Integer]]))
             \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
   where tFractionalParts :: Fractional a => [[a]]
@@ -273,49 +272,34 @@ infixr 7 \\//
 
 -- | Take a tiered product of lists of tiers.
 --
--- > tProduct [[0]..] [[0]..]
+-- > [t0,t1,t2,...] >< [u0,u1,u2,...] =
+-- > [ t0**u0
+-- > , t0**u1 ++ t1**u0
+-- > , t0**u2 ++ t1**u1 ++ t2**u0
+-- > , ...       ...       ...       ...
+-- > where xs ** ys = [(x,y) | x <- xs, y <- ys]
+--
+-- Example:
+--
+-- > [[0],[1],[2],...] >< [[0],[1],[2],...]
 -- > == [  [(0,0)]
 -- >    ,  [(1,0),(0,1)]
 -- >    ,  [(2,0),(1,1),(0,2)]
 -- >    ,  [(3,0),(2,1),(1,2),(0,3)]
 -- >    ...
 -- >    ]
---
--- Suppose:
---
--- > xs >:< ys = [(x,y) | x <- xs, y <- ys]
---
--- In terms of '(>:<)', 'tProduct' is:
---
--- > tProduct [xs] [ys] = [xs>:<ys]
--- > tProduct [xs0,xs1] [ys0] = [xs0>:<ys0, xs1>:<ys0]
--- > tProduct [xs0,xs1] [ys0,ys1] = [xs0>:<ys0, xs1>:<ys0++xs0>:<ys1, xs1>:<ys1]
--- > tProduct [xs0,xs1,xs2] [ys0,ys1] =
--- >   [ xs0 >:< ys0
--- >   , xs1 >:< ys0 ++ xs0 >:< ys1
--- >   , xs2 >:< ys0 ++ xs1 >:< ys1
--- >   ]
--- > tProduct [xs0,xs1,xs2] [ys0,ys1,ys2] =
--- >   [ xs0 >:< ys0
--- >   , xs1 >:< ys0 ++ xs0 >:< ys1
--- >   , xs2 >:< ys0 ++ xs1 >:< ys1 ++ xs0 >:< ys2
--- >   , xs2 >:< ys1 ++ xs1 >:< ys2
--- >   , xs2 >:< ys2
--- >   ]
--- > tProduct ...
-tProduct :: [[a]] -> [[b]] -> [[(a,b)]]
-tProduct = tProductWith (,)
-
--- | Infix shorthand for 'tsProduct'
 (><) :: [[a]] -> [[b]] -> [[(a,b)]]
-(><) = tProduct
+(><) = productWith (,)
 infixr 8 ><
 
-tProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
-tProductWith _ _ [] = []
-tProductWith _ [] _ = []
-tProductWith f (xs:xss) yss = map (xs **) yss
-                          \/ tProductWith f xss yss `addWeight` 1
+-- | Take the product of two lists of tiers.
+--
+-- > productWith f xss yss = map (uncurry f) $ xss >< yss
+productWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
+productWith _ _ [] = []
+productWith _ [] _ = []
+productWith f (xs:xss) yss = map (xs **) yss
+                          \/ productWith f xss yss `addWeight` 1
   where xs ** ys = [x `f` y | x <- xs, y <- ys]
 
 -- | 'Testable' values are functions
