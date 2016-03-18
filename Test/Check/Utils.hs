@@ -13,15 +13,15 @@ module Test.Check.Utils
 
   -- * Tiers of lists
   , listsOf
-  , tStrictlyAscendingListsOf
-  , tSetsOf
+  , strictlyAscendingListsOf
+  , setsOf
   , tNoDupListsOf
   , tProducts
   , tListsOfLength 
 
   -- * Choices
   , tChoices
-  , tStrictlyAscendingChoices
+  , strictlyAscendingChoices
 
   -- * Functions
 
@@ -48,12 +48,12 @@ consFromList = (`tmap` listsOf tiers)
 -- | Given a constructor for a type that takes a list with strictly ascending
 --   elements, return tiers of that type (e.g.: a Set type).
 consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
-consFromStrictlyAscendingList = (`tmap` tStrictlyAscendingListsOf tiers)
+consFromStrictlyAscendingList = (`tmap` strictlyAscendingListsOf tiers)
 
 -- | Given a constructor for a type that takes a set of elements (as a list)
 --   return tiers of that type (e.g.: a Set type).
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
-consFromSet = consFromStrictlyAscendingList
+consFromSet = (`tmap` setsOf tiers)
 
 -- | Given a constructor for a type that takes a list with no duplicate
 --   elements, return tiers of that type.
@@ -153,15 +153,16 @@ tChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
 -- >   , [[0,1,2],[0,4],[1,3],[5]]
 -- >   , ...
 -- >   ]
-tStrictlyAscendingListsOf :: [[a]] -> [[[a]]]
-tStrictlyAscendingListsOf = ([[]]:)
-                          . tConcat
-                          . tStrictlyAscendingChoicesWith (\x xss -> tmap (x:) (tStrictlyAscendingListsOf xss))
+strictlyAscendingListsOf :: [[a]] -> [[[a]]]
+strictlyAscendingListsOf =
+  ([[]]:) . tConcat .
+  strictlyAscendingChoicesWith
+    (\x xss -> tmap (x:) (strictlyAscendingListsOf xss))
 
 -- | Returns tiers of sets represented as lists of values (no repeated sets).
---   Shorthand for 'tsStrictlyAscendingListsOf'.
-tSetsOf :: [[a]] -> [[[a]]]
-tSetsOf = tStrictlyAscendingListsOf
+--   Shorthand for 'strictlyAscendingListsOf'.
+setsOf :: [[a]] -> [[[a]]]
+setsOf = strictlyAscendingListsOf
 
 -- | Like 'tChoices', but paired tiers are always strictly ascending (in terms
 --   of enumeration).
@@ -172,16 +173,16 @@ tSetsOf = tStrictlyAscendingListsOf
 -- >      , [(2,[[],[],[3]])]
 -- >      , [(3,[[],[],[]])]
 -- >      ]
-tStrictlyAscendingChoices :: [[a]] -> [[(a,[[a]])]]
-tStrictlyAscendingChoices = tStrictlyAscendingChoicesWith (,)
+strictlyAscendingChoices :: [[a]] -> [[(a,[[a]])]]
+strictlyAscendingChoices = strictlyAscendingChoicesWith (,)
 
 -- | Like 'tStrictlyAscendingChoices' but customized by a function.
-tStrictlyAscendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-tStrictlyAscendingChoicesWith f []           = []
-tStrictlyAscendingChoicesWith f [[]]         = []
-tStrictlyAscendingChoicesWith f ([]:xss)     = [] : tStrictlyAscendingChoicesWith (\y yss -> f y ([]:yss)) xss
-tStrictlyAscendingChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
-                                            \/ tStrictlyAscendingChoicesWith f (xs:xss)
+strictlyAscendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
+strictlyAscendingChoicesWith f []           = []
+strictlyAscendingChoicesWith f [[]]         = []
+strictlyAscendingChoicesWith f ([]:xss)     = [] : strictlyAscendingChoicesWith (\y yss -> f y ([]:yss)) xss
+strictlyAscendingChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
+                                           \/ strictlyAscendingChoicesWith f (xs:xss)
 
 
 -- | Given tiers, returns tiers of lists of a given length.
@@ -201,7 +202,7 @@ tAssociations xs sbs = zip xs `tmap` tProducts (const sbs `map` xs)
 -- Those represent functional relations.
 tFunctionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
 tFunctionPairs xss yss = tConcatMap (`tAssociations` yss)
-                                    (tStrictlyAscendingListsOf xss)
+                                    (strictlyAscendingListsOf xss)
 
 -- | Returns a function given by a list of input-output pairs.
 -- The result is wrapped in a maybe value.

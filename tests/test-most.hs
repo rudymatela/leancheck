@@ -29,6 +29,6 @@ tests =
   ]
 
 checkCrescent :: Int -> Bool
-checkCrescent n = tStrictlyAscendingListsOf (tiers :: [[Nat]])
+checkCrescent n = strictlyAscendingListsOf (tiers :: [[Nat]])
           =| n |= (map . filter) strictlyOrdered (tiers :: [[[Nat]]])
 

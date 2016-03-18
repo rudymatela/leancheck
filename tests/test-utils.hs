@@ -43,7 +43,7 @@ checkNoDup n = tNoDupListsOf (tiers :: [[Int]])
   where noDup xs = nub (sort xs) == sort xs
 
 checkCrescent :: Int -> Bool
-checkCrescent n = tSetsOf (tiers :: [[Nat]])
+checkCrescent n = setsOf (tiers :: [[Nat]])
           =| n |= (map . filter) strictlyOrdered (tiers :: [[[Nat]]])
 
 checkLengthListingsOfLength :: Int -> Int -> Bool

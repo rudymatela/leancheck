@@ -80,8 +80,8 @@ module Test.Check
 
   -- * Listing lists
   , listsOf
-  , tSetsOf
-  , tStrictlyAscendingListsOf
+  , setsOf
+  , strictlyAscendingListsOf
   , tNoDupListsOf
   , tProducts
   , tListsOfLength
