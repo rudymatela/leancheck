@@ -64,8 +64,6 @@ module Test.Check.Core
 
   -- ** Misc utilities
   , (+|)
-  , (>:<)
-  , productWith
   , listIntegral
   , tFractional
   )
@@ -255,16 +253,6 @@ addWeight xss w = replicate w [] ++ xss
 (x:xs) +| ys = x:(ys +| xs)
 infixr 5 +|
 
--- | Product of two lists.
---
--- > [x,y] >:< [a,b] = [(x,a),(x,b),(y,a),(y,b)]
-(>:<) :: [a] -> [b] -> [(a,b)]
-xs >:< ys = [(x,y) | x <- xs, y <- ys]
-
--- | Product of two lists by a given function.
-productWith :: (a->b->c) -> [a] -> [b] -> [c]
-productWith f xs ys = [x `f` y | x <- xs, y <- ys]
-
 -- | Append tiers.
 --
 -- > [xs,ys,zs,...] \/ [as,bs,cs,...] = [xs++as,ys++bs,zs++cs,...]
@@ -293,7 +281,11 @@ infixr 7 \\//
 -- >    ...
 -- >    ]
 --
--- In terms of '(>:<)', 'tsProduct' is:
+-- Suppose:
+--
+-- > xs >:< ys = [(x,y) | x <- xs, y <- ys]
+--
+-- In terms of '(>:<)', 'tProduct' is:
 --
 -- > tProduct [xs] [ys] = [xs>:<ys]
 -- > tProduct [xs0,xs1] [ys0] = [xs0>:<ys0, xs1>:<ys0]
@@ -322,9 +314,9 @@ infixr 8 ><
 tProductWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 tProductWith _ _ [] = []
 tProductWith _ [] _ = []
-tProductWith f (xs:xss) yss = map (productWith f xs) yss
-                           \/ tProductWith f xss yss `addWeight` 1
-
+tProductWith f (xs:xss) yss = map (xs **) yss
+                          \/ tProductWith f xss yss `addWeight` 1
+  where xs ** ys = [x `f` y | x <- xs, y <- ys]
 
 -- | 'Testable' values are functions
 --   of 'Listable' arguments that return boolean values,

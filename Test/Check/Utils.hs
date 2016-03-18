@@ -69,11 +69,9 @@ tProduct3With f xss yss zss = tProductWith ($) (tProductWith f xss yss) zss
 tProductMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
 tProductMaybeWith _ _ [] = []
 tProductMaybeWith _ [] _ = []
-tProductMaybeWith f (xs:xss) yss = map (productWithMaybe f xs) yss
+tProductMaybeWith f (xs:xss) yss = map (xs **) yss
                                 \/ tProductMaybeWith f xss yss `addWeight` 1
-
-productWithMaybe :: (a->b->Maybe c) -> [a] -> [b] -> [c]
-productWithMaybe f xs ys = catMaybes $ productWith f xs ys
+  where xs ** ys = catMaybes [ f x y | x <- xs, y <- ys ]
 
 
 -- | Given tiers of values, returns tiers of lists of those values

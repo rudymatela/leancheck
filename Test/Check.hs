@@ -98,11 +98,7 @@ module Test.Check
   -- ** Listing values
   , tFractional
   , listIntegral
-
-  -- ** Misc utilities
   , (+|)
-  , (>:<)
-  , productWith
 
   -- * Test results
   , Testable
