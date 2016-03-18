@@ -61,7 +61,7 @@ consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
 consFromNoDupList f = tmap f (noDupListsOf tiers)
 
 
--- | Like 'tsProduct', but over 3 lists of tiers.
+-- | Like 'product', but over 3 lists of tiers.
 product3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
 product3With f xss yss zss = productWith ($) (productWith f xss yss) zss
 
@@ -165,7 +165,7 @@ strictlyAscendingListsOf =
 setsOf :: [[a]] -> [[[a]]]
 setsOf = strictlyAscendingListsOf
 
--- | Like 'tChoices', but paired tiers are always strictly ascending (in terms
+-- | Like 'choices', but paired tiers are always strictly ascending (in terms
 --   of enumeration).
 --
 -- > tStrictlyAscendingChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
@@ -177,7 +177,7 @@ setsOf = strictlyAscendingListsOf
 strictlyAscendingChoices :: [[a]] -> [[(a,[[a]])]]
 strictlyAscendingChoices = strictlyAscendingChoicesWith (,)
 
--- | Like 'tStrictlyAscendingChoices' but customized by a function.
+-- | Like 'strictlyAscendingChoices' but customized by a function.
 strictlyAscendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 strictlyAscendingChoicesWith f []           = []
 strictlyAscendingChoicesWith f [[]]         = []
