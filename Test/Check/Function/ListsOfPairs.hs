@@ -13,4 +13,4 @@ tFunctions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
 tFunctions xss yss =
   tConcatMap
     (\(r,yss) -> tmap (\ps -> (ps,r)) $ tFunctionPairs xss yss)
-    (tChoices yss)
+    (choices yss)

@@ -17,10 +17,10 @@ module Test.Check.Utils
   , setsOf
   , noDupListsOf
   , tProducts
-  , tListsOfLength 
+  , listsOfLength 
 
   -- * Choices
-  , tChoices
+  , choices
   , strictlyAscendingChoices
 
   -- * Functions
@@ -115,28 +115,28 @@ tProducts = foldr (productWith (:)) [[[]]]
 -- >   ]
 noDupListsOf :: [[a]] -> [[[a]]]
 noDupListsOf =
-  ([[]]:) . tConcat . tChoicesWith (\x xss -> tmap (x:) (noDupListsOf xss))
+  ([[]]:) . tConcat . choicesWith (\x xss -> tmap (x:) (noDupListsOf xss))
 
 -- | Lists tiers of all choices of values from tiers.
 -- Choices are pairs of values and tiers excluding that value.
 --
--- > tChoices [[False,True]] == [[(False,[[True]]),(True,[[False]])]]
--- > tChoices [[1],[2],[3]]
+-- > choices [[False,True]] == [[(False,[[True]]),(True,[[False]])]]
+-- > choices [[1],[2],[3]]
 -- >   == [ [(1,[[],[2],[3]])]
 -- >      , [(2,[[1],[],[3]])]
 -- >      , [(3,[[1],[2],[]])] ]
 --
 -- Each choice is sized by the extracted element.
-tChoices :: [[a]] -> [[(a,[[a]])]]
-tChoices = tChoicesWith (,)
+choices :: [[a]] -> [[(a,[[a]])]]
+choices = choicesWith (,)
 
 -- | Like 'tChoices', but allows a custom function.
-tChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-tChoicesWith f []           = []
-tChoicesWith f [[]]         = []
-tChoicesWith f ([]:xss)     = [] : tChoicesWith (\y yss -> f y ([]:yss)) xss
-tChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
-                           \/ tChoicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
+choicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
+choicesWith f []           = []
+choicesWith f [[]]         = []
+choicesWith f ([]:xss)     = [] : choicesWith (\y yss -> f y ([]:yss)) xss
+choicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
+                          \/ choicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
 -- | Given tiers of values,
 --   returns tiers of lists of elements in crescent order
@@ -187,8 +187,8 @@ strictlyAscendingChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
 
 
 -- | Given tiers, returns tiers of lists of a given length.
-tListsOfLength :: Int -> [[a]] -> [[[a]]]
-tListsOfLength n xss = tProducts (replicate n xss)
+listsOfLength :: Int -> [[a]] -> [[[a]]]
+listsOfLength n xss = tProducts (replicate n xss)
 
 
 -- | Given a list of domain values, and tiers of codomain values,

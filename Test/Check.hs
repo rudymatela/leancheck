@@ -84,7 +84,7 @@ module Test.Check
   , strictlyAscendingListsOf
   , noDupListsOf
   , tProducts
-  , tListsOfLength
+  , listsOfLength
 
   -- ** Tiers of Functions
   , tAssociations

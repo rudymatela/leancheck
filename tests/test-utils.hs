@@ -50,13 +50,13 @@ checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]
   where check m = all (\xs -> length xs == m)
                 $ concat . take n
-                $ tListsOfLength m natTiers
+                $ listsOfLength m natTiers
 
 checkSizesListingsOfLength :: Int -> Int -> Bool
 checkSizesListingsOfLength n m = all check [1..m]
   where check m = orderedBy compare
                 $ map sum . concat . take n
-                $ tListsOfLength m natTiers
+                $ listsOfLength m natTiers
 
 ptofApp :: (Ord a, Eq b) => (a,b) -> [(a,b)] -> Bool -- Ord a is just for allUnique
 ptofApp (x,y) ps = (x,y) `elem` ps && allUnique (map fst ps)
@@ -71,7 +71,7 @@ associationsValues ty n xs = all (\xs' -> map fst xs' == xs)
 
 associationsNewAndOld :: (Eq a, Eq b) => [a] -> [[b]] -> Bool
 associationsNewAndOld xs yss = tAssociations xs yss == oldAssociations xs yss
-  where oldAssociations xs sbs = tmap (zip xs) (tListsOfLength (length xs) sbs)
+  where oldAssociations xs sbs = tmap (zip xs) (listsOfLength (length xs) sbs)
 
 
 natTiers :: [[Nat]]
