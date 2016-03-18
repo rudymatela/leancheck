@@ -98,7 +98,7 @@ module Test.Check
   , defaultFunPairsToFunction
 
   -- ** Listing values
-  , tFractional
+  , tiersFractional
   , listIntegral
   , (+|)
 

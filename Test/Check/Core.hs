@@ -64,7 +64,7 @@ module Test.Check.Core
   -- ** Misc utilities
   , (+|)
   , listIntegral
-  , tFractional
+  , tiersFractional
   )
 where
 
@@ -162,22 +162,24 @@ instance (Listable a) => Listable [a] where
   tiers = cons0 []
        \/ cons2 (:)
 
--- The position of Infinity in the enumeration is arbitrary.
-tFractional :: Fractional a => [[a]]
-tFractional = productWith (+) tFractionalParts
-                               (tmap fromIntegral (tiers::[[Integer]]))
-            \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
-  where tFractionalParts :: Fractional a => [[a]]
-        tFractionalParts = [0]
-                         : [ [fromIntegral a / fromIntegral b]
-                           | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
+-- | Tiers of 'Fractional' values.
+--   This can be used as the implementation of 'tiers' for 'Fractional' types.
+tiersFractional :: Fractional a => [[a]]
+tiersFractional = productWith (+) tiersFractionalParts
+                                  (tmap fromIntegral (tiers::[[Integer]]))
+               \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
+  where tiersFractionalParts :: Fractional a => [[a]]
+        tiersFractionalParts = [0]
+                             : [ [fromIntegral a / fromIntegral b]
+                               | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
+-- The position of Infinity in the above enumeration is arbitrary.
 
 -- Note that this instance ignores NaN's.
 instance Listable Float where
-  tiers = tFractional
+  tiers = tiersFractional
 
 instance Listable Double where
-  tiers = tFractional
+  tiers = tiersFractional
 
 
 -- | 'map' over tiers
