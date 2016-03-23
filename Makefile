@@ -8,7 +8,8 @@ TESTS = tests/test           \
         tests/test-funshow   \
         tests/test-io        \
         tests/test-types
-ALLOBJS = $(shell find Test -name \*.hs | sed -e 's/.hs$$/.o/')
+LISTOBJS = find Test -name \*.hs | sed -e 's/.hs$$/.o/'
+ALLOBJS = $(shell $(LISTOBJS))
 OBJS = Test/Check.o \
        Test/Most.o \
        Test/Check/Function.o \
@@ -35,6 +36,9 @@ test: all-all $(TESTS)
 
 clean: clean-hi-o
 	rm -f $(TESTS)
+
+list-hs:
+	$(LISTOBJS)
 
 legacy-test: # needs ghc-7.8, ghc-7.6 and ghc-7.4 installed as such
 	make clean && make test GHC=ghc-7.8 GHCFLAGS="-Werror -dynamic"
