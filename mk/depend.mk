@@ -84,6 +84,7 @@ Test/Check/Utils: \
   Test/Check/Core.hs
 Test/Most.o: \
   Test/Most.hs \
+  Test/TypeBinding.hs \
   Test/Types.hs \
   Test/Operators.hs \
   Test/Check.hs \
@@ -176,6 +177,7 @@ tests/test-most.o: \
   tests/test-most.hs \
   Test/Most.hs \
   Test/Operators.hs \
+  Test/TypeBinding.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
   Test/Check.hs \
@@ -188,6 +190,7 @@ tests/test-most: \
   tests/test-most.hs \
   Test/Most.hs \
   Test/Operators.hs \
+  Test/TypeBinding.hs \
   Test/Check/Invariants.hs \
   Test/Types.hs \
   Test/Check.hs \

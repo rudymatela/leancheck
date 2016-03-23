@@ -10,10 +10,12 @@
 module Test.Most
   ( module Test.Check
   , module Test.Operators
+  , module Test.TypeBinding
   , module Test.Types
   )
 where
 
 import Test.Check
 import Test.Operators
+import Test.TypeBinding
 import Test.Types
