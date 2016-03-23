@@ -42,6 +42,7 @@ library
                  , Test.Check.Function.CoListable
                  , Test.Check.Function.Periodic
                  , Test.Check.Function.Show
+                 , Test.Check.ShowFunction
   other-modules:       Test.Check.Invariants
   -- other-extensions:    
   build-depends:       base, template-haskell
