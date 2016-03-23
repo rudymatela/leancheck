@@ -17,7 +17,7 @@ OBJS = Test/Check.o \
        Test/Check/Error.o
 GHCIMPORTDIRS = .
 # -dynamic is needed only for Test/Check/Derive.hs and tests/test-derive.hs
-GHCFLAGS = -dynamic
+GHCFLAGS = -dynamic -O2
 
 all: $(OBJS)
 
