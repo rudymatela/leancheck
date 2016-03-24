@@ -109,7 +109,6 @@ newtype Word4 = Word4 { unWord4 :: Int } deriving (Eq, Ord)
 -- So, it is limited by the 'maxBound' of 'Int'.
 newtype Nat = Nat { unNat :: Int } deriving (Eq, Ord)
 
-
 int1 :: Int -> Int1
 int1 = Int1 . narrowS 1
 
@@ -134,6 +133,26 @@ word3 = Word3 . narrowU 3
 word4 :: Int -> Word4
 word4 = Word4 . narrowU 4
 
+oInt1  ::(Int->Int->Int)->(Int1->Int1->Int1)   ; oInt1  = oNewtype int1  unInt1
+oInt2  ::(Int->Int->Int)->(Int2->Int2->Int2)   ; oInt2  = oNewtype int2  unInt2
+oInt3  ::(Int->Int->Int)->(Int3->Int3->Int3)   ; oInt3  = oNewtype int3  unInt3
+oInt4  ::(Int->Int->Int)->(Int4->Int4->Int4)   ; oInt4  = oNewtype int4  unInt4
+oWord1 ::(Int->Int->Int)->(Word1->Word1->Word1); oWord1 = oNewtype word1 unWord1
+oWord2 ::(Int->Int->Int)->(Word2->Word2->Word2); oWord2 = oNewtype word2 unWord2
+oWord3 ::(Int->Int->Int)->(Word3->Word3->Word3); oWord3 = oNewtype word3 unWord3
+oWord4 ::(Int->Int->Int)->(Word4->Word4->Word4); oWord4 = oNewtype word4 unWord4
+oNat   ::(Int->Int->Int)->(Nat->Nat->Nat)      ; oNat   = oNewtype Nat   unNat
+
+fInt1  :: (Int->Int) -> (Int1->Int1)   ; fInt1  = fNewtype int1  unInt1
+fInt2  :: (Int->Int) -> (Int2->Int2)   ; fInt2  = fNewtype int2  unInt2
+fInt3  :: (Int->Int) -> (Int3->Int3)   ; fInt3  = fNewtype int3  unInt3
+fInt4  :: (Int->Int) -> (Int4->Int4)   ; fInt4  = fNewtype int4  unInt4
+fWord1 :: (Int->Int) -> (Word1->Word1) ; fWord1 = fNewtype word1 unWord1
+fWord2 :: (Int->Int) -> (Word2->Word2) ; fWord2 = fNewtype word2 unWord2
+fWord3 :: (Int->Int) -> (Word3->Word3) ; fWord3 = fNewtype word3 unWord3
+fWord4 :: (Int->Int) -> (Word4->Word4) ; fWord4 = fNewtype word4 unWord4
+fNat   :: (Int->Int) -> (Nat->Nat)     ; fNat   = fNewtype Nat   unNat
+
 instance Show Int1 where show = show . unInt1
 instance Show Int2 where show = show . unInt2
 instance Show Int3 where show = show . unInt3
@@ -154,77 +173,41 @@ instance Read Word3 where readsPrec = readsPrecNewtype word3
 instance Read Word4 where readsPrec = readsPrecNewtype word4
 instance Read Nat where readsPrec = readsPrecNewtype Nat
 
-instance Num Int1 where
-  (+) = oNewtype int1 unInt1 (+)
-  (-) = oNewtype int1 unInt1 (-)
-  (*) = oNewtype int1 unInt1 (*)
-  abs = fNewtype int1 unInt1 abs
-  signum = fNewtype int1 unInt1 signum
-  fromInteger = int1 . fromInteger
+instance Num Int1 where (+) = oInt1 (+);  abs    = fInt1 abs
+                        (-) = oInt1 (-);  signum = fInt1 signum
+                        (*) = oInt1 (*);  fromInteger = int1 . fromInteger
 
-instance Num Int2 where
-  (+) = oNewtype int2 unInt2 (+)
-  (-) = oNewtype int2 unInt2 (-)
-  (*) = oNewtype int2 unInt2 (*)
-  abs = fNewtype int2 unInt2 abs
-  signum = fNewtype int2 unInt2 signum
-  fromInteger = int2 . fromInteger
+instance Num Int2 where (+) = oInt2 (+);  abs    = fInt2 abs
+                        (-) = oInt2 (-);  signum = fInt2 signum
+                        (*) = oInt2 (*);  fromInteger = int2 . fromInteger
 
-instance Num Int3 where
-  (+) = oNewtype int3 unInt3 (+)
-  (-) = oNewtype int3 unInt3 (-)
-  (*) = oNewtype int3 unInt3 (*)
-  abs = fNewtype int3 unInt3 abs
-  signum = fNewtype int3 unInt3 signum
-  fromInteger = int3 . fromInteger
+instance Num Int3 where (+) = oInt3 (+);  abs    = fInt3 abs
+                        (-) = oInt3 (-);  signum = fInt3 signum
+                        (*) = oInt3 (*);  fromInteger = int3 . fromInteger
 
-instance Num Int4 where
-  (+) = oNewtype int4 unInt4 (+)
-  (-) = oNewtype int4 unInt4 (-)
-  (*) = oNewtype int4 unInt4 (*)
-  abs = fNewtype int4 unInt4 abs
-  signum = fNewtype int4 unInt4 signum
-  fromInteger = int4 . fromInteger
+instance Num Int4 where (+) = oInt4 (+);  abs    = fInt4 abs
+                        (-) = oInt4 (-);  signum = fInt4 signum
+                        (*) = oInt4 (*);  fromInteger = int4 . fromInteger
 
-instance Num Word1 where
-  (+) = oNewtype word1 unWord1 (+)
-  (-) = oNewtype word1 unWord1 (-)
-  (*) = oNewtype word1 unWord1 (*)
-  abs = fNewtype word1 unWord1 abs
-  signum = fNewtype word1 unWord1 signum
-  fromInteger = word1 . fromInteger
+instance Num Word1 where (+) = oWord1 (+);  abs    = fWord1 abs
+                         (-) = oWord1 (-);  signum = fWord1 signum
+                         (*) = oWord1 (*);  fromInteger = word1 . fromInteger
 
-instance Num Word2 where
-  (+) = oNewtype word2 unWord2 (+)
-  (-) = oNewtype word2 unWord2 (-)
-  (*) = oNewtype word2 unWord2 (*)
-  abs = fNewtype word2 unWord2 abs
-  signum = fNewtype word2 unWord2 signum
-  fromInteger = word2 . fromInteger
+instance Num Word2 where (+) = oWord2 (+);  abs    = fWord2 abs
+                         (-) = oWord2 (-);  signum = fWord2 signum
+                         (*) = oWord2 (*);  fromInteger = word2 . fromInteger
 
-instance Num Word3 where
-  (+) = oNewtype word3 unWord3 (+)
-  (-) = oNewtype word3 unWord3 (-)
-  (*) = oNewtype word3 unWord3 (*)
-  abs = fNewtype word3 unWord3 abs
-  signum = fNewtype word3 unWord3 signum
-  fromInteger = word3 . fromInteger
+instance Num Word3 where (+) = oWord3 (+);  abs    = fWord3 abs
+                         (-) = oWord3 (-);  signum = fWord3 signum
+                         (*) = oWord3 (*);  fromInteger = word3 . fromInteger
 
-instance Num Word4 where
-  (+) = oNewtype word4 unWord4 (+)
-  (-) = oNewtype word4 unWord4 (-)
-  (*) = oNewtype word4 unWord4 (*)
-  abs = fNewtype word4 unWord4 abs
-  signum = fNewtype word4 unWord4 signum
-  fromInteger = word4 . fromInteger
+instance Num Word4 where (+) = oWord4 (+);  abs    = fWord4 abs
+                         (-) = oWord4 (-);  signum = fWord4 signum
+                         (*) = oWord4 (*);  fromInteger = word4 . fromInteger
 
-instance Num Nat where
-  (+) = oNewtype Nat unNat (+)
-  (-) = oNewtype Nat unNat (-)
-  (*) = oNewtype Nat unNat (*)
-  abs = fNewtype Nat unNat abs
-  signum = fNewtype Nat unNat signum
-  fromInteger = Nat . fromInteger
+instance Num Nat where (+) = oNat (+);  abs    = fNat abs
+                       (-) = oNat (-);  signum = fNat signum
+                       (*) = oNat (*);  fromInteger = Nat . fromInteger
 
 instance Real Int1 where toRational (Int1 x) = fromIntegral x % 1
 instance Real Int2 where toRational (Int2 x) = fromIntegral x % 1
@@ -236,41 +219,32 @@ instance Real Word3 where toRational (Word3 x) = fromIntegral x % 1
 instance Real Word4 where toRational (Word4 x) = fromIntegral x % 1
 instance Real Nat where toRational (Nat x) = fromIntegral x % 1
 
-instance Integral Int1 where
-  quotRem = otNewtype int1 unInt1 quotRem
-  toInteger = toInteger . unInt1
+instance Integral Int1 where quotRem = otNewtype int1 unInt1 quotRem
+                             toInteger = toInteger . unInt1
 
-instance Integral Int2 where
-  quotRem = otNewtype int2 unInt2 quotRem
-  toInteger = toInteger . unInt2
+instance Integral Int2 where quotRem = otNewtype int2 unInt2 quotRem
+                             toInteger = toInteger . unInt2
 
-instance Integral Int3 where
-  quotRem = otNewtype int3 unInt3 quotRem
-  toInteger = toInteger . unInt3
+instance Integral Int3 where quotRem = otNewtype int3 unInt3 quotRem
+                             toInteger = toInteger . unInt3
 
-instance Integral Int4 where
-  quotRem = otNewtype int4 unInt4 quotRem
-  toInteger = toInteger . unInt4
+instance Integral Int4 where quotRem = otNewtype int4 unInt4 quotRem
+                             toInteger = toInteger . unInt4
 
-instance Integral Word1 where
-  quotRem = otNewtype word1 unWord1 quotRem
-  toInteger = toInteger . unWord1
+instance Integral Word1 where quotRem = otNewtype word1 unWord1 quotRem
+                              toInteger = toInteger . unWord1
 
-instance Integral Word2 where
-  quotRem = otNewtype word2 unWord2 quotRem
-  toInteger = toInteger . unWord2
+instance Integral Word2 where quotRem = otNewtype word2 unWord2 quotRem
+                              toInteger = toInteger . unWord2
 
-instance Integral Word3 where
-  quotRem = otNewtype word3 unWord3 quotRem
-  toInteger = toInteger . unWord3
+instance Integral Word3 where quotRem = otNewtype word3 unWord3 quotRem
+                              toInteger = toInteger . unWord3
 
-instance Integral Word4 where
-  quotRem = otNewtype word4 unWord4 quotRem
-  toInteger = toInteger . unWord4
+instance Integral Word4 where quotRem = otNewtype word4 unWord4 quotRem
+                              toInteger = toInteger . unWord4
 
-instance Integral Nat where
-  quotRem = otNewtype Nat unNat quotRem
-  toInteger = toInteger . unNat
+instance Integral Nat where quotRem = otNewtype Nat unNat quotRem
+                            toInteger = toInteger . unNat
 
 instance Bounded Int1 where maxBound = Int1 0; minBound = Int1 (-1)
 instance Bounded Int2 where maxBound = Int2 1; minBound = Int2 (-2)
