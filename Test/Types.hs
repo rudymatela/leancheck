@@ -255,59 +255,33 @@ instance Bounded Word2 where maxBound = Word2 3; minBound = Word2 0
 instance Bounded Word3 where maxBound = Word3 7; minBound = Word3 0
 instance Bounded Word4 where maxBound = Word4 15; minBound = Word4 0
 
-instance Enum Int1 where
-  toEnum   = int1
-  fromEnum = unInt1
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Int1 where toEnum   = int1;   enumFrom     = boundedEnumFrom
+                         fromEnum = unInt1; enumFromThen = boundedEnumFromThen
 
-instance Enum Int2 where
-  toEnum   = int2
-  fromEnum = unInt2
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Int2 where toEnum   = int2;   enumFrom     = boundedEnumFrom
+                         fromEnum = unInt2; enumFromThen = boundedEnumFromThen
 
-instance Enum Int3 where
-  toEnum   = int3
-  fromEnum = unInt3
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Int3 where toEnum   = int3;   enumFrom     = boundedEnumFrom
+                         fromEnum = unInt3; enumFromThen = boundedEnumFromThen
 
-instance Enum Int4 where
-  toEnum   = int4
-  fromEnum = unInt4
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Int4 where toEnum   = int4;   enumFrom     = boundedEnumFrom
+                         fromEnum = unInt4; enumFromThen = boundedEnumFromThen
 
-instance Enum Word1 where
-  toEnum   = word1
-  fromEnum = unWord1
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Word1 where toEnum   = word1;   enumFrom     = boundedEnumFrom
+                          fromEnum = unWord1; enumFromThen = boundedEnumFromThen
 
-instance Enum Word2 where
-  toEnum   = word2
-  fromEnum = unWord2
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Word2 where toEnum   = word2;   enumFrom     = boundedEnumFrom
+                          fromEnum = unWord2; enumFromThen = boundedEnumFromThen
 
-instance Enum Word3 where
-  toEnum   = word3
-  fromEnum = unWord3
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Word3 where toEnum   = word3;   enumFrom     = boundedEnumFrom
+                          fromEnum = unWord3; enumFromThen = boundedEnumFromThen
 
-instance Enum Word4 where
-  toEnum   = word4
-  fromEnum = unWord4
-  enumFrom = boundedEnumFrom
-  enumFromThen = boundedEnumFromThen
+instance Enum Word4 where toEnum   = word4;   enumFrom     = boundedEnumFrom
+                          fromEnum = unWord4; enumFromThen = boundedEnumFromThen
 
 instance Enum Nat where
-  toEnum   = Nat
-  fromEnum = unNat
-  enumFrom (Nat x) = map Nat [x..]
-  enumFromThen (Nat x) (Nat s) = map Nat [x,s..]
+  toEnum   = Nat;    enumFrom     (Nat x)         = map Nat [x..]
+  fromEnum = unNat;  enumFromThen (Nat x) (Nat s) = map Nat [x,s..]
 
 instance Listable Int1 where list = [0,minBound]
 instance Listable Int2 where list = listIntegral
