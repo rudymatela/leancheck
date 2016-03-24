@@ -109,29 +109,14 @@ newtype Word4 = Word4 { unWord4 :: Int } deriving (Eq, Ord)
 -- So, it is limited by the 'maxBound' of 'Int'.
 newtype Nat = Nat { unNat :: Int } deriving (Eq, Ord)
 
-int1 :: Int -> Int1
-int1 = Int1 . narrowS 1
-
-int2 :: Int -> Int2
-int2 = Int2 . narrowS 2
-
-int3 :: Int -> Int3
-int3 = Int3 . narrowS 3
-
-int4 :: Int -> Int4
-int4 = Int4 . narrowS 4
-
-word1 :: Int -> Word1
-word1 = Word1 . narrowU 1
-
-word2 :: Int -> Word2
-word2 = Word2 . narrowU 2
-
-word3 :: Int -> Word3
-word3 = Word3 . narrowU 3
-
-word4 :: Int -> Word4
-word4 = Word4 . narrowU 4
+int1  :: Int -> Int1;   int1  = Int1  . narrowS 1
+int2  :: Int -> Int2;   int2  = Int2  . narrowS 2
+int3  :: Int -> Int3;   int3  = Int3  . narrowS 3
+int4  :: Int -> Int4;   int4  = Int4  . narrowS 4
+word1 :: Int -> Word1;  word1 = Word1 . narrowU 1
+word2 :: Int -> Word2;  word2 = Word2 . narrowU 2
+word3 :: Int -> Word3;  word3 = Word3 . narrowU 3
+word4 :: Int -> Word4;  word4 = Word4 . narrowU 4
 
 oInt1  ::(Int->Int->Int)->(Int1->Int1->Int1)   ; oInt1  = oNewtype int1  unInt1
 oInt2  ::(Int->Int->Int)->(Int2->Int2->Int2)   ; oInt2  = oNewtype int2  unInt2
