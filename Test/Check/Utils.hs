@@ -19,6 +19,9 @@ module Test.Check.Utils
   , products
   , listsOfLength 
 
+  , deleteT
+  , normalizeT
+
   -- * Choices
   , choices
   , strictlyAscendingChoices
@@ -102,6 +105,22 @@ listsOf xss = cons0 []
 -- Tiers of all lists combining elements of tiers: xss, yss and zss 
 products :: [ [[a]] ] -> [[ [a] ]]
 products = foldr (productWith (:)) [[[]]]
+
+-- | Delete the first occurence of an element in a tier,
+--   for tiers without repetitions:
+--
+-- > deleteT x === normalizeT . (`suchThat` (/= x))
+deleteT :: Eq a => a -> [[a]] -> [[a]]
+deleteT _ [] = []
+deleteT y ([]:xss) = [] : deleteT y xss
+deleteT y [[x]]        | x == y    = []
+deleteT y ((x:xs):xss) | x == y    = xs:xss
+                       | otherwise = [[x]] \/ deleteT y (xs:xss)
+
+normalizeT :: [[a]] -> [[a]]
+normalizeT [] = []
+normalizeT [[]] = []
+normalizeT (xs:xss) = xs:normalizeT xss
 
 -- | Given tiers of values, returns tiers of lists with no repeated elements.
 --

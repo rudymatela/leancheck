@@ -1,5 +1,5 @@
 import System.Exit (exitFailure)
-import Data.List (elemIndices, sort, nub)
+import Data.List (elemIndices, sort, nub, delete)
 
 import Test.Check
 import Test.Check.Invariants
@@ -28,6 +28,11 @@ tests =
                      [[1],[2],[3],[4]]
                      [[const Nothing],[Just]] == [[],[1],[2],[3],[4]]
 
+  , holds 100 $ deleteT_is_map_delete 10 -:> nat
+  , holds 100 $ deleteT_is_map_delete 10 -:> int
+  , holds 100 $ deleteT_is_map_delete 10 -:> bool
+  , holds 100 $ deleteT_is_map_delete 10 -:> int2
+
   , holds 100 $ ptofApp -:> (char,char)
   , holds 100 $ associationsValues int  100 -:> [int]
   , holds 100 $ associationsValues bool 100 -:> [bool]
@@ -36,6 +41,10 @@ tests =
   , holds 500 $ associationsNewAndOld -: [bool] >- [[bool]] >- und
   , holds 500 $ associationsNewAndOld -: [bool] >- [[int]]  >- und
   ]
+
+deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool
+deleteT_is_map_delete n x = deleteT x tiers
+                    =| n |= normalizeT (map (delete x) tiers)
 
 checkNoDup :: Int -> Bool
 checkNoDup n = noDupListsOf (tiers :: [[Int]])

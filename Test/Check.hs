@@ -66,6 +66,8 @@ module Test.Check
   , filterT
   , concatT
   , concatMapT
+  , deleteT
+  , normalizeT
   , toTiers
 
   -- ** Automatically deriving Listable instances
