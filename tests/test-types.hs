@@ -32,6 +32,13 @@ tests =
   , list `permutation` [minBound..maxBound :: UInt3]
   , list `permutation` [minBound..maxBound :: UInt4]
 
+  , list `permutation` [minBound..maxBound :: Nat1]
+  , list `permutation` [minBound..maxBound :: Nat2]
+  , list `permutation` [minBound..maxBound :: Nat3]
+  , list `permutation` [minBound..maxBound :: Nat4]
+  , list `permutation` [minBound..maxBound :: Nat5]
+  , list `permutation` [minBound..maxBound :: Nat6]
+  , list `permutation` [minBound..maxBound :: Nat7]
 
   , [minBound..maxBound :: Int1] == signedRange 1
   , [minBound..maxBound :: Int2] == signedRange 2
