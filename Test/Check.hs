@@ -62,7 +62,7 @@ module Test.Check
   , productWith
 
   -- ** Manipulating tiers
-  , tmap
+  , mapT
   , filterT
   , concatT
   , concatMapT

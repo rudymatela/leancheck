@@ -46,22 +46,22 @@ import Data.Maybe (fromMaybe, catMaybes)
 -- | Given a constructor for a type that takes a list,
 --   return tiers for that type.
 consFromList :: Listable a => ([a] -> b) -> [[b]]
-consFromList = (`tmap` listsOf tiers)
+consFromList = (`mapT` listsOf tiers)
 
 -- | Given a constructor for a type that takes a list with strictly ascending
 --   elements, return tiers of that type (e.g.: a Set type).
 consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
-consFromStrictlyAscendingList = (`tmap` strictlyAscendingListsOf tiers)
+consFromStrictlyAscendingList = (`mapT` strictlyAscendingListsOf tiers)
 
 -- | Given a constructor for a type that takes a set of elements (as a list)
 --   return tiers of that type (e.g.: a Set type).
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
-consFromSet = (`tmap` setsOf tiers)
+consFromSet = (`mapT` setsOf tiers)
 
 -- | Given a constructor for a type that takes a list with no duplicate
 --   elements, return tiers of that type.
 consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
-consFromNoDupList f = tmap f (noDupListsOf tiers)
+consFromNoDupList f = mapT f (noDupListsOf tiers)
 
 
 -- | Like 'product', but over 3 lists of tiers.
@@ -134,7 +134,7 @@ normalizeT (xs:xss) = xs:normalizeT xss
 -- >   ]
 noDupListsOf :: [[a]] -> [[[a]]]
 noDupListsOf =
-  ([[]]:) . concatT . choicesWith (\x xss -> tmap (x:) (noDupListsOf xss))
+  ([[]]:) . concatT . choicesWith (\x xss -> mapT (x:) (noDupListsOf xss))
 
 -- | Lists tiers of all choices of values from tiers.
 -- Choices are pairs of values and tiers excluding that value.
@@ -177,7 +177,7 @@ strictlyAscendingListsOf :: [[a]] -> [[[a]]]
 strictlyAscendingListsOf =
   ([[]]:) . concatT .
   strictlyAscendingChoicesWith
-    (\x xss -> tmap (x:) (strictlyAscendingListsOf xss))
+    (\x xss -> mapT (x:) (strictlyAscendingListsOf xss))
 
 -- | Returns tiers of sets represented as lists of values (no repeated sets).
 --   Shorthand for 'strictlyAscendingListsOf'.
@@ -215,7 +215,7 @@ listsOfLength n xss = products (replicate n xss)
 --
 -- Technically: tiers of left-total functional relations.
 associations :: [a] -> [[b]] -> [[ [(a,b)] ]]
-associations xs sbs = zip xs `tmap` products (const sbs `map` xs)
+associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
 
 -- | Given tiers of input values and tiers of output values,
 -- return tiers with all possible lists of input-output pairs.

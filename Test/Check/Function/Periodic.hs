@@ -10,10 +10,10 @@ import Data.List (inits)
 
 
 instance (Eq a, Eq b, Listable a, Listable b) => Listable (a -> b) where
-  tiers = tmap pairsToFunction $ functions list tiers
+  tiers = mapT pairsToFunction $ functions list tiers
 
 functions :: Eq b => [a] -> [[b]] -> [[[(a,b)]]]
-functions xs yss = tmap (zip xs . cycle) $ lsPeriodsOfLimit xs yss
+functions xs yss = mapT (zip xs . cycle) $ lsPeriodsOfLimit xs yss
 
 functionsz :: Eq b => [[a]] -> [[b]] -> [[[(a,b)]]]
 functionsz xss = functions (concat xss)

@@ -75,7 +75,7 @@ instance (Show a, Show b) => ShowFunction (a,b) where tBindings = tBindingsShow
 -- instance for functional value type --
 instance (Show a, Listable a, ShowFunction b) => ShowFunction (a->b) where
   tBindings f = concatMapT tBindingsFor tiers
-    where tBindingsFor x = mapFst (show x:) `tmap` tBindings (f x)
+    where tBindingsFor x = mapFst (show x:) `mapT` tBindings (f x)
           mapFst f (x,y) = (f x, y)
 
 paren :: String -> String

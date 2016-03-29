@@ -52,7 +52,7 @@ module Test.Check.Core
   , productWith
 
   -- ** Manipulating lists of tiers
-  , tmap
+  , mapT
   , filterT
   , concatT
   , concatMapT
@@ -166,7 +166,7 @@ instance (Listable a) => Listable [a] where
 --   This can be used as the implementation of 'tiers' for 'Fractional' types.
 tiersFractional :: Fractional a => [[a]]
 tiersFractional = productWith (+) tiersFractionalParts
-                                  (tmap fromIntegral (tiers::[[Integer]]))
+                                  (mapT fromIntegral (tiers::[[Integer]]))
                \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
   where tiersFractionalParts :: Fractional a => [[a]]
         tiersFractionalParts = [0]
@@ -183,8 +183,8 @@ instance Listable Double where
 
 
 -- | 'map' over tiers
-tmap :: (a -> b) -> [[a]] -> [[b]]
-tmap = map . map
+mapT :: (a -> b) -> [[a]] -> [[b]]
+mapT = map . map
 
 -- | 'filter' tiers
 filterT :: (a -> Bool) -> [[a]] -> [[a]]
@@ -197,7 +197,7 @@ concatT = foldr (\+:/) [] . map (foldr (\/) [])
 
 -- | 'concatMap' over tiers
 concatMapT :: (a -> [[b]]) -> [[a]] -> [[b]]
-concatMapT f = concatT . tmap f
+concatMapT f = concatT . mapT f
 
 
 -- | Takes a constructor with no arguments and return tiers (with a single value).
@@ -208,23 +208,23 @@ cons0 x = [[x]]
 -- | Takes a constructor with one argument and return tiers of that value.
 --   This value, by default, has size/weight 1.
 cons1 :: Listable a => (a -> b) -> [[b]]
-cons1 f = tmap f tiers `addWeight` 1
+cons1 f = mapT f tiers `addWeight` 1
 
 -- | Takes a constructor with two arguments and return tiers of that value.
 --   This value, by default, has size/weight 1.
 cons2 :: (Listable a, Listable b) => (a -> b -> c) -> [[c]]
-cons2 f = tmap (uncurry f) tiers `addWeight` 1
+cons2 f = mapT (uncurry f) tiers `addWeight` 1
 
 cons3 :: (Listable a, Listable b, Listable c) => (a -> b -> c -> d) -> [[d]]
-cons3 f = tmap (uncurry3 f) tiers `addWeight` 1
+cons3 f = mapT (uncurry3 f) tiers `addWeight` 1
 
 cons4 :: (Listable a, Listable b, Listable c, Listable d)
       => (a -> b -> c -> d -> e) -> [[e]]
-cons4 f = tmap (uncurry4 f) tiers `addWeight` 1
+cons4 f = mapT (uncurry4 f) tiers `addWeight` 1
 
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
-cons5 f = tmap (uncurry5 f) tiers `addWeight` 1
+cons5 f = mapT (uncurry5 f) tiers `addWeight` 1
 
 -- | Resets the weight of a constructor (or tiers)
 -- Typically used as an infix constructor when defining Listable instances:
@@ -321,7 +321,7 @@ instance Testable Bool where
 
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
   resultiers p = concatMapT resultiersFor tiers
-    where resultiersFor x = mapFst (showsPrec 11 x "":) `tmap` resultiers (p x)
+    where resultiersFor x = mapFst (showsPrec 11 x "":) `mapT` resultiers (p x)
           mapFst f (x,y) = (f x, y)
 
 -- | List all results of a 'Testable' property.

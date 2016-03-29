@@ -65,39 +65,39 @@ instance (Listable a, Listable b, Listable c, Listable d,
 
 cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]
-cons6 f = tmap (uncurry6 f) tiers `addWeight` 1
+cons6 f = mapT (uncurry6 f) tiers `addWeight` 1
 
 cons7 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g)
       => (a -> b -> c -> d -> e -> f -> g -> h) -> [[h]]
-cons7 f = tmap (uncurry7 f) tiers `addWeight` 1
+cons7 f = mapT (uncurry7 f) tiers `addWeight` 1
 
 cons8 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i) -> [[i]]
-cons8 f = tmap (uncurry8 f) tiers `addWeight` 1
+cons8 f = mapT (uncurry8 f) tiers `addWeight` 1
 
 cons9 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j) -> [[j]]
-cons9 f = tmap (uncurry9 f) tiers `addWeight` 1
+cons9 f = mapT (uncurry9 f) tiers `addWeight` 1
 
 cons10 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
            Listable f, Listable g, Listable h, Listable i, Listable j)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k) -> [[k]]
-cons10 f = tmap (uncurry10 f) tiers `addWeight` 1
+cons10 f = mapT (uncurry10 f) tiers `addWeight` 1
 
 cons11 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l) -> [[l]]
-cons11 f = tmap (uncurry11 f) tiers `addWeight` 1
+cons11 f = mapT (uncurry11 f) tiers `addWeight` 1
 
 cons12 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k, Listable l)
        => (a->b->c->d->e->f->g->h->i->j->k->l->m) -> [[m]]
-cons12 f = tmap (uncurry12 f) tiers `addWeight` 1
+cons12 f = mapT (uncurry12 f) tiers `addWeight` 1
 
 uncurry6 :: (a->b->c->d->e->f->g) -> (a,b,c,d,e,f) -> g
 uncurry6 f (x,y,z,w,v,u) = f x y z w v u
