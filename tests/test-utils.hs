@@ -49,16 +49,16 @@ deleteT_is_map_delete n x = deleteT x tiers
 
 checkNoDup :: Int -> Bool
 checkNoDup n = noDupListsOf (tiers :: [[Int]])
-       =| n |= (map . filter) noDup (tiers :: [[[Int]]])
+       =| n |= tiers `suchThat` noDup
   where noDup xs = nub (sort xs) == sort xs
 
 checkAscending :: Int -> Bool
 checkAscending n = ascendingListsOf (tiers :: [[Nat]])
-           =| n |= (map . filter) ordered (tiers :: [[ [Nat] ]])
+           =| n |= tiers `suchThat` ordered
 
 checkCrescent :: Int -> Bool
 checkCrescent n = setsOf (tiers :: [[Nat]])
-          =| n |= (map . filter) strictlyOrdered (tiers :: [[[Nat]]])
+          =| n |= tiers `suchThat` strictlyOrdered
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]
