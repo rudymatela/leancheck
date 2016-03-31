@@ -86,6 +86,7 @@ module Test.Check
   -- * Listing lists
   , listsOf
   , setsOf
+  , ascendingListsOf
   , strictlyAscendingListsOf
   , noDupListsOf
   , products

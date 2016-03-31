@@ -19,6 +19,7 @@ tests =
   [ True
 
   , checkNoDup 12
+  , checkAscending 18
   , checkCrescent 20
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
@@ -50,6 +51,10 @@ checkNoDup :: Int -> Bool
 checkNoDup n = noDupListsOf (tiers :: [[Int]])
        =| n |= (map . filter) noDup (tiers :: [[[Int]]])
   where noDup xs = nub (sort xs) == sort xs
+
+checkAscending :: Int -> Bool
+checkAscending n = ascendingListsOf (tiers :: [[Nat]])
+           =| n |= (map . filter) ordered (tiers :: [[ [Nat] ]])
 
 checkCrescent :: Int -> Bool
 checkCrescent n = setsOf (tiers :: [[Nat]])

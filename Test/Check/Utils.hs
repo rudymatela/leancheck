@@ -3,6 +3,7 @@ module Test.Check.Utils
   (
   -- * Additional constructors
     consFromList
+  , consFromAscendingList
   , consFromStrictlyAscendingList
   , consFromSet
   , consFromNoDupList
@@ -13,17 +14,19 @@ module Test.Check.Utils
 
   -- * Tiers of lists
   , listsOf
+  , ascendingListsOf
   , strictlyAscendingListsOf
   , setsOf
   , noDupListsOf
   , products
-  , listsOfLength 
+  , listsOfLength
 
   , deleteT
   , normalizeT
 
   -- * Choices
   , choices
+  , ascendingChoices
   , strictlyAscendingChoices
 
   -- * Functions
@@ -47,6 +50,9 @@ import Data.Maybe (fromMaybe, catMaybes)
 --   return tiers for that type.
 consFromList :: Listable a => ([a] -> b) -> [[b]]
 consFromList = (`mapT` listsOf tiers)
+
+consFromAscendingList :: Listable a => ([a] -> b) -> [[b]]
+consFromAscendingList = (`mapT` ascendingListsOf tiers)
 
 -- | Given a constructor for a type that takes a list with strictly ascending
 --   elements, return tiers of that type (e.g.: a Set type).
@@ -102,7 +108,7 @@ listsOf xss = cons0 []
 --
 -- > products [ xss, yss, zss ] ==
 --
--- Tiers of all lists combining elements of tiers: xss, yss and zss 
+-- Tiers of all lists combining elements of tiers: xss, yss and zss
 products :: [ [[a]] ] -> [[ [a] ]]
 products = foldr (productWith (:)) [[[]]]
 
@@ -158,12 +164,40 @@ choicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
                           \/ choicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
 -- | Given tiers of values,
---   returns tiers of lists of elements in crescent order
+--   returns tiers of lists of elements in ascending order
+--                               (from tiered enumeration).
+--
+ascendingListsOf :: [[a]] -> [[[a]]]
+ascendingListsOf =
+  ([[]]:) . concatT . ascendingChoicesWith (\x xss -> mapT (x:) (ascendingListsOf xss))
+
+-- > ascendingChoices [[False,True]] =
+-- >   [ [(False,[[False,True]]), (True,[[True]])]
+-- >   ]
+--
+-- > ascendingChoices [[1],[2],[3],...] =
+-- >   [ [(1,[[1],[2],[3],...])]
+-- >   , [(2,[[ ],[2],[3],...])]
+-- >   , [(3,[[ ],[ ],[3],...])]
+-- >   , ...
+-- >   ]
+ascendingChoices :: [[a]] -> [[(a,[[a]])]]
+ascendingChoices = ascendingChoicesWith (,)
+
+ascendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
+ascendingChoicesWith f []           = []
+ascendingChoicesWith f [[]]         = []
+ascendingChoicesWith f ([]:xss)     = [] : ascendingChoicesWith (\y yss -> f y ([]:yss)) xss
+ascendingChoicesWith f ((x:xs):xss) = [[f x ((x:xs):xss)]]
+                                   \/ ascendingChoicesWith f (xs:xss)
+
+-- | Given tiers of values,
+--   returns tiers of lists of elements in strictly ascending order
 --                              (from tiered enumeration).
 --   If you only care about whether elements are in returned lists,
 --   this returns the tiers of all sets of values.
 --
--- > tStrictlyAscendingListsOf [[0],[1],[2],...] ==
+-- > strictlyAscendingListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
 -- >   , [[0]]
 -- >   , [[1]]
