@@ -20,7 +20,7 @@ tests =
 
   , checkNoDup 12
   , checkAscending 18
-  , checkCrescent 20
+  , checkStrictlyAscending 20
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
@@ -56,9 +56,9 @@ checkAscending :: Int -> Bool
 checkAscending n = ascendingListsOf (tiers :: [[Nat]])
            =| n |= tiers `suchThat` ordered
 
-checkCrescent :: Int -> Bool
-checkCrescent n = setsOf (tiers :: [[Nat]])
-          =| n |= tiers `suchThat` strictlyOrdered
+checkStrictlyAscending :: Int -> Bool
+checkStrictlyAscending n = setsOf (tiers :: [[Nat]])
+                   =| n |= tiers `suchThat` strictlyOrdered
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]
