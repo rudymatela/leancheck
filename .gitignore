@@ -5,6 +5,8 @@ dist/
 log/
 *.swp
 *.swo
+*.swn
+*.swm
 *.o
 *.hi
 *.dyn_hi
