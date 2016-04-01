@@ -75,6 +75,7 @@ module Test.Check
 
   -- ** Extra constructors
   , consFromList
+  , consFromAscendingList
   , consFromStrictlyAscendingList
   , consFromSet
   , consFromNoDupList
