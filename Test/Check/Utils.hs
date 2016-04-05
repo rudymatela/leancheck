@@ -221,8 +221,8 @@ setsOf = strictlyAscendingListsOf
 -- | Like 'choices', but paired tiers are always strictly ascending (in terms
 --   of enumeration).
 --
--- > tStrictlyAscendingChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
--- > tStrictlyAscendingChoices [[1],[2],[3]]
+-- > strictlyAscendingChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
+-- > strictlyAscendingChoices [[1],[2],[3]]
 -- >   == [ [(1,[[],[2],[3]])]
 -- >      , [(2,[[],[],[3]])]
 -- >      , [(3,[[],[],[]])]
