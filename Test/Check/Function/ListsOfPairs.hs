@@ -2,6 +2,7 @@
 module Test.Check.Function.ListsOfPairs
   ( functionPairs
   , associations
+  , defaultFunPairsToFunction
   )
 where
 
