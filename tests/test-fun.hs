@@ -3,7 +3,7 @@ import Data.List (elemIndices, sort, nub, delete)
 
 import Test.Check
 import Test.Check.Invariants
-import Test.Check.Function.Utils
+import Test.Check.Function.ListsOfPairs
 import Test.Operators
 import Test.TypeBinding
 import Test.Types (Nat)
