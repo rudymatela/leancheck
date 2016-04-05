@@ -1,14 +1,14 @@
 -- | Utilities functions for manipulating tiers (sized lists of lists)
 module Test.Check.Utils
   (
-  -- * Additional constructors
+  -- * Additional tiers constructors
     consFromList
   , consFromAscendingList
   , consFromStrictlyAscendingList
   , consFromSet
   , consFromNoDupList
 
-  -- * Products
+  -- * Products of tiers
   , product3With
   , productMaybeWith
 
@@ -24,7 +24,7 @@ module Test.Check.Utils
   , deleteT
   , normalizeT
 
-  -- * Choices
+  -- * Tiers of choices
   , choices
   , ascendingChoices
   , strictlyAscendingChoices
