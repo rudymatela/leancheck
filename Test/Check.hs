@@ -93,14 +93,6 @@ module Test.Check
   , products
   , listsOfLength
 
-  -- ** Tiers of Functions
-  , associations
-  , functionPairs
-  , pairsToMaybeFunction
-  , pairsToFunction
-  , defaultPairsToFunction
-  , defaultFunPairsToFunction
-
   -- ** Listing values
   , tiersFractional
   , listIntegral

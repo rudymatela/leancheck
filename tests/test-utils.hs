@@ -33,14 +33,6 @@ tests =
   , holds 100 $ deleteT_is_map_delete 10 -:> int
   , holds 100 $ deleteT_is_map_delete 10 -:> bool
   , holds 100 $ deleteT_is_map_delete 10 -:> int2
-
-  , holds 100 $ ptofApp -:> (char,char)
-  , holds 100 $ associationsValues int  100 -:> [int]
-  , holds 100 $ associationsValues bool 100 -:> [bool]
-  , holds 500 $ associationsNewAndOld -: [int]  >- [[int]]  >- und
-  , holds 500 $ associationsNewAndOld -: [int]  >- [[bool]] >- und
-  , holds 500 $ associationsNewAndOld -: [bool] >- [[bool]] >- und
-  , holds 500 $ associationsNewAndOld -: [bool] >- [[int]]  >- und
   ]
 
 deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool
@@ -72,27 +64,5 @@ checkSizesListingsOfLength n m = all check [1..m]
                 $ map sum . concat . take n
                 $ listsOfLength m natTiers
 
-ptofApp :: (Ord a, Eq b) => (a,b) -> [(a,b)] -> Bool -- Ord a is just for allUnique
-ptofApp (x,y) ps = (x,y) `elem` ps && allUnique (map fst ps)
-               ==> pairsToFunction ps x == y
-
-associationsValues :: (Listable b, Eq a)
-                   => b -> Int -> [a] -> Bool
-associationsValues ty n xs = all (\xs' -> map fst xs' == xs)
-                           $ take n
-                           $ concat
-                           $ associations xs (tiers `asTypeOf` [[ty]])
-
-associationsNewAndOld :: (Eq a, Eq b) => [a] -> [[b]] -> Bool
-associationsNewAndOld xs yss = associations xs yss == oldAssociations xs yss
-  where oldAssociations xs sbs = mapT (zip xs) (listsOfLength (length xs) sbs)
-
-
 natTiers :: [[Nat]]
 natTiers = tiers
-
-allUnique :: Ord a => [a] -> Bool
-allUnique [] = True
-allUnique (x:xs) = x `notElem` xs
-                && allUnique (filter (< x) xs)
-                && allUnique (filter (> x) xs)

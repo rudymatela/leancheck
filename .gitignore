@@ -19,4 +19,5 @@ tests/test-utils
 tests/test-most
 tests/test-derive
 tests/test-error
+tests/test-fun
 tests/test-funshow

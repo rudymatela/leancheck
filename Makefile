@@ -5,6 +5,7 @@ TESTS = tests/test           \
         tests/test-error     \
         tests/test-most      \
         tests/test-operators \
+        tests/test-fun       \
         tests/test-funshow   \
         tests/test-io        \
         tests/test-types
@@ -30,6 +31,7 @@ test: all-all $(TESTS)
 	./tests/test-error
 	./tests/test-most
 	./tests/test-operators
+	./tests/test-fun
 	./tests/test-funshow
 	./tests/test-io
 	./tests/test-types
