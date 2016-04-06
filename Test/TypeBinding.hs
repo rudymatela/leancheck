@@ -1,4 +1,4 @@
--- | Infix operators for type binding via dummy first-class values.
+-- | Infix operators for type binding using dummy first-class values.
 --
 -- Those are useful when property based testing to avoid repetition.
 -- Suppose:
