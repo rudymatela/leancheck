@@ -36,7 +36,7 @@ deriveListable t = do
 -- For example, it is not possible if there are is no Listable instance for a
 -- type in one of the constructors.
 canDeriveListable :: Name -> Q Bool
-canDeriveListable t = return True -- TODO: Fix this, check type-cons instances
+canDeriveListable t = return True -- TODO: Check instances for type-cons args
 
 -- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 reallyDeriveListable :: Name -> DecsQ
