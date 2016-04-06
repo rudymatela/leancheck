@@ -20,6 +20,13 @@ description:
   It works by producing *tiers* of test values,
   which are essentially (possibly infinite) lists
   of finite lists of same-and-increasingly-sized values.
+  .
+  LeanCheck has "lean" core with only 180 lines of Haskell code
+  but provides a selection of utilitites for property testing:
+  Test types (Nat, Nat<1-7>, Word<1-4>, Int<1-4>);
+  test operators (==>, &&&, |||);
+  type binding operators.
+
 license:             BSD3
 license-file:        LICENSE
 author:              Rudy Matela
