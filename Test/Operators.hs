@@ -79,11 +79,6 @@ identity f = f === id
 notIdentity :: Eq a => (a -> a) -> a -> Bool
 notIdentity = (not .) . identity
 
--- TODO:  something =$ function $= somethingElse
---        function something == function somethingElse
---        someList =|n|= someOtherList
---        take n someList == take n someOtherList
-
 -- | Equal under.  A ternary operator.
 --
 -- > x =$ f $= y  =  f x = f y

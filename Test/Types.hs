@@ -42,8 +42,6 @@ module Test.Types
   , UInt4
   )
 where
--- TODO: Add Nat modulo N types: Nat1, Nat2, Nat3, Nat4, Nat5, Nat6, Nat7, Nat8
---       Yes Nat modulo N!  Not Nat modulo 2^N (we already have Word)
 -- TODO: Add Ix and Bits instances
 
 import Test.Check (Listable(..), listIntegral)
