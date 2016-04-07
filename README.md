@@ -56,7 +56,7 @@ See (ghci):
 Checking properties like in SmallCheck/QuickCheck
 -------------------------------------------------
 
-To "check" properties like in SmallCheck and QuickCheck
+To "check" properties like in [SmallCheck] and [QuickCheck]
 automatically printing results on standard output,
 you can use the function `check :: Testable a => a -> IO ()`.
 
@@ -145,3 +145,4 @@ It optionally depends on Template Haskell
 
 [Feat]: https://hackage.haskell.org/package/testing-feat
 [SmallCheck]: https://hackage.haskell.org/package/smallcheck
+[QuickCheck]: https://hackage.haskell.org/package/QuickCheck
