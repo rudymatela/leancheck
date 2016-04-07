@@ -12,7 +12,7 @@
 -- this cabal file too complicated.  -- Rudy
 
 name:                leancheck
-version:             0.2.0
+version:             0.3.0
 synopsis:            Cholesterol-free property-based testing
 description:
   LeanCheck is a simple enumerative property-based testing library.
@@ -47,7 +47,7 @@ source-repository head
 source-repository this
   type:            git
   location:        https://github.com/rudymatela/leancheck
-  tag:             v0.2.0
+  tag:             v0.3.0
 
 library
   exposed-modules: Test.Check
