@@ -135,7 +135,7 @@ To use the files directly in your project:
 	$ cp -r Test ../path/to/your-project
 
 
-This was tested on GHC 7.10, GHC 7.8, GHC 7.6 and GHC 7.4.
+LeanCheck was tested on GHC 7.10, GHC 7.8, GHC 7.6 and GHC 7.4.
 This library does not use any fancy extensions:
 if it does not work on previous GHC versions,
 probably only *minor* changes are needed.
