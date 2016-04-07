@@ -1,9 +1,7 @@
 LeanCheck
 =========
 
-**This is a work in progress.  Come back after a while.**
-
-**The API is very likely to change in the near future**
+**The API is likely to change in the near future**
 
 LeanCheck is a simple enumerative property-based testing library.  It works by
 producing *tiers* of test values, which are essentially (possibly infinite)
