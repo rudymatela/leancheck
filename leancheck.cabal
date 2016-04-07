@@ -23,7 +23,7 @@ description:
   .
   LeanCheck has "lean" core with only 180 lines of Haskell code
   but provides a selection of utilitites for property testing:
-  Test types (Nat, Nat<1-7>, Word<1-4>, Int<1-4>);
+  test types (Nat, Nat<1-7>, Word<1-4>, Int<1-4>);
   test operators (==>, &&&, |||);
   type binding operators.
 
