@@ -26,8 +26,8 @@ See (ghci):
 
 	import Test.Check
 	import Data.List
-	holds 100 $ (\xs -> sort (sort xs) == sort (xs::[Int]))  -- > True
-	holds 100 $ (\xs -> [] `union` xs == (xs::[Int]))        -- > False
+	holds 100 $ \xs -> sort (sort xs) == sort (xs::[Int])  -- > True
+	holds 100 $ \xs -> [] `union` xs == (xs::[Int])        -- > False
 
 
 Finding counter examples
@@ -44,24 +44,41 @@ See (ghci):
 
 	import Test.Check
 	import Data.List
-	counterExample 100 $ (\xs -> sort (sort xs) == sort (xs::[Int]))  -- > Nothing
-	counterExample 100 $ (\xs -> [] `union` xs == (xs::[Int]))        -- > Just ["[0,0]"]
-	counterExample 100 $ (\xs ys -> xs `union` ys == ys `union` (xs::[Int])) -- > Just ["[]","[0,0]"]
+
+	counterExample 100 $ \xs -> sort (sort xs) == sort (xs::[Int])
+	-- > Nothing
+
+	counterExample 100 $ \xs -> [] `union` xs == (xs::[Int])
+	-- > Just ["[0,0]"]
+
+	counterExample 100 $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
+	-- > Just ["[]","[0,0]"]
 
 
-Current differences from SmallCheck/QuickCheck
-----------------------------------------------
+"Check"ing properties like in SmallCheck/QuickCheck
+---------------------------------------------------
 
-There is no `quickCheck/smallCheck/depthCheck` function that prints results.
-You either have to use `holds` and `counterExample`,
-which are not wrapped in an IO () thus only return the results without
-printing.
+To "check" properties like in SmallCheck and QuickCheck
+you can use the function `check :: Testable a => a -> IO ()`.
+
+	import Test.Check
+	import Data.List
+	check $ \xs -> sort (sort xs) == sort (xs::[Int])
+	-- > OK, passed 200 tests.
+	check $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
+	-- > Failed! Falsifiable (after 4 tests):
+	-- > [] [0,0]
+
+The function `check` tests for a maximum of 200 tests.
+To check for a maximum of `n` tests, use `checkFor n`.
+To get a boolean result wrapped in `IO`, use `checkResult` or `checkResultFor`.
+There is no "quiet" option, just use `holds` or `counterExample`.
 
 
 Testing for custom types
 ------------------------
 
-LeanCheck works on all types that are `Listable`.
+LeanCheck works on properties with `Listable` argument types.
 Custom `Listable` instances are created similarly to SmallCheck:
 
 	data MyType = MyConsA
