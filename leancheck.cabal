@@ -27,6 +27,7 @@ description:
   test operators (==>, &&&, |||);
   type binding operators.
 
+homepage:            https://github.com/rudymatela/leancheck#readme
 license:             BSD3
 license-file:        LICENSE
 author:              Rudy Matela
@@ -34,6 +35,15 @@ maintainer:          rudy@matela.com.br
 category:            Testing
 build-type:          Simple
 cabal-version:       >=1.10
+
+source-repository head
+  type:            git
+  location:        https://github.com/rudymatela/leancheck
+
+source-repository this
+  type:            git
+  location:        https://github.com/rudymatela/leancheck
+  tag:             v0.2.0
 
 library
   exposed-modules: Test.Check
