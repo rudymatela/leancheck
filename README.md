@@ -55,10 +55,11 @@ See (ghci):
 	-- > Just ["[]","[0,0]"]
 
 
-"Check"ing properties like in SmallCheck/QuickCheck
----------------------------------------------------
+Checking properties like in SmallCheck/QuickCheck
+-------------------------------------------------
 
 To "check" properties like in SmallCheck and QuickCheck
+automatically printing results on standard output,
 you can use the function `check :: Testable a => a -> IO ()`.
 
 	import Test.Check
@@ -72,7 +73,7 @@ you can use the function `check :: Testable a => a -> IO ()`.
 The function `check` tests for a maximum of 200 tests.
 To check for a maximum of `n` tests, use `checkFor n`.
 To get a boolean result wrapped in `IO`, use `checkResult` or `checkResultFor`.
-There is no "quiet" option, just use `holds` or `counterExample`.
+There is no "quiet" option, just use `holds` or `counterExample` in that case.
 
 
 Testing for custom types
