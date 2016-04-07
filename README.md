@@ -62,8 +62,10 @@ you can use the function `check :: Testable a => a -> IO ()`.
 
 	import Test.Check
 	import Data.List
+
 	check $ \xs -> sort (sort xs) == sort (xs::[Int])
 	-- > OK, passed 200 tests.
+
 	check $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
 	-- > Failed! Falsifiable (after 4 tests):
 	-- > [] [0,0]
