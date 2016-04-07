@@ -23,18 +23,22 @@ description:
   .
   LeanCheck has "lean" core with only 180 lines of Haskell code
   but provides a selection of utilitites for property testing:
-  test types (Nat, Nat<1-7>, Word<1-4>, Int<1-4>);
-  test operators (==>, &&&, |||);
+  test types (@Nat@, @Nat\<1-7\>@, @Word\<1-4\>@, @Int\<1-4\>@);
+  test operators (@==>@, @===@, @&&&@, @|||@);
   type binding operators.
+  .
+  LeanCheck API is likely to change in the near future.
 
 homepage:            https://github.com/rudymatela/leancheck#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Rudy Matela
-maintainer:          rudy@matela.com.br
+author:              Rudy Matela <rudy@matela.com.br>
+maintainer:          Rudy Matela <rudy@matela.com.br>
 category:            Testing
 build-type:          Simple
 cabal-version:       >=1.10
+
+extra-source-files:  README.md, CREDITS.md
 
 source-repository head
   type:            git
