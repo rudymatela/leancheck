@@ -1,7 +1,7 @@
 -- | A 'Show' instance for functions.
-module Test.Check.Function.Show () where
+module Test.LeanCheck.Function.Show () where
 
-import Test.Check.ShowFunction
+import Test.LeanCheck.ShowFunction
 
 instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
   showsPrec 0 = (++) . showFunction 8

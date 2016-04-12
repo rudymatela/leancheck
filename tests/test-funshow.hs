@@ -1,8 +1,8 @@
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
-import Test.Check.ShowFunction
-import Test.Check.Function.Show
-import Test.TypeBinding
+import Test.LeanCheck.ShowFunction
+import Test.LeanCheck.Function.Show
+import Test.LeanCheck.TypeBinding
 
 main :: IO ()
 main =

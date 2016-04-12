@@ -36,7 +36,7 @@
 --
 -- This last form is useful when testing multiple properties for multiple
 -- types.
-module Test.TypeBinding
+module Test.LeanCheck.TypeBinding
   (
   -- * Type binding operators
   --
@@ -75,10 +75,10 @@ module Test.TypeBinding
   )
 where
 
-import Test.Types
+import Test.LeanCheck.Types
 
 undefinedOf :: String -> a
-undefinedOf fn = error $ "Test.TypeBinding." ++ fn
+undefinedOf fn = error $ "Test.LeanCheck.TypeBinding." ++ fn
 
 -- | Type restricted version of const
 -- that forces its first argument
@@ -199,7 +199,7 @@ eith :: a -> b -> Either a b
 eith = undefinedOf "eith"
 
 
--- Dummy values of Test.Types's types:
+-- Dummy values of Test.LeanCheck.Types's types:
 
 nat :: Nat
 nat = undefinedOf "nat"

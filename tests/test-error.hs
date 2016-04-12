@@ -1,8 +1,8 @@
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 
-import Test.Check.Error
-import Test.Types (Nat)
+import Test.LeanCheck.Error
+import Test.LeanCheck.Types (Nat)
 import Data.List (sort)
 
 main :: IO ()

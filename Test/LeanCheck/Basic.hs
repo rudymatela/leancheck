@@ -1,12 +1,12 @@
 -- | Simple property-based testing library based on
 --   enumeration of values via lists of lists.
 --
--- This module exports "Test.Check.Core" functionality along with instances and
+-- This module exports "Test.LeanCheck.Core" functionality along with instances and
 -- functions for further tuple and constructor arities.
 --
--- For the complete list of functions, see "Test.Check".
-module Test.Check.Basic
-  ( module Test.Check.Core
+-- For the complete list of functions, see "Test.LeanCheck".
+module Test.LeanCheck.Basic
+  ( module Test.LeanCheck.Core
 
   , cons6
   , cons7
@@ -18,7 +18,7 @@ module Test.Check.Basic
   )
 where
 
-import Test.Check.Core
+import Test.LeanCheck.Core
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>

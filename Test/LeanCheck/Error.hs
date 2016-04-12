@@ -1,12 +1,12 @@
 -- | A simple property-based testing library based on
 --   enumeration of values via lists of lists.
 --
--- This module re-exports Test.Check but some test functions have been
+-- This module re-exports Test.LeanCheck but some test functions have been
 -- specialized to catch errors (see the explicit export list below).
 --
 -- This module is unsafe, it uses `unsafePerformIO` to catch errors.
 {-# LANGUAGE CPP #-}
-module Test.Check.Error
+module Test.LeanCheck.Error
   ( holds
   , fails
   , exists
@@ -21,7 +21,7 @@ module Test.Check.Error
   , errorToTrue
   , anyErrorToNothing
 
-  , module Test.Check
+  , module Test.LeanCheck
   )
 where
 
@@ -29,7 +29,7 @@ where
 import Prelude hiding (catch)
 #endif
 
-import Test.Check hiding
+import Test.LeanCheck hiding
   ( holds
   , fails
   , exists
@@ -40,7 +40,7 @@ import Test.Check hiding
   , results
   )
 
-import qualified Test.Check as C
+import qualified Test.LeanCheck as C
   ( holds
   , fails
   , results

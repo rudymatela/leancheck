@@ -17,7 +17,7 @@
 -- 'Listable' instances are provided for the most common Haskell types.
 -- New instances are easily defined
 -- (see the 'Listable's documentation for more info).
-module Test.Check
+module Test.LeanCheck
   (
   -- * Checking and testing
     holds
@@ -102,11 +102,11 @@ module Test.Check
   , Testable
   , results
 
-  , module Test.Check.IO
+  , module Test.LeanCheck.IO
   )
 where
 
-import Test.Check.Basic
-import Test.Check.Utils
-import Test.Check.Derive
-import Test.Check.IO
+import Test.LeanCheck.Basic
+import Test.LeanCheck.Utils
+import Test.LeanCheck.Derive
+import Test.LeanCheck.IO

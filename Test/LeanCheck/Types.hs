@@ -1,5 +1,5 @@
 -- | Types to aid in property-based testing.
-module Test.Types
+module Test.LeanCheck.Types
   (
   -- * Integer types
   --
@@ -44,7 +44,7 @@ module Test.Types
 where
 -- TODO: Add Ix and Bits instances
 
-import Test.Check (Listable(..), listIntegral)
+import Test.LeanCheck (Listable(..), listIntegral)
 import Data.Ratio ((%))
 
 narrowU :: Int -> Int -> Int

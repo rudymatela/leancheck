@@ -4,16 +4,16 @@
 -- Using this module, it is possible to implement
 -- a Show instance for functions:
 --
--- > import Test.Check.ShowFunction
+-- > import Test.LeanCheck.ShowFunction
 -- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
 -- >   show = showFunction 8
 --
 -- This shows functions as a case pattern with up to 8 cases.
 --
 -- The module
--- @Test.Check.Function.Show@ ('Test.Check.Function.Show')
+-- @Test.LeanCheck.Function.Show@ ('Test.LeanCheck.Function.Show')
 -- exports an instance like the one above.
-module Test.Check.ShowFunction
+module Test.LeanCheck.ShowFunction
   ( showFunction
   , showFunctionLine
   , Binding
@@ -25,8 +25,8 @@ module Test.Check.ShowFunction
   )
 where
 
-import Test.Check.Core
-import Test.Check.Error (errorToNothing)
+import Test.LeanCheck.Core
+import Test.LeanCheck.Error (errorToNothing)
 import Data.List
 import Data.Maybe
 

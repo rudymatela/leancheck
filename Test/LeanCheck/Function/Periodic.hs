@@ -1,11 +1,11 @@
 -- | Periodic function enumeration.
 --   This is just a sketch.
-module Test.Check.Function.Periodic
+module Test.LeanCheck.Function.Periodic
 where
 
 
-import Test.Check.Basic
-import Test.Check.Utils (listsOf)
+import Test.LeanCheck.Basic
+import Test.LeanCheck.Utils (listsOf)
 import Data.List (inits)
 
 

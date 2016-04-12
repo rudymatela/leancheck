@@ -1,5 +1,5 @@
 -- | Function enumeration via lists of pairs.
-module Test.Check.Function.ListsOfPairs
+module Test.LeanCheck.Function.ListsOfPairs
   ( functionPairs
   , associations
   , pairsToFunction
@@ -7,8 +7,8 @@ module Test.Check.Function.ListsOfPairs
   )
 where
 
-import Test.Check.Core
-import Test.Check.Utils
+import Test.LeanCheck.Core
+import Test.LeanCheck.Utils
 import Data.Maybe (fromMaybe)
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where

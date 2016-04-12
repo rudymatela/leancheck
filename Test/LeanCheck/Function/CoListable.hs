@@ -1,11 +1,11 @@
 -- | Function enumeration via CoListable typeclass
 --   This currently just a sketch.
-module Test.Check.Function.CoListable
+module Test.LeanCheck.Function.CoListable
 where
 
 
-import Test.Check.Core
-import Test.Check.Utils
+import Test.LeanCheck.Core
+import Test.LeanCheck.Utils
 import Data.Maybe (fromMaybe)
 
 

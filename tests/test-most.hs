@@ -2,8 +2,8 @@
 import System.Exit (exitFailure)
 import Data.List (elemIndices)
 
-import Test.Most
-import Test.Check.Invariants (strictlyOrdered)
+import Test.LeanCheck.Most
+import Test.LeanCheck.Invariants (strictlyOrdered)
 
 main :: IO ()
 main =
@@ -15,16 +15,16 @@ main =
 tests =
   [ True
 
-  -- Test.Check
+  -- Test.LeanCheck
   , holds 1 True
 
-  -- Test.Check.Utils
+  -- Test.LeanCheck.Utils
   , checkCrescent 1
 
-  -- Test.Types
+  -- Test.LeanCheck.Types
   , [minBound..maxBound :: UInt1] == [0,1]
 
-  -- Test.Operators
+  -- Test.LeanCheck.Operators
   , holds 1 $ (not . not) === id
   ]
 

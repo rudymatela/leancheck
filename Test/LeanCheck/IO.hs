@@ -1,6 +1,6 @@
 -- | QuickCheck-like interface to LeanCheck
 {-# LANGUAGE CPP #-}
-module Test.Check.IO
+module Test.LeanCheck.IO
   ( check
   , checkFor
   , checkResult
@@ -12,7 +12,7 @@ where
 import Prelude hiding (catch)
 #endif
 
-import Test.Check.Core
+import Test.LeanCheck.Core
 import Data.Maybe (listToMaybe)
 import Data.List (find)
 import Control.Exception (SomeException, catch, evaluate)
@@ -32,7 +32,7 @@ checkFor n p = checkResultFor n p >> return ()
 --   returning 'True' on success.
 --
 -- There is no option to silence this function:
--- in that case, you should use 'Test.Check.holds'.
+-- in that case, you should use 'TestLean.Check.holds'.
 checkResult :: Testable a => a -> IO Bool
 checkResult p = checkResultFor 200 p
 
@@ -41,7 +41,7 @@ checkResult p = checkResultFor 200 p
 --   returning 'True' on success.
 --
 -- There is no option to silence this function:
--- in that case, you should use 'Test.Check.holds'.
+-- in that case, you should use 'Test.LeanCheck.holds'.
 checkResultFor :: Testable a => Int -> a -> IO Bool
 checkResultFor n p = do
   r <- resultIO n p

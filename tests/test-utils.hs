@@ -1,11 +1,11 @@
 import System.Exit (exitFailure)
 import Data.List (elemIndices, sort, nub, delete)
 
-import Test.Check
-import Test.Check.Invariants
-import Test.Operators
-import Test.TypeBinding
-import Test.Types (Nat)
+import Test.LeanCheck
+import Test.LeanCheck.Invariants
+import Test.LeanCheck.Operators
+import Test.LeanCheck.TypeBinding
+import Test.LeanCheck.Types (Nat)
 
 
 main :: IO ()
