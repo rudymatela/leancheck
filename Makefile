@@ -38,7 +38,7 @@ test: all-all $(TESTS)
 	./tests/test-io
 	./tests/test-types
 
-clean: clean-hi-o
+clean: clean-hi-o clean-haddock
 	rm -f $(TESTS)
 
 list-hs:
@@ -65,7 +65,12 @@ hlint:
 	  --ignore "Redundant bracket" \
 	  .
 
-haddock:
+haddock: doc/index.html
+
+clean-haddock:
+	rm -f doc/*.{html,css,js,png,gif}
+
+doc/index.html: $(ALLHS)
 	./mk/haddock-i base template-haskell | \
 	xargs haddock --html -odoc $(ALLHS) --no-print-missing-docs
 
