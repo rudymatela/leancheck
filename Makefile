@@ -9,8 +9,10 @@ TESTS = tests/test           \
         tests/test-funshow   \
         tests/test-io        \
         tests/test-types
-LISTOBJS = find Test -name \*.hs | sed -e 's/.hs$$/.o/'
-ALLOBJS = $(shell $(LISTOBJS))
+LISTHS   = find Test -name \*.hs
+LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
+ALLHS    = $(shell $(LISTHS))
+ALLOBJS  = $(shell $(LISTOBJS))
 OBJS = Test/Check.o \
        Test/Most.o \
        Test/Check/Function.o \
@@ -40,6 +42,9 @@ clean: clean-hi-o
 	rm -f $(TESTS)
 
 list-hs:
+	$(LISTHS)
+
+list-objs:
 	$(LISTOBJS)
 
 legacy-test: # needs ghc-7.8, ghc-7.6 and ghc-7.4 installed as such
@@ -59,5 +64,9 @@ hlint:
 	  --ignore "Use import/export shortcut" \
 	  --ignore "Redundant bracket" \
 	  .
+
+haddock:
+	./mk/haddock-i base template-haskell | \
+	xargs haddock --html -odoc $(ALLHS) --no-print-missing-docs
 
 include mk/haskell.mk

@@ -21,3 +21,8 @@ tests/test-derive
 tests/test-error
 tests/test-fun
 tests/test-funshow
+doc/*.html
+doc/*.css
+doc/*.js
+doc/*.png
+doc/*.gif
