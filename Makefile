@@ -71,7 +71,7 @@ clean-haddock:
 	rm -f doc/*.{html,css,js,png,gif}
 
 doc/index.html: $(ALLHS)
-	./mk/haddock-i base template-haskell | \
-	xargs haddock --html -odoc $(ALLHS) --no-print-missing-docs
+	./mk/haddock-i base template-haskell | xargs \
+	haddock --html -odoc $(ALLHS) --no-print-missing-docs --title=leancheck
 
 include mk/haskell.mk
