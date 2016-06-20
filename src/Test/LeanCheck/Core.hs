@@ -237,7 +237,7 @@ cons4 f = mapT (uncurry4 f) tiers `addWeight` 1
 -- | Returns tiers of applications of a 5-argument constructor.
 --
 -- "Test.LeanCheck.Basic" defines
--- 'Test.LeanCheck.cons6' up to 'Test.LeanCheck.cons12'.
+-- 'Test.LeanCheck.Basic.cons6' up to 'Test.LeanCheck.Basic.cons12'.
 -- Those are exported by default from "Test.LeanCheck",
 -- but are hidden from the Haddock documentation.
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
