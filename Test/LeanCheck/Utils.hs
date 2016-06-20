@@ -1,5 +1,5 @@
 -- | Utilities functions for manipulating tiers (sized lists of lists)
-module Test.Check.Utils
+module Test.LeanCheck.Utils
   (
   -- * Additional tiers constructors
     consFromList
@@ -31,7 +31,7 @@ module Test.Check.Utils
   )
 where
 
-import Test.Check.Basic
+import Test.LeanCheck.Basic
 import Data.Maybe (catMaybes)
 
 -- | Given a constructor for a type that takes a list,

@@ -1,6 +1,6 @@
-module Test.Operators
+module Test.LeanCheck.Operators
   (
---  (==>) -- already provided by Test.Check
+--  (==>) -- already provided by Test.LeanCheck
 
   -- * Combining properties
     (===), (====)
@@ -22,7 +22,7 @@ module Test.Operators
   )
 where
 
-import Test.Check ((==>))
+import Test.LeanCheck ((==>))
 
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
 combine op f g = \x -> f x `op` g x

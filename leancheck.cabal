@@ -2,11 +2,11 @@
 --
 -- Template Haskell dependency is optional.  To deactivate it:
 -- 1. In this file, comment out:
---   Test.Check.Derive
+--   Test.LeanCheck.Derive
 --   template-haskell
 --   and the test-suite derive
--- 2. On Test.Most, comment out the Test.Check.Derive module
--- 3. On Test.Check, comment out Test.Check.Derive and deriveListable
+-- 2. On Test.LeanCheck.Most, comment out the Test.LeanCheck.Derive module
+-- 3. On Test.LeanCheck, comment out Test.LeanCheck.Derive and deriveListable
 --
 -- I could ultimately add a flag to deactivate that, but I do not want to make
 -- this cabal file too complicated.  -- Rudy
@@ -53,24 +53,24 @@ source-repository this
   tag:             v0.3.0
 
 library
-  exposed-modules: Test.Check
-                 , Test.Check.Utils
-                 , Test.Check.Basic
-                 , Test.Check.Core
-                 , Test.Check.Derive
-                 , Test.Check.Error
-                 , Test.Check.IO
-                 , Test.Types
-                 , Test.Operators
-                 , Test.TypeBinding
-                 , Test.Most
-                 , Test.Check.Function
-                 , Test.Check.Function.ListsOfPairs
-                 , Test.Check.Function.CoListable
-                 , Test.Check.Function.Periodic
-                 , Test.Check.Function.Show
-                 , Test.Check.ShowFunction
-  other-modules:       Test.Check.Invariants
+  exposed-modules: Test.LeanCheck
+                 , Test.LeanCheck.Utils
+                 , Test.LeanCheck.Basic
+                 , Test.LeanCheck.Core
+                 , Test.LeanCheck.Derive
+                 , Test.LeanCheck.Error
+                 , Test.LeanCheck.IO
+                 , Test.LeanCheck.Types
+                 , Test.LeanCheck.Operators
+                 , Test.LeanCheck.TypeBinding
+                 , Test.LeanCheck.Most
+                 , Test.LeanCheck.Function
+                 , Test.LeanCheck.Function.ListsOfPairs
+                 , Test.LeanCheck.Function.CoListable
+                 , Test.LeanCheck.Function.Periodic
+                 , Test.LeanCheck.Function.Show
+                 , Test.LeanCheck.ShowFunction
+  other-modules:       Test.LeanCheck.Invariants
   build-depends:       base >= 4 && < 5, template-haskell
   default-language:    Haskell2010
 

@@ -1,6 +1,6 @@
--- | Some invariants over Test.Check functions
---   You should be importing this ONLY to test 'Check.hs' itself.
-module Test.Check.Invariants
+-- | Some invariants over Test.LeanCheck functions
+--   You should be importing this ONLY to test 'Test/LeanCheck.hs' itself.
+module Test.LeanCheck.Invariants
   ( tNatPairOrd
   , tNatTripleOrd
   , tNatQuadrupleOrd
@@ -19,10 +19,10 @@ module Test.Check.Invariants
   )
 where
 
-import Test.Check
+import Test.LeanCheck
 import Data.List
 import Data.Ord
-import Test.Types (Nat(..))
+import Test.LeanCheck.Types (Nat(..))
 
 -- | check if a list is ordered
 ordered :: Ord a => [a] -> Bool

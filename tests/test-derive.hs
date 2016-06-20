@@ -1,9 +1,9 @@
 {-# LANGUAGE TemplateHaskell #-}
-import Test.Check.Derive
-import Test.Check
+import Test.LeanCheck.Derive
+import Test.LeanCheck
 import System.Exit (exitFailure)
 import Data.List (elemIndices)
-import Test.Operators
+import Test.LeanCheck.Operators
 
 data D0       = D0                    deriving Show
 data D1 a     = D1 a                  deriving Show

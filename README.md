@@ -36,7 +36,7 @@ and a _property_ (function returning Bool),
 then, it returns a boolean indicating whether the property holds.
 See (ghci):
 
-	import Test.Check
+	import Test.LeanCheck
 	import Data.List
 	holds 100 $ \xs -> sort (sort xs) == sort (xs::[Int])  -- > True
 	holds 100 $ \xs -> [] `union` xs == (xs::[Int])        -- > False
@@ -54,7 +54,7 @@ Then, it returns Nothing if no results are found or Just a list of Strings
 representing the offending arguments to the property.
 See (ghci):
 
-	import Test.Check
+	import Test.LeanCheck
 	import Data.List
 
 	counterExample 100 $ \xs -> sort (sort xs) == sort (xs::[Int])
@@ -74,7 +74,7 @@ To "check" properties like in [SmallCheck] and [QuickCheck]
 automatically printing results on standard output,
 you can use the function `check :: Testable a => a -> IO ()`.
 
-	import Test.Check
+	import Test.LeanCheck
 	import Data.List
 
 	check $ \xs -> sort (sort xs) == sort (xs::[Int])

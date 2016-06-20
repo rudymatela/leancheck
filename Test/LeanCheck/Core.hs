@@ -2,22 +2,22 @@
 --   enumeration of values via lists of lists.
 --
 -- This is the core module of the library, with the most basic definitions.  If
--- you are looking just to use the library, import and see "Test.Check".
+-- you are looking just to use the library, import and see "Test.LeanCheck".
 --
 -- If you want to understand how the code works, this is the place to start.
 --
 --
 -- Other important modules:
 --
--- "Test.Check.Basic" re-exports (almost) everything from this module
+-- "Test.LeanCheck.Basic" re-exports (almost) everything from this module
 --         along with constructors and instances for further arities.
 --
--- "Test.Check.Utils" re-exports "Test.Check.Basic"
+-- "Test.LeanCheck.Utils" re-exports "Test.LeanCheck.Basic"
 --         along with functions for advanced Listable instance definitions.
 --
--- "Test.Check" re-exports "Test.Check.Utils"
+-- "Test.LeanCheck" re-exports "Test.LeanCheck.Utils"
 --   along with a TH function to automatically derive Listable instances.
-module Test.Check.Core
+module Test.LeanCheck.Core
   (
   -- * Checking and testing
     holds
@@ -91,12 +91,12 @@ import Data.Maybe (listToMaybe)
 -- When defined by 'list', each sub-list in 'tiers' is a singleton list
 -- (each element of 'list' has +1 size).
 --
--- The function 'Test.Check.Derive.deriveListable' from "Test.Check.Derive"
+-- The function 'Test.LeanCheck.Derive.deriveListable' from "Test.LeanCheck.Derive"
 -- can automatically derive instances of this typeclass.
 --
 -- A 'Listable' instance for functions is also available but is not exported by
--- default.  Import "Test.Check.Function" for that.
--- ("Test.Check.Function.Show" for a Show instance for functions)
+-- default.  Import "Test.LeanCheck.Function" for that.
+-- ("Test.LeanCheck.Function.Show" for a Show instance for functions)
 class Listable a where
   tiers :: [[a]]
   list :: [a]

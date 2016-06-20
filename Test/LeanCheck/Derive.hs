@@ -2,13 +2,13 @@
 -- Experimental module for deriving Listable instances
 --
 -- Needs GHC and Template Haskell (tested on GHC 7.4, 7.6, 7.8 and 7.10)
-module Test.Check.Derive
+module Test.LeanCheck.Derive
   ( deriveListable
   )
 where
 
 import Language.Haskell.TH
-import Test.Check.Basic
+import Test.LeanCheck.Basic
 import Control.Monad (unless, liftM, liftM2)
 
 #if __GLASGOW_HASKELL__ < 706

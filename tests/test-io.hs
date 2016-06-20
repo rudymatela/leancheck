@@ -1,4 +1,4 @@
-import Test.Check.IO
+import Test.LeanCheck.IO
 
 main :: IO ()
 main = do
