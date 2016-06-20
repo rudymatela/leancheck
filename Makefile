@@ -41,6 +41,11 @@ test: all-all $(TESTS)
 clean: clean-hi-o clean-haddock
 	rm -f $(TESTS)
 
+ghci: src/Test/LeanCheck.ghci
+
+install:
+	@echo "use \`cabal install' instead"
+
 list-hs:
 	$(LISTHS)
 
