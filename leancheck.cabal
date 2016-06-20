@@ -21,7 +21,7 @@ description:
   applies enumerated argument values to these properties in search for a
   counterexample.  Properties can be viewed as parameterized unit tests.
   .
-  LeanCheck works by producing *tiers* of test values: a possibly infinite list
+  LeanCheck works by producing tiers of test values: a possibly infinite list
   of finite sublists of same-and-increasingly-sized values.
   .
   LeanCheck has lean core with only 180 lines of Haskell code.
