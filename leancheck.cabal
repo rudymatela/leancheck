@@ -5,8 +5,7 @@
 --   Test.LeanCheck.Derive
 --   template-haskell
 --   and the test-suite derive
--- 2. On Test.LeanCheck.Most, comment out the Test.LeanCheck.Derive module
--- 3. On Test.LeanCheck, comment out Test.LeanCheck.Derive and deriveListable
+-- 2. On Test.LeanCheck, comment out Test.LeanCheck.Derive and deriveListable
 --
 -- I could ultimately add a flag to deactivate that, but I do not want to make
 -- this cabal file too complicated.  -- Rudy
@@ -17,17 +16,15 @@ synopsis:            Cholesterol-free property-based testing
 description:
   LeanCheck is a simple enumerative property-based testing library.
   .
-  It works by producing *tiers* of test values,
-  which are essentially (possibly infinite) lists
-  of finite lists of same-and-increasingly-sized values.
+  Properties are defined as Haskell functions returning a boolean value which
+  should be true for all possible choices of argument values.    LeanCheck
+  applies enumerated argument values to these properties in search for a
+  counterexample.  Properties can be viewed as parameterized unit tests.
   .
-  LeanCheck has "lean" core with only 180 lines of Haskell code
-  but provides a selection of utilitites for property testing:
-  test types (@Nat@, @Nat\<1-7\>@, @Word\<1-4\>@, @Int\<1-4\>@);
-  test operators (@==>@, @===@, @&&&@, @|||@);
-  type binding operators.
+  LeanCheck works by producing *tiers* of test values: a possibly infinite list
+  of finite sublists of same-and-increasingly-sized values.
   .
-  LeanCheck API is likely to change in the near future.
+  LeanCheck has "lean" core with only 180 lines of Haskell code.
 
 homepage:            https://github.com/rudymatela/leancheck#readme
 license:             BSD3
