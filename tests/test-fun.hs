@@ -4,9 +4,7 @@ import Data.List (elemIndices, sort, nub, delete)
 import Test.LeanCheck
 import Test.LeanCheck.Invariants
 import Test.LeanCheck.Function.ListsOfPairs
-import Test.LeanCheck.Operators
-import Test.LeanCheck.TypeBinding
-import Test.LeanCheck.Types (Nat)
+import Test.LeanCheck.Utils
 
 
 main :: IO ()

@@ -22,7 +22,7 @@ where
 import Test.LeanCheck
 import Data.List
 import Data.Ord
-import Test.LeanCheck.Types (Nat(..))
+import Test.LeanCheck.Utils.Types (Nat(..))
 
 -- | check if a list is ordered
 ordered :: Ord a => [a] -> Bool

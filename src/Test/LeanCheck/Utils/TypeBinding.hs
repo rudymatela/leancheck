@@ -36,7 +36,7 @@
 --
 -- This last form is useful when testing multiple properties for multiple
 -- types.
-module Test.LeanCheck.TypeBinding
+module Test.LeanCheck.Utils.TypeBinding
   (
   -- * Type binding operators
   --
@@ -75,7 +75,7 @@ module Test.LeanCheck.TypeBinding
   )
 where
 
-import Test.LeanCheck.Types
+import Test.LeanCheck.Utils.Types
 
 undefinedOf :: String -> a
 undefinedOf fn = error $ "Test.LeanCheck.TypeBinding." ++ fn

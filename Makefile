@@ -3,7 +3,6 @@ TESTS = tests/test           \
         tests/test-utils     \
         tests/test-derive    \
         tests/test-error     \
-        tests/test-most      \
         tests/test-operators \
         tests/test-fun       \
         tests/test-funshow   \
@@ -31,7 +30,6 @@ test: all-all $(TESTS)
 	./tests/test-utils
 	./tests/test-derive
 	./tests/test-error
-	./tests/test-most
 	./tests/test-operators
 	./tests/test-fun
 	./tests/test-funshow

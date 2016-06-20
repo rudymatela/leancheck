@@ -1,5 +1,5 @@
 -- | Types to aid in property-based testing.
-module Test.LeanCheck.Types
+module Test.LeanCheck.Utils.Types
   (
   -- * Integer types
   --

@@ -104,16 +104,9 @@ test-suite operators
   build-depends:       base >= 4 && < 5, template-haskell
   default-language:    Haskell2010
 
-test-suite most
-  type:                exitcode-stdio-1.0
-  main-is:             test-most.hs
-  hs-source-dirs:      src, tests
-  build-depends:       base >= 4 && < 5, template-haskell
-  default-language:    Haskell2010
-
 test-suite derive
   type:                exitcode-stdio-1.0
-  main-is:             test-most.hs
+  main-is:             test-derive.hs
   hs-source-dirs:      src, tests
   build-depends:       base >= 4 && < 5, template-haskell
   default-language:    Haskell2010

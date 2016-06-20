@@ -2,7 +2,7 @@ import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 
 import Test.LeanCheck.Error
-import Test.LeanCheck.Types (Nat)
+import Test.LeanCheck.Utils.Types (Nat)
 import Data.List (sort)
 
 main :: IO ()

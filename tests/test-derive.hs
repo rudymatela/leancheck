@@ -3,7 +3,7 @@ import Test.LeanCheck.Derive
 import Test.LeanCheck
 import System.Exit (exitFailure)
 import Data.List (elemIndices)
-import Test.LeanCheck.Operators
+import Test.LeanCheck.Utils.Operators
 
 data D0       = D0                    deriving Show
 data D1 a     = D1 a                  deriving Show

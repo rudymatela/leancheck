@@ -13,7 +13,7 @@
 -- The module
 -- @Test.LeanCheck.Function.Show@ ('Test.LeanCheck.Function.Show')
 -- exports an instance like the one above.
-module Test.LeanCheck.ShowFunction
+module Test.LeanCheck.Function.ShowFunction
   ( showFunction
   , showFunctionLine
   , Binding

@@ -1,6 +1,6 @@
 import System.Exit (exitFailure)
 import Data.List (elemIndices,delete)
-import Test.LeanCheck.Types
+import Test.LeanCheck.Utils.Types
 import Test.LeanCheck (list,fails)
 
 main :: IO ()

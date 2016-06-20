@@ -1,4 +1,4 @@
-module Test.LeanCheck.Operators
+module Test.LeanCheck.Utils.Operators
   (
 --  (==>) -- already provided by Test.LeanCheck
 
