@@ -1,3 +1,4 @@
+{-# OPTIONS_HADDOCK prune #-}
 -- | LeanCheck is a simple enumerative property-based testing library.
 --
 -- A __property__ is a function returning a 'Bool' that should be 'True' for
@@ -42,6 +43,12 @@ module Test.LeanCheck
   , counterExamples
   , witness
   , witnesses
+
+  -- ** Reporting
+  , check
+  , checkFor
+  , checkResult
+  , checkResultFor
 
   -- * Listing test values
   , Listable(..)
@@ -111,8 +118,6 @@ module Test.LeanCheck
   -- * Test results
   , Testable
   , results
-
-  , module Test.LeanCheck.IO
   )
 where
 

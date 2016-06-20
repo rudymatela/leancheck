@@ -81,5 +81,9 @@ clean-haddock:
 doc/index.html: $(ALLHS)
 	./mk/haddock-i base template-haskell | xargs \
 	haddock --html -odoc $(ALLHS) --no-print-missing-docs --title=leancheck
+	@echo 'NOTE: please ensure that there are *only* 7'
+	@echo '      undocumented functions on Test.LeanCheck'
+	@echo '      as "OPTIONS_HADDOCK prune" is active'
+	@echo '      to hide cons6...cons12'
 
 include mk/haskell.mk

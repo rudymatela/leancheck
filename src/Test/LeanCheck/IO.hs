@@ -17,12 +17,17 @@ import Data.Maybe (listToMaybe)
 import Data.List (find)
 import Control.Exception (SomeException, catch, evaluate)
 
--- | Check a property
---   printing results on 'stdout'
+-- | Checks a property printing results on 'stdout'
+--
+-- > > check $ \xs -> sort (sort xs) == sort (xs::[Int])
+-- > +++ OK, passed 200 tests.
+-- > > check $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
+-- > *** Failed! Falsifiable (after 4 tests):
+-- > [] [0,0]
 check :: Testable a => a -> IO ()
 check p = checkResult p >> return ()
 
--- | Check a property for @N@ tests
+-- | Check a property for a given number of tests
 --   printing results on 'stdout'
 checkFor :: Testable a => Int -> a -> IO ()
 checkFor n p = checkResultFor n p >> return ()
@@ -32,16 +37,16 @@ checkFor n p = checkResultFor n p >> return ()
 --   returning 'True' on success.
 --
 -- There is no option to silence this function:
--- in that case, you should use 'TestLean.Check.holds'.
+-- for silence, you should use 'TestLean.Check.holds'.
 checkResult :: Testable a => a -> IO Bool
 checkResult p = checkResultFor 200 p
 
--- | Check a property for @N@ tests
+-- | Check a property for a given number of tests
 --   printing results on 'stdout' and
 --   returning 'True' on success.
 --
 -- There is no option to silence this function:
--- in that case, you should use 'Test.LeanCheck.holds'.
+-- for silence, you should use 'Test.LeanCheck.holds'.
 checkResultFor :: Testable a => Int -> a -> IO Bool
 checkResultFor n p = do
   r <- resultIO n p

@@ -117,6 +117,8 @@ toTiers = map (:[])
 instance Listable () where
   list = [()]
 
+-- | Tiers of 'Integral' values.
+--   Can be used as a default implementation of 'list' for 'Integral' types.
 listIntegral :: (Enum a, Num a) => [a]
 listIntegral = [0,-1..] +| [1..]
 
@@ -235,7 +237,7 @@ cons4 f = mapT (uncurry4 f) tiers `addWeight` 1
 -- | Returns tiers of applications of a 5-argument constructor.
 --
 -- "Test.LeanCheck.Basic" defines
--- 'Test.LeanCheck.cons6' up-to 'Test.LeanCheck.cons12'.
+-- 'Test.LeanCheck.cons6' up to 'Test.LeanCheck.cons12'.
 -- Those are exported by default from "Test.LeanCheck",
 -- but are hidden from the Haddock documentation.
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
@@ -330,8 +332,10 @@ productWith f (xs:xss) yss = map (xs **) yss
 --   e.g.:
 --
 -- * @ Bool @
--- * @ Int -> Bool @
+-- * @ Listable a => a -> Bool @
 -- * @ Listable a => a -> a -> Bool @
+-- * @ Int -> Bool @
+-- * @ String -> [Int] -> Bool @
 class Testable a where
   resultiers :: a -> [[([String],Bool)]]
 
@@ -344,10 +348,11 @@ instance (Testable b, Show a, Listable a) => Testable (a->b) where
           mapFst f (x,y) = (f x, y)
 
 -- | List all results of a 'Testable' property.
--- Each results is composed by a list of strings and a boolean.
--- The list of strings represents the arguments applied to the function.
--- The boolean tells whether the property holds for that selection of argument.
--- This list is usually infinite.
+-- Each result is a pair of a list of strings and a boolean.
+-- The list of strings is a printable representation of one possible choice of
+-- argument values for the property.  Each boolean paired with such a list
+-- indicates whether the property holds for this choice.  The outer list is
+-- potentially infinite and lazily evaluated.
 results :: Testable a => a -> [([String],Bool)]
 results = concat . resultiers
 
