@@ -65,6 +65,11 @@ hlint:
 	  --ignore "Redundant bracket" \
 	  .
 
+markdown:
+	pandoc README.md -o README.html
+	pandoc doc/tutorial.md -o doc/tutorial.html
+	pandoc doc/data-invariant.md -o doc/data-invariant.html
+
 haddock: doc/index.html
 
 clean-haddock:

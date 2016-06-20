@@ -38,7 +38,10 @@ category:            Testing
 build-type:          Simple
 cabal-version:       >=1.10
 
-extra-source-files:  README.md, CREDITS.md
+extra-doc-files: README.md
+               , CREDITS.md
+tested-with: GHC==7.10, GHC==7.8, GHC==7.6, GHC==7.4
+
 
 source-repository head
   type:            git

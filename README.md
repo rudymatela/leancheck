@@ -3,12 +3,26 @@ LeanCheck
 
 **The API is likely to change in the near future**
 
-LeanCheck is a simple enumerative property-based testing library.  It works by
-producing *tiers* of test values, which are essentially (possibly infinite)
-lists of finite lists of same-and-increasingly-sized values.  It is similar to
-[Feat] in that regard.
+LeanCheck is a simple enumerative [property-based testing] library.  Properties
+are defined as Haskell functions returning a boolean value which should be
+`True` for all possible choices of argument values.    LeanCheck applies
+enumerated argument values to these properties in search for a counterexample.
+Properties can be viewed as parameterized unit tests.
+
+LeanCheck works by producing *tiers* of test values: a possibly infinite list
+of finite sublists of same-and-increasingly-sized values.  This enumeration is
+similar to [Feat]'s.  However, the ranking and ordering of values are defined
+differently.  The interface is also different.
 
 In this README, lines ending with `-- >` indicate expected return values.
+
+
+Installing
+----------
+
+To install the latest LeanCheck version from Hackage, just run:
+
+	$ cabal install leancheck
 
 
 Checking if properties are True
@@ -76,11 +90,11 @@ To get a boolean result wrapped in `IO`, use `checkResult` or `checkResultFor`.
 There is no "quiet" option, just use `holds` or `counterExample` in that case.
 
 
-Testing for custom types
-------------------------
+Testing user-defined types
+--------------------------
 
-LeanCheck works on properties with `Listable` argument types.
-Custom `Listable` instances are created similarly to SmallCheck:
+LeanCheck works on properties with [`Listable`] argument types.
+`Listable` instances are declared similarly to SmallCheck:
 
 	data MyType = MyConsA
 	            | MyConsB Int
@@ -93,13 +107,13 @@ Custom `Listable` instances are created similarly to SmallCheck:
 	       \/ cons2 MyConsC
 	       \/ cons1 MyConsD
 
-The tiers function return a potentially infinite list of finite sub-lists (tiers).
-Each tier has values of increasing size.
+The `tiers` function return a potentially infinite list of finite sub-lists
+(tiers).  Each successive tier has values of increasing size.
 
 	tiers :: Listable a => [[a]]
 
-For convenience, there is also the function `list`,
-which returns an infinite list of values of the bound type:
+For convenience, the function `list` returns a potentially infinite list
+of values of the bound type:
 
 	list :: Listable a => [a]
 
@@ -109,42 +123,26 @@ So, for example:
 
 The `list` function can be used to debug your custom instances.
 
-
-More information / extra functions
-----------------------------------
-
-`Listable` class instances are more customizable than what is described here:
+[`Listable`] class instances are more customizable than what is described here:
 check source comments or haddock documentation for details.
 
 
-Building / Installing
----------------------
+Further reading
+---------------
 
-To build:
+For a detailed documentation of each function, see
+[LeanCheck's Haddock documentation].
 
-	$ cabal build
+For an introduction to property-based testing
+and a step-by-step guide to LeanCheck, see this
+[tutorial on property-based testing with LeanCheck].
 
-To install:
+[LeanCheck's Haddock documentation]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html
+[tutorial on property-based testing with LeanCheck]: doc/tutorial.md
+[`Listable`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html#t:Listable
 
-	$ cabal install
-
-To reference in a cabal sandbox:
-
-	$ cabal sandbox add-source ../path/to/leancheck
-
-To use the files directly in your project:
-
-	$ cp -r Test ../path/to/your-project
-
-
-LeanCheck was tested on GHC 7.10, GHC 7.8, GHC 7.6 and GHC 7.4.
-This library does not use any fancy extensions:
-if it does not work on previous GHC versions,
-probably only *minor* changes are needed.
-It optionally depends on Template Haskell
-(for automatic derivation of Listable instances).
-
-
+[property-based testing]: doc/tutorial.md
 [Feat]: https://hackage.haskell.org/package/testing-feat
 [SmallCheck]: https://hackage.haskell.org/package/smallcheck
 [QuickCheck]: https://hackage.haskell.org/package/QuickCheck
+
