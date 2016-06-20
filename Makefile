@@ -76,7 +76,7 @@ markdown:
 haddock: doc/index.html
 
 clean-haddock:
-	rm -f doc/*.{html,css,js,png,gif}
+	rm -f doc/*.{html,css,js,png,gif} README.html
 
 doc/index.html: $(ALLHS)
 	./mk/haddock-i base template-haskell | xargs \
