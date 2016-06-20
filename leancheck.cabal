@@ -24,7 +24,7 @@ description:
   LeanCheck works by producing *tiers* of test values: a possibly infinite list
   of finite sublists of same-and-increasingly-sized values.
   .
-  LeanCheck has "lean" core with only 180 lines of Haskell code.
+  LeanCheck has lean core with only 180 lines of Haskell code.
 
 homepage:            https://github.com/rudymatela/leancheck#readme
 license:             BSD3
