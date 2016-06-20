@@ -1,8 +1,6 @@
 LeanCheck
 =========
 
-**The API is likely to change in the near future**
-
 LeanCheck is a simple enumerative [property-based testing] library.  Properties
 are defined as Haskell functions returning a boolean value which should be
 `True` for all possible choices of argument values.    LeanCheck applies
