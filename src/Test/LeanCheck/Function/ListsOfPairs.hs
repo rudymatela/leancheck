@@ -7,8 +7,8 @@ module Test.LeanCheck.Function.ListsOfPairs
   )
 where
 
-import Test.LeanCheck.Core
-import Test.LeanCheck.Utils
+import Test.LeanCheck
+import Test.LeanCheck.Tiers
 import Data.Maybe (fromMaybe)
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where

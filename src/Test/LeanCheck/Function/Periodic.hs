@@ -4,8 +4,7 @@ module Test.LeanCheck.Function.Periodic
 where
 
 
-import Test.LeanCheck.Basic
-import Test.LeanCheck.Utils (listsOf)
+import Test.LeanCheck
 import Data.List (inits)
 
 

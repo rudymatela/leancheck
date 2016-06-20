@@ -4,8 +4,7 @@ module Test.LeanCheck.Function.CoListable
 where
 
 
-import Test.LeanCheck.Core
-import Test.LeanCheck.Utils
+import Test.LeanCheck
 import Data.Maybe (fromMaybe)
 
 

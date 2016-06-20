@@ -107,6 +107,6 @@ module Test.LeanCheck
 where
 
 import Test.LeanCheck.Basic
-import Test.LeanCheck.Utils
+import Test.LeanCheck.Tiers
 import Test.LeanCheck.Derive
 import Test.LeanCheck.IO

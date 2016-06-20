@@ -56,12 +56,12 @@ source-repository this
 
 library
   exposed-modules: Test.LeanCheck
-                 , Test.LeanCheck.Utils
                  , Test.LeanCheck.Basic
                  , Test.LeanCheck.Core
                  , Test.LeanCheck.Derive
                  , Test.LeanCheck.Error
                  , Test.LeanCheck.IO
+                 , Test.LeanCheck.Tiers
                  , Test.LeanCheck.Types
                  , Test.LeanCheck.Operators
                  , Test.LeanCheck.TypeBinding

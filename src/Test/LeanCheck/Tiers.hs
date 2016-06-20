@@ -1,5 +1,5 @@
 -- | Utilities functions for manipulating tiers (sized lists of lists)
-module Test.LeanCheck.Utils
+module Test.LeanCheck.Tiers
   (
   -- * Additional tiers constructors
     consFromList
