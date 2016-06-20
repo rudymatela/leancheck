@@ -74,29 +74,32 @@ import Data.Maybe (listToMaybe)
 -- | A type is 'Listable' when there exists a function that
 --   is able to list (ideally all of) its values.
 --
--- Ideally, this type should be defined by a 'tiers' function that
--- returns a (possibly infinite) list of finite sub-lists (tiers):
+-- Ideally, instances should be defined by a 'tiers' function that
+-- returns a (potentially infinite) list of finite sub-lists (tiers):
 --   the first sub-list contains elements of size 0,
 --   the second sub-list contains elements of size 1
 --   and so on.
 -- Size here is defined by the implementor of the type-class instance.
 --
--- For algebraic data types, the general form for 'tiers' is:
+-- For algebraic data types, the general form for 'tiers' is
 --
--- > tiers = consN ConstructorA
--- >      \/ consN ConstructorB
--- >      \/ consN ConstructorC
+-- > tiers = cons<N> ConstructorA
+-- >      \/ cons<N> ConstructorB
 -- >      \/ ...
+-- >      \/ cons<N> ConstructorZ
 --
--- When defined by 'list', each sub-list in 'tiers' is a singleton list
--- (each element of 'list' has +1 size).
+-- where @N@ is the number of arguments of each constructor @A...Z@.
+--
+-- Instances can be alternatively defined by 'list'.
+-- In this case, each sub-list in 'tiers' is a singleton list
+-- (each succeeding element of 'list' has +1 size).
 --
 -- The function 'Test.LeanCheck.Derive.deriveListable' from "Test.LeanCheck.Derive"
 -- can automatically derive instances of this typeclass.
 --
 -- A 'Listable' instance for functions is also available but is not exported by
--- default.  Import "Test.LeanCheck.Function" for that.
--- ("Test.LeanCheck.Function.Show" for a Show instance for functions)
+-- default.  Import "Test.LeanCheck.Function" if you need to test higher-order
+-- properties.
 class Listable a where
   tiers :: [[a]]
   list :: [a]
@@ -200,28 +203,41 @@ concatMapT :: (a -> [[b]]) -> [[a]] -> [[b]]
 concatMapT f = concatT . mapT f
 
 
--- | Takes a constructor with no arguments and return tiers (with a single value).
---   This value, by default, has size/weight 0.
+-- | Given a constructor with no arguments,
+--   returns 'tiers' of all possible applications of this constructor.
+--   Since in this case there is only one possible application (to no
+--   arguments), only a single value, of size/weight 0, will be present in the
+--   resulting list of tiers.
 cons0 :: a -> [[a]]
 cons0 x = [[x]]
 
--- | Takes a constructor with one argument and return tiers of that value.
---   This value, by default, has size/weight 1.
+-- | Given a constructor with one 'Listable' argument,
+--   return 'tiers' of applications of this constructor.
+--   By default, returned values will have size/weight of 1.
 cons1 :: Listable a => (a -> b) -> [[b]]
 cons1 f = mapT f tiers `addWeight` 1
 
--- | Takes a constructor with two arguments and return tiers of that value.
---   This value, by default, has size/weight 1.
+-- | Given a constructor with two 'Listable' arguments,
+--   return 'tiers' of applications of this constructor.
+--   By default, returned values will have size/weight of 1.
 cons2 :: (Listable a, Listable b) => (a -> b -> c) -> [[c]]
 cons2 f = mapT (uncurry f) tiers `addWeight` 1
 
+-- | Returns tiers of applications of a 3-argument constructor.
 cons3 :: (Listable a, Listable b, Listable c) => (a -> b -> c -> d) -> [[d]]
 cons3 f = mapT (uncurry3 f) tiers `addWeight` 1
 
+-- | Returns tiers of applications of a 4-argument constructor.
 cons4 :: (Listable a, Listable b, Listable c, Listable d)
       => (a -> b -> c -> d -> e) -> [[e]]
 cons4 f = mapT (uncurry4 f) tiers `addWeight` 1
 
+-- | Returns tiers of applications of a 5-argument constructor.
+--
+-- "Test.LeanCheck.Basic" defines
+-- 'Test.LeanCheck.cons6' up-to 'Test.LeanCheck.cons12'.
+-- Those are exported by default from "Test.LeanCheck",
+-- but are hidden from the Haddock documentation.
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
 cons5 f = mapT (uncurry5 f) tiers `addWeight` 1
@@ -229,7 +245,7 @@ cons5 f = mapT (uncurry5 f) tiers `addWeight` 1
 -- | Resets the weight of a constructor (or tiers)
 -- Typically used as an infix constructor when defining Listable instances:
 --
--- > cons<N> `ofWeight` W
+-- > cons<N> `ofWeight` <W>
 --
 -- Be careful: do not apply @`ofWeight` 0@ to recursive data structure
 -- constructors.  In general this will make the list of size 0 infinite,
@@ -256,7 +272,7 @@ suchThat = flip filterT
 (x:xs) +| ys = x:(ys +| xs)
 infixr 5 +|
 
--- | Append tiers.
+-- | Append tiers --- sum of two tiers enumerations.
 --
 -- > [xs,ys,zs,...] \/ [as,bs,cs,...] = [xs++as,ys++bs,zs++cs,...]
 (\/) :: [[a]] -> [[a]] -> [[a]]
@@ -265,7 +281,8 @@ xss \/ []  = xss
 (xs:xss) \/ (ys:yss) = (xs ++ ys) : xss \/ yss
 infixr 7 \/
 
--- | Interleave tiers.  When in doubt, use @\/@ instead.
+-- | Interleave tiers --- sum of two tiers enumerations.
+--   When in doubt, use '\/' instead.
 --
 -- > [xs,ys,zs,...] \/ [as,bs,cs,...] = [xs+|as,ys+|bs,zs+|cs,...]
 (\\//) :: [[a]] -> [[a]] -> [[a]]
@@ -281,6 +298,7 @@ infixr 7 \\//
 -- > , t0**u1 ++ t1**u0
 -- > , t0**u2 ++ t1**u1 ++ t2**u0
 -- > , ...       ...       ...       ...
+-- > ]
 -- > where xs ** ys = [(x,y) | x <- xs, y <- ys]
 --
 -- Example:
@@ -296,7 +314,8 @@ infixr 7 \\//
 (><) = productWith (,)
 infixr 8 ><
 
--- | Take the product of two lists of tiers.
+-- | Take a tiered product of lists of tiers.
+--   'productWith' can be defined by '><', as:
 --
 -- > productWith f xss yss = map (uncurry f) $ xss >< yss
 productWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
@@ -336,21 +355,26 @@ results = concat . resultiers
 counterExamples :: Testable a => Int -> a -> [[String]]
 counterExamples n = map fst . filter (not . snd) . take n . results
 
--- | For a number of tests to a property,
---   returns Just the first counter-example or Nothing.
+-- | Up to a number of tests to a property,
+--   returns 'Just' the first counter-example
+--   or 'Nothing' if there is none.
+--
+-- > counterExample 100 $ \xs -> [] `union` xs == (xs::[Int])
+-- > -- > Just ["[0,0]"]
 counterExample :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
 
--- | Lists all witnesses for a number of tests to a property,
+-- | Lists all witnesses up to a number of tests to a property,
 witnesses :: Testable a => Int -> a -> [[String]]
 witnesses n = map fst . filter snd . take n . results
 
--- | For a number of tests to a property,
---   returns Just the first witness or Nothing.
+-- | Up to a number of tests to a property,
+--   returns 'Just' the first witness
+--   or 'Nothing' if there is none.
 witness :: Testable a => Int -> a -> Maybe [String]
 witness n = listToMaybe . witnesses n
 
--- | Does a property __hold__ for a number of test values?
+-- | Does a property __hold__ up to a number of test values?
 --
 -- > holds 1000 $ \xs -> length (sort xs) == length xs
 holds :: Testable a => Int -> a -> Bool
@@ -362,7 +386,10 @@ holds n = and . take n . map snd . results
 fails :: Testable a => Int -> a -> Bool
 fails n = not . holds n
 
--- | There __exists__ and assignment of values that satisfy a property?
+-- | There __exists__ an assignment of values that satisfies a property
+--   up to a number of test values?
+--
+-- > exists 1000 $ \x -> x > 10
 exists :: Testable a => Int -> a -> Bool
 exists n = or . take n . map snd . results
 
@@ -375,7 +402,7 @@ uncurry4 f (x,y,z,w) = f x y z w
 uncurry5 :: (a->b->c->d->e->f) -> (a,b,c,d,e) -> f
 uncurry5 f (x,y,z,w,v) = f x y z w v
 
--- | Boolean implication.  Use this for defining conditional properties:
+-- | Boolean implication operator.  Useful for defining conditional properties:
 --
 -- > prop_something x y = condition x y ==> something x y
 (==>) :: Bool -> Bool -> Bool

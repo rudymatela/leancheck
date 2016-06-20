@@ -1,22 +1,32 @@
--- | A simple property-based testing library based on
---   enumeration of values via lists of lists.
+-- | LeanCheck is a simple enumerative property-based testing library.
 --
--- In the context of this library,
--- a __property__ is a function returning a 'Bool'
--- that should return 'True' for all input values.
+-- A __property__ is a function returning a 'Bool' that should be 'True' for
+-- all possible choices of arguments.  Properties can be viewed as a
+-- parameterized unit tests.
 --
--- To check if a property holds by testing a thousand values, you simply do:
 --
--- > holds 1000 property  -- yield True when Ok, False otherwise
+-- To check if a property 'holds' by testing up to a thousand values,
+-- we evaluate:
+--
+-- > holds 1000 property
+--
+-- 'True' indicates success.  'False' indicates a bug.
 --
 -- For example:
 --
 -- > holds $ \xs -> length (sort xs) == length (xs::[Int])
 --
+--
+-- To get the smallest 'counterExample' by testing up to a thousand values,
+-- we evaluate:
+--
+-- > counterExample 1000 property
+--
+--
 -- Arguments of properties should be instances of the 'Listable' typeclass.
 -- 'Listable' instances are provided for the most common Haskell types.
 -- New instances are easily defined
--- (see the 'Listable's documentation for more info).
+-- (see 'Listable' for more info).
 module Test.LeanCheck
   (
   -- * Checking and testing

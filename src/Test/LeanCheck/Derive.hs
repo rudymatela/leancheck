@@ -17,7 +17,12 @@ reportWarning :: String -> Q ()
 reportWarning = report False
 #endif
 
--- | Derives a Listable instance for a given type ('Name').
+-- | Derives a Listable instance for a given type 'Name', e.g.:
+--
+-- > data Stack a = Stack a (Stack a) | Empty
+-- > deriveListable ''Stack
+--
+-- Needs @TemplateHaskell@ extension.
 deriveListable :: Name -> DecsQ
 deriveListable t = do
   is <- t `isInstanceOf` ''Listable
@@ -33,7 +38,7 @@ deriveListable t = do
 
 -- | Checks whether it is possible to derive a Listable instance.
 --
--- For example, it is not possible if there are is no Listable instance for a
+-- For example, it is not possible if there is no Listable instance for a
 -- type in one of the constructors.
 canDeriveListable :: Name -> Q Bool
 canDeriveListable t = return True -- TODO: Check instances for type-cons args

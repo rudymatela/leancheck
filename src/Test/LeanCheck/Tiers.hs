@@ -34,35 +34,53 @@ where
 import Test.LeanCheck.Basic
 import Data.Maybe (catMaybes)
 
--- | Given a constructor for a type that takes a list,
---   return tiers for that type.
+-- | Given a constructor that takes a list,
+--   return tiers of applications of this constructor.
+--
+--   This is equivalent to 'cons1'.
 consFromList :: Listable a => ([a] -> b) -> [[b]]
 consFromList = (`mapT` listsOf tiers)
 
+-- | Given a constructor that takes a list with ascending elements,
+--   return tiers of applications of this constructor.
+--
+-- For example, a 'Bag' represented as a list.
+--
+-- > consFromAscendingList Bag
 consFromAscendingList :: Listable a => ([a] -> b) -> [[b]]
 consFromAscendingList = (`mapT` ascendingListsOf tiers)
 
--- | Given a constructor for a type that takes a list with strictly ascending
---   elements, return tiers of that type (e.g.: a Set type).
+-- | Given a constructor that takes a list with ascending elements,
+--   return tiers of applications of this constructor.
+--
+-- For example, a 'Set' represented as a list.
+--
+-- > consFromAscendingList Set
 consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
 consFromStrictlyAscendingList = (`mapT` strictlyAscendingListsOf tiers)
 
--- | Given a constructor for a type that takes a set of elements (as a list)
---   return tiers of that type (e.g.: a Set type).
+-- | Given a constructor that takes a set of elements (as a list),
+--   return tiers of applications of this constructor.
+--
+-- For example, a 'Set' represented as a list.
+--
+-- > consFromAscendingList Set
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
 consFromSet = (`mapT` setsOf tiers)
 
--- | Given a constructor for a type that takes a list with no duplicate
---   elements, return tiers of that type.
+-- | Given a constructor that takes a list with no duplicate elements,
+--   return tiers of applications of this constructor.
 consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
 consFromNoDupList f = mapT f (noDupListsOf tiers)
 
 
--- | Like 'product', but over 3 lists of tiers.
+-- | Like 'productWith', but over 3 lists of tiers.
 product3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
 product3With f xss yss zss = productWith ($) (productWith f xss yss) zss
 
--- | Take the product of lists of tiers by a function returning a maybe value.
+-- | Take the product of lists of tiers
+--   by a function returning a 'Maybe' value
+--   discarding 'Nothing' values.
 productMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
 productMaybeWith _ _ [] = []
 productMaybeWith _ [] _ = []
@@ -100,10 +118,11 @@ listsOf xss = cons0 []
 products :: [ [[a]] ] -> [[ [a] ]]
 products = foldr (productWith (:)) [[[]]]
 
--- | Delete the first occurence of an element in a tier,
---   for tiers without repetitions:
+-- | Delete the first occurence of an element in a tier.
 --
--- > deleteT x === normalizeT . (`suchThat` (/= x))
+-- For tiers without repetitions, the following holds:
+--
+-- > deleteT x = normalizeT . (`suchThat` (/= x))
 deleteT :: Eq a => a -> [[a]] -> [[a]]
 deleteT _ [] = []
 deleteT y ([]:xss) = [] : deleteT y xss
@@ -111,6 +130,14 @@ deleteT y [[x]]        | x == y    = []
 deleteT y ((x:xs):xss) | x == y    = xs:xss
                        | otherwise = [[x]] \/ deleteT y (xs:xss)
 
+-- | Normalizes tiers by removing an empty tier from the end of a list of
+--   tiers.
+--
+-- > normalizeT [xs0,xs1,...,xsN,[]] = [xs0,xs1,...,xsN]
+--
+--   Note this will only remove a single empty tier:
+--
+-- > normalizeT [xs0,xs1,...,xsN,[],[]] = [xs0,xs1,...,xsN,[]]
 normalizeT :: [[a]] -> [[a]]
 normalizeT [] = []
 normalizeT [[]] = []
