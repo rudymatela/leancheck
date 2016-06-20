@@ -13,13 +13,13 @@ LISTHS   = find Test -name \*.hs
 LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
 ALLHS    = $(shell $(LISTHS))
 ALLOBJS  = $(shell $(LISTOBJS))
-OBJS = Test/Check.o \
-       Test/Most.o \
-       Test/Check/Function.o \
-       Test/Check/Function/Show.o \
-       Test/Check/Error.o
+OBJS = Test/LeanCheck.o \
+       Test/LeanCheck/Most.o \
+       Test/LeanCheck/Function.o \
+       Test/LeanCheck/Function/Show.o \
+       Test/LeanCheck/Error.o
 GHCIMPORTDIRS = .
-# -dynamic is needed only for Test/Check/Derive.hs and tests/test-derive.hs
+# -dynamic is needed only for Test/LeanCheck/Derive.hs and tests/test-derive.hs
 GHCFLAGS = -dynamic -O2
 
 all: $(OBJS)
