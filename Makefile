@@ -51,12 +51,14 @@ list-objs:
 	$(LISTOBJS)
 
 legacy-test: # needs ghc-7.8, ghc-7.6 and ghc-7.4 installed as such
+	make clean && make test GHC=ghc-7.10 GHCFLAGS="-Werror -dynamic"
 	make clean && make test GHC=ghc-7.8 GHCFLAGS="-Werror -dynamic"
 	make clean && make test GHC=ghc-7.6 GHCFLAGS="-Werror -fno-warn-unrecognised-pragmas"
 	make clean && make test GHC=ghc-7.4 GHCFLAGS="-Werror -fno-warn-unrecognised-pragmas"
 	make clean
 
 legacy-test-via-cabal: # needs similarly named cabal wrappers
+	cabal clean && cabal-ghc-7.10 test
 	cabal clean && cabal-ghc-7.8 test
 	cabal clean && cabal-ghc-7.6 test
 	cabal clean && cabal-ghc-7.4 test
