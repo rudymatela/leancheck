@@ -1,7 +1,8 @@
 {-# LANGUAGE TemplateHaskell, CPP #-}
 -- Experimental module for deriving Listable instances
 --
--- Needs GHC and Template Haskell (tested on GHC 7.4, 7.6, 7.8 and 7.10)
+-- Needs GHC and Template Haskell
+-- (tested on GHC 7.4, 7.6, 7.8, 7.10 and 8.0)
 module Test.LeanCheck.Derive
   ( deriveListable
   )
