@@ -67,7 +67,7 @@ have three solutions:
 
     TODO: write!
 
-[`Listable`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html#t:Listable
-[`list`]:     https://hackage.haskell.org/package/leancheck/docs/Test-Check.html#v:list
-[`suchThat`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html#v:suchThat
+[`Listable`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
+[`list`]:     https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:list
+[`suchThat`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:suchThat
 [`Rational`]: https://hackage.haskell.org/package/base/docs/Data-Ratio.html#t:Ratio

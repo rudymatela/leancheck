@@ -248,23 +248,23 @@ Further reading
 * [QuickCheck's seminal paper (2000)](https://dl.acm.org/citation.cfm?id=1988046)
 * [SmallCheck's paper (2008)](http://dl.acm.org/citation.cfm?id=1411292)
 
-[`Listable`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html#t:Listable
-[`check`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check-IO.html#v:check
-[`checkFor`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check-IO.html#v:checkFor
-[`==>`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html#v:-61--61--62-
-[`deriveListable`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check-Derive.html#v:deriveListable
+[`Listable`]:       https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
+[`check`]:          https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:check
+[`checkFor`]:       https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:checkFor
+[`==>`]:            https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:-61--61--62-
+[`deriveListable`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:deriveListable
 
-[QuickCheck]: https://hackage.haskell.org/package/QuickCheck
-[SmallCheck]: https://hackage.haskell.org/package/smallcheck
+[QuickCheck]:      https://hackage.haskell.org/package/QuickCheck
+[SmallCheck]:      https://hackage.haskell.org/package/smallcheck
 [Lazy SmallCheck]: https://hackage.haskell.org/package/lazysmallcheck
-[Feat]: https://hackage.haskell.org/package/testing-feat
-[LeanCheck]: https://hackage.haskell.org/package/leancheck
+[Feat]:            https://hackage.haskell.org/package/testing-feat
+[LeanCheck]:       https://hackage.haskell.org/package/leancheck
 
 [parameterized unit tests]: http://research.microsoft.com/apps/pubs/default.aspx?id=77419
 [NUnit]: http://www.nunit.org/index.php?p=parameterizedTests&r=2.5
 [JUnit]: http://www.mkyong.com/unittest/junit-4-tutorial-6-parameterized-test/
 
-[`insert`]: https://hackage.haskell.org/package/base/docs/Data-List.html#v:insert 
+[`insert`]:    https://hackage.haskell.org/package/base/docs/Data-List.html#v:insert
 [`Data.List`]: https://hackage.haskell.org/package/base/docs/Data-List.html
 
 [Ranking programs using Black-Box testing (2010)]: http://www.cse.chalmers.se/~nicsma/papers/ranking-programs.pdf

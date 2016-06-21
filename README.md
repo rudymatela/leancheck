@@ -135,9 +135,9 @@ For an introduction to property-based testing
 and a step-by-step guide to LeanCheck, see this
 [tutorial on property-based testing with LeanCheck].
 
-[LeanCheck's Haddock documentation]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html
+[LeanCheck's Haddock documentation]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html
 [tutorial on property-based testing with LeanCheck]: doc/tutorial.md
-[`Listable`]: https://hackage.haskell.org/package/leancheck/docs/Test-Check.html#t:Listable
+[`Listable`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
 
 [property-based testing]: doc/tutorial.md
 [Feat]: https://hackage.haskell.org/package/testing-feat
