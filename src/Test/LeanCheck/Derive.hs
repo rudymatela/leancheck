@@ -126,8 +126,13 @@ typeArity :: Name -> Q Int
 typeArity t = do
   ti <- reify t
   return . length $ case ti of
+#if __GLASGOW_HASKELL__ < 800
     TyConI (DataD    _ _ ks _ _) -> ks
     TyConI (NewtypeD _ _ ks _ _) -> ks
+#else
+    TyConI (DataD    _ _ ks _ _ _) -> ks
+    TyConI (NewtypeD _ _ ks _ _ _) -> ks
+#endif
     _                            -> error $ "error (arity): symbol "
                                          ++ show t
                                          ++ " is not a newtype or data"
@@ -138,8 +143,13 @@ typeCons :: Name -> Q [(Name,Int)]
 typeCons t = do
   ti <- reify t
   return . map simplify $ case ti of
+#if __GLASGOW_HASKELL__ < 800
     TyConI (DataD    _ _ _ cs _) -> cs
     TyConI (NewtypeD _ _ _ c  _) -> [c]
+#else
+    TyConI (DataD    _ _ _ _ cs _) -> cs
+    TyConI (NewtypeD _ _ _ _ c  _) -> [c]
+#endif
     _ -> error $ "error (typeConstructors): symbol "
               ++ show t
               ++ " is neither newtype nor data"
@@ -154,5 +164,10 @@ typeCons t = do
 (|=>|) :: Cxt -> DecsQ -> DecsQ
 c |=>| qds = do ds <- qds
                 return $ map (`ac` c) ds
+#if __GLASGOW_HASKELL__ < 800
   where ac (InstanceD c ts ds) c' = InstanceD (c++c') ts ds
         ac d                   _  = d
+#else
+  where ac (InstanceD o c ts ds) c' = InstanceD o (c++c') ts ds
+        ac d                     _  = d
+#endif
