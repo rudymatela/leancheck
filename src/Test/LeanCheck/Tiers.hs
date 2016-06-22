@@ -61,9 +61,16 @@ consFromBag = (`mapT` bagsOf tiers)
 -- | Given a constructor that takes a set of elements (as a list),
 --   lists tiers of applications of this constructor.
 --
--- For example, a 'Set' represented as a list.
+-- A naive 'Listable' instance for the 'Data.Set.Set' (of "Data.Set")
+-- would read:
 --
--- > consFromSet Set
+-- > instance Listable a => Listable (Set a) where
+-- >   tiers = cons0 empty \/ cons2 insert
+--
+-- The above instance has a problem: it generates repeated sets.
+-- A more efficient implementation that does not repeat sets is given by:
+--
+-- >   tiers = consFromSet fromList
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
 consFromSet = (`mapT` setsOf tiers)
 
@@ -194,6 +201,12 @@ bagsOf = ([[]]:) . concatT . bagChoicesWith (\x xss -> mapT (x:) (bagsOf xss))
 -- >   , [[0,1,2],[0,4],[1,3],[5]]
 -- >   , ...
 -- >   ]
+--
+-- Can be used in the constructor of specialized 'Listable' instances.
+-- For 'Data.Set.Set' (from "Data.Set"), we would have:
+--
+-- > instance Listable a => Listable (Set a) where
+-- >   tiers = mapT fromList $ setsOf tiers
 setsOf :: [[a]] -> [[[a]]]
 setsOf = ([[]]:) . concatT . setChoicesWith (\x xss -> mapT (x:) (setsOf xss))
 
