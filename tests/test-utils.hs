@@ -17,8 +17,8 @@ tests =
   [ True
 
   , checkNoDup 12
-  , checkAscending 18
-  , checkStrictlyAscending 20
+  , checkBags 18
+  , checkSets 20
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
@@ -38,17 +38,14 @@ deleteT_is_map_delete n x = deleteT x tiers
                     =| n |= normalizeT (map (delete x) tiers)
 
 checkNoDup :: Int -> Bool
-checkNoDup n = noDupListsOf (tiers :: [[Int]])
-       =| n |= tiers `suchThat` noDup
+checkNoDup n = noDupListsOf (tiers :: [[Int]]) =| n |= tiers `suchThat` noDup
   where noDup xs = nub (sort xs) == sort xs
 
-checkAscending :: Int -> Bool
-checkAscending n = ascendingListsOf (tiers :: [[Nat]])
-           =| n |= tiers `suchThat` ordered
+checkBags :: Int -> Bool
+checkBags n = bagsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` ordered
 
-checkStrictlyAscending :: Int -> Bool
-checkStrictlyAscending n = setsOf (tiers :: [[Nat]])
-                   =| n |= tiers `suchThat` strictlyOrdered
+checkSets :: Int -> Bool
+checkSets n = setsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` strictlyOrdered
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]

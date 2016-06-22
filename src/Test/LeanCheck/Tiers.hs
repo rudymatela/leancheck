@@ -1,25 +1,27 @@
 -- | LeanCheck is a simple enumerative property-based testing library.
 --
--- This module provides advanced functions for manipulating 'tiers'.  Most of
--- the functions defined here are exported by "Test.LeanCheck".  You will only
--- ever need to explicitly import this if you need functions like 'choices'.
+-- This module provides advanced functions for manipulating 'tiers'.
+-- Most definitions given here are exported by "Test.LeanCheck", except:
+--   'consFromList',
+--   'choices',
+--   'setChoices' and
+--   'bagChoices'.
 module Test.LeanCheck.Tiers
   (
   -- * Additional tiers constructors
     consFromList
-  , consFromAscendingList
-  , consFromStrictlyAscendingList
   , consFromSet
+  , consFromBag
   , consFromNoDupList
 
   -- * Products of tiers
+  , product3
   , product3With
   , productMaybeWith
 
   -- * Tiers of lists
   , listsOf
-  , ascendingListsOf
-  , strictlyAscendingListsOf
+  , bagsOf
   , setsOf
   , noDupListsOf
   , products
@@ -30,8 +32,8 @@ module Test.LeanCheck.Tiers
 
   -- * Tiers of choices
   , choices
-  , ascendingChoices
-  , strictlyAscendingChoices
+  , setChoices
+  , bagChoices
   )
 where
 
@@ -41,34 +43,27 @@ import Data.Maybe (catMaybes)
 -- | Given a constructor that takes a list,
 --   return tiers of applications of this constructor.
 --
---   This is equivalent to 'cons1'.
+-- This is basically a type-restricted version of 'cons1'.
+-- You should use 'cons1' instead: this serves more as an illustration of how
+-- 'consFromSet' and 'consFromBag' work (see source).
 consFromList :: Listable a => ([a] -> b) -> [[b]]
 consFromList = (`mapT` listsOf tiers)
 
--- | Given a constructor that takes a list with ascending elements,
---   return tiers of applications of this constructor.
+-- | Given a constructor that takes a bag of elements (as a list),
+--   lists tiers of applications of this constructor.
 --
 -- For example, a 'Bag' represented as a list.
 --
--- > consFromAscendingList Bag
-consFromAscendingList :: Listable a => ([a] -> b) -> [[b]]
-consFromAscendingList = (`mapT` ascendingListsOf tiers)
-
--- | Given a constructor that takes a list with ascending elements,
---   return tiers of applications of this constructor.
---
--- For example, a 'Set' represented as a list.
---
--- > consFromAscendingList Set
-consFromStrictlyAscendingList :: Listable a => ([a] -> b) -> [[b]]
-consFromStrictlyAscendingList = (`mapT` strictlyAscendingListsOf tiers)
+-- > consFromBag Bag
+consFromBag :: Listable a => ([a] -> b) -> [[b]]
+consFromBag = (`mapT` bagsOf tiers)
 
 -- | Given a constructor that takes a set of elements (as a list),
---   return tiers of applications of this constructor.
+--   lists tiers of applications of this constructor.
 --
 -- For example, a 'Set' represented as a list.
 --
--- > consFromAscendingList Set
+-- > consFromSet Set
 consFromSet :: Listable a => ([a] -> b) -> [[b]]
 consFromSet = (`mapT` setsOf tiers)
 
@@ -77,6 +72,9 @@ consFromSet = (`mapT` setsOf tiers)
 consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
 consFromNoDupList f = mapT f (noDupListsOf tiers)
 
+-- | Like '><', but over 3 lists of tiers.
+product3 :: [[a]] -> [[b]]-> [[c]] -> [[(a,b,c)]]
+product3 = product3With (\x y z -> (x,y,z))
 
 -- | Like 'productWith', but over 3 lists of tiers.
 product3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
@@ -93,7 +91,8 @@ productMaybeWith f (xs:xss) yss = map (xs **) yss
   where xs ** ys = catMaybes [ f x y | x <- xs, y <- ys ]
 
 
--- | Given tiers of values, returns tiers of lists of those values
+-- | Takes as argument tiers of element values;
+--   returns tiers of lists of elements.
 --
 -- > listsOf [[]] == [[[]]]
 --
@@ -114,11 +113,15 @@ listsOf :: [[a]] -> [[[a]]]
 listsOf xss = cons0 []
            \/ productWith (:) xss (listsOf xss) `addWeight` 1
 
--- | Generates several lists of the same size.
+-- | Takes the product of N lists of tiers, producing lists of length N.
 --
--- > products [ xss, yss, zss ] ==
+-- Alternatively,
+-- takes as argument a list of lists of tiers of elements;
+-- returns lists combining elements of each list of tiers.
 --
--- Tiers of all lists combining elements of tiers: xss, yss and zss
+-- > products [xss] = mapT (:[]) xss
+-- > products [xss,yss] = mapT (\(x,y) -> [x,y]) (xss >< yss)
+-- > products [xss,yss,zss] = product3With (\x y z -> [x,y,z]) xss yss zss
 products :: [ [[a]] ] -> [[ [a] ]]
 products = foldr (productWith (:)) [[[]]]
 
@@ -147,7 +150,8 @@ normalizeT [] = []
 normalizeT [[]] = []
 normalizeT (xs:xss) = xs:normalizeT xss
 
--- | Given tiers of values, returns tiers of lists with no repeated elements.
+-- | Takes as argument tiers of element values;
+--   returns tiers of lists with no repeated elements.
 --
 -- > noDupListsOf [[0],[1],[2],...] ==
 -- >   [ [[]]
@@ -161,7 +165,39 @@ noDupListsOf :: [[a]] -> [[[a]]]
 noDupListsOf =
   ([[]]:) . concatT . choicesWith (\x xss -> mapT (x:) (noDupListsOf xss))
 
--- | Lists tiers of all choices of values from tiers.
+-- | Takes as argument tiers of element values;
+--   returns tiers of size-ordered lists of elements possibly with repetition.
+--
+-- > bagsOf [[0],[1],[2],...] =
+-- >   [ [[]]
+-- >   , [[0]]
+-- >   , [[0,0],[1]]
+-- >   , [[0,0,0],[0,1],[2]]
+-- >   , [[0,0,0,0],[0,0,1],[0,2],[1,1],[3]]
+-- >   , [[0,0,0,0,0],[0,0,0,1],[0,0,2],[0,1,1],[0,3],[1,2],[4]]
+-- >   , ...
+-- >   ]
+bagsOf :: [[a]] -> [[[a]]]
+bagsOf = ([[]]:) . concatT . bagChoicesWith (\x xss -> mapT (x:) (bagsOf xss))
+
+
+-- | Takes as argument tiers of element values;
+--   returns tiers of size-ordered lists of elements without repetition.
+--
+-- > setsOf [[0],[1],[2],...] =
+-- >   [ [[]]
+-- >   , [[0]]
+-- >   , [[1]]
+-- >   , [[0,1],[2]]
+-- >   , [[0,2],[3]]
+-- >   , [[0,3],[1,2],[4]]
+-- >   , [[0,1,2],[0,4],[1,3],[5]]
+-- >   , ...
+-- >   ]
+setsOf :: [[a]] -> [[[a]]]
+setsOf = ([[]]:) . concatT . setChoicesWith (\x xss -> mapT (x:) (setsOf xss))
+
+-- | Lists tiers of choices.
 -- Choices are pairs of values and tiers excluding that value.
 --
 -- > choices [[False,True]] == [[(False,[[True]]),(True,[[False]])]]
@@ -182,82 +218,58 @@ choicesWith f ([]:xss)     = [] : choicesWith (\y yss -> f y ([]:yss)) xss
 choicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
                           \/ choicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
--- | Given tiers of values,
---   returns tiers of lists of elements in ascending order
---                               (from tiered enumeration).
+-- | Like 'choices' but lists tiers of non-decreasing (ascending) choices.
+--   Used to construct 'bagsOf' values.
 --
-ascendingListsOf :: [[a]] -> [[[a]]]
-ascendingListsOf =
-  ([[]]:) . concatT . ascendingChoicesWith (\x xss -> mapT (x:) (ascendingListsOf xss))
-
--- > ascendingChoices [[False,True]] =
+-- > bagChoices [[False,True]] =
 -- >   [ [(False,[[False,True]]), (True,[[True]])]
 -- >   ]
 --
--- > ascendingChoices [[1],[2],[3],...] =
+-- > bagChoices [[1],[2],[3],...] =
 -- >   [ [(1,[[1],[2],[3],...])]
 -- >   , [(2,[[ ],[2],[3],...])]
 -- >   , [(3,[[ ],[ ],[3],...])]
 -- >   , ...
 -- >   ]
-ascendingChoices :: [[a]] -> [[(a,[[a]])]]
-ascendingChoices = ascendingChoicesWith (,)
+bagChoices :: [[a]] -> [[(a,[[a]])]]
+bagChoices = bagChoicesWith (,)
 
-ascendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-ascendingChoicesWith f []           = []
-ascendingChoicesWith f [[]]         = []
-ascendingChoicesWith f ([]:xss)     = [] : ascendingChoicesWith (\y yss -> f y ([]:yss)) xss
-ascendingChoicesWith f ((x:xs):xss) = [[f x ((x:xs):xss)]]
-                                   \/ ascendingChoicesWith f (xs:xss)
+-- | Like 'bagChoices' but customized by a function.
+bagChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
+bagChoicesWith f []           = []
+bagChoicesWith f [[]]         = []
+bagChoicesWith f ([]:xss)     = [] : bagChoicesWith (\y yss -> f y ([]:yss)) xss
+bagChoicesWith f ((x:xs):xss) = [[f x ((x:xs):xss)]]
+                             \/ bagChoicesWith f (xs:xss)
 
--- | Given tiers of values,
---   returns tiers of lists of elements in strictly ascending order
---                              (from tiered enumeration).
---   If you only care about whether elements are in returned lists,
---   this returns the tiers of all sets of values.
+-- | Like 'choices' but lists tiers of strictly ascending choices.
+--   Used to construct 'setsOf' values.
 --
--- > strictlyAscendingListsOf [[0],[1],[2],...] ==
--- >   [ [[]]
--- >   , [[0]]
--- >   , [[1]]
--- >   , [[0,1],[2]]
--- >   , [[0,2],[3]]
--- >   , [[0,3],[1,2],[4]]
--- >   , [[0,1,2],[0,4],[1,3],[5]]
--- >   , ...
--- >   ]
-strictlyAscendingListsOf :: [[a]] -> [[[a]]]
-strictlyAscendingListsOf =
-  ([[]]:) . concatT .
-  strictlyAscendingChoicesWith
-    (\x xss -> mapT (x:) (strictlyAscendingListsOf xss))
-
--- | Returns tiers of sets represented as lists of values (no repeated sets).
---   Shorthand for 'strictlyAscendingListsOf'.
-setsOf :: [[a]] -> [[[a]]]
-setsOf = strictlyAscendingListsOf
-
--- | Like 'choices', but paired tiers are always strictly ascending (in terms
---   of enumeration).
---
--- > strictlyAscendingChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
--- > strictlyAscendingChoices [[1],[2],[3]]
+-- > setChoices [[False,True]] == [[(False,[[True]]),(True,[[]])]]
+-- > setChoices [[1],[2],[3]]
 -- >   == [ [(1,[[],[2],[3]])]
 -- >      , [(2,[[],[],[3]])]
 -- >      , [(3,[[],[],[]])]
 -- >      ]
-strictlyAscendingChoices :: [[a]] -> [[(a,[[a]])]]
-strictlyAscendingChoices = strictlyAscendingChoicesWith (,)
+setChoices :: [[a]] -> [[(a,[[a]])]]
+setChoices = setChoicesWith (,)
 
--- | Like 'strictlyAscendingChoices' but customized by a function.
-strictlyAscendingChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-strictlyAscendingChoicesWith f []           = []
-strictlyAscendingChoicesWith f [[]]         = []
-strictlyAscendingChoicesWith f ([]:xss)     = [] : strictlyAscendingChoicesWith (\y yss -> f y ([]:yss)) xss
-strictlyAscendingChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
-                                           \/ strictlyAscendingChoicesWith f (xs:xss)
+-- | Like 'setChoices' but customized by a function.
+setChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
+setChoicesWith f []           = []
+setChoicesWith f [[]]         = []
+setChoicesWith f ([]:xss)     = [] : setChoicesWith (\y yss -> f y ([]:yss)) xss
+setChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
+                             \/ setChoicesWith f (xs:xss)
 
-
--- | Given tiers, returns tiers of lists of a given length.
+-- | Takes as argument an integer length and tiers of element values;
+--   returns tiers of lists of element values of the given length.
+--
+-- > listsOfLength 3 [[0],[1],[2],[3],[4]...] =
+-- >   [ [[0,0,0]]
+-- >   , [[0,0,1],[0,1,0],[1,0,0]]
+-- >   , [[0,0,2],[0,1,1],[0,2,0],[1,0,1],[1,1,0],[2,0,0]]
+-- >   , ...
+-- >   ]
 listsOfLength :: Int -> [[a]] -> [[[a]]]
 listsOfLength n xss = products (replicate n xss)

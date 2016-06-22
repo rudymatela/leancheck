@@ -13,14 +13,17 @@ documentation
 
 * on data-invariant.md, write missing section;
 
+* add example to consFromSet (Data.Set)
 
-v0.4.1
+
+v0.5.0
 ------
 
 * rework LeanCheck.Tiers module (simply bagsOf and setsOf);
 
+* rename 'consFromSet' to 'setCons'?
 
-v0.4.2
+v0.6.0
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;

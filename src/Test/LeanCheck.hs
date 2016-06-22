@@ -91,10 +91,8 @@ module Test.LeanCheck
   , deriveListable
 
   -- ** Extra constructors
-  , consFromList
-  , consFromAscendingList
-  , consFromStrictlyAscendingList
   , consFromSet
+  , consFromBag
   , consFromNoDupList
 
   -- ** Products of tiers
@@ -104,8 +102,7 @@ module Test.LeanCheck
   -- * Listing lists
   , listsOf
   , setsOf
-  , ascendingListsOf
-  , strictlyAscendingListsOf
+  , bagsOf
   , noDupListsOf
   , products
   , listsOfLength

@@ -40,7 +40,7 @@ associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
 -- Those represent functional relations.
 functionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
 functionPairs xss yss = concatMapT (`associations` yss)
-                                   (strictlyAscendingListsOf xss)
+                                   (setsOf xss)
 
 -- | Returns a function given by a list of input-output pairs.
 -- The result is wrapped in a maybe value.
