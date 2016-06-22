@@ -102,7 +102,7 @@ By binding those properties to specific types and passing those properties as
 arguments to the [`check`] function, we get:
 
     $ ghci
-	> import Test.Check
+	> import Test.LeanCheck
 
     > check (prop_elem :: Int -> [Int] -> Bool)
     +++ OK, passed 200 tests.
