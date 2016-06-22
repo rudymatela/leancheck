@@ -13,13 +13,6 @@ documentation
 
 * on data-invariant.md, write missing section;
 
-* update documentation of `T.LC.Function.*`, mark done/stub/experimental modules;
-
-* review Haddock of all public modules
-
-* find a way to fix links on hackage's README rendering
-  (absolute links to github?)
-
 
 v0.4.1
 ------
