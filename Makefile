@@ -13,9 +13,7 @@ LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
 ALLHS    = $(shell $(LISTHS))
 ALLOBJS  = $(shell $(LISTOBJS))
 OBJS = src/Test/LeanCheck.o \
-       src/Test/LeanCheck/Most.o \
        src/Test/LeanCheck/Function.o \
-       src/Test/LeanCheck/Function/Show.o \
        src/Test/LeanCheck/Error.o
 GHCIMPORTDIRS = src
 # -dynamic is needed only for src/Test/LeanCheck/Derive.hs and tests/test-derive.hs
