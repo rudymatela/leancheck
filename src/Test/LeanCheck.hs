@@ -90,10 +90,10 @@ module Test.LeanCheck
   -- ** Automatically deriving Listable instances
   , deriveListable
 
-  -- ** Extra constructors
-  , consFromSet
-  , consFromBag
-  , consFromNoDupList
+  -- ** Specialized constructors of tiers
+  , setCons
+  , bagCons
+  , noDupListCons
 
   -- ** Products of tiers
   , product3With

@@ -2,17 +2,17 @@
 --
 -- This module provides advanced functions for manipulating 'tiers'.
 -- Most definitions given here are exported by "Test.LeanCheck", except:
---   'consFromList',
+--   'listCons',
 --   'choices',
 --   'setChoices' and
 --   'bagChoices'.
 module Test.LeanCheck.Tiers
   (
   -- * Additional tiers constructors
-    consFromList
-  , consFromSet
-  , consFromBag
-  , consFromNoDupList
+    listCons
+  , setCons
+  , bagCons
+  , noDupListCons
 
   -- * Products of tiers
   , product3
@@ -45,18 +45,18 @@ import Data.Maybe (catMaybes)
 --
 -- This is basically a type-restricted version of 'cons1'.
 -- You should use 'cons1' instead: this serves more as an illustration of how
--- 'consFromSet' and 'consFromBag' work (see source).
-consFromList :: Listable a => ([a] -> b) -> [[b]]
-consFromList = (`mapT` listsOf tiers)
+-- 'setCons' and 'bagCons' work (see source).
+listCons :: Listable a => ([a] -> b) -> [[b]]
+listCons = (`mapT` listsOf tiers)
 
 -- | Given a constructor that takes a bag of elements (as a list),
 --   lists tiers of applications of this constructor.
 --
 -- For example, a 'Bag' represented as a list.
 --
--- > consFromBag Bag
-consFromBag :: Listable a => ([a] -> b) -> [[b]]
-consFromBag = (`mapT` bagsOf tiers)
+-- > bagCons Bag
+bagCons :: Listable a => ([a] -> b) -> [[b]]
+bagCons = (`mapT` bagsOf tiers)
 
 -- | Given a constructor that takes a set of elements (as a list),
 --   lists tiers of applications of this constructor.
@@ -70,14 +70,16 @@ consFromBag = (`mapT` bagsOf tiers)
 -- The above instance has a problem: it generates repeated sets.
 -- A more efficient implementation that does not repeat sets is given by:
 --
--- >   tiers = consFromSet fromList
-consFromSet :: Listable a => ([a] -> b) -> [[b]]
-consFromSet = (`mapT` setsOf tiers)
+-- >   tiers = setCons fromList
+--
+-- Alternatively, you can use 'setsOf' direclty.
+setCons :: Listable a => ([a] -> b) -> [[b]]
+setCons = (`mapT` setsOf tiers)
 
 -- | Given a constructor that takes a list with no duplicate elements,
 --   return tiers of applications of this constructor.
-consFromNoDupList :: Listable a => ([a] -> b) -> [[b]]
-consFromNoDupList f = mapT f (noDupListsOf tiers)
+noDupListCons :: Listable a => ([a] -> b) -> [[b]]
+noDupListCons f = mapT f (noDupListsOf tiers)
 
 -- | Like '><', but over 3 lists of tiers.
 product3 :: [[a]] -> [[b]]-> [[c]] -> [[(a,b,c)]]
