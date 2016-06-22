@@ -1,4 +1,8 @@
--- | Utilities functions for manipulating tiers (sized lists of lists)
+-- | LeanCheck is a simple enumerative property-based testing library.
+--
+-- This module provides advanced functions for manipulating 'tiers'.  Most of
+-- the functions defined here are exported by "Test.LeanCheck".  You will only
+-- ever need to explicitly import this if you need functions like 'choices'.
 module Test.LeanCheck.Tiers
   (
   -- * Additional tiers constructors

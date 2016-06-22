@@ -1,4 +1,4 @@
--- | QuickCheck-like interface to LeanCheck
+-- | QuickCheck-like interface to 'Test.LeanCheck'
 {-# LANGUAGE CPP #-}
 module Test.LeanCheck.IO
   ( check

@@ -1,8 +1,13 @@
 {-# LANGUAGE TemplateHaskell, CPP #-}
--- Experimental module for deriving Listable instances
+-- | LeanCheck is a simple enumerative property-based testing library.
+--
+-- This is an experimental module for deriving 'Listable' instances.
 --
 -- Needs GHC and Template Haskell
--- (tested on GHC 7.4, 7.6, 7.8, 7.10 and 8.0)
+-- (tested on GHC 7.4, 7.6, 7.8, 7.10 and 8.0).
+--
+-- If LeanCheck does not compile under later GHCs, this module is probably the
+-- culprit.
 module Test.LeanCheck.Derive
   ( deriveListable
   )
@@ -18,12 +23,22 @@ reportWarning :: String -> Q ()
 reportWarning = report False
 #endif
 
--- | Derives a Listable instance for a given type 'Name', e.g.:
+-- | Derives a 'Listable' instance for a given type 'Name'.
+--
+-- Consider the following @Stack@ datatype:
 --
 -- > data Stack a = Stack a (Stack a) | Empty
+--
+-- Writing
+--
 -- > deriveListable ''Stack
 --
--- Needs @TemplateHaskell@ extension.
+-- will automatically derive the following 'Listable' instance:
+--
+-- > instance Listable a => Listable (Stack a) where
+-- >   tiers = cons2 Stack \/ cons0 Empty
+--
+-- Needs the @TemplateHaskell@ extension.
 deriveListable :: Name -> DecsQ
 deriveListable t = do
   is <- t `isInstanceOf` ''Listable

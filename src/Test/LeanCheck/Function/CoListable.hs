@@ -1,5 +1,8 @@
--- | Function enumeration via CoListable typeclass
---   This currently just a sketch.
+-- | This module is part of 'Test.LeanCheck'.
+-- It exports a 'Listable' instance for function enumeration
+-- by means of a 'CoListable' typeclass.
+--
+-- This module /does not currently work/, it it just a sketch and a stub.
 module Test.LeanCheck.Function.CoListable
 where
 

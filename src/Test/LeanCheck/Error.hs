@@ -1,10 +1,9 @@
--- | A simple property-based testing library based on
---   enumeration of values via lists of lists.
+-- | LeanCheck is a simple enumerative property-based testing library.
 --
--- This module re-exports Test.LeanCheck but some test functions have been
+-- This module re-exports "Test.LeanCheck" but some test functions have been
 -- specialized to catch errors (see the explicit export list below).
 --
--- This module is unsafe, it uses `unsafePerformIO` to catch errors.
+-- This module is unsafe as it uses `unsafePerformIO` to catch errors.
 {-# LANGUAGE CPP #-}
 module Test.LeanCheck.Error
   ( holds

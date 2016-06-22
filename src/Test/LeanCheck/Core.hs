@@ -1,22 +1,28 @@
--- | Simple property-based testing library based on
---   enumeration of values via lists of lists.
+-- | LeanCheck is a simple enumerative property-based testing library.
 --
 -- This is the core module of the library, with the most basic definitions.  If
 -- you are looking just to use the library, import and see "Test.LeanCheck".
 --
--- If you want to understand how the code works, this is the place to start.
+-- If you want to understand how the code works, this is the place to start
+-- reading.
 --
 --
 -- Other important modules:
 --
--- "Test.LeanCheck.Basic" re-exports (almost) everything from this module
---         along with constructors and instances for further arities.
+-- * "Test.LeanCheck.Basic" exports:
+--     "Test.LeanCheck.Core",
+--     additional 'tiers' constructors
+--       ('Test.LeanCheck.Basic.cons6' ...
+--        'Test.LeanCheck.Basic.cons12') and
+--     'Listable' tuple instances.
 --
--- "Test.LeanCheck.Utils" re-exports "Test.LeanCheck.Basic"
---         along with functions for advanced Listable instance definitions.
+-- * "Test.LeanCheck.Tiers" exports:
+--     functions for advanced Listable definitions.
 --
--- "Test.LeanCheck" re-exports "Test.LeanCheck.Utils"
---   along with a TH function to automatically derive Listable instances.
+-- * "Test.LeanCheck" exports:
+--      "Test.LeanCheck.Basic",
+--      most of "Test.LeanCheck.Tiers" and
+--      'Test.LeanCheck.Derive.deriveListable'.
 module Test.LeanCheck.Core
   (
   -- * Checking and testing
@@ -149,6 +155,7 @@ instance (Listable a, Listable b) => Listable (Either a b) where
   tiers = cons1 Left  `ofWeight` 0
      \\// cons1 Right `ofWeight` 0
 
+-- | > list :: [(Int,Int)] = [(0,0), (0,1), (1,0), (0,-1), (1,1), ...]
 instance (Listable a, Listable b) => Listable (a,b) where
   tiers = tiers >< tiers
 
@@ -159,6 +166,9 @@ instance (Listable a, Listable b, Listable c, Listable d) =>
          Listable (a,b,c,d) where
   tiers = productWith (\x (y,z,w) -> (x,y,z,w)) tiers tiers
 
+-- | Instances for 'Listable' sixtuples up to 12-tuples are exported by default
+--   form "Test.LeanCheck" but are hidden from Haddock documentation.  These
+--   instances are defined in "Test.LeanCheck.Basic".
 instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
          Listable (a,b,c,d,e) where
   tiers = productWith (\x (y,z,w,v) -> (x,y,z,w,v)) tiers tiers

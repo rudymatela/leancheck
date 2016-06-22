@@ -1,4 +1,9 @@
--- | Function enumeration via lists of pairs.
+-- | This module is part of 'Test.LeanCheck'.
+--   It exports a 'Listable' instance for function enumeration
+--   via lists of pairs.
+--
+-- This module considers functions as a finite list of exceptional input-output
+-- cases to a default value (list of pairs of arguments and results).
 module Test.LeanCheck.Function.ListsOfPairs
   ( functionPairs
   , associations

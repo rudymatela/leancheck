@@ -1,10 +1,14 @@
--- | Simple property-based testing library based on
---   enumeration of values via lists of lists.
+-- | LeanCheck is a simple enumerative property-based testing library.
 --
--- This module exports "Test.LeanCheck.Core" functionality along with instances and
+-- This module exports "Test.LeanCheck.Core" along with instances and
 -- functions for further tuple and constructor arities.
 --
 -- For the complete list of functions, see "Test.LeanCheck".
+--
+-- "Test.LeanCheck" already exports everything from this module.
+-- You should only import this if you /only/ want basic functionality from
+-- "Test.LeanCheck.Core" with support for tuples and constructors with arities
+-- from 6 up to 12.
 module Test.LeanCheck.Basic
   ( module Test.LeanCheck.Core
 

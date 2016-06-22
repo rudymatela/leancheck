@@ -1,5 +1,6 @@
--- | Some invariants over Test.LeanCheck functions
---   You should be importing this ONLY to test 'Test/LeanCheck.hs' itself.
+-- | Some invariants over Test.LeanCheck functions.
+--
+-- You should be importing this ONLY to test "Test.LeanCheck" itself.
 module Test.LeanCheck.Invariants
   ( tNatPairOrd
   , tNatTripleOrd

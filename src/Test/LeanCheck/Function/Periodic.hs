@@ -1,5 +1,7 @@
--- | Periodic function enumeration.
---   This is just a sketch.
+-- | This module is part of 'Test.LeanCheck'.
+-- It exports a 'Listable' instance for enumeration of periodic functions.
+--
+-- This module /barely works/ and is just a sketch.
 module Test.LeanCheck.Function.Periodic
 where
 
