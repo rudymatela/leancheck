@@ -13,15 +13,12 @@ documentation
 
 * on data-invariant.md, write missing section;
 
-* add example to consFromSet (Data.Set)
-
 
 v0.5.0
 ------
 
-* rework LeanCheck.Tiers module (simply bagsOf and setsOf);
+* release!
 
-* rename 'consFromSet' to 'setCons'?
 
 v0.6.0
 ------
