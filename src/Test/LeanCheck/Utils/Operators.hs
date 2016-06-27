@@ -22,6 +22,8 @@ module Test.LeanCheck.Utils.Operators
   )
 where
 
+-- TODO: review terminology in this module.  Some names aren't quite right!
+
 import Test.LeanCheck ((==>))
 
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
@@ -69,6 +71,17 @@ distributive o o' = \x y z -> x `o` (y `o'` z) == (x `o` y) `o'` (x `o` z)
 
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
 transitive o = \x y z -> x `o` y && y `o` z ==> x `o` z
+
+-- | An element is always related to itself.
+reflexive :: (a -> a -> Bool) -> a -> Bool
+reflexive o = \x -> x `o` x
+
+-- | An element is __never__ related to itself.
+irreflexive :: (a -> a -> Bool) -> a -> Bool
+irreflexive o = \x -> not $ x `o` x
+
+symmetric :: Eq b => (a -> a -> b) -> (a -> a -> b) -> a -> a -> Bool
+symmetric (+-) (-+) = \x y -> x +- y == y -+ x
 
 idempotent :: Eq a => (a -> a) -> a -> Bool
 idempotent f = f . f === f
