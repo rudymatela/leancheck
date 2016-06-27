@@ -15,6 +15,9 @@ module Test.LeanCheck.Utils.Operators
   , idempotent
   , identity
   , notIdentity
+  , reflexive
+  , irreflexive
+  , symmetric
 
   -- * Ternary comparison operators
   , (=$), ($=)
