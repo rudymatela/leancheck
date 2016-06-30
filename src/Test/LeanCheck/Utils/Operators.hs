@@ -150,7 +150,7 @@ identity f = f === id
 neverIdentity :: Eq a => (a -> a) -> a -> Bool
 neverIdentity = (not .) . identity
 
--- | Equal under.  A ternary operator.
+-- | Equal under, a ternary operator with the same fixity as '=='.
 --
 -- > x =$ f $= y  =  f x = f y
 --
@@ -165,11 +165,13 @@ neverIdentity = (not .) . identity
 (x =$ f) y = f x == f y
 infixl 4 =$
 
+-- | See '=$'
 ($=) :: (a -> Bool) -> a -> Bool
 ($=) = ($)
 infixl 4 $=
 
 -- | Check if two lists are equal for @n@ values.
+--   This operator has the same fixity of '=='.
 --
 -- > xs =| n |= ys  =  take n xs == take n ys
 --
@@ -179,6 +181,7 @@ infixl 4 $=
 xs =| n = xs =$ take n
 infixl 4 =|
 
+-- | See '=|'
 (|=) :: (a -> Bool) -> a -> Bool
 (|=) = ($)
 infixl 4 |=
