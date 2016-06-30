@@ -26,9 +26,21 @@ module Test.LeanCheck.Utils.Operators
   , asymmetric
   , antisymmetric
 
+  -- ** Order relations
+  , equivalence
+  , partialOrder
+  , strictPartialOrder
+  , totalOrder
+  , strictTotalOrder
+
   -- * Ternary comparison operators
   , (=$), ($=)
   , (=|), (|=)
+
+  -- * Properties for typeclass instances
+  , okEq
+  , okOrd
+  , okEqOrd
   )
 where
 
@@ -60,6 +72,10 @@ infix 3 &&&
 (&&&&) :: (a -> b -> Bool) -> (a -> b -> Bool) -> a -> b -> Bool
 (&&&&) = combine (&&&)
 infix 3 &&&&
+
+(&&&&&) :: (a -> b -> c -> Bool) -> (a -> b -> c -> Bool) -> a -> b -> c -> Bool
+(&&&&&) = combine (&&&&)
+infix 2 &&&&&
 
 (|||) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 (|||) = combine (||)
@@ -123,6 +139,33 @@ antisymmetric r = \x y -> x `r` y && y `r` x ==> x == y
 asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 asymmetric r = \x y -> x `r` y ==> not (y `r` x)
 
+equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
+equivalence (==) = \x y z -> reflexive  (==) x
+                          && symmetric  (==) x y
+                          && transitive (==) x y z
+
+partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+partialOrder (<=) = \x y z -> reflexive     (<=) x
+                           && antisymmetric (<=) x y
+                           && transitive    (<=) x y z
+
+strictPartialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+strictPartialOrder (<) = \x y z -> irreflexive   (<) x
+                                && antisymmetric (<) x y
+                                && transitive    (<) x y z
+
+totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+totalOrder (<=) = \x y z -> (x <= y || y <= x)
+                         && antisymmetric (<=) x y
+                         && transitive    (<=) x y z
+
+strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+strictTotalOrder (<) = \x y z -> (x /= y ==> x < y || y < x)
+                              && irreflexive   (<) x
+                              && antisymmetric (<) x y
+                              && transitive    (<) x y z
+
+
 -- | Is the given function idempotent? @f (f x) == x@
 --
 -- > holds n $ idempotent abs
@@ -149,6 +192,17 @@ identity f = f === id
 -- Note: this is not the same as not being an identity.
 neverIdentity :: Eq a => (a -> a) -> a -> Bool
 neverIdentity = (not .) . identity
+
+okEq :: Eq a => a -> a -> a -> Bool
+okEq = equivalence (==)
+
+okOrd :: Ord a => a -> a -> a -> Bool
+okOrd = totalOrder (<=)
+  &&&&& \x y z -> True -- TODO: comparison compare
+
+okEqOrd :: (Eq a, Ord a) => a -> a -> a -> Bool
+okEqOrd = okEq
+    &&&&& okOrd
 
 -- | Equal under, a ternary operator with the same fixity as '=='.
 --

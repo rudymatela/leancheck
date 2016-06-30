@@ -3,6 +3,8 @@ import Data.List (elemIndices,sort)
 import Test.LeanCheck
 import Test.LeanCheck.Utils
 
+import Data.List (isPrefixOf)
+import Data.Function (on)
 
 main :: IO ()
 main =
@@ -72,6 +74,32 @@ tests n =
   , holds n $ asymmetric    (>)  -:> int
   , holds n $ antisymmetric (>=) -:> int
   , fails n $ asymmetric    (>=) -:> int
+
+  , holds n $ equivalence (==) -:> int
+  , holds n $ equivalence ((==) `on` fst) -:> (int,int)
+  , holds n $ equivalence ((==) `on` length) -:> [int]
+
+  , holds n $       totalOrder (<=) -:> int
+  , holds n $ strictTotalOrder (<)  -:> int
+  , fails n $       totalOrder (<)  -:> int
+  , fails n $ strictTotalOrder (<=) -:> int
+  , holds n $       totalOrder (>=) -:> int
+  , holds n $ strictTotalOrder (>)  -:> int
+  , fails n $       totalOrder (>)  -:> int
+  , fails n $ strictTotalOrder (>=) -:> int
+
+  , holds n $ partialOrder isPrefixOf -:> [int]
+  , fails n $   totalOrder isPrefixOf -:> [int]
+
+  , holds n $ okEqOrd -:> ()
+  , holds n $ okEqOrd -:> int
+  , holds n $ okEqOrd -:> char
+  , holds n $ okEqOrd -:> bool
+  , holds n $ okEqOrd -:> [()]
+  , holds n $ okEqOrd -:> [int]
+  , holds n $ okEqOrd -:> [bool]
+  , holds n $ okEqOrd -:> float  -- fails if NaN is included in enumeration
+  , holds n $ okEqOrd -:> double -- fails if NaN is included in enumeration
 
   , holds n $ idempotent id   -:> int
   , holds n $ idempotent abs  -:> int
