@@ -91,6 +91,10 @@ tests n =
   , holds n $ partialOrder isPrefixOf -:> [int]
   , fails n $   totalOrder isPrefixOf -:> [int]
 
+  , holds n $ comparison compare -:> int
+  , holds n $ comparison compare -:> bool
+  , holds n $ comparison compare -:> ()
+
   , holds n $ okEqOrd -:> ()
   , holds n $ okEqOrd -:> int
   , holds n $ okEqOrd -:> char

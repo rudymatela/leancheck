@@ -32,6 +32,7 @@ module Test.LeanCheck.Utils.Operators
   , strictPartialOrder
   , totalOrder
   , strictTotalOrder
+  , comparison
 
   -- * Ternary comparison operators
   , (=$), ($=)
@@ -47,6 +48,7 @@ where
 -- TODO: review terminology in this module.  Some names aren't quite right!
 
 import Test.LeanCheck ((==>))
+import Data.List (elem)
 
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
 combine op f g = \x -> f x `op` g x
@@ -67,23 +69,23 @@ infix 4 ====
 
 (&&&) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 (&&&) = combine (&&)
-infix 3 &&&
+infixr 3 &&&
 
 (&&&&) :: (a -> b -> Bool) -> (a -> b -> Bool) -> a -> b -> Bool
 (&&&&) = combine (&&&)
-infix 3 &&&&
+infixr 3 &&&&
 
 (&&&&&) :: (a -> b -> c -> Bool) -> (a -> b -> c -> Bool) -> a -> b -> c -> Bool
 (&&&&&) = combine (&&&&)
-infix 2 &&&&&
+infixr 3 &&&&&
 
 (|||) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 (|||) = combine (||)
-infix 2 |||
+infixr 2 |||
 
 (||||) :: (a -> b -> Bool) -> (a -> b -> Bool) -> a -> b -> Bool
 (||||) = combine (|||)
-infix 2 ||||
+infixr 2 ||||
 
 -- | Is a given operator commutative?  @x + y = y + x@
 --
@@ -149,10 +151,10 @@ partialOrder (<=) = \x y z -> reflexive     (<=) x
                            && antisymmetric (<=) x y
                            && transitive    (<=) x y z
 
-strictPartialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-strictPartialOrder (<) = \x y z -> irreflexive   (<) x
-                                && antisymmetric (<) x y
-                                && transitive    (<) x y z
+strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
+strictPartialOrder (<) = \x y z -> irreflexive (<) x
+                                && asymmetric  (<) x y -- implied?
+                                && transitive  (<) x y z
 
 totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 totalOrder (<=) = \x y z -> (x <= y || y <= x)
@@ -161,9 +163,20 @@ totalOrder (<=) = \x y z -> (x <= y || y <= x)
 
 strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 strictTotalOrder (<) = \x y z -> (x /= y ==> x < y || y < x)
-                              && irreflexive   (<) x
-                              && antisymmetric (<) x y
-                              && transitive    (<) x y z
+                              && irreflexive (<) x
+                              && asymmetric  (<) x y -- implied?
+                              && transitive  (<) x y z
+
+comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
+comparison compare = \x y z -> equivalence (===) x y z
+                            && irreflexive (<) x
+                            && transitive  (<) x y z
+                            && symmetric2  (<) (>) x y
+  where
+  x === y = x `compare` y == EQ
+  x =/= y = x `compare` y /= EQ
+  x  <  y = x `compare` y == LT
+  x  >  y = x `compare` y == GT
 
 
 -- | Is the given function idempotent? @f (f x) == x@
@@ -198,8 +211,8 @@ okEq = equivalence (==)
 
 okOrd :: Ord a => a -> a -> a -> Bool
 okOrd x y z = totalOrder (<=) x y z
-           && True -- TODO: comparison compare
-           && True -- TODO: <= and Ord consistent
+           && comparison compare x y z
+           && (x <= y) == ((x `compare` y) `elem` [LT,EQ])
 
 okEqOrd :: (Eq a, Ord a) => a -> a -> a -> Bool
 okEqOrd x y z = okEq  x y z
