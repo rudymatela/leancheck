@@ -7,17 +7,21 @@ module Test.LeanCheck.Utils.Operators
   , (&&&), (&&&&)
   , (|||), (||||)
 
-  -- * Properties over functions
-  , commutative
-  , associative
-  , distributive
-  , transitive
+  -- * Properties of unary functions
   , idempotent
   , identity
   , notIdentity
+
+  -- * Properties of operators (binary functions)
+  , commutative
+  , associative
+  , distributive
+  , symmetric
+
+  -- * Properties of relations (binary functions returning truth values)
+  , transitive
   , reflexive
   , irreflexive
-  , symmetric
 
   -- * Ternary comparison operators
   , (=$), ($=)
@@ -32,11 +36,11 @@ import Test.LeanCheck ((==>))
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
 combine op f g = \x -> f x `op` g x
 
--- Uneeded, just food for thought
---combine2 :: (c -> d -> e) -> (a -> b -> c) -> (a -> b -> d) -> (a -> b -> e)
+-- Uneeded, just food for thought:
+-- > combine2 :: (c -> d -> e) -> (a -> b -> c) -> (a -> b -> d) -> (a -> b -> e)
 -- Two possible implementations:
---combine2 op f g = \x y -> f x y `op` g x y
---combine2 = combine . combine
+-- > combine2 op f g = \x y -> f x y `op` g x y
+-- > combine2 = combine . combine
 
 (===) :: Eq b => (a -> b) -> (a -> b) -> a -> Bool
 (===) = combine (==)
@@ -86,12 +90,19 @@ irreflexive o = \x -> not $ x `o` x
 symmetric :: Eq b => (a -> a -> b) -> (a -> a -> b) -> a -> a -> Bool
 symmetric (+-) (-+) = \x y -> x +- y == y -+ x
 
+-- | Is the given function idempotent? @f (f x) == x@
+--
+-- > holds 100 $ idempotent abs
+-- > holds 100 $ idempotent sort
+-- > fails 100 $ idempotent negate
 idempotent :: Eq a => (a -> a) -> a -> Bool
 idempotent f = f . f === f
 
+-- | Is the given function an identity? @f x == x@
 identity :: Eq a => (a -> a) -> a -> Bool
 identity f = f === id
 
+-- | Is the given function never an identity? @f x /= x@
 notIdentity :: Eq a => (a -> a) -> a -> Bool
 notIdentity = (not .) . identity
 
