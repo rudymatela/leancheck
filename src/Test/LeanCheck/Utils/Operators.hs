@@ -197,12 +197,14 @@ okEq :: Eq a => a -> a -> a -> Bool
 okEq = equivalence (==)
 
 okOrd :: Ord a => a -> a -> a -> Bool
-okOrd = totalOrder (<=)
-  &&&&& \x y z -> True -- TODO: comparison compare
+okOrd x y z = totalOrder (<=) x y z
+           && True -- TODO: comparison compare
+           && True -- TODO: <= and Ord consistent
 
 okEqOrd :: (Eq a, Ord a) => a -> a -> a -> Bool
-okEqOrd = okEq
-    &&&&& okOrd
+okEqOrd x y z = okEq  x y z
+             && okOrd x y z
+             && (x == y) == (x `compare` y == EQ) -- consistent instances
 
 -- | Equal under, a ternary operator with the same fixity as '=='.
 --
