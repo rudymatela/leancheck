@@ -45,6 +45,13 @@ tests n =
   , holds n $ distributive (*) (+) -:> int
   , fails n $ distributive (+) (*) -:> int
 
+  , holds n $ symmetric (==) -:> int
+  , holds n $ symmetric (/=) -:> int
+  , fails n $ symmetric (<=) -:> int
+
+  , holds n $   reflexive (==) -:> int
+  , holds n $ irreflexive (/=) -:> int
+
   , holds n $ (<)  `symmetric2` (>)  -:> int
   , holds n $ (<=) `symmetric2` (>=) -:> int
   , fails n $ (<)  `symmetric2` (>=) -:> int
@@ -58,6 +65,13 @@ tests n =
   , holds n $ transitive (<)  -:> int
   , holds n $ transitive (<=) -:> int
   , fails n $ transitive (/=) -:> int
+
+  , holds n $ asymmetric    (<)  -:> int
+  , holds n $ antisymmetric (<=) -:> int
+  , fails n $ asymmetric    (<=) -:> int
+  , holds n $ asymmetric    (>)  -:> int
+  , holds n $ antisymmetric (>=) -:> int
+  , fails n $ asymmetric    (>=) -:> int
 
   , holds n $ idempotent id   -:> int
   , holds n $ idempotent abs  -:> int

@@ -22,6 +22,9 @@ module Test.LeanCheck.Utils.Operators
   , transitive
   , reflexive
   , irreflexive
+  , symmetric
+  , asymmetric
+  , antisymmetric
 
   -- * Ternary comparison operators
   , (=$), ($=)
@@ -91,6 +94,7 @@ distributive o o' = \x y z -> x `o` (y `o'` z) == (x `o` y) `o'` (x `o` z)
 -- > fails n $ (<=) `symmetric2` (>)  -:> int
 symmetric2 :: Eq b => (a -> a -> b) -> (a -> a -> b) -> a -> a -> Bool
 symmetric2 (+-) (-+) = \x y -> x +- y == y -+ x
+-- TODO: generalize type of symmetric2!  a -> b -> c, b -> a -> c
 
 -- | Is a given relation transitive?
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
@@ -103,6 +107,21 @@ reflexive o = \x -> x `o` x
 -- | An element is __never__ related to itself.
 irreflexive :: (a -> a -> Bool) -> a -> Bool
 irreflexive o = \x -> not $ x `o` x
+
+-- | Is a given relation symmetric?
+-- This is a type-restricted version of 'commutative'.
+symmetric :: (a -> a -> Bool) -> a -> a -> Bool
+symmetric = commutative
+
+-- | Is a given relation antisymmetric?
+-- Not to be confused with "not symmetric" and "assymetric".
+antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
+antisymmetric r = \x y -> x `r` y && y `r` x ==> x == y
+
+-- | Is a given relation asymmetric?
+-- Not to be confused with "not symmetric" and "antissymetric".
+asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
+asymmetric r = \x y -> x `r` y ==> not (y `r` x)
 
 -- | Is the given function idempotent? @f (f x) == x@
 --
