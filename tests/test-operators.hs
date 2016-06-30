@@ -45,6 +45,11 @@ tests n =
   , holds n $ distributive (*) (+) -:> int
   , fails n $ distributive (+) (*) -:> int
 
+  , holds n $ (<)  `symmetric2` (>)  -:> int
+  , holds n $ (<=) `symmetric2` (>=) -:> int
+  , fails n $ (<)  `symmetric2` (>=) -:> int
+  , fails n $ (<=) `symmetric2` (>)  -:> int
+
   , holds n $ transitive (==) -:> bool
   , holds n $ transitive (<)  -:> bool
   , holds n $ transitive (<=) -:> bool
@@ -65,7 +70,7 @@ tests n =
   , holds n $ identity (not . not)
   , fails n $ identity not
 
-  , holds n $ notIdentity not
-  , fails n $ notIdentity abs    -:> int
-  , fails n $ notIdentity negate -:> int
+  , holds n $ neverIdentity not
+  , fails n $ neverIdentity abs    -:> int
+  , fails n $ neverIdentity negate -:> int
   ]

@@ -10,13 +10,13 @@ module Test.LeanCheck.Utils.Operators
   -- * Properties of unary functions
   , idempotent
   , identity
-  , notIdentity
+  , neverIdentity
 
   -- * Properties of operators (binary functions)
   , commutative
   , associative
   , distributive
-  , symmetric
+  , symmetric2
 
   -- * Properties of relations (binary functions returning truth values)
   , transitive
@@ -66,16 +66,33 @@ infix 2 |||
 (||||) = combine (|||)
 infix 2 ||||
 
+-- | Is a given operator commutative?  @x + y = y + x@
+--
+-- > holds n $ commutative (+)
+--
+-- > fails n $ commutative union  -- union [] [0,0] = [0]
 commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
 commutative o = \x y -> x `o` y == y `o` x
 
+-- | Is a given operator associative?  @x + (y + z) = (x + y) + z@
 associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
 associative o = \x y z -> x `o` (y `o` z) == (x `o` y) `o` z
 
--- type could be more general: (b -> a -> a) for both operators
+-- | Does the first operator, distributes over the second?
 distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
 distributive o o' = \x y z -> x `o` (y `o'` z) == (x `o` y) `o'` (x `o` z)
 
+-- | Are two operators flipped versions of each other?
+--
+-- > holds n $ (<)  `symmetric2` (>)  -:> int
+-- > holds n $ (<=) `symmetric2` (>=) -:> int
+--
+-- > fails n $ (<)  `symmetric2` (>=) -:> int
+-- > fails n $ (<=) `symmetric2` (>)  -:> int
+symmetric2 :: Eq b => (a -> a -> b) -> (a -> a -> b) -> a -> a -> Bool
+symmetric2 (+-) (-+) = \x y -> x +- y == y -+ x
+
+-- | Is a given relation transitive?
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
 transitive o = \x y z -> x `o` y && y `o` z ==> x `o` z
 
@@ -87,24 +104,32 @@ reflexive o = \x -> x `o` x
 irreflexive :: (a -> a -> Bool) -> a -> Bool
 irreflexive o = \x -> not $ x `o` x
 
-symmetric :: Eq b => (a -> a -> b) -> (a -> a -> b) -> a -> a -> Bool
-symmetric (+-) (-+) = \x y -> x +- y == y -+ x
-
 -- | Is the given function idempotent? @f (f x) == x@
 --
--- > holds 100 $ idempotent abs
--- > holds 100 $ idempotent sort
--- > fails 100 $ idempotent negate
+-- > holds n $ idempotent abs
+-- > holds n $ idempotent sort
+--
+-- > fails n $ idempotent negate
 idempotent :: Eq a => (a -> a) -> a -> Bool
 idempotent f = f . f === f
 
 -- | Is the given function an identity? @f x == x@
+--
+-- > holds n $ identity (+0)
+-- > holds n $ identity (sort :: [()])
+-- > holds n $ identity (not . not)
 identity :: Eq a => (a -> a) -> a -> Bool
 identity f = f === id
 
 -- | Is the given function never an identity? @f x /= x@
-notIdentity :: Eq a => (a -> a) -> a -> Bool
-notIdentity = (not .) . identity
+--
+-- > holds n $ neverIdentity not
+--
+-- > fails n $ neverIdentity negate   -- yes, fails: negate 0 == 0, hah!
+--
+-- Note: this is not the same as not being an identity.
+neverIdentity :: Eq a => (a -> a) -> a -> Bool
+neverIdentity = (not .) . identity
 
 -- | Equal under.  A ternary operator.
 --
