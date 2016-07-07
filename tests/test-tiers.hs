@@ -5,6 +5,7 @@ import Test.LeanCheck
 import Test.LeanCheck.Invariants
 import Test.LeanCheck.Utils
 
+import Test.LeanCheck.Tiers
 
 main :: IO ()
 main =
@@ -19,8 +20,13 @@ tests =
   , checkNoDup 12
   , checkBags 18
   , checkSets 20
+  , checkDistinctPairs 20
+  , checkUnorderedPairs 20
+  , checkUnorderedDistinctPairs 20
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
+
+  , all (uncurry (/=)) . concat . take 100 $ distinctPairs (tiers :: [[Nat]])
 
   , productMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
   , productMaybeWith (flip ($))
@@ -46,6 +52,18 @@ checkBags n = bagsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` ordered
 
 checkSets :: Int -> Bool
 checkSets n = setsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` strictlyOrdered
+
+checkDistinctPairs :: Int -> Bool
+checkDistinctPairs n =
+  distinctPairs (tiers :: [[Nat]]) =| n |= tiers `suchThat` uncurry (/=)
+
+checkUnorderedDistinctPairs :: Int -> Bool
+checkUnorderedDistinctPairs n =
+  unorderedDistinctPairs (tiers :: [[Nat]]) =| n |= tiers `suchThat` uncurry (<)
+
+checkUnorderedPairs :: Int -> Bool
+checkUnorderedPairs n =
+  unorderedPairs (tiers :: [[Nat]]) =| n |= tiers `suchThat` uncurry (<=)
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
 checkLengthListingsOfLength n m = all check [1..m]

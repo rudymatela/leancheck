@@ -27,6 +27,14 @@ module Test.LeanCheck.Tiers
   , products
   , listsOfLength
 
+  -- * Tiers of pairs
+  , distinctPairs
+  , distinctPairsWith
+  , unorderedPairs
+  , unorderedPairsWith
+  , unorderedDistinctPairs
+  , unorderedDistinctPairsWith
+
   , deleteT
   , normalizeT
 
@@ -99,6 +107,61 @@ productMaybeWith f (xs:xss) yss = map (xs **) yss
                                \/ productMaybeWith f xss yss `addWeight` 1
   where xs ** ys = catMaybes [ f x y | x <- xs, y <- ys ]
 
+-- | Takes as argument tiers of element values;
+--   returns tiers of pairs with distinct element values.
+--
+-- When argument tiers have no repeated elements:
+--
+-- > distinctPairs xss  =  xss >< xss  `suchThat` uncurry (/=)
+distinctPairs :: [[a]] -> [[(a,a)]]
+distinctPairs = distinctPairsWith (,)
+
+-- | 'distinctPairs' by a given function:
+--
+-- > distinctPairsWith f = mapT (uncurry f) . distinctPairs
+distinctPairsWith :: (a -> a -> b) -> [[a]] -> [[b]]
+distinctPairsWith f = concatT . choicesWith (\e -> mapT (f e))
+
+-- | Takes as argument tiers of element values;
+--   returns tiers of unordered pairs where, in enumeration order,
+--   the first element is less than or equal to the second.
+--
+-- The name of this function is perhaps a misnomer.  But in mathematics,
+-- an unordered pair is a pair where you don't care about element order, e.g.:
+-- @(1,2) = (2,1)@.  This function will enumerate canonical versions of such
+-- pairs where the first element is less than the second.
+--
+-- The returned element pairs can be seen as bags with two elements.
+--
+-- When argument tiers are listed in 'Ord':
+--
+-- > distinctPairs xss  =  xss >< xss  `suchThat` uncurry (<=)
+unorderedPairs :: [[a]] -> [[(a,a)]]
+unorderedPairs = unorderedPairsWith (,)
+
+-- | 'unorderedPairs' by a given function:
+--
+-- > unorderedPairsWith f = mapT (uncurry f) . unorderedPairs
+unorderedPairsWith :: (a -> a -> b) -> [[a]] -> [[b]]
+unorderedPairsWith f = concatT . bagChoicesWith (\e -> mapT (f e))
+
+-- | Takes as argument tiers of element values;
+--   returns tiers of unordered pairs where, in enumeration order,
+--   the first element is strictly less than the second.
+--
+-- The returned element pairs can be seen as sets with two elements.
+--
+-- When argument tiers are listed in 'Ord':
+--
+-- > distinctPairs xss  =  xss >< xss  `suchThat` uncurry (<)
+unorderedDistinctPairs :: [[a]] -> [[(a,a)]]
+unorderedDistinctPairs = unorderedDistinctPairsWith (,)
+
+-- | 'unorderedPairs' by a given function:
+--
+-- > unorderedDistinctPairsWith f = mapT (uncurry f) . unorderedDistinctPairs
+unorderedDistinctPairsWith :: (a -> a -> b) -> [[a]] -> [[b]]
+unorderedDistinctPairsWith f = concatT . setChoicesWith (\e -> mapT (f e))
 
 -- | Takes as argument tiers of element values;
 --   returns tiers of lists of elements.
