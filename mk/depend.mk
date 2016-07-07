@@ -287,6 +287,32 @@ tests/test: \
   src/Test/LeanCheck/Basic.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Core.hs
+tests/test-tiers.o: \
+  tests/test-tiers.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Invariants.hs \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Basic.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Core.hs
+tests/test-tiers: \
+  tests/test-tiers.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Invariants.hs \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Basic.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Core.hs
 tests/test-types.o: \
   tests/test-types.hs \
   src/Test/LeanCheck/Utils/Types.hs \
@@ -298,32 +324,6 @@ tests/test-types.o: \
   src/Test/LeanCheck/Core.hs
 tests/test-types: \
   tests/test-types.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck/Basic.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Core.hs
-tests/test-utils.o: \
-  tests/test-utils.hs \
-  src/Test/LeanCheck/Utils.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Invariants.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck/Basic.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Core.hs
-tests/test-utils: \
-  tests/test-utils.hs \
-  src/Test/LeanCheck/Utils.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Invariants.hs \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/Derive.hs \

@@ -1,12 +1,12 @@
 # Makefile for LeanCheck
 TESTS = tests/test           \
-        tests/test-utils     \
         tests/test-derive    \
         tests/test-error     \
         tests/test-operators \
         tests/test-fun       \
         tests/test-funshow   \
         tests/test-io        \
+        tests/test-tiers     \
         tests/test-types
 LISTHS   = find src -name \*.hs
 LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
@@ -25,13 +25,13 @@ all-all: $(ALLOBJS)
 
 test: all-all $(TESTS)
 	./tests/test
-	./tests/test-utils
 	./tests/test-derive
 	./tests/test-error
 	./tests/test-operators
 	./tests/test-fun
 	./tests/test-funshow
 	./tests/test-io
+	./tests/test-tiers
 	./tests/test-types
 
 clean: clean-hi-o clean-haddock

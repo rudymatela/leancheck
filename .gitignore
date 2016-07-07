@@ -15,7 +15,7 @@ tests/test
 tests/test-io
 tests/test-operators
 tests/test-types
-tests/test-utils
+tests/test-tiers
 tests/test-most
 tests/test-derive
 tests/test-error
