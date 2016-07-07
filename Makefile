@@ -2,10 +2,10 @@
 TESTS = tests/test           \
         tests/test-derive    \
         tests/test-error     \
-        tests/test-operators \
         tests/test-fun       \
         tests/test-funshow   \
         tests/test-io        \
+        tests/test-operators \
         tests/test-tiers     \
         tests/test-types
 LISTHS   = find src -name \*.hs
@@ -27,10 +27,10 @@ test: all-all $(TESTS)
 	./tests/test
 	./tests/test-derive
 	./tests/test-error
-	./tests/test-operators
 	./tests/test-fun
 	./tests/test-funshow
 	./tests/test-io
+	./tests/test-operators
 	./tests/test-tiers
 	./tests/test-types
 
