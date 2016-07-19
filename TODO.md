@@ -12,6 +12,10 @@ misc
   It will also be clearer what each parameter means.
   Note that ALLHS and LIBHS are not (but could be) the final names.
 
+* parameterize number of tests in test programs and add slow-test target
+
+* add diff test for IO functions (diff w/ model output and exit status)
+
 
 documentation
 -------------
