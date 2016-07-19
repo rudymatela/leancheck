@@ -16,6 +16,8 @@ misc
 
 * add diff test for IO functions (diff w/ model output and exit status)
 
+* (?) on leancheck.cabal, add upper bound for template-haskell package
+
 
 documentation
 -------------
