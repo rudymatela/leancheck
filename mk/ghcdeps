@@ -29,6 +29,7 @@ do
 	exit 1
 	deps="`cat tmp.mk |
 	       grep "hs$" |
+	       sort |
 	       sed -e "s/.*: //" |
 	       tac |
 	       tr '\n' ' ' |
