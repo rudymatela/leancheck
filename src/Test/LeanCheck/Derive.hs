@@ -117,7 +117,7 @@ reallyDeriveListableCascade t = do
 -- simply skipping type synonyms.
 
 typeConArgs :: Name -> Q [Type]
-typeConArgs = liftM (nub . sort . concat . map snd) . typeCons'
+typeConArgs = liftM (concat . map snd) . typeCons'
 
 typeConTs :: Type -> [Name]
 typeConTs (AppT t1 t2) = typeConTs t1 `nubMerge` typeConTs t2
