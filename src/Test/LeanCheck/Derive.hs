@@ -153,10 +153,8 @@ typeArity t = do
                                          ++ show t
                                          ++ " is not a newtype or data"
 
--- Given a type name, returns a list of its type constructor names tupled with
--- the number of arguments they take.
-typeCons :: Name -> Q [(Name,Int)]
-typeCons t = do
+typeCons' :: Name -> Q [(Name,[Type])]
+typeCons' t = do
   ti <- reify t
   return . map simplify $ case ti of
 #if __GLASGOW_HASKELL__ < 800
@@ -169,9 +167,18 @@ typeCons t = do
     _ -> error $ "error (typeConstructors): symbol "
               ++ show t
               ++ " is neither newtype nor data"
-  where simplify (NormalC n ts)  = (n,length ts)
-        simplify (RecC    n ts)  = (n,length ts)
-        simplify (InfixC  _ n _) = (n,2)
+  where
+  simplify (NormalC n ts)  = (n,map snd ts)
+  simplify (RecC    n ts)  = (n,map trd ts)
+  simplify (InfixC  t1 n t2) = (n,[snd t1,snd t2])
+  trd (x,y,z) = z
+
+-- Given a type name, returns a list of its type constructor names tupled with
+-- the number of arguments they take.
+typeCons :: Name -> Q [(Name,Int)]
+typeCons = liftM (map (mapSnd length)) . typeCons'
+  where
+  mapSnd f (x,y) = (x,f y)
 
 -- Append to instance contexts in a declaration.
 --
