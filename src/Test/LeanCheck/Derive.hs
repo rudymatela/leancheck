@@ -48,16 +48,7 @@ deriveListable t = do
                    ++ " already exists, skipping derivation"
       return []
     else do
-      cd <- canDeriveListable t
-      unless cd (fail $ "Unable to derive Listable " ++ show t)
       reallyDeriveListable t
-
--- | Checks whether it is possible to derive a Listable instance.
---
--- For example, it is not possible if there is no Listable instance for a
--- type in one of the constructors.
-canDeriveListable :: Name -> Q Bool
-canDeriveListable t = return True -- TODO: Check instances for type-cons args
 
 -- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 reallyDeriveListable :: Name -> DecsQ
