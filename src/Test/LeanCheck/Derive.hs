@@ -43,14 +43,14 @@ deriveListable :: Name -> DecsQ
 deriveListable t = do
   is <- t `isInstanceOf` ''Listable
   if is
-    then do reportWarning $ "Instance Listable "
-                         ++ show t
-                         ++ " already exists, skipping derivation"
-            return []
-    else do cd <- canDeriveListable t
-            unless cd (fail $ "Unable to derive Listable "
-                           ++ show t)
-            reallyDeriveListable t
+    then do
+      reportWarning $ "Instance Listable " ++ show t
+                   ++ " already exists, skipping derivation"
+      return []
+    else do
+      cd <- canDeriveListable t
+      unless cd (fail $ "Unable to derive Listable " ++ show t)
+      reallyDeriveListable t
 
 -- | Checks whether it is possible to derive a Listable instance.
 --
