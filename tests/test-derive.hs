@@ -21,7 +21,6 @@ deriveListable ''C1
 deriveListable ''C2
 deriveListable ''I
 
-#if __GLASGOW_HASKELL__ >= 710
 -- Nested datatype cascade
 data Nested = Nested N0 (N1 Int) (N2 Int Int)
 data N0     = R0 Int
@@ -50,7 +49,6 @@ data Pairiple a = Pairiple (Triple a) (Triple a)
 -- data Pairiple a = Pairriple (Tralias a) (Tralias a)
 -- TODO: cascade derivation of aliases
 deriveListableCascade ''Pairiple
-#endif
 
 -- Those should have no effect (instance already exists):
 {- uncommenting those should generate warnings

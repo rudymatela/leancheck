@@ -101,10 +101,6 @@ reallyDeriveListable t = do
 -- Not only really derive Listable instances,
 -- but cascade through argument types.
 reallyDeriveListableCascade :: Name -> DecsQ
-#if __GLASGOW_HASKELL__ < 710
-reallyDeriveListableCascade =
-  fail "LeanCheck.Derive: cascading not (yet) supported on GHC < 7.10"
-#else
 reallyDeriveListableCascade t = do
   targs <- t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
   listableArgs <- mapM reallyDeriveListable (delete t targs)
@@ -130,7 +126,6 @@ typeConArgs = liftM (nubMerges . map typeConTs . concat . map snd) . typeCons'
   typeConTs (ParensT t) = typeConTs t
 #endif
   typeConTs _ = []
-#endif
 
 typeConArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
 typeConArgsThat t p = do
