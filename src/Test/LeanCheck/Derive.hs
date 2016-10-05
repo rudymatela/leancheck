@@ -10,6 +10,7 @@
 -- culprit.
 module Test.LeanCheck.Derive
   ( deriveListable
+  , deriveListableIfNeeded
   )
 where
 
@@ -40,12 +41,21 @@ reportWarning = report False
 --
 -- Needs the @TemplateHaskell@ extension.
 deriveListable :: Name -> DecsQ
-deriveListable t = do
+deriveListable = deriveListableV True
+
+-- | Same as 'deriveListable' but does not warn when instance already exists
+--   ('deriveListable' is preferable).
+deriveListableIfNeeded :: Name -> DecsQ
+deriveListableIfNeeded = deriveListableV False
+
+deriveListableV :: Bool -> Name -> DecsQ
+deriveListableV warnExisting t = do
   is <- t `isInstanceOf` ''Listable
   if is
     then do
-      reportWarning $ "Instance Listable " ++ show t
-                   ++ " already exists, skipping derivation"
+      unless (not warnExisting)
+        (reportWarning $ "Instance Listable " ++ show t
+                      ++ " already exists, skipping derivation")
       return []
     else do
       reallyDeriveListable t

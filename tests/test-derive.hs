@@ -28,6 +28,11 @@ deriveListable ''Maybe
 deriveListable ''Either
 -}
 
+-- Those should not generate warnings
+deriveListableIfNeeded ''Bool
+deriveListableIfNeeded ''Maybe
+deriveListableIfNeeded ''Either
+
 main :: IO ()
 main =
   case elemIndices False (tests 100) of
