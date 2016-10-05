@@ -12,8 +12,6 @@ module Test.LeanCheck.Derive
   ( deriveListable
   , deriveListableIfNeeded
   , deriveListableCascade
-  , typeConCascadingArgsThat
-  , isntInstanceOf
   )
 where
 
