@@ -146,13 +146,15 @@ typeArity t = do
 #if __GLASGOW_HASKELL__ < 800
     TyConI (DataD    _ _ ks _ _) -> ks
     TyConI (NewtypeD _ _ ks _ _) -> ks
+    TyConI (TySynD   _   ks   _) -> ks
 #else
     TyConI (DataD    _ _ ks _ _ _) -> ks
     TyConI (NewtypeD _ _ ks _ _ _) -> ks
+    TyConI (TySynD   _   ks     _) -> ks
 #endif
     _                            -> error $ "error (arity): symbol "
                                          ++ show t
-                                         ++ " is not a newtype or data"
+                                         ++ " is not a newtype, data or type synonym"
 
 typeCons' :: Name -> Q [(Name,[Type])]
 typeCons' t = do
