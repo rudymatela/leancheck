@@ -106,6 +106,8 @@ reallyDeriveListableCascade t = do
 -- opening up the type synonym and listing all the ConTs (preferable);
 -- simply skipping type synonyms.
 
+-- * Template haskell utilities
+
 typeConArgs :: Name -> Q [Name]
 typeConArgs = liftM (nubMerges . map typeConTs . concat . map snd) . typeCons'
   where
@@ -134,8 +136,6 @@ t `typeConCascadingArgsThat` p = do
   let p' t' = do is <- p t'; return $ t' `notElem` (t:ts) && is
   tss <- mapM (`typeConCascadingArgsThat` p') ts
   return $ nubMerges (ts:tss)
-
--- * Template haskell utilities
 
 -- Normalizes a type by applying it to necessary type variables, making it
 -- accept "zero" parameters.  The normalized type is tupled with a list of
