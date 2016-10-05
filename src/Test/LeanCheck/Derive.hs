@@ -104,7 +104,7 @@ reallyDeriveListableCascade =
   fail "LeanCheck.Derive: cascading not (yet) supported on GHC < 7.10"
 #else
 reallyDeriveListableCascade t = do
-  targs <- liftM (nubMerges . map typeConTs) $ typeConArgs t
+  targs <- typeConArgs t
   listableArgs <- mapM deriveListableIfNeeded targs
   listableT    <- reallyDeriveListable t
   return . nubMerges $ listableT:listableArgs
@@ -116,21 +116,21 @@ reallyDeriveListableCascade t = do
 -- opening up the type synonym and listing all the ConTs (preferable);
 -- simply skipping type synonyms.
 
-typeConArgs :: Name -> Q [Type]
-typeConArgs = liftM (concat . map snd) . typeCons'
-
-typeConTs :: Type -> [Name]
-typeConTs (AppT t1 t2) = typeConTs t1 `nubMerge` typeConTs t2
-typeConTs (SigT t _) = typeConTs t
-typeConTs (VarT _) = []
-typeConTs (ConT n) = [n]
+typeConArgs :: Name -> Q [Name]
+typeConArgs = liftM (nubMerges . map typeConTs . concat . map snd) . typeCons'
+  where
+  typeConTs :: Type -> [Name]
+  typeConTs (AppT t1 t2) = typeConTs t1 `nubMerge` typeConTs t2
+  typeConTs (SigT t _) = typeConTs t
+  typeConTs (VarT _) = []
+  typeConTs (ConT n) = [n]
 #if __GLASGOW_HASKELL__ >= 800
--- typeConTs (PromotedT n) = [n] ?
-typeConTs (InfixT  t1 n t2) = typeConTs t1 `nubMerge` typeConTs t2
-typeConTs (UInfixT t1 n t2) = typeConTs t1 `nubMerge` typeConTs t2
-typeConTs (ParensT t) = typeConTs t
+  -- typeConTs (PromotedT n) = [n] ?
+  typeConTs (InfixT  t1 n t2) = typeConTs t1 `nubMerge` typeConTs t2
+  typeConTs (UInfixT t1 n t2) = typeConTs t1 `nubMerge` typeConTs t2
+  typeConTs (ParensT t) = typeConTs t
 #endif
-typeConTs _ = []
+  typeConTs _ = []
 #endif
 
 
