@@ -12,13 +12,15 @@ module Test.LeanCheck.Derive
   ( deriveListable
   , deriveListableIfNeeded
   , deriveListableCascade
+  , typeConCascadingArgsThat
+  , isntInstanceOf
   )
 where
 
 import Language.Haskell.TH
 import Test.LeanCheck.Basic
 import Control.Monad (unless, liftM, liftM2)
-import Data.List (sort, nub)
+import Data.List (delete)
 
 #if __GLASGOW_HASKELL__ < 706
 -- reportWarning was only introduced in GHC 7.6 / TH 2.8
@@ -104,13 +106,10 @@ reallyDeriveListableCascade =
   fail "LeanCheck.Derive: cascading not (yet) supported on GHC < 7.10"
 #else
 reallyDeriveListableCascade t = do
-  targs <- typeConArgs t
-  listableArgs <- mapM deriveListableIfNeeded targs
+  targs <- t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
+  listableArgs <- mapM reallyDeriveListable (delete t targs)
   listableT    <- reallyDeriveListable t
-  return . nubMerges $ listableT:listableArgs
--- TODO: carry global state of things already derived instead of nubMerges.
--- The use of nubMerges here could cause bad performance
--- (and even, maybe, I'm not sure of this, non-termination).
+  return . concat $ listableT:listableArgs
 -- TODO: skip derivation of type synonyms when cascading.
 -- This can be done either by:
 -- opening up the type synonym and listing all the ConTs (preferable);
@@ -133,6 +132,18 @@ typeConArgs = liftM (nubMerges . map typeConTs . concat . map snd) . typeCons'
   typeConTs _ = []
 #endif
 
+typeConArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
+typeConArgsThat t p = do
+  targs <- typeConArgs t
+  tbs   <- mapM (\t' -> do is <- p t'; return (t',is)) targs
+  return [t' | (t',p) <- tbs, p]
+
+typeConCascadingArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
+t `typeConCascadingArgsThat` p = do
+  ts <- t `typeConArgsThat` p
+  let p' t' = do is <- p t'; return $ t' `notElem` (t:ts) && is
+  tss <- mapM (`typeConCascadingArgsThat` p') ts
+  return $ nubMerges (ts:tss)
 
 -- * Template haskell utilities
 
@@ -175,6 +186,9 @@ isInstanceOf :: Name -> Name -> Q Bool
 isInstanceOf tn cl = do
   ty <- normalizeTypeUnits tn
   isInstance cl [ty]
+
+isntInstanceOf :: Name -> Name -> Q Bool
+isntInstanceOf tn cl = liftM not (isInstanceOf tn cl)
 
 -- | Given a type name, return the number of arguments taken by that type.
 -- Examples in partially broken TH:
