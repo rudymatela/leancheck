@@ -204,6 +204,20 @@ typeArity t = do
                                          ++ show t
                                          ++ " is not a newtype, data or type synonym"
 
+-- Given a type name, returns a list of its type constructor names paired with
+-- the type arguments they take.
+--
+-- > typeCons' ''()    === Q [('(),[])]
+--
+-- > typeCons' ''(,)   === Q [('(,),[VarT a, VarT b])]
+--
+-- > typeCons' ''[]    === Q [('[],[]),('(:),[VarT a,AppT ListT (VarT a)])]
+--
+-- > data Pair a = P a a
+-- > typeCons' ''Pair  === Q [('P,[VarT a, VarT a])]
+--
+-- > data Point = Pt Int Int
+-- > typeCons' ''Point === Q [('Pt,[ConT Int, ConT Int])]
 typeCons' :: Name -> Q [(Name,[Type])]
 typeCons' t = do
   ti <- reify t
@@ -224,8 +238,20 @@ typeCons' t = do
   simplify (InfixC  t1 n t2) = (n,[snd t1,snd t2])
   trd (x,y,z) = z
 
--- Given a type name, returns a list of its type constructor names tupled with
+-- Given a type name, returns a list of its type constructor names paired with
 -- the number of arguments they take.
+--
+-- > typeCons ''()    === Q [('(),0)]
+--
+-- > typeCons ''(,)   === Q [('(,),2)]
+--
+-- > typeCons ''[]    === Q [('[],0),('(:),2)]
+--
+-- > data Pair a = P a a
+-- > typeCons ''Pair  === Q [('P,2)]
+--
+-- > data Point = Pt Int Int
+-- > typeCons ''Point === Q [('Pt,2)]
 typeCons :: Name -> Q [(Name,Int)]
 typeCons = liftM (map (mapSnd length)) . typeCons'
   where
