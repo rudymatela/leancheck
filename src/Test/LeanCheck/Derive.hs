@@ -11,12 +11,14 @@
 module Test.LeanCheck.Derive
   ( deriveListable
   , deriveListableIfNeeded
+  , deriveListableCascade
   )
 where
 
 import Language.Haskell.TH
 import Test.LeanCheck.Basic
 import Control.Monad (unless, liftM, liftM2)
+import Data.List (sort, nub)
 
 #if __GLASGOW_HASKELL__ < 706
 -- reportWarning was only introduced in GHC 7.6 / TH 2.8
@@ -41,15 +43,23 @@ reportWarning = report False
 --
 -- Needs the @TemplateHaskell@ extension.
 deriveListable :: Name -> DecsQ
-deriveListable = deriveListableV True
+deriveListable = deriveListableX True False
 
 -- | Same as 'deriveListable' but does not warn when instance already exists
 --   ('deriveListable' is preferable).
 deriveListableIfNeeded :: Name -> DecsQ
-deriveListableIfNeeded = deriveListableV False
+deriveListableIfNeeded = deriveListableX False False
 
-deriveListableV :: Bool -> Name -> DecsQ
-deriveListableV warnExisting t = do
+-- | Derives a 'Listable' instance for a given type 'Name'
+--   cascading derivation of type arguments as well.
+--
+-- Note currently this only works on GHC >= 7.10
+deriveListableCascade :: Name -> DecsQ
+deriveListableCascade = deriveListableX True True
+-- TODO: Make deriveListableCascade work on GHC < 7.10
+
+deriveListableX :: Bool -> Bool -> Name -> DecsQ
+deriveListableX warnExisting cascade t = do
   is <- t `isInstanceOf` ''Listable
   if is
     then do
@@ -57,8 +67,9 @@ deriveListableV warnExisting t = do
         (reportWarning $ "Instance Listable " ++ show t
                       ++ " already exists, skipping derivation")
       return []
-    else do
-      reallyDeriveListable t
+    else if cascade
+           then reallyDeriveListableCascade t
+           else reallyDeriveListable t
 
 -- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 reallyDeriveListable :: Name -> DecsQ
@@ -84,6 +95,43 @@ reallyDeriveListable t = do
           (Just consN) <- lookupValueName $ "cons" ++ show arity
           [| $(varE consN) $(conE n) |]
         conse = foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
+
+-- Not only really derive Listable instances,
+-- but cascade through argument types.
+reallyDeriveListableCascade :: Name -> DecsQ
+#if __GLASGOW_HASKELL__ < 710
+reallyDeriveListableCascade =
+  fail "LeanCheck.Derive: cascading not (yet) supported on GHC < 7.10"
+#else
+reallyDeriveListableCascade t = do
+  targs <- liftM (nubMerges . map typeConTs) $ typeConArgs t
+  listableArgs <- mapM deriveListableIfNeeded targs
+  listableT    <- reallyDeriveListable t
+  return . nubMerges $ listableT:listableArgs
+-- TODO: carry global state of things already derived instead of nubMerges.
+-- The use of nubMerges here could cause bad performance
+-- (and even, maybe, I'm not sure of this, non-termination).
+-- TODO: skip derivation of type synonyms when cascading.
+-- This can be done either by:
+-- opening up the type synonym and listing all the ConTs (preferable);
+-- simply skipping type synonyms.
+
+typeConArgs :: Name -> Q [Type]
+typeConArgs = liftM (nub . sort . concat . map snd) . typeCons'
+
+typeConTs :: Type -> [Name]
+typeConTs (AppT t1 t2) = typeConTs t1 `nubMerge` typeConTs t2
+typeConTs (SigT t _) = typeConTs t
+typeConTs (VarT _) = []
+typeConTs (ConT n) = [n]
+#if __GLASGOW_HASKELL__ >= 800
+-- typeConTs (PromotedT n) = [n] ?
+typeConTs (InfixT  t1 n t2) = typeConTs t1 `nubMerge` typeConTs t2
+typeConTs (UInfixT t1 n t2) = typeConTs t1 `nubMerge` typeConTs t2
+typeConTs (ParensT t) = typeConTs t
+#endif
+typeConTs _ = []
+#endif
 
 
 -- * Template haskell utilities
@@ -197,3 +245,15 @@ c |=>| qds = do ds <- qds
   where ac (InstanceD o c ts ds) c' = InstanceD o (c++c') ts ds
         ac d                     _  = d
 #endif
+
+-- > nubMerge xs ys == nub (merge xs ys)
+-- > nubMerge xs ys == nub (sort (xs ++ ys))
+nubMerge :: Ord a => [a] -> [a] -> [a]
+nubMerge [] ys = ys
+nubMerge xs [] = xs
+nubMerge (x:xs) (y:ys) | x < y     = x :    xs  `nubMerge` (y:ys)
+                       | x > y     = y : (x:xs) `nubMerge`    ys
+                       | otherwise = x :    xs  `nubMerge`    ys
+
+nubMerges :: Ord a => [[a]] -> [a]
+nubMerges = foldr nubMerge []

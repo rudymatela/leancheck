@@ -1,4 +1,4 @@
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TemplateHaskell, CPP #-}
 import Test.LeanCheck.Derive
 import Test.LeanCheck
 import System.Exit (exitFailure)
@@ -20,6 +20,37 @@ deriveListable ''D3
 deriveListable ''C1
 deriveListable ''C2
 deriveListable ''I
+
+#if __GLASGOW_HASKELL__ >= 710
+-- Nested datatype cascade
+data Nested = Nested N0 (N1 Int) (N2 Int Int)
+data N0     = R0 Int
+data N1 a   = R1 a
+data N2 a b = R2 a b
+deriveListableCascade ''Nested
+
+-- Recursive nested datatype cascade
+data RN      = RN RN0 (RN1 Int) (RN2 Int RN)
+data RN0     = Nest0 Int | Recurse0 RN
+data RN1 a   = Nest1 a   | Recurse1 RN
+data RN2 a b = Nest2 a b | Recurse2 RN
+deriveListableCascade ''RN
+
+-- Type synonyms
+data Pair a = Pair a a
+type Alias a = Pair a
+deriveListable ''Pair
+deriveListableIfNeeded ''Alias -- only works because instance already exists
+
+-- Nested type synonyms
+data Triple a = Triple a a a
+type Tralias a = Triple a
+data Pairiple a = Pairiple (Triple a) (Triple a)
+-- This alternate definition won't cascade:
+-- data Pairiple a = Pairriple (Tralias a) (Tralias a)
+-- TODO: cascade derivation of aliases
+deriveListableCascade ''Pairiple
+#endif
 
 -- Those should have no effect (instance already exists):
 {- uncommenting those should generate warnings

@@ -89,6 +89,7 @@ module Test.LeanCheck
 
   -- ** Automatically deriving Listable instances
   , deriveListable
+  , deriveListableCascade
 
   -- ** Specialized constructors of tiers
   , setCons
