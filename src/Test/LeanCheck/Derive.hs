@@ -54,11 +54,8 @@ deriveListableIfNeeded = deriveListableX False False
 
 -- | Derives a 'Listable' instance for a given type 'Name'
 --   cascading derivation of type arguments as well.
---
--- Note currently this only works on GHC >= 7.10
 deriveListableCascade :: Name -> DecsQ
 deriveListableCascade = deriveListableX True True
--- TODO: Make deriveListableCascade work on GHC < 7.10
 
 deriveListableX :: Bool -> Bool -> Name -> DecsQ
 deriveListableX warnExisting cascade t = do
