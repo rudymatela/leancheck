@@ -28,10 +28,12 @@ documentation
 
 * on data-invariant.md, write missing section;
 
+
 v0.5.1? or 0.6.0?
 -----------------
 
 * provide Listable instance for Data.Ratio
+
 
 v0.6.0
 ------
