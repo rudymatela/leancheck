@@ -1,14 +1,17 @@
--- | LeanCheck is a simple enumerative property-based testing library.
+-- | This module is part of LeanCheck,
+--   a simple enumerative property-based testing library.
 --
--- This module exports "Test.LeanCheck.Core" along with instances and
--- functions for further tuple and constructor arities.
+-- This module exports "Test.LeanCheck.Core" along with:
 --
--- For the complete list of functions, see "Test.LeanCheck".
+--   * support for 'Listable' 6-tuples up to 12-tuples;
+--   * 'tiers' constructors (@consN@) with arities from 6 up to 12;
+--   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational').
 --
 -- "Test.LeanCheck" already exports everything from this module.
--- You should only import this if you /only/ want basic functionality from
--- "Test.LeanCheck.Core" with support for tuples and constructors with arities
--- from 6 up to 12.
+-- You are probably better off importing it.
+--
+-- You should /only/ import "Test.LeanCheck.Basic"
+-- if you /only/ want the above basic functionality.
 module Test.LeanCheck.Basic
   ( module Test.LeanCheck.Core
 
@@ -23,6 +26,7 @@ module Test.LeanCheck.Basic
 where
 
 import Test.LeanCheck.Core
+import Test.LeanCheck.Ratio ()
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>

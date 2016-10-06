@@ -5,6 +5,8 @@ import Test.LeanCheck
 import Test.LeanCheck.Invariants
 import Test.LeanCheck.Utils
 
+import Data.Ratio
+
 main :: IO ()
 main =
   case elemIndices False tests of
@@ -46,6 +48,11 @@ tests =
   , counterExample 50 (\x -> x + 1 /= (x::Double)) == Just ["Infinity"]
   , allUnique (take 100 list :: [Float])
   , allUnique (take 500 list :: [Double])
+
+  , allUnique (take 500 list :: [Rational])
+  , allUnique (take 100 list :: [Ratio Nat])
+  , orderedOn (\r -> numerator r + denominator r) (take 500 (list :: [Ratio Nat]))
+  , orderedOn (\r -> abs (numerator r) + abs(denominator r)) (take 500 (list :: [Rational]))
 
   , tPairEqParams 100
   , tTripleEqParams 100

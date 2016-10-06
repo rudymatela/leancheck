@@ -32,7 +32,9 @@ documentation
 v0.5.1? or 0.6.0?
 -----------------
 
-* provide Listable instance for Data.Ratio
+* release v0.5.1 or v0.6.0 with the main addition of:
+	Listable Ratio
+	deriveListableCascading
 
 
 v0.6.0

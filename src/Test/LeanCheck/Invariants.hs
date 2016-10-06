@@ -15,6 +15,7 @@ module Test.LeanCheck.Invariants
 
   , ordered
   , orderedBy
+  , orderedOn
   , strictlyOrdered
   , strictlyOrderedBy
   )
@@ -42,6 +43,9 @@ orderedBy _ [_] = True
 orderedBy cmp (x:y:xs) = case x `cmp` y of
                            GT -> False
                            _  -> orderedBy cmp (y:xs)
+
+orderedOn :: Ord b => (a -> b) -> [a] -> Bool
+orderedOn f = orderedBy (comparing f)
 
 -- | check if a list is strictly ordered by a given ordering function
 strictlyOrderedBy :: (a -> a -> Ordering) -> [a] -> Bool
