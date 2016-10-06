@@ -47,7 +47,7 @@ type Tralias a = Triple a
 data Pairiple a = Pairiple (Triple a) (Triple a)
 -- This alternate definition won't cascade:
 -- data Pairiple a = Pairriple (Tralias a) (Tralias a)
--- TODO: cascade derivation of aliases
+-- TODO: cascade derivation of type synonyms
 deriveListableCascading ''Pairiple
 
 -- Those should have no effect (instance already exists):
