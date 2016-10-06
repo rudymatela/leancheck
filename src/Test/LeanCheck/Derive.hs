@@ -11,7 +11,7 @@
 module Test.LeanCheck.Derive
   ( deriveListable
   , deriveListableIfNeeded
-  , deriveListableCascade
+  , deriveListableCascading
   )
 where
 
@@ -52,8 +52,8 @@ deriveListableIfNeeded = deriveListableX False False
 
 -- | Derives a 'Listable' instance for a given type 'Name'
 --   cascading derivation of type arguments as well.
-deriveListableCascade :: Name -> DecsQ
-deriveListableCascade = deriveListableX True True
+deriveListableCascading :: Name -> DecsQ
+deriveListableCascading = deriveListableX True True
 
 deriveListableX :: Bool -> Bool -> Name -> DecsQ
 deriveListableX warnExisting cascade t = do
@@ -65,7 +65,7 @@ deriveListableX warnExisting cascade t = do
                       ++ " already exists, skipping derivation")
       return []
     else if cascade
-           then reallyDeriveListableCascade t
+           then reallyDeriveListableCascading t
            else reallyDeriveListable t
 
 -- TODO: Somehow check if the enumeration has repetitions, then warn the user.
@@ -95,8 +95,8 @@ reallyDeriveListable t = do
 
 -- Not only really derive Listable instances,
 -- but cascade through argument types.
-reallyDeriveListableCascade :: Name -> DecsQ
-reallyDeriveListableCascade t = do
+reallyDeriveListableCascading :: Name -> DecsQ
+reallyDeriveListableCascading t = do
   targs <- t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
   listableArgs <- mapM reallyDeriveListable (delete t targs)
   listableT    <- reallyDeriveListable t
