@@ -204,8 +204,7 @@ typeArity t = do
     TyConI (NewtypeD _ _ ks _ _ _) -> ks
 #endif
     TyConI (TySynD _ ks _) -> ks
-    _ -> error $ "error (arity): symbol "
-              ++ show t
+    _ -> error $ "error (typeArity): symbol " ++ show t
               ++ " is not a newtype, data or type synonym"
 
 -- Given a type name, returns a list of its type constructor names paired with
@@ -233,8 +232,7 @@ typeCons' t = do
     TyConI (DataD    _ _ _ _ cs _) -> cs
     TyConI (NewtypeD _ _ _ _ c  _) -> [c]
 #endif
-    _ -> error $ "error (typeConstructors): symbol "
-              ++ show t
+    _ -> error $ "error (typeConstructors): symbol " ++ show t
               ++ " is neither newtype nor data"
   where
   simplify (NormalC n ts)  = (n,map snd ts)
@@ -273,8 +271,7 @@ typeSynonymType t = do
   ti <- reify t
   return $ case ti of
     TyConI (TySynD _ _ t') -> t'
-    _ -> error $ "error (typeSynonymType): symbol "
-              ++ show t
+    _ -> error $ "error (typeSynonymType): symbol " ++ show t
               ++ " is not a type synonym"
 
 -- Append to instance contexts in a declaration.
