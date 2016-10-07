@@ -79,17 +79,17 @@ reallyDeriveListable t = do
 #endif
 #if __GLASGOW_HASKELL__ >= 708
   cxt |=>| [d| instance Listable $(return nt)
-                 where tiers = $(conse =<< typeCons t) |]
+                 where tiers = $(conse =<< typeCons' t) |]
 #else
-  tiersE <- conse =<< typeCons t
+  tiersE <- conse =<< typeCons' t
   return [ InstanceD
              cxt
              (AppT (ConT ''Listable) nt)
              [ValD (VarP 'tiers) (NormalB tiersE) []]
          ]
 #endif
-  where cone n arity = do
-          (Just consN) <- lookupValueName $ "cons" ++ show arity
+  where cone n as = do
+          (Just consN) <- lookupValueName $ "cons" ++ show (length as)
           [| $(varE consN) $(conE n) |]
         conse = foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
 
@@ -239,25 +239,6 @@ typeCons' t = do
   simplify (RecC    n ts)  = (n,map trd ts)
   simplify (InfixC  t1 n t2) = (n,[snd t1,snd t2])
   trd (x,y,z) = z
-
--- Given a type name, returns a list of its type constructor names paired with
--- the number of arguments they take.
---
--- > typeCons ''()    === Q [('(),0)]
---
--- > typeCons ''(,)   === Q [('(,),2)]
---
--- > typeCons ''[]    === Q [('[],0),('(:),2)]
---
--- > data Pair a = P a a
--- > typeCons ''Pair  === Q [('P,2)]
---
--- > data Point = Pt Int Int
--- > typeCons ''Point === Q [('Pt,2)]
-typeCons :: Name -> Q [(Name,Int)]
-typeCons = liftM (map (mapSnd length)) . typeCons'
-  where
-  mapSnd f (x,y) = (x,f y)
 
 isTypeSynonym :: Name -> Q Bool
 isTypeSynonym t = do
