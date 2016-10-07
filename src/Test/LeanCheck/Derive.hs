@@ -96,11 +96,12 @@ reallyDeriveListable t = do
 -- Not only really derive Listable instances,
 -- but cascade through argument types.
 reallyDeriveListableCascading :: Name -> DecsQ
-reallyDeriveListableCascading t = do
-  targs <- filterM (liftM not . isTypeSynonym)
-       =<< return . (t:) . delete t
-       =<< t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
-  liftM concat $ mapM reallyDeriveListable targs
+reallyDeriveListableCascading t =
+      return . concat
+  =<< mapM reallyDeriveListable
+  =<< filterM (liftM not . isTypeSynonym)
+  =<< return . (t:) . delete t
+  =<< t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
 
 -- * Template haskell utilities
 
