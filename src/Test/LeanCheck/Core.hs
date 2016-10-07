@@ -196,6 +196,10 @@ instance Listable Float where
 instance Listable Double where
   tiers = tiersFractional
 
+instance Listable Ordering where
+  tiers = cons0 LT
+       \/ cons0 EQ
+       \/ cons0 GT
 
 -- | 'map' over tiers
 mapT :: (a -> b) -> [[a]] -> [[b]]

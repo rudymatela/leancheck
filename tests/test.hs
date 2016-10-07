@@ -54,6 +54,10 @@ tests =
   , orderedOn (\r -> numerator r + denominator r) (take 500 (list :: [Ratio Nat]))
   , orderedOn (\r -> abs (numerator r) + abs(denominator r)) (take 500 (list :: [Rational]))
 
+  , list == [LT, EQ, GT]
+  , orderedOn length (take 500 (list :: [[Ordering]]))
+  , orderedOn length (take 500 (list :: [[Bool]]))
+
   , tPairEqParams 100
   , tTripleEqParams 100
 
