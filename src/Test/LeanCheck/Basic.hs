@@ -5,7 +5,8 @@
 --
 --   * support for 'Listable' 6-tuples up to 12-tuples;
 --   * 'tiers' constructors (@consN@) with arities from 6 up to 12;
---   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational').
+--   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational');
+--   * a 'Listable' 'Word' instance.
 --
 -- "Test.LeanCheck" already exports everything from this module.
 -- You are probably better off importing it.
@@ -28,8 +29,8 @@ where
 -- TODO: Listable Int8/16/32/64, Word8/16/32/64, Natural
 
 import Test.LeanCheck.Core
-import Test.LeanCheck.Ratio ()
 import Data.Word (Word)
+import Data.Ratio
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
@@ -132,6 +133,11 @@ uncurry11 f (x,y,z,w,v,u,r,s,t,o,p) = f x y z w v u r s t o p
 uncurry12 :: (a->b->c->d->e->f->g->h->i->j->k->l->m)
           -> (a,b,c,d,e,f,g,h,i,j,k,l) -> m
 uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q) = f x y z w v u r s t o p q
+
+instance (Integral a, Listable a) => Listable (Ratio a) where
+  tiers = mapT (uncurry (%))
+        $ tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
+                `ofWeight` 0 -- make size 0 not be "usually" empty
 
 instance Listable Word where
   list = [0..]
