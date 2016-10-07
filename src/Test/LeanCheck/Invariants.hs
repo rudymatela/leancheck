@@ -18,6 +18,7 @@ module Test.LeanCheck.Invariants
   , orderedOn
   , strictlyOrdered
   , strictlyOrderedBy
+  , strictlyOrderedOn
   )
 where
 
@@ -54,6 +55,9 @@ strictlyOrderedBy _ [_] = True
 strictlyOrderedBy cmp (x:y:xs) = case x `cmp` y of
                                    LT -> strictlyOrderedBy cmp (y:xs)
                                    _  -> False
+
+strictlyOrderedOn :: Ord b => (a -> b) -> [a] -> Bool
+strictlyOrderedOn f = strictlyOrderedBy (comparing f)
 
 ifNotEq :: Ordering -> Ordering -> Ordering
 -- Could be implemented as:  ifNotEq = mappend
