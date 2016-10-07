@@ -29,15 +29,13 @@ documentation
 * on data-invariant.md, write missing section;
 
 
-v0.5.1? or 0.6.0?
------------------
-
-* release v0.5.1 or v0.6.0 with the main addition of:
-	Listable Ratio
-	deriveListableCascading
-
-
 v0.6.0
+------
+
+* release!
+
+
+v0.6.1
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
