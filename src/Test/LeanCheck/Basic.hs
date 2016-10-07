@@ -25,8 +25,11 @@ module Test.LeanCheck.Basic
   )
 where
 
+-- TODO: Listable Int8/16/32/64, Word8/16/32/64, Natural
+
 import Test.LeanCheck.Core
 import Test.LeanCheck.Ratio ()
+import Data.Word (Word)
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
@@ -129,3 +132,6 @@ uncurry11 f (x,y,z,w,v,u,r,s,t,o,p) = f x y z w v u r s t o p
 uncurry12 :: (a->b->c->d->e->f->g->h->i->j->k->l->m)
           -> (a,b,c,d,e,f,g,h,i,j,k,l) -> m
 uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q) = f x y z w v u r s t o p q
+
+instance Listable Word where
+  list = [0..]

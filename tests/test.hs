@@ -6,6 +6,7 @@ import Test.LeanCheck.Invariants
 import Test.LeanCheck.Utils
 
 import Data.Ratio
+import Data.Word (Word)
 
 main :: IO ()
 main =
@@ -57,6 +58,8 @@ tests =
   , list == [LT, EQ, GT]
   , orderedOn length (take 500 (list :: [[Ordering]]))
   , orderedOn length (take 500 (list :: [[Bool]]))
+
+  , strictlyOrderedOn (\xs -> (sum $ map (+1) xs, xs)) (take 500 (list :: [[Word]]))
 
   , tPairEqParams 100
   , tTripleEqParams 100
