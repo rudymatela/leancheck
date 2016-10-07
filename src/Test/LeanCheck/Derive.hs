@@ -79,9 +79,9 @@ reallyDeriveListable t = do
 #endif
 #if __GLASGOW_HASKELL__ >= 708
   cxt |=>| [d| instance Listable $(return nt)
-                 where tiers = $(conse =<< typeCons' t) |]
+                 where tiers = $(conse =<< typeConstructors t) |]
 #else
-  tiersE <- conse =<< typeCons' t
+  tiersE <- conse =<< typeConstructors t
   return [ InstanceD
              cxt
              (AppT (ConT ''Listable) nt)
@@ -110,7 +110,7 @@ typeConArgs t = do
   is <- isTypeSynonym t
   if is
     then liftM typeConTs $ typeSynonymType t
-    else liftM (nubMerges . map typeConTs . concat . map snd) $ typeCons' t
+    else liftM (nubMerges . map typeConTs . concat . map snd) $ typeConstructors t
   where
   typeConTs :: Type -> [Name]
   typeConTs (AppT t1 t2) = typeConTs t1 `nubMerge` typeConTs t2
@@ -210,19 +210,19 @@ typeArity t = do
 -- Given a type name, returns a list of its type constructor names paired with
 -- the type arguments they take.
 --
--- > typeCons' ''()    === Q [('(),[])]
+-- > typeConstructors ''()    === Q [('(),[])]
 --
--- > typeCons' ''(,)   === Q [('(,),[VarT a, VarT b])]
+-- > typeConstructors ''(,)   === Q [('(,),[VarT a, VarT b])]
 --
--- > typeCons' ''[]    === Q [('[],[]),('(:),[VarT a,AppT ListT (VarT a)])]
+-- > typeConstructors ''[]    === Q [('[],[]),('(:),[VarT a,AppT ListT (VarT a)])]
 --
 -- > data Pair a = P a a
--- > typeCons' ''Pair  === Q [('P,[VarT a, VarT a])]
+-- > typeConstructors ''Pair  === Q [('P,[VarT a, VarT a])]
 --
 -- > data Point = Pt Int Int
--- > typeCons' ''Point === Q [('Pt,[ConT Int, ConT Int])]
-typeCons' :: Name -> Q [(Name,[Type])]
-typeCons' t = do
+-- > typeConstructors ''Point === Q [('Pt,[ConT Int, ConT Int])]
+typeConstructors :: Name -> Q [(Name,[Type])]
+typeConstructors t = do
   ti <- reify t
   return . map simplify $ case ti of
 #if __GLASGOW_HASKELL__ < 800
