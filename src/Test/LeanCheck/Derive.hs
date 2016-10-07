@@ -17,7 +17,7 @@ where
 
 import Language.Haskell.TH
 import Test.LeanCheck.Basic
-import Control.Monad (unless, liftM, liftM2)
+import Control.Monad (unless, liftM, liftM2, filterM)
 import Data.List (delete)
 
 #if __GLASGOW_HASKELL__ < 706
@@ -97,19 +97,20 @@ reallyDeriveListable t = do
 -- but cascade through argument types.
 reallyDeriveListableCascading :: Name -> DecsQ
 reallyDeriveListableCascading t = do
-  targs <- t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
+  targs <- filterM (liftM not . isTypeSynonym)
+       =<< t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
   listableArgs <- mapM reallyDeriveListable (delete t targs)
   listableT    <- reallyDeriveListable t
   return . concat $ listableT:listableArgs
--- TODO: skip derivation of type synonyms when cascading.
--- This can be done either by:
--- opening up the type synonym and listing all the ConTs (preferable);
--- simply skipping type synonyms.
 
 -- * Template haskell utilities
 
 typeConArgs :: Name -> Q [Name]
-typeConArgs = liftM (nubMerges . map typeConTs . concat . map snd) . typeCons'
+typeConArgs t = do
+  is <- isTypeSynonym t
+  if is
+    then liftM typeConTs $ typeSynonymType t
+    else liftM (nubMerges . map typeConTs . concat . map snd) $ typeCons' t
   where
   typeConTs :: Type -> [Name]
   typeConTs (AppT t1 t2) = typeConTs t1 `nubMerge` typeConTs t2
@@ -259,6 +260,22 @@ typeCons :: Name -> Q [(Name,Int)]
 typeCons = liftM (map (mapSnd length)) . typeCons'
   where
   mapSnd f (x,y) = (x,f y)
+
+isTypeSynonym :: Name -> Q Bool
+isTypeSynonym t = do
+  ti <- reify t
+  return $ case ti of
+    TyConI (TySynD _ _ _) -> True
+    _                     -> False
+
+typeSynonymType :: Name -> Q Type
+typeSynonymType t = do
+  ti <- reify t
+  return $ case ti of
+    TyConI (TySynD _ _ t') -> t'
+    _ -> error $ "error (typeSynonymType): symbol "
+              ++ show t
+              ++ " is not a type synonym"
 
 -- Append to instance contexts in a declaration.
 --
