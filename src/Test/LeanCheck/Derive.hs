@@ -99,9 +99,7 @@ reallyDeriveListableCascading :: Name -> DecsQ
 reallyDeriveListableCascading t = do
   targs <- filterM (liftM not . isTypeSynonym)
        =<< t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
-  listableArgs <- mapM reallyDeriveListable (delete t targs)
-  listableT    <- reallyDeriveListable t
-  return . concat $ listableT:listableArgs
+  liftM concat . mapM reallyDeriveListable $ t:delete t targs
 
 -- * Template haskell utilities
 
