@@ -38,8 +38,8 @@ deriveListableCascading ''RN
 -- Type synonyms
 data Pair a = Pair a a
 type Alias a = Pair a
--- deriveListable ''Alias -- this will fail!
-deriveListable ''Pair
+-- deriveListable ''Alias -- this will fail
+deriveListableCascading ''Alias
 deriveListableIfNeeded ''Alias -- only works because instance already exists
 
 -- Nested type synonyms
