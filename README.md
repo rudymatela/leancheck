@@ -134,7 +134,7 @@ For a detailed documentation of each function, see
 For an introduction to property-based testing
 and a step-by-step guide to LeanCheck, see the
 [tutorial on property-based testing with LeanCheck]
-(`doc/tutorial.md` in the source repository).
+\(`doc/tutorial.md` in the source repository).
 
 [LeanCheck's Haddock documentation]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html
 [tutorial on property-based testing with LeanCheck]: https://github.com/rudymatela/leancheck/blob/master/doc/tutorial.md
