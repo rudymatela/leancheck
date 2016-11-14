@@ -33,7 +33,7 @@ module Test.LeanCheck.Core
   , counterExamples
   , witness
   , witnesses
-  , Testable
+  , Testable(..)
 
   , results
 
