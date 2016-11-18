@@ -37,6 +37,7 @@ module Test.LeanCheck.Tiers
 
   , deleteT
   , normalizeT
+  , catMaybesT
 
   -- * Tiers of choices
   , choices
@@ -221,6 +222,10 @@ normalizeT :: [[a]] -> [[a]]
 normalizeT [] = []
 normalizeT [[]] = []
 normalizeT (xs:xss) = xs:normalizeT xss
+
+-- | Concatenate tiers of maybes
+catMaybesT :: [[Maybe a]] -> [[a]]
+catMaybesT = map catMaybes
 
 -- | Takes as argument tiers of element values;
 --   returns tiers of lists with no repeated elements.
