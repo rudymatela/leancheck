@@ -87,7 +87,7 @@ setCons = (`mapT` setsOf tiers)
 -- | Given a constructor that takes a list with no duplicate elements,
 --   return tiers of applications of this constructor.
 noDupListCons :: Listable a => ([a] -> b) -> [[b]]
-noDupListCons f = mapT f (noDupListsOf tiers)
+noDupListCons = (`mapT` noDupListsOf tiers)
 
 -- | Like '><', but over 3 lists of tiers.
 product3 :: [[a]] -> [[b]]-> [[c]] -> [[(a,b,c)]]
