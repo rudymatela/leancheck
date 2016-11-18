@@ -14,6 +14,10 @@ module Test.LeanCheck.Tiers
   , bagCons
   , noDupListCons
 
+  , maybeCons0
+  , maybeCons1
+  , maybeCons2
+
   -- * Products of tiers
   , product3
   , product3With
@@ -38,6 +42,7 @@ module Test.LeanCheck.Tiers
   , deleteT
   , normalizeT
   , catMaybesT
+  , mapMaybeT
 
   -- * Tiers of choices
   , choices
@@ -89,6 +94,16 @@ setCons = (`mapT` setsOf tiers)
 --   return tiers of applications of this constructor.
 noDupListCons :: Listable a => ([a] -> b) -> [[b]]
 noDupListCons = (`mapT` noDupListsOf tiers)
+
+maybeCons0 :: Maybe b -> [[b]]
+maybeCons0 Nothing  = []
+maybeCons0 (Just x) = [[x]]
+
+maybeCons1 :: Listable a => (a -> Maybe b) -> [[b]]
+maybeCons1 f = mapMaybeT f tiers `addWeight` 1
+
+maybeCons2 :: (Listable a, Listable b) => (a -> b -> Maybe c) -> [[c]]
+maybeCons2 f = mapMaybeT (uncurry f) tiers `addWeight` 1
 
 -- | Like '><', but over 3 lists of tiers.
 product3 :: [[a]] -> [[b]]-> [[c]] -> [[(a,b,c)]]
@@ -226,6 +241,9 @@ normalizeT (xs:xss) = xs:normalizeT xss
 -- | Concatenate tiers of maybes
 catMaybesT :: [[Maybe a]] -> [[a]]
 catMaybesT = map catMaybes
+
+mapMaybeT :: (a -> Maybe b) -> [[a]] -> [[b]]
+mapMaybeT f = catMaybesT . mapT f
 
 -- | Takes as argument tiers of element values;
 --   returns tiers of lists with no repeated elements.
