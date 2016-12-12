@@ -90,7 +90,7 @@ showTuple [x] = x
 showTuple xs  = paren $ intercalate "," xs
 
 showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
-showNBindingsOf m n f = take n bs
+showNBindingsOf m n f = (sort $ take n bs)
                      ++ ["..." | length bs' >= m || length bs > n]
   where bs' = take m $ bindings f
         bs = [ showTuple as ++ " -> " ++ r
@@ -158,7 +158,7 @@ showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
                 then "undefined"
                 else casePat ++ sep ++ cases
 
--- instances for further tuples --
+-- instances for further tuple arities --
 instance (Show a, Show b, Show c)
       => ShowFunction (a,b,c) where tBindings = tBindingsShow
 instance (Show a, Show b, Show c, Show d)
