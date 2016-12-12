@@ -22,5 +22,5 @@
 -- Take care: all the above 'Listable' instances are __experimental__.  Only
 -- one of the above can be imported at a time.
 module Test.LeanCheck.Function () where
-import Test.LeanCheck.Function.CoListable ()
+import Test.LeanCheck.Function.ListsOfPairs ()
 import Test.LeanCheck.Function.Show ()
