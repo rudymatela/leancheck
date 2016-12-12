@@ -90,7 +90,7 @@ showTuple [x] = x
 showTuple xs  = paren $ intercalate "," xs
 
 showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
-showNBindingsOf m n f = (sort $ take n bs)
+showNBindingsOf m n f = take n bs
                      ++ ["..." | length bs' >= m || length bs > n]
   where bs' = take m $ bindings f
         bs = [ showTuple as ++ " -> " ++ r
