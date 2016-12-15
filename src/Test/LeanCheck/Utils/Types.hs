@@ -18,22 +18,22 @@ module Test.LeanCheck.Utils.Types
   -- > read "2"          = -2 :: Int2
   -- > abs minBound      = minBound
   -- > negate n          = 2^N - n :: WordN
-    Int1
-  , Int2
-  , Int3
-  , Int4
-  , Word1
-  , Word2
-  , Word3
-  , Word4
-  , Nat
-  , Nat1
-  , Nat2
-  , Nat3
-  , Nat4
-  , Nat5
-  , Nat6
-  , Nat7
+    Int1 (..)
+  , Int2 (..)
+  , Int3 (..)
+  , Int4 (..)
+  , Word1 (..)
+  , Word2 (..)
+  , Word3 (..)
+  , Word4 (..)
+  , Nat (..)
+  , Nat1 (..)
+  , Nat2 (..)
+  , Nat3 (..)
+  , Nat4 (..)
+  , Nat5 (..)
+  , Nat6 (..)
+  , Nat7 (..)
 
   -- * Aliases to word types (deprecated)
   , UInt1
