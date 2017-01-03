@@ -42,7 +42,7 @@ list-hs:
 list-objs:
 	$(LISTOBJS)
 
-legacy-test: # needs ghc-7.8, ghc-7.6 and ghc-7.4 installed as such
+legacy-test: # needs ghc-7.10 .. ghc-7.4 installed as such
 	make clean && make test GHC=ghc-7.10 GHCFLAGS="-Werror -dynamic"
 	make clean && make test GHC=ghc-7.8 GHCFLAGS="-Werror -dynamic"
 	make clean && make test GHC=ghc-7.6 GHCFLAGS="-Werror -fno-warn-unrecognised-pragmas"
