@@ -15,6 +15,7 @@ module Test.LeanCheck.Error
   , witnesses
   , results
 
+  , fromError
   , errorToNothing
   , errorToFalse
   , errorToTrue
