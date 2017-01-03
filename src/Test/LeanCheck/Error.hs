@@ -47,7 +47,7 @@ import qualified Test.LeanCheck as C
 
 import Control.Monad (liftM)
 import System.IO.Unsafe (unsafePerformIO)
-import Data.Maybe (listToMaybe)
+import Data.Maybe (listToMaybe, fromMaybe)
 import Control.Exception ( Exception
                          , SomeException
                          , ArithException
@@ -89,15 +89,13 @@ anyErrorToNothing x = unsafePerformIO $
                                              return Nothing
 
 errorToFalse :: Bool -> Bool
-errorToFalse p = case errorToNothing p of
-                   Just p' -> p
-                   Nothing -> False
+errorToFalse = fromError False
 
 errorToTrue :: Bool -> Bool
-errorToTrue p = case errorToNothing p of
-                  Just p' -> p
-                  Nothing -> True
+errorToTrue = fromError True
 
+fromError :: a -> a -> a
+fromError x = fromMaybe x . errorToNothing
 
 holds,fails,exists :: Testable a => Int -> a -> Bool
 holds n = errorToFalse . C.holds n
