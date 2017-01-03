@@ -8,7 +8,7 @@ TESTS = tests/test           \
         tests/test-operators \
         tests/test-tiers     \
         tests/test-types
-LISTHS   = find src -name \*.hs
+LISTHS   = find src mk -name \*.hs
 LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
 ALLHS    = $(shell $(LISTHS))
 ALLOBJS  = $(shell $(LISTOBJS))
@@ -23,16 +23,10 @@ all: $(OBJS)
 
 all-all: $(ALLOBJS)
 
-test: all-all $(TESTS)
-	./tests/test
-	./tests/test-derive
-	./tests/test-error
-	./tests/test-fun
-	./tests/test-funshow
-	./tests/test-io
-	./tests/test-operators
-	./tests/test-tiers
-	./tests/test-types
+test: $(patsubst %,%.test,$(TESTS))
+
+%.test: %
+	./$<
 
 clean: clean-hi-o clean-haddock
 	rm -f $(TESTS)
@@ -85,5 +79,12 @@ doc/index.html: $(ALLHS)
 	@echo '      undocumented functions on Test.LeanCheck'
 	@echo '      as "OPTIONS_HADDOCK prune" is active'
 	@echo '      to hide cons6...cons12'
+
+# NOTE: (very hacky!) the following target allows parallel compilation (-jN) of
+# eg and tests programs so long as they don't share dependencies _not_ stored
+# in src/ and tests/.  Runnable binaries should depend on mk/toplibs instead of
+# actual Haskell source files
+mk/toplibs: mk/Toplibs.o
+	touch mk/toplibs
 
 include mk/haskell.mk

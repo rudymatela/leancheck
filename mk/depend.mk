@@ -1,3 +1,21 @@
+mk/Toplibs.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Invariants.hs \
+  src/Test/LeanCheck/Function/Show.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Error.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  mk/Toplibs.hs
 src/Test/LeanCheck/Basic.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
@@ -23,15 +41,9 @@ src/Test/LeanCheck/Function/CoListable.o: \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
-src/Test/LeanCheck/Function/ListsOfPairs.o: \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Function/ListsOfPairs.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
 src/Test/LeanCheck/Function/ListsOfPairs: \
+  mk/toplibs
+src/Test/LeanCheck/Function/ListsOfPairs.o: \
   src/Test/LeanCheck/Tiers.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
@@ -148,13 +160,7 @@ tests/test-derive.o: \
   src/Test/LeanCheck/Basic.hs
 tests/test-derive: \
   tests/test-derive.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs
 tests/test-error.o: \
   tests/test-error.hs \
   src/Test/LeanCheck/Utils/Types.hs \
@@ -167,14 +173,7 @@ tests/test-error.o: \
   src/Test/LeanCheck/Basic.hs
 tests/test-error: \
   tests/test-error.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Error.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs
 tests/test-fun.o: \
   tests/test-fun.hs \
   src/Test/LeanCheck/Utils/Types.hs \
@@ -204,39 +203,17 @@ tests/test-funshow.o: \
   src/Test/LeanCheck/Basic.hs
 tests/test-funshow: \
   tests/test-funshow.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Function/Show.hs \
-  src/Test/LeanCheck/Function/ShowFunction.hs \
-  src/Test/LeanCheck/Error.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs
 tests/test-fun: \
   tests/test-fun.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Utils.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Invariants.hs \
-  src/Test/LeanCheck/Function/ListsOfPairs.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs
 tests/test-io.o: \
   tests/test-io.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Core.hs
 tests/test-io: \
   tests/test-io.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Core.hs
+  mk/toplibs
 tests/test-operators.o: \
   tests/test-operators.hs \
   src/Test/LeanCheck/Utils/Types.hs \
@@ -251,16 +228,7 @@ tests/test-operators.o: \
   src/Test/LeanCheck/Basic.hs
 tests/test-operators: \
   tests/test-operators.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Utils.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs
 tests/test.o: \
   tests/test.hs \
   src/Test/LeanCheck/Utils/Types.hs \
@@ -276,17 +244,7 @@ tests/test.o: \
   src/Test/LeanCheck/Basic.hs
 tests/test: \
   tests/test.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Utils.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Invariants.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs
 tests/test-tiers.o: \
   tests/test-tiers.hs \
   src/Test/LeanCheck/Utils/Types.hs \
@@ -302,17 +260,7 @@ tests/test-tiers.o: \
   src/Test/LeanCheck/Basic.hs
 tests/test-tiers: \
   tests/test-tiers.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Utils.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Invariants.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs
 tests/test-types.o: \
   tests/test-types.hs \
   src/Test/LeanCheck/Utils/Types.hs \
@@ -324,10 +272,4 @@ tests/test-types.o: \
   src/Test/LeanCheck/Basic.hs
 tests/test-types: \
   tests/test-types.hs \
-  src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
+  mk/toplibs

@@ -26,4 +26,5 @@ doc/*.css
 doc/*.js
 doc/*.png
 doc/*.gif
+mk/toplibs
 README.html
