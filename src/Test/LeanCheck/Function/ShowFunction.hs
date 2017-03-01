@@ -27,6 +27,7 @@ where
 
 import Test.LeanCheck.Core
 import Test.LeanCheck.Error (errorToNothing)
+import Test.LeanCheck.Utils.Types
 import Data.List
 import Data.Maybe
 
@@ -63,14 +64,18 @@ bindings = concat . tBindings
 tBindingsShow :: Show a => a -> [[Binding]]
 tBindingsShow x = [[([],errorToNothing $ show x)]]
 
-instance ShowFunction ()   where tBindings = tBindingsShow
-instance ShowFunction Bool where tBindings = tBindingsShow
-instance ShowFunction Int  where tBindings = tBindingsShow
-instance ShowFunction Char where tBindings = tBindingsShow
+instance ShowFunction ()       where tBindings = tBindingsShow
+instance ShowFunction Bool     where tBindings = tBindingsShow
+instance ShowFunction Int      where tBindings = tBindingsShow
+instance ShowFunction Integer  where tBindings = tBindingsShow
+instance ShowFunction Char     where tBindings = tBindingsShow
+instance ShowFunction Float    where tBindings = tBindingsShow
+instance ShowFunction Double   where tBindings = tBindingsShow
+instance ShowFunction Ordering where tBindings = tBindingsShow
 instance Show a => ShowFunction [a]       where tBindings = tBindingsShow
 instance Show a => ShowFunction (Maybe a) where tBindings = tBindingsShow
+instance (Show a, Show b) => ShowFunction (Either a b) where tBindings = tBindingsShow
 instance (Show a, Show b) => ShowFunction (a,b) where tBindings = tBindingsShow
-
 
 -- instance for functional value type --
 instance (Show a, Listable a, ShowFunction b) => ShowFunction (a->b) where
@@ -171,3 +176,21 @@ instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g)
       => ShowFunction (a,b,c,d,e,f,g) where tBindings = tBindingsShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g, Show h)
       => ShowFunction (a,b,c,d,e,f,g,h) where tBindings = tBindingsShow
+
+-- instance for types from Test.LeanCheck.Utils.Types
+instance ShowFunction Nat   where tBindings = tBindingsShow
+instance ShowFunction Nat1  where tBindings = tBindingsShow
+instance ShowFunction Nat2  where tBindings = tBindingsShow
+instance ShowFunction Nat3  where tBindings = tBindingsShow
+instance ShowFunction Nat4  where tBindings = tBindingsShow
+instance ShowFunction Nat5  where tBindings = tBindingsShow
+instance ShowFunction Nat6  where tBindings = tBindingsShow
+instance ShowFunction Nat7  where tBindings = tBindingsShow
+instance ShowFunction Int1  where tBindings = tBindingsShow
+instance ShowFunction Int2  where tBindings = tBindingsShow
+instance ShowFunction Int3  where tBindings = tBindingsShow
+instance ShowFunction Int4  where tBindings = tBindingsShow
+instance ShowFunction Word1 where tBindings = tBindingsShow
+instance ShowFunction Word2 where tBindings = tBindingsShow
+instance ShowFunction Word3 where tBindings = tBindingsShow
+instance ShowFunction Word4 where tBindings = tBindingsShow
