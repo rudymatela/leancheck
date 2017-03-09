@@ -29,7 +29,7 @@ documentation
 * on data-invariant.md, write missing section;
 
 
-v0.6.1
+v0.6.2
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
