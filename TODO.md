@@ -29,7 +29,19 @@ documentation
 * on data-invariant.md, write missing section;
 
 
+v0.6.1
+------
+
+* release!
+
+
 v0.6.2
+------
+
+* add copyright notices on modules using Haddock markup
+
+
+v0.6.3
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
