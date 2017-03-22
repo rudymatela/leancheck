@@ -20,6 +20,7 @@ Installing
 
 To install the latest LeanCheck version from Hackage, just run:
 
+	$ cabal update
 	$ cabal install leancheck
 
 

@@ -15,7 +15,7 @@
 --
 -- For example:
 --
--- > holds $ \xs -> length (sort xs) == length (xs::[Int])
+-- > holds 1000 $ \xs -> length (sort xs) == length (xs::[Int])
 --
 --
 -- To get the smallest 'counterExample' by testing up to a thousand values,
@@ -26,8 +26,7 @@
 --
 -- Arguments of properties should be instances of the 'Listable' typeclass.
 -- 'Listable' instances are provided for the most common Haskell types.
--- New instances are easily defined
--- (see 'Listable' for more info).
+-- New instances are easily defined (see 'Listable' for more info).
 module Test.LeanCheck
   (
   -- * Checking and testing
