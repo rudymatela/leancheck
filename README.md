@@ -1,4 +1,4 @@
-LeanCheck
+LeanCheck [![Build Status][build-status]][build-log]
 =========
 
 LeanCheck is a simple enumerative [property-based testing] library.  Properties
@@ -155,3 +155,5 @@ and a step-by-step guide to LeanCheck, see the
 [SmallCheck]: https://hackage.haskell.org/package/smallcheck
 [QuickCheck]: https://hackage.haskell.org/package/QuickCheck
 
+[build-status]: https://travis-ci.org/rudymatela/leancheck.svg?branch=master
+[build-log]:    https://travis-ci.org/rudymatela/leancheck
