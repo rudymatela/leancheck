@@ -9,5 +9,16 @@ ghc:
   - "7.6"
   - "7.4"
 
+matrix:
+  include:
+    - ghc: '7.6'
+      script: >
+        make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
+        make test GHCFLAGS="-fno-warn-unrecognised-pragmas"
+    - ghc: '7.4'
+      script: >
+        make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
+        make test GHCFLAGS="-fno-warn-unrecognised-pragmas"
+
 script:
   - make && make test
