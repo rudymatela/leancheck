@@ -1,5 +1,7 @@
 sudo: false
 
+language: generic
+
 ghc:
   - 8.0
   - 7.10
