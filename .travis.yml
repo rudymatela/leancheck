@@ -1,0 +1,7 @@
+ghc:
+	- 8.0
+	- 7.10
+	- 7.8
+
+script:
+	- make && make test
