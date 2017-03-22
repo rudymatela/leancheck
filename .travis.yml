@@ -3,9 +3,11 @@ sudo: false
 language: haskell
 
 ghc:
-  - 8.0
-  - 7.10
-  - 7.8
+  - "8.0"
+  - "7.10"
+  - "7.8"
+  - "7.6"
+  - "7.4"
 
 script:
   - make && make test
