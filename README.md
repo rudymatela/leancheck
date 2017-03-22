@@ -1,5 +1,10 @@
-LeanCheck [![Build Status][build-status]][build-log]
+LeanCheck
 =========
+
+[![Build Status][build-status]][build-log]
+[![Hackage version][hackage-version]][leancheck-on-hackage]
+
+
 
 LeanCheck is a simple enumerative [property-based testing] library.  Properties
 are defined as Haskell functions returning a boolean value which should be
@@ -157,3 +162,5 @@ and a step-by-step guide to LeanCheck, see the
 
 [build-status]: https://travis-ci.org/rudymatela/leancheck.svg?branch=master
 [build-log]:    https://travis-ci.org/rudymatela/leancheck
+[hackage-version]: https://img.shields.io/hackage/v/leancheck.svg
+[leancheck-on-hackage]: https://hackage.haskell.org/package/leancheck
