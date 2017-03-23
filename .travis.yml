@@ -20,3 +20,7 @@ matrix:
 
 script:
   - make && make test
+
+notifications:
+  email:
+    on_failure: change
