@@ -32,7 +32,13 @@ documentation
 v0.6.2
 ------
 
-* add copyright notices on modules using Haddock markup
+* add copyright notices on modules using Haddock markup;
+
+* add `classify` function to measure distribution of data:
+  something like:
+
+    classifyBy :: (a -> b) -> [a] -> [(b,a)]
+	countsBy :: (a -> b) -> [a] -> [(b,Int)]
 
 
 v0.6.3
