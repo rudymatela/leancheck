@@ -4,8 +4,6 @@ LeanCheck
 [![Build Status][build-status]][build-log]
 [![Hackage version][hackage-version]][leancheck-on-hackage]
 
-
-
 LeanCheck is a simple enumerative [property-based testing] library.  Properties
 are defined as Haskell functions returning a boolean value which should be
 `True` for all possible choices of argument values.    LeanCheck applies
