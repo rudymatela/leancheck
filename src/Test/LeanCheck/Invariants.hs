@@ -1,4 +1,13 @@
--- | Some invariants over Test.LeanCheck functions.
+-- |
+-- Module      : Test.LeanCheck.Invariants
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
+--
+-- Some invariants about Test.LeanCheck functions.
 --
 -- You should be importing this ONLY to test "Test.LeanCheck" itself.
 module Test.LeanCheck.Invariants

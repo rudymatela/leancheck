@@ -1,3 +1,13 @@
+-- |
+-- Module      : Test.LeanCheck.Utils.Operators
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
+--
+-- Some operators for property-based testing.
 module Test.LeanCheck.Utils.Operators
   (
 --  (==>) -- already provided by Test.LeanCheck

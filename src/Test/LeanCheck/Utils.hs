@@ -1,4 +1,13 @@
--- | Some utilities for property-based testing with 'Test.LeanCheck'.
+-- |
+-- Module      : Test.LeanCheck.Utils
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
+--
+-- Some utilities for property-based testing with 'Test.LeanCheck'.
 --
 -- Those utilities are general-purpose enough to be used with other
 -- property-based based testing libraries.  See each exported module for

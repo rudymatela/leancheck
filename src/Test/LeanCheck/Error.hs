@@ -1,4 +1,11 @@
--- | LeanCheck is a simple enumerative property-based testing library.
+-- |
+-- Module      : Test.LeanCheck.Error
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
 --
 -- This module re-exports "Test.LeanCheck" but some test functions have been
 -- specialized to catch errors (see the explicit export list below).

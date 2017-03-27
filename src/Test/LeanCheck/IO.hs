@@ -1,4 +1,13 @@
--- | QuickCheck-like interface to "Test.LeanCheck"
+-- |
+-- Module      : Test.LeanCheck.IO
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
+--
+-- QuickCheck-like interface to "Test.LeanCheck"
 {-# LANGUAGE CPP #-}
 module Test.LeanCheck.IO
   ( check

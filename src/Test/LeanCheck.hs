@@ -1,5 +1,11 @@
 {-# OPTIONS_HADDOCK prune #-}
--- | LeanCheck is a simple enumerative property-based testing library.
+-- |
+-- Module      : Test.LeanCheck
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- LeanCheck is a simple enumerative property-based testing library.
 --
 -- A __property__ is a function returning a 'Bool' that should be 'True' for
 -- all possible choices of arguments.  Properties can be viewed as a

@@ -1,5 +1,14 @@
--- | This module is part of 'Test.LeanCheck'.
--- It exports a 'Listable' instance for enumeration of periodic functions.
+-- |
+-- Module      : Test.LeanCheck.Function.Periodic
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
+--
+-- This module exports a 'Listable' instance for enumeration of periodic
+-- functions.
 --
 -- This module /barely works/ and is just a sketch.
 module Test.LeanCheck.Function.Periodic

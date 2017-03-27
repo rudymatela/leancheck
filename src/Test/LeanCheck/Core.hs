@@ -1,4 +1,10 @@
--- | LeanCheck is a simple enumerative property-based testing library.
+-- |
+-- Module      : Test.LeanCheck.Core
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- LeanCheck is a simple enumerative property-based testing library.
 --
 -- This is the core module of the library, with the most basic definitions.  If
 -- you are looking just to use the library, import and see "Test.LeanCheck".

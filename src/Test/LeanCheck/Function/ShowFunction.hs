@@ -1,5 +1,14 @@
--- | This module exports the 'ShowFunction' typeclass,
---   its instances and related functions.
+-- |
+-- Module      : Test.LeanCheck.Function.ShowFunction
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
+--
+-- This module exports the 'ShowFunction' typeclass,
+-- its instances and related functions.
 --
 -- Using this module, it is possible to implement
 -- a Show instance for functions:

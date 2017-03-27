@@ -1,6 +1,14 @@
--- | This module is part of 'Test.LeanCheck'.
--- It exports a 'Listable' instance for function enumeration
--- by means of a 'CoListable' typeclass.
+-- |
+-- Module      : Test.LeanCheck.CoListable
+-- Copyright   : (c) 2015-2017 Rudy Matela
+-- License     : 3-Clause BSD  (see the file LICENSE)
+-- Maintainer  : Rudy Matela <rudy@matela.com.br>
+--
+-- This module is part of LeanCheck,
+-- a simple enumerative property-based testing library.
+--
+-- This module exports a 'Listable' instance for function enumeration by means
+-- of a 'CoListable' typeclass.
 --
 -- This module /does not currently work/, it it just a sketch and a stub.
 module Test.LeanCheck.Function.CoListable
