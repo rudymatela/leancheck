@@ -41,6 +41,9 @@ src/Test/LeanCheck/Function/CoListable.o: \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Eq.o: \
+  src/Test/LeanCheck/Function/Eq.hs \
+  src/Test/LeanCheck/Core.hs
 src/Test/LeanCheck/Function/ListsOfPairs: \
   mk/toplibs
 src/Test/LeanCheck/Function/ListsOfPairs.o: \
@@ -52,6 +55,7 @@ src/Test/LeanCheck/Function/ListsOfPairs.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
 src/Test/LeanCheck/Function.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
@@ -72,6 +76,7 @@ src/Test/LeanCheck/Function/Periodic.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
 src/Test/LeanCheck/Function/ShowFunction.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
@@ -81,6 +86,7 @@ src/Test/LeanCheck/Function/ShowFunction.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
 src/Test/LeanCheck/Function/Show.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
