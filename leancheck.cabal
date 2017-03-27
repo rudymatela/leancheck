@@ -1,4 +1,4 @@
--- LeanCheck
+-- Cabal file for LeanCheck
 --
 -- Template Haskell dependency is optional.  To deactivate it:
 -- 1. In this file, comment out:
