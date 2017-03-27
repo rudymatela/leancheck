@@ -32,8 +32,6 @@ documentation
 v0.6.2
 ------
 
-* add copyright notices on modules using Haddock markup;
-
 * add `classify` function to measure distribution of data:
   something like:
 
