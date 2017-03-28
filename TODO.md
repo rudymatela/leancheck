@@ -32,6 +32,12 @@ documentation
 v0.6.2
 ------
 
+* release!
+
+
+v0.6.3
+------
+
 * add `classify` function to measure distribution of data:
   something like:
 
@@ -39,7 +45,7 @@ v0.6.2
 	countsBy :: (a -> b) -> [a] -> [(b,Int)]
 
 
-v0.6.3
+v0.6.4
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
