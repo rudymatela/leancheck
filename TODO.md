@@ -29,12 +29,6 @@ documentation
 * on data-invariant.md, write missing section;
 
 
-v0.6.2
-------
-
-* release!
-
-
 v0.6.3
 ------
 
