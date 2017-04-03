@@ -40,11 +40,23 @@ main = do
                 [t,n] -> (t, read n)
   putStrLn $ "tiers :: [" ++ t ++ "]  ="
   case t of
+    -- simple types
     "()"            -> put n (u :: ()            )
     "Int"           -> put n (u :: Int           )
     "Nat"           -> put n (u :: Nat           )
     "Integer"       -> put n (u :: Integer       )
     "Bool"          -> put n (u :: Bool          )
+    "Char"          -> put n (u :: Char          )
+    -- lists
+    "[()]"          -> put n (u :: [()]          )
+    "[Int]"         -> put n (u :: [Int]         )
+    "[Nat]"         -> put n (u :: [Nat]         )
+    "[Integer]"     -> put n (u :: [Integer]     )
+    "[Bool]"        -> put n (u :: [Bool]        )
+    "[Char]"        -> put n (u :: [Char]        )
+    "String"        -> put n (u :: String        )
+    -- pairs
+    "((),())"       -> put n (u :: ((),())       )
     "(Int,Int)"     -> put n (u :: (Int,Int)     )
     "(Nat,Nat)"     -> put n (u :: (Nat,Nat)     )
     "(Bool,Bool)"   -> put n (u :: (Bool,Bool)   )
@@ -52,8 +64,15 @@ main = do
     "(Int,Bool)"    -> put n (u :: (Int,Bool)    )
     "(Int,Int,Int)" -> put n (u :: (Int,Int,Int) )
     "(Nat,Nat,Nat)" -> put n (u :: (Nat,Nat,Nat) )
+    -- lists & pairs
+    "[((),())]"       -> put n (u :: [((),())]       )
+    "([()],[()])"     -> put n (u :: ([()],[()])     )
+    "([Bool],[Bool])" -> put n (u :: ([Bool],[Bool]) )
+    "([Int],[Int])"   -> put n (u :: ([Int],[Int])   )
+    -- functions
     "Int->Int"      -> put n (u :: Int -> Int    )
     "Nat->Nat"      -> put n (u :: Nat -> Nat    )
+    -- unhandled
     _               -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
   where
   u :: a
