@@ -26,7 +26,7 @@ import Data.Maybe (fromMaybe)
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
   tiers = mapT (uncurry $ flip defaultPairsToFunction)
-        $ functions list tiers
+        $ functions tiers tiers
 
 
 functions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]

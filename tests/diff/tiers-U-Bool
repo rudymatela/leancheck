@@ -4,59 +4,11 @@ tiers :: [()->Bool]  =
     , \x -> case x of
               () -> True
     ]
-  , []
   , [ \x -> case x of
               () -> True
-    , \x -> case x of
-              () -> False
-    ]
-  , [ \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> False
-    ]
-  , [ \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> False
-    ]
-  , [ \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> True
-    , \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> False
     , \x -> case x of
               () -> False
     ]
   ]
 
-map length (tiers :: [()->Bool])  =  [2,0,2,4,6,12]
+map length (tiers :: [()->Bool])  =  [2,2]
