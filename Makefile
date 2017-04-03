@@ -126,6 +126,8 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "()->Bool"       6 | diff -rud tests/diff/tiers-U-Bool      -
 	./bench/tiers "Int->Int"       6 | diff -rud tests/diff/tiers-Int-Int     -
 	./bench/tiers "Nat->Nat"       6 | diff -rud tests/diff/tiers-Nat-Nat     -
+	./bench/tiers "()->Nat"        6 | diff -rud tests/diff/tiers-U-Nat       -
+	./bench/tiers "Nat->()"        6 | diff -rud tests/diff/tiers-Nat-U       -
 	./bench/tiers "Int->Int->Int"  4 | diff -rud tests/diff/tiers-Int-Int-Int -
 	./bench/tiers "Nat->Nat->Nat"  4 | diff -rud tests/diff/tiers-Nat-Nat-Nat -
 	./bench/tiers "(Nat,Nat)->Nat" 4 | diff -rud tests/diff/tiers-Nat,Nat-Nat -
@@ -158,6 +160,8 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "()->Bool"       6 > tests/diff/tiers-U-Bool
 	./bench/tiers "Int->Int"       6 > tests/diff/tiers-Int-Int
 	./bench/tiers "Nat->Nat"       6 > tests/diff/tiers-Nat-Nat
+	./bench/tiers "Nat->()"        6 > tests/diff/tiers-Nat-U
+	./bench/tiers "()->Nat"        6 > tests/diff/tiers-U-Nat
 	./bench/tiers "Int->Int->Int"  4 > tests/diff/tiers-Int-Int-Int
 	./bench/tiers "Nat->Nat->Nat"  4 > tests/diff/tiers-Nat-Nat-Nat
 	./bench/tiers "(Nat,Nat)->Nat" 4 > tests/diff/tiers-Nat,Nat-Nat

@@ -75,6 +75,8 @@ main = do
     "Bool->Bool->Bool" -> put t n (u :: Bool -> Bool -> Bool )
     "Int->Int"         -> put t n (u :: Int -> Int           )
     "Int->Int->Int"    -> put t n (u :: Int -> Int -> Int    )
+    "()->Nat"          -> put t n (u :: () -> Nat            )
+    "Nat->()"          -> put t n (u :: Nat -> ()            )
     "Nat->Nat"         -> put t n (u :: Nat -> Nat           )
     "Nat->Nat->Nat"    -> put t n (u :: Nat -> Nat -> Nat    )
     "(Nat,Nat)->Nat"   -> put t n (u :: (Nat,Nat) -> Nat     )
