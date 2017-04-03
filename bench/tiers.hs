@@ -70,8 +70,12 @@ main = do
     "([Bool],[Bool])" -> put n (u :: ([Bool],[Bool]) )
     "([Int],[Int])"   -> put n (u :: ([Int],[Int])   )
     -- functions
-    "Int->Int"      -> put n (u :: Int -> Int    )
-    "Nat->Nat"      -> put n (u :: Nat -> Nat    )
+    "Bool->Bool"       -> put n (u :: Bool -> Bool         )
+    "Bool->Bool->Bool" -> put n (u :: Bool -> Bool -> Bool )
+    "Int->Int"         -> put n (u :: Int -> Int           )
+    "Int->Int->Int"    -> put n (u :: Int -> Int -> Int    )
+    "Nat->Nat"         -> put n (u :: Nat -> Nat           )
+    "Nat->Nat->Nat"    -> put n (u :: Nat -> Nat -> Nat    )
     -- unhandled
     _               -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
   where
