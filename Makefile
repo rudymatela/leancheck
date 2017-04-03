@@ -27,7 +27,9 @@ all: $(OBJS)
 
 all-all: $(ALLOBJS)
 
-test: $(patsubst %,%.test,$(TESTS)) diff-test-tiers
+test: $(patsubst %,%.test,$(TESTS)) diff-test
+
+diff-test: diff-test-tiers
 
 %.test: %
 	./$<
