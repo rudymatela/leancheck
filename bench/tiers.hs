@@ -7,8 +7,29 @@ import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Function
 import System.Environment
 
+beside :: String -> String -> String
+beside heading s = init $ unlines $
+  zipWith
+    (++)
+    ([heading] ++ repeat (replicate (length heading) ' '))
+    (lines s)
+
+listLines :: [String] -> String
+listLines []  = "[]"
+listLines [s] | '\n' `notElem` s = "[" ++ s ++ "]"
+listLines ss  = (++ "]")
+              . unlines
+              . zipWith beside (["[ "] ++ repeat ", ")
+              $ ss
+
+showListLines :: Show a => [a] -> String
+showListLines = listLines . map show
+
+showTiersLines :: Show a => [[a]] -> String
+showTiersLines = listLines . map showListLines
+
 putTiers :: Show a => Int -> [[a]] -> IO ()
-putTiers n = putStr . unlines . take n . map (unlines . map show)
+putTiers n = putStrLn . ("  " `beside`) . showTiersLines . take n
 
 main :: IO ()
 main = do
@@ -17,6 +38,7 @@ main = do
                 []    -> ("Int", 12)
                 [t]   -> (t,     12)
                 [t,n] -> (t, read n)
+  putStrLn $ "tiers :: [" ++ t ++ "]  ="
   case t of
     "()"            -> put n (u :: ()            )
     "Int"           -> put n (u :: Int           )
