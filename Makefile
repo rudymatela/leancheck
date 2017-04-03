@@ -27,10 +27,33 @@ all: $(OBJS)
 
 all-all: $(ALLOBJS)
 
-test: $(patsubst %,%.test,$(TESTS))
+test: $(patsubst %,%.test,$(TESTS)) diff-test-tiers
 
-bench-tiers: bench/tiers
-	./bench/tiers
+diff-test-tiers: bench/tiers
+	./bench/tiers "()"              | diff -rud tests/diff/tiers             -
+	./bench/tiers "Int"             | diff -rud tests/diff/tiers-Int         -
+	./bench/tiers "Nat"             | diff -rud tests/diff/tiers-Nat         -
+	./bench/tiers "Integer"         | diff -rud tests/diff/tiers-Integer     -
+	./bench/tiers "Bool"            | diff -rud tests/diff/tiers-Bool        -
+	./bench/tiers "(Int,Int)"       | diff -rud tests/diff/tiers-Int,Int     -
+	./bench/tiers "(Nat,Nat)"       | diff -rud tests/diff/tiers-Nat,Nat     -
+	./bench/tiers "(Int,Int,Int)" 6 | diff -rud tests/diff/tiers-Int,Int,Int -
+	./bench/tiers "(Nat,Nat,Nat)" 6 | diff -rud tests/diff/tiers-Nat,Nat,Nat -
+	./bench/tiers "Int->Int"      6 | diff -rud tests/diff/tiers-Int-Int     -
+	./bench/tiers "Nat->Nat"      6 | diff -rud tests/diff/tiers-Nat-Nat     -
+
+update-diff-test-tiers: bench/tiers
+	./bench/tiers "()"              > tests/diff/tiers
+	./bench/tiers "Int"             > tests/diff/tiers-Int
+	./bench/tiers "Nat"             > tests/diff/tiers-Nat
+	./bench/tiers "Integer"         > tests/diff/tiers-Integer
+	./bench/tiers "Bool"            > tests/diff/tiers-Bool
+	./bench/tiers "(Int,Int)"       > tests/diff/tiers-Int,Int
+	./bench/tiers "(Nat,Nat)"       > tests/diff/tiers-Nat,Nat
+	./bench/tiers "(Int,Int,Int)" 6 > tests/diff/tiers-Int,Int,Int
+	./bench/tiers "(Nat,Nat,Nat)" 6 > tests/diff/tiers-Nat,Nat,Nat
+	./bench/tiers "Int->Int"      6 > tests/diff/tiers-Int-Int
+	./bench/tiers "Nat->Nat"      6 > tests/diff/tiers-Nat-Nat
 
 %.test: %
 	./$<
