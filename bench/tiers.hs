@@ -90,5 +90,5 @@ main = do
     putStrLn $ "tiers :: [" ++ t ++ "]  ="
     putTiers n $ tiers `asTypeOf` [[a]]
     putStrLn $ ""
-    putStr $ "map length (tiers :: [" ++ t ++ "])  =  "
+    putStrLn $ "map length (tiers :: [" ++ t ++ "])  =  "
           ++ show (map length . take n $ tiers `asTypeOf` [[a]])
