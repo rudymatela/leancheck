@@ -76,6 +76,7 @@ main = do
     "Int->Int->Int"    -> put n (u :: Int -> Int -> Int    )
     "Nat->Nat"         -> put n (u :: Nat -> Nat           )
     "Nat->Nat->Nat"    -> put n (u :: Nat -> Nat -> Nat    )
+    "(Nat,Nat)->Nat"   -> put n (u :: (Nat,Nat) -> Nat     )
     -- unhandled
     _               -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
   where
