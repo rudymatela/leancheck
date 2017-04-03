@@ -1,3 +1,20 @@
+bench/tiers: \
+  bench/tiers.hs \
+  mk/toplibs
+bench/tiers.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/Show.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Error.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  bench/tiers.hs
 mk/Toplibs.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Utils/TypeBinding.hs \
