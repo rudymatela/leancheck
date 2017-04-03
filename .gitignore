@@ -21,6 +21,7 @@ tests/test-most
 tests/test-operators
 tests/test-tiers
 tests/test-types
+bench/tiers
 doc/*.html
 doc/*.css
 doc/*.js

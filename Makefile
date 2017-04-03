@@ -29,6 +29,9 @@ all-all: $(ALLOBJS)
 
 test: $(patsubst %,%.test,$(TESTS))
 
+bench-tiers: bench/tiers
+	./bench/tiers
+
 %.test: %
 	./$<
 
