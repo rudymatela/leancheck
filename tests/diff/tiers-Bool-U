@@ -9,3 +9,5 @@ tiers :: [Bool->()]  =
   , []
   , []
   ]
+
+map length (tiers :: [Bool->()])  =  [1,0,0,0,0,0]

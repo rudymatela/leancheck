@@ -64,3 +64,5 @@ tiers :: [(Nat,Nat)->Nat]  =
               ...
     ]
   ]
+
+map length (tiers :: [(Nat,Nat)->Nat])  =  [1,1,1,3]

@@ -61,3 +61,5 @@ tiers :: [(Int,Int,Int)]  =
     , (3,0,0)
     ]
   ]
+
+map length (tiers :: [(Int,Int,Int)])  =  [1,3,6,10,15,21]

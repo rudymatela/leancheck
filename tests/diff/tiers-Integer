@@ -12,3 +12,5 @@ tiers :: [Integer]  =
   , [-5]
   , [6]
   ]
+
+map length (tiers :: [Integer])  =  [1,1,1,1,1,1,1,1,1,1,1,1]

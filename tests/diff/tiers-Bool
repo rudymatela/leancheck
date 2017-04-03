@@ -3,3 +3,5 @@ tiers :: [Bool]  =
     , True
     ]
   ]
+
+map length (tiers :: [Bool])  =  [2]

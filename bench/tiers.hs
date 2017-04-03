@@ -86,4 +86,7 @@ main = do
   put :: (Show a, Listable a) => String -> Int -> a -> IO ()
   put t n a = do
     putStrLn $ "tiers :: [" ++ t ++ "]  ="
-    putTiers n (tiers `asTypeOf` [[a]])
+    putTiers n $ tiers `asTypeOf` [[a]]
+    putStrLn $ ""
+    putStr $ "map length (tiers :: [" ++ t ++ "])  =  "
+          ++ show (map length . take n $ tiers `asTypeOf` [[a]])

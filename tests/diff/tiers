@@ -1,2 +1,4 @@
 tiers :: [()]  =
   [[()]]
+
+map length (tiers :: [()])  =  [1]

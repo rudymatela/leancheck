@@ -36,3 +36,5 @@ tiers :: [[Nat]]  =
     , [4]
     ]
   ]
+
+map length (tiers :: [[Nat]])  =  [1,1,2,4,8,16]

@@ -68,3 +68,5 @@ tiers :: [[Bool]]  =
     , [True,True,True,True,True]
     ]
   ]
+
+map length (tiers :: [[Bool]])  =  [1,2,4,8,16,32]
