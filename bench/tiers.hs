@@ -52,6 +52,8 @@ main = do
     "(Int,Bool)"    -> put n (u :: (Int,Bool)    )
     "(Int,Int,Int)" -> put n (u :: (Int,Int,Int) )
     "(Nat,Nat,Nat)" -> put n (u :: (Nat,Nat,Nat) )
+    "Int->Int"      -> put n (u :: Int -> Int    )
+    "Nat->Nat"      -> put n (u :: Nat -> Nat    )
     _               -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
   where
   u :: a
