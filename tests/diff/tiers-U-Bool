@@ -1,0 +1,60 @@
+tiers :: [()->Bool]  =
+  [ [ \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> True
+    ]
+  , []
+  , [ \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> False
+    ]
+  , [ \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    ]
+  , [ \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    ]
+  , [ \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> False
+    ]
+  ]

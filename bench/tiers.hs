@@ -70,6 +70,8 @@ main = do
     "([Bool],[Bool])"  -> put n (u :: ([Bool],[Bool])      )
     "([Int],[Int])"    -> put n (u :: ([Int],[Int])        )
     -- functions
+    "()->Bool"         -> put n (u :: () -> Bool           )
+    "Bool->()"         -> put n (u :: Bool -> ()           )
     "Bool->Bool"       -> put n (u :: Bool -> Bool         )
     "Bool->Bool->Bool" -> put n (u :: Bool -> Bool -> Bool )
     "Int->Int"         -> put n (u :: Int -> Int           )
