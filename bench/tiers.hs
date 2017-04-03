@@ -18,13 +18,21 @@ main = do
                 [t]   -> (t,     12)
                 [t,n] -> (t, read n)
   case t of
-    "Int"         -> putTiers n (tiers :: [[Int]])
-    "Nat"         -> putTiers n (tiers :: [[Nat]])
-    "Integer"     -> putTiers n (tiers :: [[Integer]])
-    "Bool"        -> putTiers n (tiers :: [[Bool]])
-    "(Int,Int)"   -> putTiers n (tiers :: [[(Int,Int)]])
-    "(Bool,Bool)" -> putTiers n (tiers :: [[(Bool,Bool)]])
-    "(Bool,Int)"  -> putTiers n (tiers :: [[(Bool,Int)]])
-    "(Int,Bool)"  -> putTiers n (tiers :: [[(Int,Bool)]])
-    "()"          -> putTiers n (tiers :: [[()]])
-    _             -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
+    "()"            -> put n (u :: ())
+    "Int"           -> put n (u :: Int)
+    "Nat"           -> put n (u :: Nat)
+    "Integer"       -> put n (u :: Integer)
+    "Bool"          -> put n (u :: Bool)
+    "(Int,Int)"     -> put n (u :: (Int,Int))
+    "(Nat,Nat)"     -> put n (u :: (Nat,Nat))
+    "(Bool,Bool)"   -> put n (u :: (Bool,Bool))
+    "(Bool,Int)"    -> put n (u :: (Bool,Int))
+    "(Int,Bool)"    -> put n (u :: (Int,Bool))
+    "(Int,Int,Int)" -> put n (u :: (Int,Int,Int))
+    "(Nat,Nat,Nat)" -> put n (u :: (Nat,Nat,Nat))
+    _               -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
+  where
+  u :: a
+  u = undefined
+  put :: (Show a, Listable a) => Int -> a -> IO ()
+  put n a = putTiers n (tiers `asTypeOf` [[a]])
