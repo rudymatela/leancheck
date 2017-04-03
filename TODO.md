@@ -32,6 +32,8 @@ documentation
 v0.6.3
 ------
 
+* on `bench/tiers` add `...` to lists that are larger than the limit
+
 * ListsOfPairs' `tiers :: Bool -> ()` is
 
 	[ [ \x -> case x of False -> (); True -> () ]
