@@ -1,0 +1,6 @@
+tiers :: [Set ()]  =
+  [ [Set []]
+  , [Set [()]]
+  ]
+
+map length (tiers :: [Set ()])  =  [1,1]

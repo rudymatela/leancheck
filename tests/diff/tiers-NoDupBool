@@ -1,0 +1,11 @@
+tiers :: [NoDup Bool]  =
+  [ [NoDup []]
+  , [ NoDup [False]
+    , NoDup [True]
+    ]
+  , [ NoDup [False,True]
+    , NoDup [True,False]
+    ]
+  ]
+
+map length (tiers :: [NoDup Bool])  =  [1,2,2]

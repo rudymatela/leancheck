@@ -139,6 +139,22 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "Nat2->Nat3"       | diff -rud tests/diff/tiers-Nat2-Nat3   -
 	./bench/tiers "Nat3->Nat2"       | diff -rud tests/diff/tiers-Nat3-Nat2   -
 	./bench/tiers "Nat3->Nat3"       | diff -rud tests/diff/tiers-Nat3-Nat3   -
+	# special lists
+	./bench/tiers "Set Bool"         | diff -rud tests/diff/tiers-SetBool     -
+	./bench/tiers "Set ()"           | diff -rud tests/diff/tiers-SetU        -
+	./bench/tiers "Set Nat"          | diff -rud tests/diff/tiers-SetNat      -
+	./bench/tiers "Set Nat2"         | diff -rud tests/diff/tiers-SetNat2     -
+	./bench/tiers "Set Nat3"         | diff -rud tests/diff/tiers-SetNat3     -
+	./bench/tiers "Bag Bool"         | diff -rud tests/diff/tiers-BagBool     -
+	./bench/tiers "Bag ()"           | diff -rud tests/diff/tiers-BagU        -
+	./bench/tiers "Bag Nat"          | diff -rud tests/diff/tiers-BagNat      -
+	./bench/tiers "Bag Nat2"         | diff -rud tests/diff/tiers-BagNat2     -
+	./bench/tiers "Bag Nat3"         | diff -rud tests/diff/tiers-BagNat3     -
+	./bench/tiers "NoDup Bool"       | diff -rud tests/diff/tiers-NoDupBool   -
+	./bench/tiers "NoDup ()"         | diff -rud tests/diff/tiers-NoDupU      -
+	./bench/tiers "NoDup Nat"        | diff -rud tests/diff/tiers-NoDupNat    -
+	./bench/tiers "NoDup Nat2"       | diff -rud tests/diff/tiers-NoDupNat2   -
+	./bench/tiers "NoDup Nat3"       | diff -rud tests/diff/tiers-NoDupNat3   -
 
 update-diff-test-tiers: bench/tiers
 	# simple types
@@ -181,3 +197,19 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Nat2->Nat3"       > tests/diff/tiers-Nat2-Nat3
 	./bench/tiers "Nat3->Nat2"       > tests/diff/tiers-Nat3-Nat2
 	./bench/tiers "Nat3->Nat3"       > tests/diff/tiers-Nat3-Nat3
+	# special lists
+	./bench/tiers "Set Bool"         > tests/diff/tiers-SetBool
+	./bench/tiers "Set ()"           > tests/diff/tiers-SetU
+	./bench/tiers "Set Nat"          > tests/diff/tiers-SetNat
+	./bench/tiers "Set Nat2"         > tests/diff/tiers-SetNat2
+	./bench/tiers "Set Nat3"         > tests/diff/tiers-SetNat3
+	./bench/tiers "Bag Bool"         > tests/diff/tiers-BagBool
+	./bench/tiers "Bag ()"           > tests/diff/tiers-BagU
+	./bench/tiers "Bag Nat"          > tests/diff/tiers-BagNat
+	./bench/tiers "Bag Nat2"         > tests/diff/tiers-BagNat2
+	./bench/tiers "Bag Nat3"         > tests/diff/tiers-BagNat3
+	./bench/tiers "NoDup Bool"       > tests/diff/tiers-NoDupBool
+	./bench/tiers "NoDup ()"         > tests/diff/tiers-NoDupU
+	./bench/tiers "NoDup Nat"        > tests/diff/tiers-NoDupNat
+	./bench/tiers "NoDup Nat2"       > tests/diff/tiers-NoDupNat2
+	./bench/tiers "NoDup Nat3"       > tests/diff/tiers-NoDupNat3

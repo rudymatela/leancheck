@@ -1,0 +1,6 @@
+tiers :: [NoDup ()]  =
+  [ [NoDup []]
+  , [NoDup [()]]
+  ]
+
+map length (tiers :: [NoDup ()])  =  [1,1]

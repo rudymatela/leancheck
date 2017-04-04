@@ -97,6 +97,22 @@ main = do
     "Nat2->Nat3"       -> put t n (u :: Nat2 -> Nat3         )
     "Nat3->Nat2"       -> put t n (u :: Nat3 -> Nat2         )
     "Nat3->Nat3"       -> put t n (u :: Nat3 -> Nat3         )
+    -- special lists
+    "Set Bool"         -> put t n (u :: Set Bool             )
+    "Set ()"           -> put t n (u :: Set ()               )
+    "Set Nat"          -> put t n (u :: Set Nat              )
+    "Set Nat2"         -> put t n (u :: Set Nat2             )
+    "Set Nat3"         -> put t n (u :: Set Nat3             )
+    "Bag Bool"         -> put t n (u :: Bag Bool             )
+    "Bag ()"           -> put t n (u :: Bag ()               )
+    "Bag Nat"          -> put t n (u :: Bag Nat              )
+    "Bag Nat2"         -> put t n (u :: Bag Nat2             )
+    "Bag Nat3"         -> put t n (u :: Bag Nat3             )
+    "NoDup Bool"       -> put t n (u :: NoDup Bool           )
+    "NoDup ()"         -> put t n (u :: NoDup ()             )
+    "NoDup Nat"        -> put t n (u :: NoDup Nat            )
+    "NoDup Nat2"       -> put t n (u :: NoDup Nat2           )
+    "NoDup Nat3"       -> put t n (u :: NoDup Nat3           )
     -- unhandled
     _                  -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
   where
