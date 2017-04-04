@@ -36,6 +36,8 @@ v0.6.3
 
 * Add `names` function to the ShowFunction typeclass that lists templates of
   names for variables of the type.
+  Sadly, there is no way to do this without introducing a typeclass restriction
+  on function arguments.  Make a separate `Argument` typeclass to do that?
 
 * add `classify` function to measure distribution of data:
   something like:
