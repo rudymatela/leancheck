@@ -34,6 +34,7 @@ v0.6.3
 
 * on `bench/tiers` add `...` to lists that are larger than the limit
 
+* Remove repetition on ListsOfPairs' `tiers :: Bool -> Bool` enumeration.
 
 * Add `names` function to the ShowFunction typeclass that lists templates of
   names for variables of the type.
