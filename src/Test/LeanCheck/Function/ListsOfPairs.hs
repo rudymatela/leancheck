@@ -50,6 +50,10 @@ functionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
 functionPairs xss yss = concatMapT (`associations` yss)
                                    (incompleteSetsOf xss)
 
+-- | Returns tiers of sets excluding the universe set.
+--
+-- > incompleteSetsOf (tiers :: [[Bool]])  =  [[],[[False],[True]],[]]
+-- > incompleteSetsOf (tiers :: [[()]])    =  [[]]
 incompleteSetsOf :: [[a]] -> [[[a]]]
 incompleteSetsOf xss
   | finite xs = setsOf xss `suchThat` (\xs' -> length xs' < length xs)
