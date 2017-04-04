@@ -34,23 +34,6 @@ v0.6.3
 
 * on `bench/tiers` add `...` to lists that are larger than the limit
 
-* ListsOfPairs' `tiers :: Bool -> ()` is
-
-	[ [ \x -> case x of False -> (); True -> () ]
-	, []
-	, []
-	, []
-	, ...
-	]
-
-  but should be just:
-
-	[ [ \x -> case x of False -> (); True -> () ] ]
-
-* ListsOfPairs' `tiers :: () -> Bool` has repeated functions.
-  See [test/data/tiers-u-Bool](test/data/tiers-u-Bool).
-  There are only two (total) functions of type `() -> Bool`:
-  `const False` and `const True`.
 
 * Add `names` function to the ShowFunction typeclass that lists templates of
   names for variables of the type.

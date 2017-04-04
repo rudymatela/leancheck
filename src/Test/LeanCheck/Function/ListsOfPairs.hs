@@ -48,7 +48,18 @@ associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
 -- Those represent functional relations.
 functionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
 functionPairs xss yss = concatMapT (`associations` yss)
-                                   (setsOf xss)
+                                   (incompleteSetsOf xss)
+
+incompleteSetsOf :: [[a]] -> [[[a]]]
+incompleteSetsOf xss
+  | finite xs = setsOf xss `suchThat` (\xs' -> length xs' < length xs)
+  | otherwise = setsOf xss
+  where
+  xs = concat xss
+  -- A list with more than 12 elements is considered infinite.
+  -- alas, if only we had lazy natural numbers!
+  finite (_:_:_:_: _:_:_:_: _:_:_:_: _) = False
+  finite _                              = True
 
 -- | Returns a function given by a list of input-output pairs.
 -- The result is wrapped in a maybe value.
