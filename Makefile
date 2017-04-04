@@ -134,6 +134,11 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "Maybe Bool->Bool" | diff -rud tests/diff/tiers-MBool-Bool  -
 	./bench/tiers "Bool->Maybe Bool" | diff -rud tests/diff/tiers-Bool-MBool  -
 	./bench/tiers "Maybe Bool->Maybe Bool" | diff -rud tests/diff/tiers-MBool-MBool -
+	# more functions
+	./bench/tiers "Nat2->Nat2"       | diff -rud tests/diff/tiers-Nat2-Nat2   -
+	./bench/tiers "Nat2->Nat3"       | diff -rud tests/diff/tiers-Nat2-Nat3   -
+	./bench/tiers "Nat3->Nat2"       | diff -rud tests/diff/tiers-Nat3-Nat2   -
+	./bench/tiers "Nat3->Nat3"       | diff -rud tests/diff/tiers-Nat3-Nat3   -
 
 update-diff-test-tiers: bench/tiers
 	# simple types
@@ -171,3 +176,8 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Maybe Bool->Bool" > tests/diff/tiers-MBool-Bool
 	./bench/tiers "Bool->Maybe Bool" > tests/diff/tiers-Bool-MBool
 	./bench/tiers "Maybe Bool->Maybe Bool" > tests/diff/tiers-MBool-MBool
+	# more functions
+	./bench/tiers "Nat2->Nat2"       > tests/diff/tiers-Nat2-Nat2
+	./bench/tiers "Nat2->Nat3"       > tests/diff/tiers-Nat2-Nat3
+	./bench/tiers "Nat3->Nat2"       > tests/diff/tiers-Nat3-Nat2
+	./bench/tiers "Nat3->Nat3"       > tests/diff/tiers-Nat3-Nat3
