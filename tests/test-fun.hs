@@ -19,7 +19,6 @@ main =
 tests =
   [ True
 
-  , holds 100 $ ptofApp -:> (char,char)
   , holds 100 $ associationsValues int  100 -:> [int]
   , holds 100 $ associationsValues bool 100 -:> [bool]
   , holds 500 $ associationsNewAndOld -: [int]  >- [[int]]  >- und
@@ -27,10 +26,6 @@ tests =
   , holds 500 $ associationsNewAndOld -: [bool] >- [[bool]] >- und
   , holds 500 $ associationsNewAndOld -: [bool] >- [[int]]  >- und
   ]
-
-ptofApp :: (Ord a, Eq b) => (a,b) -> [(a,b)] -> Bool -- Ord a is just for allUnique
-ptofApp (x,y) ps = (x,y) `elem` ps && allUnique (map fst ps)
-               ==> pairsToFunction ps x == y
 
 associationsValues :: (Listable b, Eq a)
                    => b -> Int -> [a] -> Bool

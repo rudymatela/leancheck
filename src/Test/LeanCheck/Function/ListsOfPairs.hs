@@ -15,8 +15,6 @@
 module Test.LeanCheck.Function.ListsOfPairs
   ( functionPairs
   , associations
-  , pairsToFunction
-  , defaultFunPairsToFunction
   )
 where
 
@@ -25,15 +23,20 @@ import Test.LeanCheck.Tiers
 import Data.Maybe (fromMaybe)
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
-  tiers = mapT (uncurry $ flip defaultPairsToFunction)
-        $ functions tiers tiers
+  tiers = functions tiers tiers
 
 
-functions :: [[a]] -> [[b]] -> [[([(a,b)],b)]]
+functions :: Eq a => [[a]] -> [[b]] -> [[a->b]]
 functions xss yss =
   concatMapT
-    (\(r,yss) -> mapT (\ps -> (ps,r)) $ functionPairs xss yss)
+    (\(r,yss) -> mapT (const r `mutate`) (functionPairs xss yss))
     (choices yss)
+
+
+mutate :: Eq a => (a -> b) -> [(a,b)] -> (a -> b)
+mutate f ms = foldr mut f ms
+  where
+  mut (x',fx') f x = if x == x' then fx' else f x
 
 
 -- | Given a list of domain values, and tiers of codomain values,
@@ -47,8 +50,7 @@ associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
 -- return tiers with all possible lists of input-output pairs.
 -- Those represent functional relations.
 functionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
-functionPairs xss yss = concatMapT (`associations` yss)
-                                   (incompleteSetsOf xss)
+functionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
 
 -- | Returns tiers of sets excluding the universe set.
 --
@@ -64,27 +66,3 @@ incompleteSetsOf xss
   -- alas, if only we had lazy natural numbers!
   finite (_:_:_:_: _:_:_:_: _:_:_:_: _) = False
   finite _                              = True
-
--- | Returns a function given by a list of input-output pairs.
--- The result is wrapped in a maybe value.
--- The output for bound inputs is 'Just' a value.
--- The output for unbound inputs is 'Nothing'.
-pairsToMaybeFunction :: Eq a => [(a,b)] -> a -> Maybe b
-pairsToMaybeFunction []          _ = Nothing
-pairsToMaybeFunction ((a',r):bs) a | a == a'   = Just r
-                                   | otherwise = pairsToMaybeFunction bs a
-
--- | Returns a partial function given by a list of input-output pairs.
---
--- NOTE: This function *will* return undefined values for unbound inputs.
-pairsToFunction :: Eq a => [(a,b)] -> a -> b
-pairsToFunction bs a = fromMaybe undefined (pairsToMaybeFunction bs a)
-
-
--- | Returns a function given by a list of input-output pairs and a default value.
-defaultPairsToFunction :: Eq a => b -> [(a,b)] -> a -> b
-defaultPairsToFunction r bs a = fromMaybe r (pairsToMaybeFunction bs a)
-
-
-defaultFunPairsToFunction :: Eq a => (a -> b) -> [(a,b)] -> a -> b
-defaultFunPairsToFunction f bs a = fromMaybe (f a) (pairsToMaybeFunction bs a)
