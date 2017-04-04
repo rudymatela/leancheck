@@ -49,14 +49,14 @@ associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
 -- | Given tiers of input values and tiers of output values,
 -- return tiers with all possible lists of input-output pairs.
 -- Those represent functional relations.
-functionPairs :: [[a]] -> [[b]] -> [[[(a,b)]]]
+functionPairs :: [[a]] -> [[b]] -> [[ [(a,b)] ]]
 functionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
 
 -- | Returns tiers of sets excluding the universe set.
 --
 -- > incompleteSetsOf (tiers :: [[Bool]])  =  [[],[[False],[True]],[]]
 -- > incompleteSetsOf (tiers :: [[()]])    =  [[]]
-incompleteSetsOf :: [[a]] -> [[[a]]]
+incompleteSetsOf :: [[a]] -> [[ [a] ]]
 incompleteSetsOf xss  =  setsOf xss `suchThat` (`shorter` concat xss)
 
 -- | @xs `shorter` ys@ is true when @xs@ is shorter than @ys@, false otherwise.
