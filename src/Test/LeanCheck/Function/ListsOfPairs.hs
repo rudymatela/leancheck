@@ -56,6 +56,10 @@ functionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
 --
 -- > incompleteSetsOf (tiers :: [[Bool]])  =  [[],[[False],[True]],[]]
 -- > incompleteSetsOf (tiers :: [[()]])    =  [[]]
+--
+-- This is the same as 'setsOf' on types with infinite values:
+--
+-- > incompleteSetsOf (tiers :: [[Int]])  =  setsOf (tiers :: [[Int]])
 incompleteSetsOf :: [[a]] -> [[ [a] ]]
 incompleteSetsOf xss  =  setsOf xss `suchThat` (`shorter` concat xss)
 
