@@ -44,16 +44,22 @@ module Test.LeanCheck.Utils.Types
   , Nat6 (..)
   , Nat7 (..)
 
-  -- * Aliases to word types (deprecated)
+  -- ** Aliases to word types (deprecated)
   , UInt1
   , UInt2
   , UInt3
   , UInt4
+
+  -- * List-wrapper types
+  , NoDup (..)
+  , Bag (..)
+  , Set (..)
   )
 where
 -- TODO: Add Ix and Bits instances
 
 import Test.LeanCheck (Listable(..), listIntegral)
+import Test.LeanCheck.Tiers (noDupListCons, setCons, bagCons)
 import Data.Ratio ((%))
 
 narrowU :: Int -> Int -> Int
@@ -445,3 +451,11 @@ type UInt1 = Word1
 type UInt2 = Word2
 type UInt3 = Word3
 type UInt4 = Word4
+
+newtype NoDup a = NoDup [a] deriving (Show, Read, Eq, Ord)
+newtype Bag a = Bag [a] deriving (Show, Read, Eq, Ord)
+newtype Set a = Set [a] deriving (Show, Read, Eq, Ord)
+
+instance Listable a => Listable (NoDup a) where tiers = noDupListCons NoDup
+instance Listable a => Listable (Bag a)   where tiers = bagCons Bag
+instance Listable a => Listable (Set a)   where tiers = setCons Set
