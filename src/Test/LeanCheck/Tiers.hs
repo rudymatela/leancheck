@@ -221,7 +221,7 @@ products = foldr (productWith (:)) [[[]]]
 
 -- | Delete the first occurence of an element in a tier.
 --
--- For tiers without repetitions, the following holds:
+-- For normalized lists-of-tiers without repetitions, the following holds:
 --
 -- > deleteT x = normalizeT . (`suchThat` (/= x))
 deleteT :: Eq a => a -> [[a]] -> [[a]]
