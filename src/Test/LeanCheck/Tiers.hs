@@ -332,7 +332,7 @@ choices = choicesWith (,)
 choicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 choicesWith f []           = []
 choicesWith f [[]]         = []
-choicesWith f ([]:xss)     = [] : choicesWith (\y yss -> f y ([]:yss)) xss
+choicesWith f ([]:xss)     = [] : choicesWith (\y yss -> f y ([]:normalizeT yss)) xss
 choicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
                           \/ choicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
@@ -376,7 +376,7 @@ setChoices = setChoicesWith (,)
 setChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
 setChoicesWith f []           = []
 setChoicesWith f [[]]         = []
-setChoicesWith f ([]:xss)     = [] : setChoicesWith (\y yss -> f y ([]:yss)) xss
+setChoicesWith f ([]:xss)     = [] : setChoicesWith (\y yss -> f y ([]:normalizeT yss)) xss
 setChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
                              \/ setChoicesWith f (xs:xss)
 

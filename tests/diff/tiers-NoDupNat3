@@ -19,8 +19,6 @@ tiers :: [NoDup Nat3]  =
     , NoDup [2,0,1]
     , NoDup [2,1,0]
     ]
-  , []
-  , []
   ]
 
-map length (tiers :: [NoDup Nat3])  =  [1,1,1,3,2,2,6,0,0]
+map length (tiers :: [NoDup Nat3])  =  [1,1,1,3,2,2,6]

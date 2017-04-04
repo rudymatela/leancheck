@@ -22,7 +22,6 @@ tiers :: [Nat2->Nat2]  =
               1 -> 0
     ]
   , []
-  , []
   ]
 
-map length (tiers :: [Nat2->Nat2])  =  [1,1,2,2,0,0]
+map length (tiers :: [Nat2->Nat2])  =  [1,1,2,2,0]

@@ -8,8 +8,6 @@ tiers :: [Set Nat3]  =
   , [Set [0,2]]
   , [Set [1,2]]
   , [Set [0,1,2]]
-  , []
-  , []
   ]
 
-map length (tiers :: [Set Nat3])  =  [1,1,1,2,1,1,1,0,0]
+map length (tiers :: [Set Nat3])  =  [1,1,1,2,1,1,1]
