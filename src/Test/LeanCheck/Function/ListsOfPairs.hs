@@ -57,12 +57,11 @@ functionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
 -- > incompleteSetsOf (tiers :: [[Bool]])  =  [[],[[False],[True]],[]]
 -- > incompleteSetsOf (tiers :: [[()]])    =  [[]]
 incompleteSetsOf :: [[a]] -> [[[a]]]
-incompleteSetsOf xss
-  | finite xs = setsOf xss `suchThat` (\xs' -> length xs' < length xs)
-  | otherwise = setsOf xss
-  where
-  xs = concat xss
-  -- A list with more than 12 elements is considered infinite.
-  -- alas, if only we had lazy natural numbers!
-  finite (_:_:_:_: _:_:_:_: _:_:_:_: _) = False
-  finite _                              = True
+incompleteSetsOf xss  =  setsOf xss `suchThat` (`shorter` concat xss)
+
+-- | @xs `shorter` ys@ is true when @xs@ is shorter than @ys@, false otherwise.
+shorter :: [a] -> [a] -> Bool
+shorter []     []      =  False
+shorter []     (y:ys)  =  True
+shorter (x:xs) []      =  False
+shorter (x:xs) (y:ys)  =  shorter xs ys
