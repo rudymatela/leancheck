@@ -15,6 +15,18 @@ bench/tiers.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   bench/tiers.hs
+mk/All.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  mk/All.hs
 mk/Toplibs.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Utils/TypeBinding.hs \

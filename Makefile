@@ -37,7 +37,7 @@ diff-test: diff-test-tiers
 clean: clean-hi-o clean-haddock
 	rm -f $(TESTS)
 
-ghci: src/Test/LeanCheck.ghci
+ghci: mk/All.ghci
 
 install:
 	@echo "use \`cabal install' instead"
