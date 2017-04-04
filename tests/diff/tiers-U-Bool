@@ -4,7 +4,6 @@ tiers :: [()->Bool]  =
     , \x -> case x of
               () -> True
     ]
-  , []
   ]
 
-map length (tiers :: [()->Bool])  =  [2,0]
+map length (tiers :: [()->Bool])  =  [2]

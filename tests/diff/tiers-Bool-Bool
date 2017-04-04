@@ -19,7 +19,6 @@ tiers :: [Bool->Bool]  =
               False -> True
               True -> False
     ]
-  , []
   ]
 
-map length (tiers :: [Bool->Bool])  =  [2,4,0]
+map length (tiers :: [Bool->Bool])  =  [2,4]

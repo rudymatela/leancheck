@@ -60,7 +60,6 @@ tiers :: [Maybe Bool->Bool]  =
               Just False -> False
               Just True -> False
     ]
-  , []
   ]
 
-map length (tiers :: [Maybe Bool->Bool])  =  [2,2,4,4,2,0]
+map length (tiers :: [Maybe Bool->Bool])  =  [2,2,4,4,2]

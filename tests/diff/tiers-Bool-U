@@ -4,7 +4,6 @@ tiers :: [Bool->()]  =
               True -> ()
     ]
   , []
-  , []
   ]
 
-map length (tiers :: [Bool->()])  =  [1,0,0]
+map length (tiers :: [Bool->()])  =  [1,0]

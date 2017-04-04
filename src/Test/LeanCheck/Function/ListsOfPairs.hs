@@ -61,11 +61,6 @@ functionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
 --
 -- > incompleteSetsOf (tiers :: [[Int]])  =  setsOf (tiers :: [[Int]])
 incompleteSetsOf :: [[a]] -> [[ [a] ]]
-incompleteSetsOf xss  =  setsOf xss `suchThat` (`shorter` concat xss)
-
--- | @xs `shorter` ys@ is true when @xs@ is shorter than @ys@, false otherwise.
-shorter :: [a] -> [a] -> Bool
-shorter []     []      =  False
-shorter []     (y:ys)  =  True
-shorter (x:xs) []      =  False
-shorter (x:xs) (y:ys)  =  shorter xs ys
+incompleteSetsOf  =  init . setsOf
+-- the above implementation works because, and depends on the fact that:
+-- the last tier returned by setsOf contains only the complete set
