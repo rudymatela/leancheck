@@ -365,6 +365,7 @@ tiers :: [Nat->Nat]  =
               7 -> 5
               ...
     ]
+  , ...
   ]
 
-map length (tiers :: [Nat->Nat])  =  [1,1,3,5,10,16]
+map length (tiers :: [Nat->Nat])  =  [1,1,3,5,10,16,...]

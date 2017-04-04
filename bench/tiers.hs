@@ -6,6 +6,7 @@ import Test.LeanCheck
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Function
 import System.Environment
+import Data.List (intercalate)
 
 beside :: String -> String -> String
 beside heading s = init $ unlines $
@@ -25,11 +26,19 @@ listLines ss  = (++ "]")
 showListLines :: Show a => [a] -> String
 showListLines = listLines . map show
 
-showTiersLines :: Show a => [[a]] -> String
-showTiersLines = listLines . map showListLines
+showTiersLines :: Show a => Int -> [[a]] -> String
+showTiersLines n = listLines . dotsLongerThan n . map showListLines
+
+dotsLongerThan :: Int -> [String] -> [String]
+dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
+
+showDotsLongerThan :: Show a => Int -> [a] -> String
+showDotsLongerThan n xs = "["
+                       ++ intercalate "," (dotsLongerThan n $ map show xs)
+                       ++ "]"
 
 putTiers :: Show a => Int -> [[a]] -> IO ()
-putTiers n = putStrLn . ("  " `beside`) . showTiersLines . take n
+putTiers n = putStrLn . ("  " `beside`) . showTiersLines n
 
 main :: IO ()
 main = do
@@ -91,4 +100,4 @@ main = do
     putTiers n $ tiers `asTypeOf` [[a]]
     putStrLn $ ""
     putStrLn $ "map length (tiers :: [" ++ t ++ "])  =  "
-          ++ show (map length . take n $ tiers `asTypeOf` [[a]])
+          ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])

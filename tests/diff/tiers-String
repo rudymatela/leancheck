@@ -35,6 +35,7 @@ tiers :: [String]  =
     , "Aa"
     , "c"
     ]
+  , ...
   ]
 
-map length (tiers :: [String])  =  [1,1,2,4,8,16]
+map length (tiers :: [String])  =  [1,1,2,4,8,16,...]
