@@ -94,6 +94,8 @@ main = do
     "Maybe Bool->Bool" -> put t n (u :: Maybe Bool -> Bool   )
     "Maybe Bool->Maybe Bool" -> put t n (u :: Maybe Bool -> Maybe Bool)
     -- more functions
+    "Nat2->()"         -> put t n (u :: Nat2 -> ()           )
+    "()->Nat2"         -> put t n (u :: () -> Nat2           )
     "Nat2->Nat2"       -> put t n (u :: Nat2 -> Nat2         )
     "Nat2->Nat3"       -> put t n (u :: Nat2 -> Nat3         )
     "Nat3->Nat2"       -> put t n (u :: Nat3 -> Nat2         )
