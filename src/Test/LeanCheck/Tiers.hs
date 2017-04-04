@@ -231,17 +231,28 @@ deleteT y [[x]]        | x == y    = []
 deleteT y ((x:xs):xss) | x == y    = xs:xss
                        | otherwise = [[x]] \/ deleteT y (xs:xss)
 
--- | Normalizes tiers by removing an empty tier from the end of a list of
---   tiers.
+-- | Normalizes tiers by removing up to 12 empty tiers from the end of a list
+--   of tiers.
 --
--- > normalizeT [xs0,xs1,...,xsN,[]] = [xs0,xs1,...,xsN]
+-- > normalizeT [xs0,xs1,...,xsN,[]]     =  [xs0,xs1,...,xsN]
+-- > normalizeT [xs0,xs1,...,xsN,[],[]]  =  [xs0,xs1,...,xsN]
 --
---   Note this will only remove a single empty tier:
---
--- > normalizeT [xs0,xs1,...,xsN,[],[]] = [xs0,xs1,...,xsN,[]]
+-- The arbitrary limit of 12 tiers is necessary as this function would loop if
+-- there is an infinite trail of empty tiers.
 normalizeT :: [[a]] -> [[a]]
 normalizeT [] = []
 normalizeT [[]] = []
+normalizeT [[],[]] = []
+normalizeT [[],[],[]] = []
+normalizeT [[],[],[],[]] = []
+normalizeT [[],[],[],[], []] = []
+normalizeT [[],[],[],[], [],[]] = []
+normalizeT [[],[],[],[], [],[],[]] = []
+normalizeT [[],[],[],[], [],[],[],[]] = []
+normalizeT [[],[],[],[], [],[],[],[], []] = []
+normalizeT [[],[],[],[], [],[],[],[], [],[]] = []
+normalizeT [[],[],[],[], [],[],[],[], [],[],[]] = []
+normalizeT [[],[],[],[], [],[],[],[], [],[],[],[]] = []
 normalizeT (xs:xss) = xs:normalizeT xss
 
 -- | Concatenate tiers of maybes
