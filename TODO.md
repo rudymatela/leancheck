@@ -32,7 +32,12 @@ documentation
 v0.6.3
 ------
 
-* Remove repetition on ListsOfPairs' `tiers :: Bool -> Bool` enumeration.
+* Remove repetition on ListsOfPairs' `tiers :: [[Bool -> Bool]]` enumeration.
+
+* Remove trailing empty tiers on
+  `tiers :: [[Bool->()]]` and `tiers :: [[Nat2->()]]`.
+  (See the output of `./bench/tiers`.)
+  Or if removal is not easy, at least state _why_ it happens somewhere.
 
 * Add `names` function to the ShowFunction typeclass that lists templates of
   names for variables of the type.
