@@ -121,9 +121,9 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "[((),())]"        | diff -rud tests/diff/tiers-U,Us        -
 	./bench/tiers "([()],[()])"      | diff -rud tests/diff/tiers-Us,Us       -
 	# functions
-	./bench/tiers "Bool->Bool"     6 | diff -rud tests/diff/tiers-Bool-Bool   -
-	./bench/tiers "Bool->()"       6 | diff -rud tests/diff/tiers-Bool-U      -
-	./bench/tiers "()->Bool"       6 | diff -rud tests/diff/tiers-U-Bool      -
+	./bench/tiers "Bool->Bool"       | diff -rud tests/diff/tiers-Bool-Bool   -
+	./bench/tiers "Bool->()"         | diff -rud tests/diff/tiers-Bool-U      -
+	./bench/tiers "()->Bool"         | diff -rud tests/diff/tiers-U-Bool      -
 	./bench/tiers "Int->Int"       6 | diff -rud tests/diff/tiers-Int-Int     -
 	./bench/tiers "Nat->Nat"       6 | diff -rud tests/diff/tiers-Nat-Nat     -
 	./bench/tiers "()->Nat"        6 | diff -rud tests/diff/tiers-U-Nat       -
@@ -158,9 +158,9 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "[((),())]"        > tests/diff/tiers-U,Us
 	./bench/tiers "([()],[()])"      > tests/diff/tiers-Us,Us
 	# functions
-	./bench/tiers "Bool->Bool"     6 > tests/diff/tiers-Bool-Bool
-	./bench/tiers "Bool->()"       6 > tests/diff/tiers-Bool-U
-	./bench/tiers "()->Bool"       6 > tests/diff/tiers-U-Bool
+	./bench/tiers "Bool->Bool"       > tests/diff/tiers-Bool-Bool
+	./bench/tiers "Bool->()"         > tests/diff/tiers-Bool-U
+	./bench/tiers "()->Bool"         > tests/diff/tiers-U-Bool
 	./bench/tiers "Int->Int"       6 > tests/diff/tiers-Int-Int
 	./bench/tiers "Nat->Nat"       6 > tests/diff/tiers-Nat-Nat
 	./bench/tiers "Nat->()"        6 > tests/diff/tiers-Nat-U
