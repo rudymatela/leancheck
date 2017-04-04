@@ -89,6 +89,9 @@ main = do
     "Nat->Nat"         -> put t n (u :: Nat -> Nat           )
     "Nat->Nat->Nat"    -> put t n (u :: Nat -> Nat -> Nat    )
     "(Nat,Nat)->Nat"   -> put t n (u :: (Nat,Nat) -> Nat     )
+    "Bool->Maybe Bool" -> put t n (u :: Bool -> Maybe Bool   )
+    "Maybe Bool->Bool" -> put t n (u :: Maybe Bool -> Bool   )
+    "Maybe Bool->Maybe Bool" -> put t n (u :: Maybe Bool -> Maybe Bool)
     -- unhandled
     _                  -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
   where
