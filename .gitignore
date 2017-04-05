@@ -24,6 +24,8 @@ tests/test-types
 bench/tiers
 bench/tiers-colistable
 bench/tiers-colistable.hs
+bench/tiers-listsofpairs
+bench/tiers-listsofpairs.hs
 doc/*.html
 doc/*.css
 doc/*.js
