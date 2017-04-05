@@ -54,6 +54,13 @@ module Test.LeanCheck.Tiers
   , choices
   , setChoices
   , bagChoices
+
+  -- * Showing and printing lists-of-tiers
+  -- | Lists-of-tiers are already show instances as their type is just @[[a]]@.
+  --   The following functions are alternatives to 'print' and 'show' with one
+  --   element per line and can be useful for debugging.
+  , printTiers
+  , showTiers
   )
 where
 
@@ -391,3 +398,77 @@ setChoicesWith f ((x:xs):xss) = [[f x (xs:xss)]]
 -- >   ]
 listsOfLength :: Int -> [[a]] -> [[[a]]]
 listsOfLength n xss = products (replicate n xss)
+
+
+
+
+-- -- Showing tiers of values -- --
+
+-- | Shows a list of strings, one element per line.
+--   The returned string _does not_ end with a line break.
+--
+-- > listLines [] = "[]"
+-- > listLines ["0"] = "[0]"
+-- > listLines ["0","1"] = "[ 0\n\
+-- >                       \, 1\n\
+-- >                       \]"
+listLines :: [String] -> String
+listLines []  = "[]"
+listLines [s] | '\n' `notElem` s = "[" ++ s ++ "]"
+listLines ss  = (++ "]")
+              . unlines
+              . zipWith beside (["[ "] ++ repeat ", ")
+              $ ss
+  where
+  beside :: String -> String -> String
+  beside s = init
+           . unlines
+           . zipWith (++) ([s] ++ repeat (replicate (length s) ' '))
+           . lines
+
+
+-- | Shows a list, one element per line.
+--   The returned string _does not_ end with a line break.
+--
+-- > listLines [] = "[]"
+-- > listLines [0] = "[0]"
+-- > listLines [0,1] = "[ 0\n\
+-- >                   \, 1\n\
+-- >                   \]"
+showListLines :: Show a => [a] -> String
+showListLines = listLines . map show
+
+-- | Shows a list of strings, adding @...@ to the end when longer than given
+--   length.
+--
+-- > dotsLongerThan 3 ["1","2"]          =  [1,2]
+-- > dotsLongerThan 3 ["1","2","3","4"]  = [1,2,3,...]
+-- > dotsLongerThan 5 $ map show [1..]   = [1,2,3,4,5,...]
+dotsLongerThan :: Int -> [String] -> [String]
+dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
+
+-- | Alternative to 'show' for 'tiers' with one element per line.
+--   (useful for debugging, see also 'printTiers').
+--
+--   This function can be useful when debugging your 'Listable' instances.
+showTiers :: Show a => Int -> [[a]] -> String
+showTiers n = listLines . dotsLongerThan n . map showListLines
+
+-- | Alternative to 'print' for 'tiers' with one element per line.
+--   (useful for debugging, see also 'showTiers').
+--
+-- > > printTiers 3 (tiers :: [[Int]])
+-- > [ [0]
+-- > , [1]
+-- > , [-1]
+-- > , ...
+-- > ]
+-- > > printTiers 3 (tiers :: [[Bool]])
+-- > [ [ False
+-- >   , True
+-- >   ]
+-- > ]
+--
+-- This function can be useful when debugging your 'Listable' instances.
+printTiers :: Show a => Int -> [[a]] -> IO ()
+printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n

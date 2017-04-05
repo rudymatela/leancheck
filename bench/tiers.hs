@@ -5,81 +5,16 @@
 import Test.LeanCheck
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Function
+import Test.LeanCheck.Tiers
 import System.Environment
 import Data.List (intercalate)
-
--- | Shows a list of strings, one element per line.
---   The returned string _does not_ end with a line break.
---
--- > listLines [] = "[]"
--- > listLines ["0"] = "[0]"
--- > listLines ["0","1"] = "[ 0\n\
--- >                       \, 1\n\
--- >                       \]"
-listLines :: [String] -> String
-listLines []  = "[]"
-listLines [s] | '\n' `notElem` s = "[" ++ s ++ "]"
-listLines ss  = (++ "]")
-              . unlines
-              . zipWith beside (["[ "] ++ repeat ", ")
-              $ ss
-  where
-  beside :: String -> String -> String
-  beside s = init
-           . unlines
-           . zipWith (++) ([s] ++ repeat (replicate (length s) ' '))
-           . lines
-
-
--- | Shows a list, one element per line.
---   The returned string _does not_ end with a line break.
---
--- > listLines [] = "[]"
--- > listLines [0] = "[0]"
--- > listLines [0,1] = "[ 0\n\
--- >                   \, 1\n\
--- >                   \]"
-showListLines :: Show a => [a] -> String
-showListLines = listLines . map show
-
--- | Shows a list of strings, adding @...@ to the end when longer than given
---   length.
---
--- > dotsLongerThan 3 ["1","2"]          =  [1,2]
--- > dotsLongerThan 3 ["1","2","3","4"]  = [1,2,3,...]
--- > dotsLongerThan 5 $ map show [1..]   = [1,2,3,4,5,...]
-dotsLongerThan :: Int -> [String] -> [String]
-dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
-
--- | Shows tiers as a string with one element per line up to a certain size.
---   (See also 'printTiers'.)
---
---   This function can be useful when debugging your 'Listable' instances.
-showTiers :: Show a => Int -> [[a]] -> String
-showTiers n = listLines . dotsLongerThan n . map showListLines
-
--- | Prints tiers on stdout with one element per line up to a certain size.
---
--- > > printTiers 3 (tiers :: [[Int]])
--- > [ [0]
--- > , [1]
--- > , [-1]
--- > , ...
--- > ]
--- > > printTiers 3 (tiers :: [[Bool]])
--- > [ [ False
--- >   , True
--- >   ]
--- > ]
---
--- This function can be useful when debugging your 'Listable' instances.
-printTiers :: Show a => Int -> [[a]] -> IO ()
-printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
 showDotsLongerThan :: Show a => Int -> [a] -> String
 showDotsLongerThan n xs = "["
                        ++ intercalate "," (dotsLongerThan n $ map show xs)
                        ++ "]"
+  where
+  dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
 
 main :: IO ()
 main = do
