@@ -247,6 +247,7 @@ bench/tiers-%.update-diff-test: bench/tiers-%
 	$< "Bool->Maybe Bool" > tests/diff/tiers-$*-Bool-MBool
 	$< "Maybe Bool->Maybe Bool" > tests/diff/tiers-$*-MBool-MBool
 	# functions of lists
+	$< "[()]->[()]"     4 > tests/diff/tiers-$*-Us-Us
 	$< "[Bool]->[Bool]" 4 > tests/diff/tiers-$*-Bools-Bools
 	$< "[Nat]->[Nat]"   4 > tests/diff/tiers-$*-Nats-Nats
 	$< "[Int]->[Int]"   4 > tests/diff/tiers-$*-Ints-Ints
