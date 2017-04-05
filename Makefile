@@ -12,6 +12,9 @@ TESTS = tests/test           \
         tests/test-operators \
         tests/test-tiers     \
         tests/test-types
+BENCHS = \
+	bench/tiers-colistable \
+	bench/tiers
 LISTHS   = find src mk -name \*.hs
 LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
 ALLHS    = $(shell $(LISTHS))
@@ -35,7 +38,8 @@ diff-test: diff-test-tiers
 	./$<
 
 clean: clean-hi-o clean-haddock
-	rm -f $(TESTS)
+	rm -f bench/tiers-colistable.hs
+	rm -f $(TESTS) $(BENCHS)
 
 ghci: mk/All.ghci
 
@@ -97,6 +101,10 @@ mk/toplibs: mk/Toplibs.o
 	touch mk/toplibs
 
 include mk/haskell.mk
+
+TLF = "import\ Test.LeanCheck.Function"
+bench/tiers-colistable.hs: bench/tiers.hs
+	sed -e "s/$(TLF)/$(TLF).CoListable\n$(TLF).Show/" $< > $@
 
 diff-test-tiers: bench/tiers
 	# simple types
