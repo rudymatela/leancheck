@@ -471,4 +471,4 @@ showTiers n = listLines . dotsLongerThan n . map showListLines
 --
 -- This function can be useful when debugging your 'Listable' instances.
 printTiers :: Show a => Int -> [[a]] -> IO ()
-printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
+printTiers n = putStrLn . showTiers n

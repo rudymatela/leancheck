@@ -5,7 +5,7 @@
 import Test.LeanCheck
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Function
-import Test.LeanCheck.Tiers
+import Test.LeanCheck.Tiers (showTiers)
 import System.Environment
 import Data.List (intercalate)
 
@@ -15,6 +15,9 @@ showDotsLongerThan n xs = "["
                        ++ "]"
   where
   dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
+
+printTiers :: Show a => Int -> [[a]] -> IO ()
+printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
 main :: IO ()
 main = do
