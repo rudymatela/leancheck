@@ -8,6 +8,14 @@ import Test.LeanCheck.Function
 import System.Environment
 import Data.List (intercalate)
 
+-- | Shows a list of strings, one element per line.
+--   The returned string _does not_ end with a line break.
+--
+-- > listLines [] = "[]"
+-- > listLines ["0"] = "[0]"
+-- > listLines ["0","1"] = "[ 0\
+-- >                       \, 1\
+-- >                       \]"
 listLines :: [String] -> String
 listLines []  = "[]"
 listLines [s] | '\n' `notElem` s = "[" ++ s ++ "]"
@@ -23,9 +31,23 @@ listLines ss  = (++ "]")
            . lines
 
 
+-- | Shows a list, one element per line.
+--   The returned string _does not_ end with a line break.
+--
+-- > listLines [] = "[]"
+-- > listLines [0] = "[0]"
+-- > listLines [0,1] = "[ 0\
+-- >                   \, 1\
+-- >                   \]"
 showListLines :: Show a => [a] -> String
 showListLines = listLines . map show
 
+-- | Shows a list of strings, adding @...@ to the end when longer than given
+--   length.
+--
+-- > dotsLongerThan 3 ["1","2"]          =  [1,2]
+-- > dotsLongerThan 3 ["1","2","3","4"]  = [1,2,3,...]
+-- > dotsLongerThan 5 $ map show [1..]   = [1,2,3,4,5,...]
 dotsLongerThan :: Int -> [String] -> [String]
 dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
 
