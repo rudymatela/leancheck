@@ -50,6 +50,28 @@ v0.6.3
     classifyBy :: (a -> b) -> [a] -> [(b,a)]
 	countsBy :: (a -> b) -> [a] -> [(b,Int)]
 
+* idea for restructuring Function modules (all under `Test.LeanCheck.Function`):
+
+	Show                  -- exports just Show (a -> b)
+	Listable              -- exports just Listable (a -> b), based on LoP
+
+	Listable.ListsOfPairs -- exports just Listable (a -> b), based on LoP
+	Listable.CoListable   -- exports just Listable (a -> b), based on CoL
+
+	CoListable            -- exports just the CoListable typeclass
+	ListsOfPairs          -- exports just the LoP auxiliary functions
+	ShowFunction          -- exports just the ShowFunction typeclass
+
+  This structure seems somehow more clear to me.  It also allows, in the future, adding:
+
+	module Test.LeanCheck.Function.Listable.Mixed where
+	import Test.LeanCheck.Function.CoListable   as CoL
+	import Test.LeanCheck.Function.ListsOfPairs as LoP
+	instance Listable (a -> b) where
+	  tiers = LoP.functions tiers tiers \/ CoL.cotiers tiers
+
+  so that the user gets an enumeration of functions with repetitions, but using
+  a mixed strategy for generation of values.
 
 v0.6.4
 ------
