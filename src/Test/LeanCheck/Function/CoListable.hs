@@ -82,18 +82,10 @@ instance CoListable Nat where
 -- TODO: fix the above instance, there are no negative Nat's
 
 instance CoListable Nat2 where
-  cotiers rss = mapT const rss
-           \+:/ productWith
-                  (\f g  i -> if i >= 0 then f (i-1) else g (i+1))
-                  (cotiers rss) (cotiers rss)
--- TODO: fix the above instance, there are no negative Nat's
+  cotiers rss = (\rs x -> rs !! fromIntegral x) `mapT` products [rss,rss]
 
 instance CoListable Nat3 where
-  cotiers rss = mapT const rss
-           \+:/ productWith
-                  (\f g  i -> if i >= 0 then f (i-1) else g (i+1))
-                  (cotiers rss) (cotiers rss)
--- TODO: fix the above instance, there are no negative Nat's
+  cotiers rss = (\rs x -> rs !! fromIntegral x) `mapT` products [rss,rss,rss]
 
 
 alts0 :: [[a]] -> [[a]]
