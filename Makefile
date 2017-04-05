@@ -220,6 +220,10 @@ bench/tiers-%.diff-test: bench/tiers-%
 	$< "Maybe Bool->Bool" | diff -rud tests/diff/tiers-$*-MBool-Bool  -
 	$< "Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-Bool-MBool  -
 	$< "Maybe Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-MBool-MBool -
+	# functions of lists
+	$< "[Bool]->[Bool]" 4 | diff -rud tests/diff/tiers-$*-Bools-Bools
+	$< "[Nat]->[Nat]"   4 | diff -rud tests/diff/tiers-$*-Nats-Nats
+	$< "[Int]->[Int]"   4 | diff -rud tests/diff/tiers-$*-Ints-Ints
 	# more functions
 	$< "Nat2->Nat2"       | diff -rud tests/diff/tiers-$*-Nat2-Nat2   -
 	$< "Nat2->Nat3"       | diff -rud tests/diff/tiers-$*-Nat2-Nat3   -
@@ -242,6 +246,10 @@ bench/tiers-%.update-diff-test: bench/tiers-%
 	$< "Maybe Bool->Bool" > tests/diff/tiers-$*-MBool-Bool
 	$< "Bool->Maybe Bool" > tests/diff/tiers-$*-Bool-MBool
 	$< "Maybe Bool->Maybe Bool" > tests/diff/tiers-$*-MBool-MBool
+	# functions of lists
+	$< "[Bool]->[Bool]" 4 > tests/diff/tiers-$*-Bools-Bools
+	$< "[Nat]->[Nat]"   4 > tests/diff/tiers-$*-Nats-Nats
+	$< "[Int]->[Int]"   4 > tests/diff/tiers-$*-Ints-Ints
 	# more functions
 	$< "Nat2->Nat2"       > tests/diff/tiers-$*-Nat2-Nat2
 	$< "Nat2->Nat3"       > tests/diff/tiers-$*-Nat2-Nat3

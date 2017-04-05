@@ -1,0 +1,379 @@
+tiers :: [[Bool]->[Bool]]  =
+  [ [ \x -> case x of
+              [] -> []
+              [False] -> []
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    ]
+  , [ \x -> case x of
+              [] -> [False]
+              [False] -> [False]
+              [True] -> [False]
+              [False,False] -> [False]
+              [False,True] -> [False]
+              [True,False] -> [False]
+              [True,True] -> [False]
+              [False,False,False] -> [False]
+              ...
+    , \x -> case x of
+              [] -> [True]
+              [False] -> [True]
+              [True] -> [True]
+              [False,False] -> [True]
+              [False,True] -> [True]
+              [True,False] -> [True]
+              [True,True] -> [True]
+              [False,False,False] -> [True]
+              ...
+    ]
+  , [ \x -> case x of
+              [] -> [False]
+              [False] -> []
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> [True]
+              [False] -> []
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [False]
+              [True] -> [False]
+              [False,False] -> [False]
+              [False,True] -> [False]
+              [True,False] -> [False]
+              [True,True] -> [False]
+              [False,False,False] -> [False]
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [True]
+              [True] -> [True]
+              [False,False] -> [True]
+              [False,True] -> [True]
+              [True,False] -> [True]
+              [True,True] -> [True]
+              [False,False,False] -> [True]
+              ...
+    , \x -> case x of
+              [] -> [False,False]
+              [False] -> [False,False]
+              [True] -> [False,False]
+              [False,False] -> [False,False]
+              [False,True] -> [False,False]
+              [True,False] -> [False,False]
+              [True,True] -> [False,False]
+              [False,False,False] -> [False,False]
+              ...
+    , \x -> case x of
+              [] -> [False,True]
+              [False] -> [False,True]
+              [True] -> [False,True]
+              [False,False] -> [False,True]
+              [False,True] -> [False,True]
+              [True,False] -> [False,True]
+              [True,True] -> [False,True]
+              [False,False,False] -> [False,True]
+              ...
+    , \x -> case x of
+              [] -> [True,False]
+              [False] -> [True,False]
+              [True] -> [True,False]
+              [False,False] -> [True,False]
+              [False,True] -> [True,False]
+              [True,False] -> [True,False]
+              [True,True] -> [True,False]
+              [False,False,False] -> [True,False]
+              ...
+    , \x -> case x of
+              [] -> [True,True]
+              [False] -> [True,True]
+              [True] -> [True,True]
+              [False,False] -> [True,True]
+              [False,True] -> [True,True]
+              [True,False] -> [True,True]
+              [True,True] -> [True,True]
+              [False,False,False] -> [True,True]
+              ...
+    ]
+  , [ \x -> case x of
+              [] -> [False,False]
+              [False] -> []
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> [False,True]
+              [False] -> []
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> [True,False]
+              [False] -> []
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> [True,True]
+              [False] -> []
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [False]
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [True]
+              [True] -> []
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> []
+              [True] -> [False]
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> []
+              [True] -> [True]
+              [False,False] -> []
+              [False,True] -> []
+              [True,False] -> []
+              [True,True] -> []
+              [False,False,False] -> []
+              ...
+    , \x -> case x of
+              [] -> [True]
+              [False] -> [False]
+              [True] -> [False]
+              [False,False] -> [False]
+              [False,True] -> [False]
+              [True,False] -> [False]
+              [True,True] -> [False]
+              [False,False,False] -> [False]
+              ...
+    , \x -> case x of
+              [] -> [False]
+              [False] -> []
+              [True] -> [False]
+              [False,False] -> [False]
+              [False,True] -> [False]
+              [True,False] -> [False]
+              [True,True] -> [False]
+              [False,False,False] -> [False]
+              ...
+    , \x -> case x of
+              [] -> [False]
+              [False] -> [False]
+              [True] -> []
+              [False,False] -> [False]
+              [False,True] -> [False]
+              [True,False] -> [False]
+              [True,True] -> [False]
+              [False,False,False] -> [False]
+              ...
+    , \x -> case x of
+              [] -> [False]
+              [False] -> [True]
+              [True] -> [True]
+              [False,False] -> [True]
+              [False,True] -> [True]
+              [True,False] -> [True]
+              [True,True] -> [True]
+              [False,False,False] -> [True]
+              ...
+    , \x -> case x of
+              [] -> [True]
+              [False] -> []
+              [True] -> [True]
+              [False,False] -> [True]
+              [False,True] -> [True]
+              [True,False] -> [True]
+              [True,True] -> [True]
+              [False,False,False] -> [True]
+              ...
+    , \x -> case x of
+              [] -> [True]
+              [False] -> [True]
+              [True] -> []
+              [False,False] -> [True]
+              [False,True] -> [True]
+              [True,False] -> [True]
+              [True,True] -> [True]
+              [False,False,False] -> [True]
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [False,False]
+              [True] -> [False,False]
+              [False,False] -> [False,False]
+              [False,True] -> [False,False]
+              [True,False] -> [False,False]
+              [True,True] -> [False,False]
+              [False,False,False] -> [False,False]
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [False,True]
+              [True] -> [False,True]
+              [False,False] -> [False,True]
+              [False,True] -> [False,True]
+              [True,False] -> [False,True]
+              [True,True] -> [False,True]
+              [False,False,False] -> [False,True]
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [True,False]
+              [True] -> [True,False]
+              [False,False] -> [True,False]
+              [False,True] -> [True,False]
+              [True,False] -> [True,False]
+              [True,True] -> [True,False]
+              [False,False,False] -> [True,False]
+              ...
+    , \x -> case x of
+              [] -> []
+              [False] -> [True,True]
+              [True] -> [True,True]
+              [False,False] -> [True,True]
+              [False,True] -> [True,True]
+              [True,False] -> [True,True]
+              [True,True] -> [True,True]
+              [False,False,False] -> [True,True]
+              ...
+    , \x -> case x of
+              [] -> [False,False,False]
+              [False] -> [False,False,False]
+              [True] -> [False,False,False]
+              [False,False] -> [False,False,False]
+              [False,True] -> [False,False,False]
+              [True,False] -> [False,False,False]
+              [True,True] -> [False,False,False]
+              [False,False,False] -> [False,False,False]
+              ...
+    , \x -> case x of
+              [] -> [False,False,True]
+              [False] -> [False,False,True]
+              [True] -> [False,False,True]
+              [False,False] -> [False,False,True]
+              [False,True] -> [False,False,True]
+              [True,False] -> [False,False,True]
+              [True,True] -> [False,False,True]
+              [False,False,False] -> [False,False,True]
+              ...
+    , \x -> case x of
+              [] -> [False,True,False]
+              [False] -> [False,True,False]
+              [True] -> [False,True,False]
+              [False,False] -> [False,True,False]
+              [False,True] -> [False,True,False]
+              [True,False] -> [False,True,False]
+              [True,True] -> [False,True,False]
+              [False,False,False] -> [False,True,False]
+              ...
+    , \x -> case x of
+              [] -> [False,True,True]
+              [False] -> [False,True,True]
+              [True] -> [False,True,True]
+              [False,False] -> [False,True,True]
+              [False,True] -> [False,True,True]
+              [True,False] -> [False,True,True]
+              [True,True] -> [False,True,True]
+              [False,False,False] -> [False,True,True]
+              ...
+    , \x -> case x of
+              [] -> [True,False,False]
+              [False] -> [True,False,False]
+              [True] -> [True,False,False]
+              [False,False] -> [True,False,False]
+              [False,True] -> [True,False,False]
+              [True,False] -> [True,False,False]
+              [True,True] -> [True,False,False]
+              [False,False,False] -> [True,False,False]
+              ...
+    , \x -> case x of
+              [] -> [True,False,True]
+              [False] -> [True,False,True]
+              [True] -> [True,False,True]
+              [False,False] -> [True,False,True]
+              [False,True] -> [True,False,True]
+              [True,False] -> [True,False,True]
+              [True,True] -> [True,False,True]
+              [False,False,False] -> [True,False,True]
+              ...
+    , \x -> case x of
+              [] -> [True,True,False]
+              [False] -> [True,True,False]
+              [True] -> [True,True,False]
+              [False,False] -> [True,True,False]
+              [False,True] -> [True,True,False]
+              [True,False] -> [True,True,False]
+              [True,True] -> [True,True,False]
+              [False,False,False] -> [True,True,False]
+              ...
+    , \x -> case x of
+              [] -> [True,True,True]
+              [False] -> [True,True,True]
+              [True] -> [True,True,True]
+              [False,False] -> [True,True,True]
+              [False,True] -> [True,True,True]
+              [True,False] -> [True,True,True]
+              [True,True] -> [True,True,True]
+              [False,False,False] -> [True,True,True]
+              ...
+    ]
+  , ...
+  ]
+
+map length (tiers :: [[Bool]->[Bool]])  =  [1,2,8,26,...]

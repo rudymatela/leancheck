@@ -83,6 +83,10 @@ main = do
     "Bool->Maybe Bool" -> put t n (u :: Bool -> Maybe Bool   )
     "Maybe Bool->Bool" -> put t n (u :: Maybe Bool -> Bool   )
     "Maybe Bool->Maybe Bool" -> put t n (u :: Maybe Bool -> Maybe Bool)
+    -- functions with lists
+    "[Bool]->[Bool]"   -> put t n (u :: [Bool] -> [Bool]     )
+    "[Int]->[Int]"     -> put t n (u :: [Int] -> [Int]       )
+    "[Nat]->[Nat]"     -> put t n (u :: [Nat] -> [Nat]       )
     -- more functions
     "Nat2->()"         -> put t n (u :: Nat2 -> ()           )
     "()->Nat2"         -> put t n (u :: () -> Nat2           )
