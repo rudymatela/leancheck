@@ -19,6 +19,17 @@ showDotsLongerThan n xs = "["
 printTiers :: Show a => Int -> [[a]] -> IO ()
 printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
+put :: (Show a, Listable a) => String -> Int -> a -> IO ()
+put t n a = do
+  putStrLn $ "tiers :: [" ++ t ++ "]  ="
+  printTiers n $ tiers `asTypeOf` [[a]]
+  putStrLn $ ""
+  putStrLn $ "map length (tiers :: [" ++ t ++ "])  =  "
+        ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
+
+u :: a
+u = undefined
+
 main :: IO ()
 main = do
   as <- getArgs
@@ -97,13 +108,3 @@ main = do
     "NoDup Nat3"       -> put t n (u :: NoDup Nat3           )
     -- unhandled
     _                  -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"
-  where
-  u :: a
-  u = undefined
-  put :: (Show a, Listable a) => String -> Int -> a -> IO ()
-  put t n a = do
-    putStrLn $ "tiers :: [" ++ t ++ "]  ="
-    printTiers n $ tiers `asTypeOf` [[a]]
-    putStrLn $ ""
-    putStrLn $ "map length (tiers :: [" ++ t ++ "])  =  "
-          ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
