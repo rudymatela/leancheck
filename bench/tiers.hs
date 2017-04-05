@@ -37,8 +37,8 @@ showDotsLongerThan n xs = "["
                        ++ intercalate "," (dotsLongerThan n $ map show xs)
                        ++ "]"
 
-putTiers :: Show a => Int -> [[a]] -> IO ()
-putTiers n = putStrLn . ("  " `beside`) . showTiersLines n
+printTiers :: Show a => Int -> [[a]] -> IO ()
+printTiers n = putStrLn . ("  " `beside`) . showTiersLines n
 
 main :: IO ()
 main = do
@@ -124,7 +124,7 @@ main = do
   put :: (Show a, Listable a) => String -> Int -> a -> IO ()
   put t n a = do
     putStrLn $ "tiers :: [" ++ t ++ "]  ="
-    putTiers n $ tiers `asTypeOf` [[a]]
+    printTiers n $ tiers `asTypeOf` [[a]]
     putStrLn $ ""
     putStrLn $ "map length (tiers :: [" ++ t ++ "])  =  "
           ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
