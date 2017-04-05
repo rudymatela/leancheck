@@ -77,7 +77,7 @@ instance CoListable Int where
 instance CoListable Nat where
   cotiers rss = mapT const rss
            \+:/ productWith
-                  (\f g  i -> if i >= 0 then f (i-1) else g (i+1))
+                  (\f g  i -> if even i then f (i`div`2) else g (i`div`2))
                   (cotiers rss) (cotiers rss)
 -- TODO: fix the above instance, there are no negative Nat's
 
