@@ -79,7 +79,6 @@ instance CoListable Nat where
            \+:/ productWith
                   (\f g  i -> if even i then f (i`div`2) else g (i`div`2))
                   (cotiers rss) (cotiers rss)
--- TODO: fix the above instance, there are no negative Nat's
 
 instance CoListable Nat2 where
   cotiers rss = (\rs x -> rs !! fromIntegral x) `mapT` products [rss,rss]
