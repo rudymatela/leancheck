@@ -193,14 +193,16 @@ TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-colistable.hs: bench/tiers.hs
 	sed -e "s/$(TLF)/$(TLF).CoListable\n$(TLF).Show/" $< > $@
 
-bench/tiers-colistable: bench/tiers-colistable.hs
+bench/tiers-colistable: bench/tiers-colistable.hs src/Test/LeanCheck/Function/CoListable.hs
 
-bench/tiers-listsofpairs: bench/tiers-listsofpairs.hs
+bench/tiers-listsofpairs: bench/tiers-listsofpairs.hs src/Test/LeanCheck/Function/ListsOfPairs.hs
 
 
-diff-test-funtiers: bench/tiers-listsofpairs.diff-test
+diff-test-funtiers: bench/tiers-listsofpairs.diff-test \
+                    bench/tiers-colistable.diff-test
 
-update-diff-test-funtiers: bench/tiers-listsofpairs.update-diff-test
+update-diff-test-funtiers: bench/tiers-listsofpairs.update-diff-test \
+                           bench/tiers-colistable.update-diff-test
 
 bench/tiers-%.diff-test: bench/tiers-%
 	# functions

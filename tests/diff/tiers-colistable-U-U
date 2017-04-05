@@ -1,0 +1,7 @@
+tiers :: [()->()]  =
+  [ [ \x -> case x of
+              () -> ()
+    ]
+  ]
+
+map length (tiers :: [()->()])  =  [1]

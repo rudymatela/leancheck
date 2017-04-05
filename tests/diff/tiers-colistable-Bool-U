@@ -1,0 +1,8 @@
+tiers :: [Bool->()]  =
+  [ [ \x -> case x of
+              False -> ()
+              True -> ()
+    ]
+  ]
+
+map length (tiers :: [Bool->()])  =  [1]

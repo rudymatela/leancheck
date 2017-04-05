@@ -1,0 +1,37 @@
+tiers :: [Maybe Bool->Bool]  =
+  [ [ \x -> case x of
+              Nothing -> False
+              Just False -> False
+              Just True -> False
+    , \x -> case x of
+              Nothing -> False
+              Just False -> True
+              Just True -> False
+    , \x -> case x of
+              Nothing -> False
+              Just False -> False
+              Just True -> True
+    , \x -> case x of
+              Nothing -> False
+              Just False -> True
+              Just True -> True
+    , \x -> case x of
+              Nothing -> True
+              Just False -> False
+              Just True -> False
+    , \x -> case x of
+              Nothing -> True
+              Just False -> True
+              Just True -> False
+    , \x -> case x of
+              Nothing -> True
+              Just False -> False
+              Just True -> True
+    , \x -> case x of
+              Nothing -> True
+              Just False -> True
+              Just True -> True
+    ]
+  ]
+
+map length (tiers :: [Maybe Bool->Bool])  =  [8]
