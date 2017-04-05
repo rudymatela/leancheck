@@ -13,8 +13,8 @@ import Data.List (intercalate)
 --
 -- > listLines [] = "[]"
 -- > listLines ["0"] = "[0]"
--- > listLines ["0","1"] = "[ 0\
--- >                       \, 1\
+-- > listLines ["0","1"] = "[ 0\n\
+-- >                       \, 1\n\
 -- >                       \]"
 listLines :: [String] -> String
 listLines []  = "[]"
@@ -36,8 +36,8 @@ listLines ss  = (++ "]")
 --
 -- > listLines [] = "[]"
 -- > listLines [0] = "[0]"
--- > listLines [0,1] = "[ 0\
--- >                   \, 1\
+-- > listLines [0,1] = "[ 0\n\
+-- >                   \, 1\n\
 -- >                   \]"
 showListLines :: Show a => [a] -> String
 showListLines = listLines . map show
@@ -51,9 +51,28 @@ showListLines = listLines . map show
 dotsLongerThan :: Int -> [String] -> [String]
 dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
 
+-- | Shows tiers as a string with one element per line up to a certain size.
+--   (See also 'printTiers'.)
+--
+--   This function can be useful when debugging your 'Listable' instances.
 showTiers :: Show a => Int -> [[a]] -> String
 showTiers n = listLines . dotsLongerThan n . map showListLines
 
+-- | Prints tiers on stdout with one element per line up to a certain size.
+--
+-- > > printTiers 3 (tiers :: [[Int]])
+-- > [ [0]
+-- > , [1]
+-- > , [-1]
+-- > , ...
+-- > ]
+-- > > printTiers 3 (tiers :: [[Bool]])
+-- > [ [ False
+-- >   , True
+-- >   ]
+-- > ]
+--
+-- This function can be useful when debugging your 'Listable' instances.
 printTiers :: Show a => Int -> [[a]] -> IO ()
 printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
