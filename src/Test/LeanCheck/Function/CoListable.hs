@@ -17,6 +17,7 @@ where
 
 import Test.LeanCheck
 import Test.LeanCheck.Tiers
+import Test.LeanCheck.Utils (Nat(..), Nat2(..), Nat3(..))
 import Data.Maybe (fromMaybe)
 
 
@@ -72,6 +73,27 @@ instance CoListable Int where
            \+:/ productWith
                   (\f g  i -> if i >= 0 then f (i-1) else g (i+1))
                   (cotiers rss) (cotiers rss)
+
+instance CoListable Nat where
+  cotiers rss = mapT const rss
+           \+:/ productWith
+                  (\f g  i -> if i >= 0 then f (i-1) else g (i+1))
+                  (cotiers rss) (cotiers rss)
+-- TODO: fix the above instance, there are no negative Nat's
+
+instance CoListable Nat2 where
+  cotiers rss = mapT const rss
+           \+:/ productWith
+                  (\f g  i -> if i >= 0 then f (i-1) else g (i+1))
+                  (cotiers rss) (cotiers rss)
+-- TODO: fix the above instance, there are no negative Nat's
+
+instance CoListable Nat3 where
+  cotiers rss = mapT const rss
+           \+:/ productWith
+                  (\f g  i -> if i >= 0 then f (i-1) else g (i+1))
+                  (cotiers rss) (cotiers rss)
+-- TODO: fix the above instance, there are no negative Nat's
 
 
 alts0 :: [[a]] -> [[a]]
