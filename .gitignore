@@ -22,6 +22,8 @@ tests/test-operators
 tests/test-tiers
 tests/test-types
 bench/tiers
+bench/tiers-colistable
+bench/tiers-colistable.hs
 doc/*.html
 doc/*.css
 doc/*.js
