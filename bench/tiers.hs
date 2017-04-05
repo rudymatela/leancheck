@@ -26,19 +26,19 @@ listLines ss  = (++ "]")
 showListLines :: Show a => [a] -> String
 showListLines = listLines . map show
 
-showTiersLines :: Show a => Int -> [[a]] -> String
-showTiersLines n = listLines . dotsLongerThan n . map showListLines
-
 dotsLongerThan :: Int -> [String] -> [String]
 dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
+
+showTiers :: Show a => Int -> [[a]] -> String
+showTiers n = listLines . dotsLongerThan n . map showListLines
+
+printTiers :: Show a => Int -> [[a]] -> IO ()
+printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
 showDotsLongerThan :: Show a => Int -> [a] -> String
 showDotsLongerThan n xs = "["
                        ++ intercalate "," (dotsLongerThan n $ map show xs)
                        ++ "]"
-
-printTiers :: Show a => Int -> [[a]] -> IO ()
-printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiersLines n
 
 main :: IO ()
 main = do
