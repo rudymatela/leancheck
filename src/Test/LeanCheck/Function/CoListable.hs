@@ -63,6 +63,8 @@ instance (CoListable a) => CoListable [a] where
                   (cotiers (cotiers rss))
 
 
+instance (CoListable a, CoListable b) => CoListable (a,b) where
+  cotiers = mapT uncurry . cotiers . cotiers
 
 
 instance CoListable Int where
