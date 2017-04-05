@@ -8,12 +8,6 @@ import Test.LeanCheck.Function
 import System.Environment
 import Data.List (intercalate)
 
-beside :: String -> String -> String
-beside s = init
-         . unlines
-         . zipWith (++) ([s] ++ repeat (replicate (length s) ' '))
-         . lines
-
 listLines :: [String] -> String
 listLines []  = "[]"
 listLines [s] | '\n' `notElem` s = "[" ++ s ++ "]"
@@ -21,6 +15,13 @@ listLines ss  = (++ "]")
               . unlines
               . zipWith beside (["[ "] ++ repeat ", ")
               $ ss
+  where
+  beside :: String -> String -> String
+  beside s = init
+           . unlines
+           . zipWith (++) ([s] ++ repeat (replicate (length s) ' '))
+           . lines
+
 
 showListLines :: Show a => [a] -> String
 showListLines = listLines . map show
@@ -37,7 +38,7 @@ showDotsLongerThan n xs = "["
                        ++ "]"
 
 printTiers :: Show a => Int -> [[a]] -> IO ()
-printTiers n = putStrLn . ("  " `beside`) . showTiersLines n
+printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiersLines n
 
 main :: IO ()
 main = do
