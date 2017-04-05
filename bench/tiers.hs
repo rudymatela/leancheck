@@ -9,11 +9,10 @@ import System.Environment
 import Data.List (intercalate)
 
 beside :: String -> String -> String
-beside heading s = init $ unlines $
-  zipWith
-    (++)
-    ([heading] ++ repeat (replicate (length heading) ' '))
-    (lines s)
+beside s = init
+         . unlines
+         . zipWith (++) ([s] ++ repeat (replicate (length s) ' '))
+         . lines
 
 listLines :: [String] -> String
 listLines []  = "[]"
