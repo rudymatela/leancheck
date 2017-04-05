@@ -8,7 +8,8 @@
 -- a simple enumerative property-based testing library.
 --
 -- This module exports a 'Listable' instance for function enumeration by means
--- of a 'CoListable' typeclass.
+-- of a 'CoListable' typeclass.  This is very similar to the coseries
+-- enumeration of SmallCheck.
 --
 -- This module /does not currently work/, it it just a sketch and a stub.
 module Test.LeanCheck.Function.CoListable
