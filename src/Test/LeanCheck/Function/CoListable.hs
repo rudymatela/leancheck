@@ -20,6 +20,10 @@ import Test.LeanCheck.Tiers
 import Data.Maybe (fromMaybe)
 
 
+instance (CoListable a, Listable b) => Listable (a -> b) where
+  tiers = cotiers tiers
+
+
 (\+:/) :: [[a]] -> [[a]] -> [[a]]
 xss \+:/ yss = xss \/ ([]:yss)
 infixr 9 \+:/
