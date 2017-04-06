@@ -65,12 +65,14 @@ instance FunListable Bool where
 
 
 instance FunListable a => FunListable (Maybe a) where
+  validResults _ _   =  True
   funtiers = mapT (\(n, mkf) -> (n+1, \(r:rs)  m -> case m of
                                                        Nothing -> r
                                                        Just x  -> mkf rs x)) funtiers
 
 
 instance (FunListable a, FunListable b) => FunListable (Either a b) where
+  validResults _ _  =  True
   funtiers = productWith
                 (\(nf, mf) (ng, mg) -> (nf + ng, \rs  e -> case e of
                                                              Left  x -> mf (take nf rs) x
