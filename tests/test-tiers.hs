@@ -52,15 +52,16 @@ tests =
   , finite (tiers :: [[ Word1 ]])  == True
   , finite (tiers :: [[ Word2 ]])  == True
   , finite (tiers :: [[ Word3 ]])  == True
-  , finite (tiers :: [[ Word4 ]])  == True
-  , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool) ]]) == True
-  -- false negative, there are 64 sixtuples of booleans, > 60
-  , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool,Bool) ]]) == False
 
   , finite (tiers :: [[ Nat ]])   == False
   , finite (tiers :: [[ Int ]])   == False
   , finite (tiers :: [[ [Int] ]]) == False
   , finite (tiers :: [[ [()] ]])  == False
+
+  -- false negatives, more than 12 values:
+  , finite (tiers :: [[ Word4 ]])  == False
+  , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool) ]]) == False
+  , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool,Bool) ]]) == False
   ]
 
 deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool

@@ -478,7 +478,13 @@ printTiers n = putStrLn . showTiers n
 -- | Checks if a list-of-tiers is finite.
 --
 -- **Warning:** this is just an approximation, a list-of-tiers is considered
---              finite if it has less than 61 values.  This function may give
+--              finite if it has less than 13 values.  This function may give
 --              false negatives.
 finite :: [[a]] -> Bool
-finite = null . drop 60 . concat
+finite = null . drop 12 . concat . take 60
+-- NOTE: `take 60` is there because otherwise this function would not
+-- terminate in a tier-of-lists with an infinite tail of empty tiers, like:
+-- > import Test.LeanCheck.Function.ListsOfPairs
+-- > map length (tiers :: [[ Nat -> () ]]) [1,0,0,0,0,0,...]
+-- maybe this `take 60` has to be copied in other places of LeanCheck to avoid
+-- similar issues of non-temrination.
