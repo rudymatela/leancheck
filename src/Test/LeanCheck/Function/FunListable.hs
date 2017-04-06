@@ -88,6 +88,11 @@ instance (FunListable a, FunListable b) => FunListable (Either a b) where
                 funtiers
 
 
+-- NOTE: big problem: adding r1 == r2 below instroduces an Eq restriction on
+-- the result type.  Which does not exist for (a->b).  Maybe create a new
+-- typeclass: FunResult, then rename FunListable to FunArg.  This way we can
+-- have the equality check (or any other special checks) for types that have
+-- equality and ignore it for types that don't.
 instance (FunListable a) => FunListable [a] where
   validResults _ [r1,r2]  {- | r1 == r2 -} =  False  -- The results cannot end with repetitions
   validResults x (r:rs)   =  validResults x rs
