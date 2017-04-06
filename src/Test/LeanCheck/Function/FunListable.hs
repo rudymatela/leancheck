@@ -82,6 +82,9 @@ instance (FunListable a, FunListable b) => FunListable (Either a b) where
 
 
 instance (FunListable a) => FunListable [a] where
+  validResults _ [r1,r2]  =  False  -- The results cannot end with repetitions
+  validResults x (r:rs)   =  validResults x rs
+  validResults _ _        =  True
   funtiers = [[ (1, \[r]  xs -> r) ]]
          \+:/ mapT (\(n, f) -> (1 + n, \(r:rs)  xs -> case xs of
                                                         []     -> r
