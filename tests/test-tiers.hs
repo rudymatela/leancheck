@@ -39,6 +39,28 @@ tests =
   , holds 100 $ deleteT_is_map_delete 10 -:> int
   , holds 100 $ deleteT_is_map_delete 10 -:> bool
   , holds 100 $ deleteT_is_map_delete 10 -:> int2
+
+  , finite (tiers :: [[ Bool ]])  == True
+  , finite (tiers :: [[ (Bool,Bool) ]]) == True
+  , finite (tiers :: [[ Nat1 ]])  == True
+  , finite (tiers :: [[ Nat2 ]])  == True
+  , finite (tiers :: [[ Nat3 ]])  == True
+  , finite (tiers :: [[ Nat4 ]])  == True
+  , finite (tiers :: [[ Nat5 ]])  == True
+  , finite (tiers :: [[ Nat6 ]])  == True
+  , finite (tiers :: [[ Nat7 ]])  == True
+  , finite (tiers :: [[ Word1 ]])  == True
+  , finite (tiers :: [[ Word2 ]])  == True
+  , finite (tiers :: [[ Word3 ]])  == True
+  , finite (tiers :: [[ Word4 ]])  == True
+  , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool) ]]) == True
+  -- false negative, there are 64 sixtuples of booleans, > 60
+  , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool,Bool) ]]) == False
+
+  , finite (tiers :: [[ Nat ]])   == False
+  , finite (tiers :: [[ Int ]])   == False
+  , finite (tiers :: [[ [Int] ]]) == False
+  , finite (tiers :: [[ [()] ]])  == False
   ]
 
 deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool

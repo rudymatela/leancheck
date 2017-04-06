@@ -61,6 +61,8 @@ module Test.LeanCheck.Tiers
   --   element per line and can be useful for debugging.
   , printTiers
   , showTiers
+
+  , finite
   )
 where
 
@@ -472,3 +474,11 @@ showTiers n = listLines . dotsLongerThan n . map showListLines
 -- This function can be useful when debugging your 'Listable' instances.
 printTiers :: Show a => Int -> [[a]] -> IO ()
 printTiers n = putStrLn . showTiers n
+
+-- | Checks if a list-of-tiers is finite.
+--
+-- **Warning:** this is just an approximation, a list-of-tiers is considered
+--              finite if it has less than 61 values.  This function may give
+--              false negatives.
+finite :: [[a]] -> Bool
+finite = null . drop 60 . concat
