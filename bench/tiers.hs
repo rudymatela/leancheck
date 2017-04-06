@@ -25,7 +25,7 @@ put t n a = do
   printTiers n $ tiers `asTypeOf` [[a]]
   putStrLn $ ""
   putStrLn $ "map length (tiers :: [" ++ t ++ "])  =  "
-        ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
+          ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
 
 u :: a
 u = undefined
