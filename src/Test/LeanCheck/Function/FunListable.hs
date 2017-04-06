@@ -44,6 +44,7 @@ class FunListable a where
 --        of course, this for the enumeration where I have the points.
 --   * for pairs, apply the invariants accordingly in the matrix (is that
 --     possible?)
+--        I think it is.  Apply one invariant to columns, the other to lines.
 
 instance FunListable () where
   funtiers = [[ (1, \[r]  () -> r) ]]
