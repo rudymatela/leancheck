@@ -32,6 +32,12 @@ documentation
 v0.6.3
 ------
 
+* Improve ListsOfPairs by checking if the argument type is infinite:
+  if it is, generate functions in the current way,
+  if it is not, generate functions where the return values are a product of possible result values.
+  Checking if the argument type is infinite is impossible (wo/ defining a new typeclass to state it),
+  so, just check if the concat of tiers has less than 60 elements.
+
 * Remove repetition on ListsOfPairs' `tiers :: [[Bool -> Bool]]` enumeration.
 
 * Remove trailing empty tiers on
