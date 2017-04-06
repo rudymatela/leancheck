@@ -1,4 +1,4 @@
 tiers :: [Int->Int]  =
   [[]]
 
-map length (tiers :: [Int->Int])  =  [0]
+map length (tiers :: [[ Int->Int ]])  =  [0]

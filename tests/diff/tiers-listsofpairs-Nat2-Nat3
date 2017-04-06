@@ -52,4 +52,4 @@ tiers :: [Nat2->Nat3]  =
     ]
   ]
 
-map length (tiers :: [Nat2->Nat3])  =  [1,1,3,4,4,2]
+map length (tiers :: [[ Nat2->Nat3 ]])  =  [1,1,3,4,4,2]

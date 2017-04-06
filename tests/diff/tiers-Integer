@@ -14,4 +14,4 @@ tiers :: [Integer]  =
   , ...
   ]
 
-map length (tiers :: [Integer])  =  [1,1,1,1,1,1,1,1,1,1,1,1,...]
+map length (tiers :: [[ Integer ]])  =  [1,1,1,1,1,1,1,1,1,1,1,1,...]

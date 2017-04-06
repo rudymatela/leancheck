@@ -86,4 +86,4 @@ tiers :: [[Int]->[Int]]  =
   , ...
   ]
 
-map length (tiers :: [[Int]->[Int]])  =  [1,1,2,4,...]
+map length (tiers :: [[ [Int]->[Int] ]])  =  [1,1,2,4,...]

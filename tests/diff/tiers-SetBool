@@ -6,4 +6,4 @@ tiers :: [Set Bool]  =
   , [Set [False,True]]
   ]
 
-map length (tiers :: [Set Bool])  =  [1,2,1]
+map length (tiers :: [[ Set Bool ]])  =  [1,2,1]

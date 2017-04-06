@@ -156,4 +156,4 @@ tiers :: [[Bool]->[Bool]]  =
   , ...
   ]
 
-map length (tiers :: [[Bool]->[Bool]])  =  [1,2,4,8,...]
+map length (tiers :: [[ [Bool]->[Bool] ]])  =  [1,2,4,8,...]

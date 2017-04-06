@@ -7,4 +7,4 @@ tiers :: [NoDup Nat2]  =
     ]
   ]
 
-map length (tiers :: [NoDup Nat2])  =  [1,1,1,2]
+map length (tiers :: [[ NoDup Nat2 ]])  =  [1,1,1,2]

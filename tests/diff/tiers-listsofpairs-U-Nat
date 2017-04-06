@@ -20,4 +20,4 @@ tiers :: [()->Nat]  =
   , ...
   ]
 
-map length (tiers :: [()->Nat])  =  [1,1,1,1,1,1,...]
+map length (tiers :: [[ ()->Nat ]])  =  [1,1,1,1,1,1,...]

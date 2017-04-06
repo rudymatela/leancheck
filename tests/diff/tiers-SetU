@@ -3,4 +3,4 @@ tiers :: [Set ()]  =
   , [Set [()]]
   ]
 
-map length (tiers :: [Set ()])  =  [1,1]
+map length (tiers :: [[ Set () ]])  =  [1,1]

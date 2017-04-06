@@ -1,4 +1,4 @@
 tiers :: [Nat->()]  =
   [[]]
 
-map length (tiers :: [Nat->()])  =  [0]
+map length (tiers :: [[ Nat->() ]])  =  [0]

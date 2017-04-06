@@ -5,4 +5,4 @@ tiers :: [Bool->()]  =
     ]
   ]
 
-map length (tiers :: [Bool->()])  =  [1]
+map length (tiers :: [[ Bool->() ]])  =  [1]

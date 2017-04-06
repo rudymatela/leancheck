@@ -5,4 +5,4 @@ tiers :: [Set Nat2]  =
   , [Set [0,1]]
   ]
 
-map length (tiers :: [Set Nat2])  =  [1,1,1,1]
+map length (tiers :: [[ Set Nat2 ]])  =  [1,1,1,1]

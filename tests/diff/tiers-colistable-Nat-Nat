@@ -2628,4 +2628,4 @@ tiers :: [Nat->Nat]  =
   , ...
   ]
 
-map length (tiers :: [Nat->Nat])  =  [1,2,5,15,51,188,...]
+map length (tiers :: [[ Nat->Nat ]])  =  [1,2,5,15,51,188,...]
