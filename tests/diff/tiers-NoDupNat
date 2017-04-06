@@ -218,3 +218,5 @@ tiers :: [NoDup Nat]  =
   ]
 
 map length (tiers :: [[ NoDup Nat ]])  =  [1,1,1,3,3,5,11,13,19,27,57,65,...]
+
+length (list :: [ NoDup Nat ])  =  Infinity

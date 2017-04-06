@@ -39,3 +39,5 @@ tiers :: [String]  =
   ]
 
 map length (tiers :: [[ String ]])  =  [1,1,2,4,8,16,...]
+
+length (list :: [ String ])  =  Infinity

@@ -55,3 +55,5 @@ tiers :: [Bag Nat2]  =
   ]
 
 map length (tiers :: [[ Bag Nat2 ]])  =  [1,1,2,2,3,3,4,4,5,5,6,6,...]
+
+length (list :: [ Bag Nat2 ])  =  Infinity

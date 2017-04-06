@@ -22,3 +22,5 @@ tiers :: [Bool->Bool]  =
   ]
 
 map length (tiers :: [[ Bool->Bool ]])  =  [2,4]
+
+length (list :: [ Bool->Bool ])  =  6

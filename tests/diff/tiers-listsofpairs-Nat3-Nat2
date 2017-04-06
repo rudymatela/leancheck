@@ -66,3 +66,5 @@ tiers :: [Nat3->Nat2]  =
   ]
 
 map length (tiers :: [[ Nat3->Nat2 ]])  =  [1,1,2,2,3,2,2,1]
+
+length (list :: [ Nat3->Nat2 ])  =  Infinity

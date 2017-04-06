@@ -35,3 +35,5 @@ tiers :: [Maybe Bool->Bool]  =
   ]
 
 map length (tiers :: [[ Maybe Bool->Bool ]])  =  [8]
+
+length (list :: [ Maybe Bool->Bool ])  =  8

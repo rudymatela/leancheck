@@ -5,9 +5,25 @@
 import Test.LeanCheck
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Function
-import Test.LeanCheck.Tiers (showTiers)
+import Test.LeanCheck.Tiers (showTiers, finite)
 import System.Environment
 import Data.List (intercalate)
+
+dropEmptyTiersTail :: [[a]] -> [[a]]
+dropEmptyTiersTail ([]:[]:[]: []:[]:[]: _) = []
+dropEmptyTiersTail (xs:xss) = xs:dropEmptyTiersTail xss
+dropEmptyTiersTail []     = []
+
+lengthT :: [[a]] -> Maybe Int
+lengthT xss | finite xss' = Just . length $ concat xss'
+            | otherwise   = Nothing
+  where xss' = dropEmptyTiersTail xss
+
+
+showLengthT :: [[a]] -> String
+showLengthT xss = case lengthT xss of
+                    Nothing -> "Infinity"
+                    Just x  -> show x
 
 showDotsLongerThan :: Show a => Int -> [a] -> String
 showDotsLongerThan n xs = "["
@@ -26,6 +42,9 @@ put t n a = do
   putStrLn $ ""
   putStrLn $ "map length (tiers :: [[ " ++ t ++ " ]])  =  "
           ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
+  putStrLn $ ""
+  putStrLn $ "length (list :: [ " ++ t ++ " ])  =  "
+          ++ showLengthT (tiers `asTypeOf` [[a]])
 
 u :: a
 u = undefined

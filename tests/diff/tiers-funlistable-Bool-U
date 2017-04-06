@@ -6,3 +6,5 @@ tiers :: [Bool->()]  =
   ]
 
 map length (tiers :: [[ Bool->() ]])  =  [1]
+
+length (list :: [ Bool->() ])  =  1

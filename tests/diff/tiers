@@ -2,3 +2,5 @@ tiers :: [()]  =
   [[()]]
 
 map length (tiers :: [[ () ]])  =  [1]
+
+length (list :: [ () ])  =  1

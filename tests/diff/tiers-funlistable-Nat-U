@@ -2,3 +2,5 @@ tiers :: [Nat->()]  =
   [[]]
 
 map length (tiers :: [[ Nat->() ]])  =  [0]
+
+length (list :: [ Nat->() ])  =  0

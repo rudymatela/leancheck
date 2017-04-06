@@ -2,3 +2,5 @@ tiers :: [Int->Int->Int]  =
   [[]]
 
 map length (tiers :: [[ Int->Int->Int ]])  =  [0]
+
+length (list :: [ Int->Int->Int ])  =  0

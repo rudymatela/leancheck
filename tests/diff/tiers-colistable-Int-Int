@@ -2629,3 +2629,5 @@ tiers :: [Int->Int]  =
   ]
 
 map length (tiers :: [[ Int->Int ]])  =  [1,2,5,15,51,188,...]
+
+length (list :: [ Int->Int ])  =  Infinity

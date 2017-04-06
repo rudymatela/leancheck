@@ -167,3 +167,5 @@ tiers :: [[Nat]->[Nat]]  =
   ]
 
 map length (tiers :: [[ [Nat]->[Nat] ]])  =  [1,1,4,10,...]
+
+length (list :: [ [Nat]->[Nat] ])  =  Infinity

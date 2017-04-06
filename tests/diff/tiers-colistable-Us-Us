@@ -157,3 +157,5 @@ tiers :: [[()]->[()]]  =
   ]
 
 map length (tiers :: [[ [()]->[()] ]])  =  [1,2,4,8,...]
+
+length (list :: [ [()]->[()] ])  =  Infinity

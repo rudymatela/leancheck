@@ -63,3 +63,5 @@ tiers :: [Maybe Bool->Bool]  =
   ]
 
 map length (tiers :: [[ Maybe Bool->Bool ]])  =  [2,2,4,4,2]
+
+length (list :: [ Maybe Bool->Bool ])  =  Infinity
