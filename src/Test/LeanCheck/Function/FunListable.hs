@@ -21,8 +21,15 @@ import Test.LeanCheck.Utils (Nat(..), Nat2(..), Nat3(..))
 import Data.Maybe (fromMaybe)
 
 
+sndArgTypeOf :: b -> (a -> b -> c) -> b
+x `sndArgTypeOf` _ = x
+
+
 instance (FunListable a, Listable b) => Listable (a -> b) where
-  tiers = concatMapT (\(n, mkf) -> mapT mkf (products $ replicate n tiers)) funtiers
+  tiers = concatMapT mkfss funtiers
+    where
+    mkfss (n, mkf) = mapT mkf (products (replicate n tiers)
+                    `suchThat` validResults (undefined `sndArgTypeOf` mkf))
 
 
 (\+:/) :: [[a]] -> [[a]] -> [[a]]
