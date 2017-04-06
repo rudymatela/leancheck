@@ -31,6 +31,10 @@ infixr 9 \+:/
 
 
 class FunListable a where
+  validResults   :: a -> [b] -> Bool
+  validResults   x  =  not . invalidResults x
+  invalidResults :: a -> [b] -> Bool
+  invalidResults x  =  not .   validResults x
   funtiers :: [[ (Int, [b] -> (a -> b)) ]]
 
 -- maybe the other function FunListable needs is a okResults that checks if
