@@ -32,6 +32,9 @@ documentation
 v0.6.3
 ------
 
+* On `bench/tiers`, print if the enumeration has repetitions
+  (import `Function.Eq` for that)
+
 * Add `names` function to the ShowFunction typeclass that lists templates of
   names for variables of the type.
   Sadly, there is no way to do this without introducing a typeclass restriction
