@@ -1,0 +1,4 @@
+tiers :: [Nat2->Nat3]  =
+  [[]]
+
+map length (tiers :: [Nat2->Nat3])  =  [0]

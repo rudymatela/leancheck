@@ -204,9 +204,11 @@ bench/tiers-listsofpairs: bench/tiers-listsofpairs.hs src/Test/LeanCheck/Functio
 bench/tiers-funlistable: bench/tiers-funlistable.hs src/Test/LeanCheck/Function/FunListable.hs
 
 diff-test-funtiers: bench/tiers-listsofpairs.diff-test \
+                    bench/tiers-funlistable.diff-test \
                     bench/tiers-colistable.diff-test
 
 update-diff-test-funtiers: bench/tiers-listsofpairs.update-diff-test \
+                           bench/tiers-funlistable.update-diff-test \
                            bench/tiers-colistable.update-diff-test
 
 bench/tiers-%.diff-test: bench/tiers-%
