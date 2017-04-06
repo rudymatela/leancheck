@@ -32,19 +32,6 @@ documentation
 v0.6.3
 ------
 
-* Improve ListsOfPairs by checking if the argument type is infinite:
-  if it is, generate functions in the current way,
-  if it is not, generate functions where the return values are a product of possible result values.
-  Checking if the argument type is infinite is impossible (wo/ defining a new typeclass to state it),
-  so, just check if the concat of tiers has less than 60 elements.
-
-* Remove repetition on ListsOfPairs' `tiers :: [[Bool -> Bool]]` enumeration.
-
-* Remove trailing empty tiers on
-  `tiers :: [[Bool->()]]` and `tiers :: [[Nat2->()]]`.
-  (See the output of `./bench/tiers`.)
-  Or if removal is not easy, at least state _why_ it happens somewhere.
-
 * Add `names` function to the ShowFunction typeclass that lists templates of
   names for variables of the type.
   Sadly, there is no way to do this without introducing a typeclass restriction

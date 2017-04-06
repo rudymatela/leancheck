@@ -27,10 +27,12 @@ instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
 
 
 functions :: Eq a => [[a]] -> [[b]] -> [[a->b]]
-functions xss yss =
-  concatMapT
-    (\(r,yss) -> mapT (const r `mutate`) (functionPairs xss yss))
-    (choices yss)
+functions xss yss
+  | finite xss = mapT ((undefined `mutate`) . zip (concat xss))
+                      (products $ replicate (length $ concat xss) yss)
+  | otherwise  = concatMapT
+                   (\(r,yss) -> mapT (const r `mutate`) (functionPairs xss yss))
+                   (choices yss)
 
 
 mutate :: Eq a => (a -> b) -> [(a,b)] -> (a -> b)

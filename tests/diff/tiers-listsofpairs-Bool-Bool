@@ -3,24 +3,17 @@ tiers :: [Bool->Bool]  =
               False -> False
               True -> False
     , \x -> case x of
-              False -> True
-              True -> True
-    ]
-  , [ \x -> case x of
-              False -> True
-              True -> False
-    , \x -> case x of
-              False -> False
-              True -> True
-    , \x -> case x of
               False -> False
               True -> True
     , \x -> case x of
               False -> True
               True -> False
+    , \x -> case x of
+              False -> True
+              True -> True
     ]
   ]
 
-map length (tiers :: [[ Bool->Bool ]])  =  [2,4]
+map length (tiers :: [[ Bool->Bool ]])  =  [4]
 
-length (list :: [ Bool->Bool ])  =  6
+length (list :: [ Bool->Bool ])  =  4

@@ -3,9 +3,8 @@ tiers :: [Bool->()]  =
               False -> ()
               True -> ()
     ]
-  , []
   ]
 
-map length (tiers :: [[ Bool->() ]])  =  [1,0]
+map length (tiers :: [[ Bool->() ]])  =  [1]
 
 length (list :: [ Bool->() ])  =  1

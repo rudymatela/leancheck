@@ -4,25 +4,18 @@ tiers :: [Nat2->Nat2]  =
               1 -> 0
     ]
   , [ \x -> case x of
-              0 -> 1
-              1 -> 1
-    ]
-  , [ \x -> case x of
-              0 -> 1
-              1 -> 0
-    , \x -> case x of
-              0 -> 0
-              1 -> 1
-    ]
-  , [ \x -> case x of
               0 -> 0
               1 -> 1
     , \x -> case x of
               0 -> 1
               1 -> 0
+    ]
+  , [ \x -> case x of
+              0 -> 1
+              1 -> 1
     ]
   ]
 
-map length (tiers :: [[ Nat2->Nat2 ]])  =  [1,1,2,2]
+map length (tiers :: [[ Nat2->Nat2 ]])  =  [1,2,1]
 
-length (list :: [ Nat2->Nat2 ])  =  6
+length (list :: [ Nat2->Nat2 ])  =  4
