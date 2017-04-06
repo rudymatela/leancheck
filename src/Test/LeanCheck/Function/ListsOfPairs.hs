@@ -53,6 +53,11 @@ associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
 -- Those represent functional relations.
 functionPairs :: [[a]] -> [[b]] -> [[ [(a,b)] ]]
 functionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
+-- incompleteSetsOf is needed, instead of setsOf, because mutating *all* values
+-- of a constant function makes no sense (we would have already enumerated that
+-- function anyway).  As of 2c23c1a, it makes no difference whether
+-- incompleteSetsOf is used instead of setsOf for types with less than 12
+-- values.
 
 -- | Returns tiers of sets excluding the universe set.
 --
