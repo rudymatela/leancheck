@@ -92,6 +92,7 @@ instance (FunListable a) => FunListable [a] where
 
 
 instance (FunListable a, FunListable b) => FunListable (a,b) where
+  validResults _ _  =  True  -- TODO: check lines and columns
   funtiers = productWith (\(n, f)  (m, g)
                             -> (n*m, \rs  (x,y) -> toMatrix m rs
                                                 !! f [0..(n-1)] x
