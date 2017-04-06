@@ -51,12 +51,12 @@ class FunListable a where
 --        I think it is.  Apply one invariant to columns, the other to lines.
 
 instance FunListable () where
-  validResults _ _  =  True
+  validResults _ _ = True
   funtiers = [[ (1, \[r]  () -> r) ]]
 
 
 instance FunListable Bool where
-  validResults _ _  =  True
+  validResults _ _ = True
   funtiers = [[ (2, \[r1,r2]  b -> if b then r1 else r2) ]]
 
 -- have funtiers = [[ (1, \[r1]  b -> r1) ]
