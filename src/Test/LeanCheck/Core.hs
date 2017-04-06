@@ -378,7 +378,7 @@ results = concat . resultiers
 
 -- | Lists all counter-examples for a number of tests to a property,
 counterExamples :: Testable a => Int -> a -> [[String]]
-counterExamples n p = [c | (c,False) <- take n (results p)]
+counterExamples n p = [as | (as,False) <- take n (results p)]
 
 -- | Up to a number of tests to a property,
 --   returns 'Just' the first counter-example
@@ -391,7 +391,7 @@ counterExample n = listToMaybe . counterExamples n
 
 -- | Lists all witnesses up to a number of tests to a property,
 witnesses :: Testable a => Int -> a -> [[String]]
-witnesses n p = [w | (w,True) <- take n (results p)]
+witnesses n p = [as | (as,True) <- take n (results p)]
 
 -- | Up to a number of tests to a property,
 --   returns 'Just' the first witness
