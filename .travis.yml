@@ -1,3 +1,4 @@
+# .travis.yml file for LeanCheck
 sudo: false
 
 language: haskell
