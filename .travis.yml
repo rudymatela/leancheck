@@ -1,5 +1,5 @@
 # .travis.yml file for LeanCheck
-sudo: false
+sudo: true
 
 language: haskell
 
@@ -18,6 +18,9 @@ matrix:
       script: >
         make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
         make test GHCFLAGS="-fno-warn-unrecognised-pragmas"
+
+before_install:
+  - sudo apt-get install ghc-dynamic
 
 script:
   - cabal install --only-dependencies --enable-tests --enable-shared
