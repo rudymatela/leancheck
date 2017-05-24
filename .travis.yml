@@ -20,6 +20,7 @@ matrix:
         make test GHCFLAGS="-fno-warn-unrecognised-pragmas"
 
 script:
+  - cabal install --only-dependencies --enable-tests --enable-shared
   - make && make test
   - cabal test
 
