@@ -23,11 +23,11 @@ import Test.LeanCheck.Tiers
 import Data.Maybe (fromMaybe)
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
-  tiers = functions tiers tiers
+  tiers = tiers -->> tiers
 
 
-functions :: Eq a => [[a]] -> [[b]] -> [[a->b]]
-functions xss yss
+(-->>) :: Eq a => [[a]] -> [[b]] -> [[a->b]]
+xss -->> yss
   | finite xss = mapT ((undefined `mutate`) . zip (concat xss))
                       (products $ replicate (length $ concat xss) yss)
   | otherwise  = concatMapT
