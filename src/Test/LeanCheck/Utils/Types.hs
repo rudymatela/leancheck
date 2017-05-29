@@ -50,6 +50,9 @@ module Test.LeanCheck.Utils.Types
   , UInt3
   , UInt4
 
+  -- * Extreme Integers
+  , X (..)
+
   -- * List-wrapper types
   , NoDup (..)
   , Bag (..)
@@ -59,6 +62,7 @@ where
 -- TODO: Add Ix and Bits instances
 
 import Test.LeanCheck (Listable(..), listIntegral)
+import Test.LeanCheck.Core ((+|))
 import Test.LeanCheck.Tiers (noDupListCons, setCons, bagCons)
 import Data.Ratio ((%))
 
@@ -459,3 +463,50 @@ newtype Set a = Set [a] deriving (Show, Read, Eq, Ord)
 instance Listable a => Listable (NoDup a) where tiers = noDupListCons NoDup
 instance Listable a => Listable (Bag a)   where tiers = bagCons Bag
 instance Listable a => Listable (Set a)   where tiers = setCons Set
+
+newtype X a = X {unX :: a} deriving (Eq, Ord)
+instance Show a => Show (X a) where show (X x) = show x
+instance (Integral a, Bounded a) => Listable (X a) where list = map X listXIntegral
+
+-- FIXME: make this work for Int2 / Word2 types
+--        by checking then using normal enumeration
+listXIntegral :: (Bounded a, Integral a) => [a]
+listXIntegral = l undefined
+  where
+  l :: (Ord a, Num a, Bounded a, Integral a) => a -> [a]
+  l a | minBound `asTypeOf` a < 0 = listXIntegralN
+      | otherwise                 = listXIntegralP
+-- The type-hackery above is needed so that we don't need to activate
+-- ScopedTypeVariables
+
+listXIntegralN :: (Bounded a, Integral a) => [a]
+listXIntegralN = 0 : (extremes 1 maxBound) +| (extremes (-1) minBound)
+-- listXIntegralN :: Int4 =
+--    0 : (([1,2,3,4] +| [7,6,5]) +| ([-1,-2,-3,-4] +| [-8,-7,-6,-5]))
+
+listXIntegralP :: (Bounded a, Integral a) => [a]
+listXIntegralP = 0 : [1..midBound] ++| [maxBound,(maxBound-1)..(midBound+1)]
+  where
+  midBound = maxBound `div` 3 * 2
+
+extremes :: (Integral a) => a -> a -> [a]
+extremes x y
+  | x > y      =  [x,x-1..m] +| [y..m-1]
+  | otherwise  =  [x..m] +| [y,y-1..m+1]
+  where m = mid x y
+
+mid :: Integral a => a -> a -> a
+mid x y = x `div` 2
+        + y `div` 2
+        + if odd x && odd y then 1 else 0
+
+-- | Lazily interleaves two lists, switching between elements of the two.
+--   This version uses the first list more frequently than the second.
+--
+-- > [x,y,z,w] +| [a,b] == [x,y, a, z,w, b]
+(++|) :: [a] -> [a] -> [a]
+[]        ++| ys      =  ys
+xs        ++| []      =  xs
+[x]       ++| ys      =  x:ys
+(x:x':xs) ++| (y:ys)  =  x:x':y:(xs ++| ys)
+infixr 5 ++|

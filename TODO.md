@@ -4,22 +4,6 @@ TO DO list for LeanCheck
 List of things to do for LeanCheck.
 
 
-Create an "extreme" enumeration for Int types
----------------------------------------------
-
-Create wrappers for Int types (XInt, XWord, XInt32, XInt16) that have the
-following enumeration pattern:
-
-	[0, 1, -1, maxBound, minBound, 2, -2, maxBound - 1, minBound + 1, ...]
-	[0, 1, 2, maxBound, 3, maxBound-1, 4, maxBound-2, ...]
-
-I'll have to carefully implement the "end" of the enumeration, something like:
-
-	[0,1..(maxBound/2)] +| [maxBound,(maxBound-1)..(maxBound/2)]
-
-Test with Utils.Types by creating (XInt4).  Add properties of uniqueness.
-
-
 misc
 ----
 

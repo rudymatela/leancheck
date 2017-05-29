@@ -1,9 +1,11 @@
 -- Copyright (c) 2015-2017 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import System.Exit (exitFailure)
-import Data.List (elemIndices,delete)
+import Data.List (elemIndices,delete,isPrefixOf)
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck (list,fails)
+import Data.Word
+import Data.Int
 
 main :: IO ()
 main =
@@ -42,6 +44,39 @@ tests =
   , list `permutation` [minBound..maxBound :: Nat6]
   , list `permutation` [minBound..maxBound :: Nat7]
 
+  , map (unX) list `permutation` [minBound..maxBound :: Int8]
+  , map (unX) list `permutation` [minBound..maxBound :: Int4]
+  , map (unX) list `permutation` [minBound..maxBound :: Int3]
+-- TODO: make the following commented tests pass:
+--, map (unX) list `permutation` [minBound..maxBound :: Int2]
+--, map (unX) list `permutation` [minBound..maxBound :: Int1]
+  , map (unX) list `permutation` [minBound..maxBound :: Word8]
+  , map (unX) list `permutation` [minBound..maxBound :: Word4]
+  , map (unX) list `permutation` [minBound..maxBound :: Word3]
+  , map (unX) list `permutation` [minBound..maxBound :: Word2]
+  , map (unX) list `permutation` [minBound..maxBound :: Word1]
+  , map (unX) list `permutation` [minBound..maxBound :: Nat7]
+  , map (unX) list `permutation` [minBound..maxBound :: Nat6]
+  , map (unX) list `permutation` [minBound..maxBound :: Nat5]
+  , map (unX) list `permutation` [minBound..maxBound :: Nat4]
+-- TODO: make the following commented tests pass:
+--, map (unX) list `permutation` [minBound..maxBound :: Nat3]
+--, map (unX) list `permutation` [minBound..maxBound :: Nat2]
+--, map (unX) list `permutation` [minBound..maxBound :: Nat1]
+
+  , (prefiX :: [Int8])  `isPrefixOf` map (unX) list
+  , (prefiX :: [Int16]) `isPrefixOf` map (unX) list
+  , (prefiX :: [Int32]) `isPrefixOf` map (unX) list
+  , (prefiX :: [Int64]) `isPrefixOf` map (unX) list
+  , (prefiX :: [Int])   `isPrefixOf` map (unX) list
+
+  , (prefiXN :: [Word8])  `isPrefixOf` map (unX) list
+  , (prefiXN :: [Word16]) `isPrefixOf` map (unX) list
+  , (prefiXN :: [Word32]) `isPrefixOf` map (unX) list
+  , (prefiXN :: [Word64]) `isPrefixOf` map (unX) list
+  , (prefiXN :: [Word])   `isPrefixOf` map (unX) list
+
+
   , [minBound..maxBound :: Int1] == signedRange 1
   , [minBound..maxBound :: Int2] == signedRange 2
   , [minBound..maxBound :: Int3] == signedRange 3
@@ -64,6 +99,29 @@ tests =
   , fails 100 (\i -> i + 1 < (i::Int2))
   , fails 100 (\i -> i + 1 < (i::Int3))
   , fails 100 (\i -> i + 1 < (i::Int4))
+  ]
+
+
+prefiX :: (Bounded a, Integral a) => [a]
+prefiX =
+  [ 0
+  , 1, -1
+  , maxBound, minBound
+  , 2, -2
+  , maxBound-1, minBound+1
+  , 3, -3
+  , maxBound-2, minBound+2
+  ]
+
+prefiXN :: (Bounded a, Integral a) => [a]
+prefiXN =
+  [ 0
+  , 1, 2
+  , maxBound
+  , 3, 4
+  , maxBound-1
+  , 5, 6
+  , maxBound-2
   ]
 
 
