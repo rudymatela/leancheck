@@ -18,6 +18,16 @@ misc
 
 * (?) on leancheck.cabal, add upper bound for template-haskell package
 
+* Show when test cases are exhausted after testing:
+
+	> check $ \p -> p == (p :: Bool)
+	+++ OK, passed 2 tests (test cases exhausted).
+
+  Instead of just:
+
+	> check $ \p -> p == (p :: Bool)
+	+++ OK, passed 2 tests.
+
 
 documentation
 -------------
