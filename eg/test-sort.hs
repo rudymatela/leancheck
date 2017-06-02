@@ -1,6 +1,6 @@
 -- test-sort.hs -- example program, testing sort using LeanCheck
 --
--- Copyright (c) 2015-2017 Rudy Matela.
+-- Copyright (c) 2017 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
 
