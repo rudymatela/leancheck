@@ -59,7 +59,7 @@ checkResult p = checkResultFor 200 p
 checkResultFor :: Testable a => Int -> a -> IO Bool
 checkResultFor n p = do
   r <- resultIO n p
-  putStrLn . showResult $ r
+  putStrLn . showResult n $ r
   return (isOK r)
   where isOK (OK _) = True
         isOK _      = False
@@ -86,9 +86,10 @@ resultIO n p = do
   where isFailure (OK _) = False
         isFailure _      = True
 
-showResult :: Result -> String
-showResult (OK n)             = "+++ OK, passed " ++ show n ++ " tests."
-showResult (Falsified i ce)   = "*** Failed! Falsifiable (after "
-                             ++ show i ++ " tests):\n" ++ unwords ce
-showResult (Exception i ce e) = "*** Failed! Exception '" ++ e ++ "' (after "
-                             ++ show i ++ " tests):\n" ++ unwords ce
+showResult :: Int -> Result -> String
+showResult m (OK n)             = "+++ OK, passed " ++ show n ++ " tests"
+                               ++ takeWhile (\_ -> n < m) " (exhausted)" ++ "."
+showResult m (Falsified i ce)   = "*** Failed! Falsifiable (after "
+                               ++ show i ++ " tests):\n" ++ unwords ce
+showResult m (Exception i ce e) = "*** Failed! Exception '" ++ e ++ "' (after "
+                               ++ show i ++ " tests):\n" ++ unwords ce
