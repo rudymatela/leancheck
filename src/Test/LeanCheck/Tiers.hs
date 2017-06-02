@@ -115,10 +115,10 @@ maybeCons0 Nothing  = []
 maybeCons0 (Just x) = [[x]]
 
 maybeCons1 :: Listable a => (a -> Maybe b) -> [[b]]
-maybeCons1 f = mapMaybeT f tiers `addWeight` 1
+maybeCons1 f = delay $ mapMaybeT f tiers
 
 maybeCons2 :: (Listable a, Listable b) => (a -> b -> Maybe c) -> [[c]]
-maybeCons2 f = mapMaybeT (uncurry f) tiers `addWeight` 1
+maybeCons2 f = delay $ mapMaybeT (uncurry f) tiers
 
 -- | Like '><', but over 3 lists of tiers.
 product3 :: [[a]] -> [[b]]-> [[c]] -> [[(a,b,c)]]
@@ -135,7 +135,7 @@ productMaybeWith :: (a->b->Maybe c) -> [[a]] -> [[b]] -> [[c]]
 productMaybeWith _ _ [] = []
 productMaybeWith _ [] _ = []
 productMaybeWith f (xs:xss) yss = map (xs **) yss
-                               \/ productMaybeWith f xss yss `addWeight` 1
+                               \/ delay (productMaybeWith f xss yss)
   where xs ** ys = catMaybes [ f x y | x <- xs, y <- ys ]
 
 -- | Takes as argument tiers of element values;
@@ -214,7 +214,7 @@ unorderedDistinctPairsWith f = concatT . setChoicesWith (\e -> mapT (f e))
 -- >                      ]
 listsOf :: [[a]] -> [[[a]]]
 listsOf xss = cons0 []
-           \/ productWith (:) xss (listsOf xss) `addWeight` 1
+           \/ delay (productWith (:) xss (listsOf xss))
 
 -- | Takes the product of N lists of tiers, producing lists of length N.
 --

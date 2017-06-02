@@ -54,8 +54,8 @@ module Test.LeanCheck.Core
   , cons4
   , cons5
 
-  , ofWeight
-  , addWeight
+  , delay
+  , reset
   , suchThat
 
   -- ** Combining lists of tiers
@@ -158,8 +158,8 @@ instance Listable a => Listable (Maybe a) where
   tiers = cons0 Nothing \/ cons1 Just
 
 instance (Listable a, Listable b) => Listable (Either a b) where
-  tiers = cons1 Left  `ofWeight` 0
-     \\// cons1 Right `ofWeight` 0
+  tiers = reset (cons1 Left)
+     \\// reset (cons1 Right)
 
 -- | > list :: [(Int,Int)] = [(0,0), (0,1), (1,0), (0,-1), (1,1), ...]
 instance (Listable a, Listable b) => Listable (a,b) where
@@ -237,22 +237,22 @@ cons0 x = [[x]]
 --   return 'tiers' of applications of this constructor.
 --   By default, returned values will have size/weight of 1.
 cons1 :: Listable a => (a -> b) -> [[b]]
-cons1 f = mapT f tiers `addWeight` 1
+cons1 f = delay $ mapT f tiers
 
 -- | Given a constructor with two 'Listable' arguments,
 --   return 'tiers' of applications of this constructor.
 --   By default, returned values will have size/weight of 1.
 cons2 :: (Listable a, Listable b) => (a -> b -> c) -> [[c]]
-cons2 f = mapT (uncurry f) tiers `addWeight` 1
+cons2 f = delay $ mapT (uncurry f) tiers
 
 -- | Returns tiers of applications of a 3-argument constructor.
 cons3 :: (Listable a, Listable b, Listable c) => (a -> b -> c -> d) -> [[d]]
-cons3 f = mapT (uncurry3 f) tiers `addWeight` 1
+cons3 f = delay $ mapT (uncurry3 f) tiers
 
 -- | Returns tiers of applications of a 4-argument constructor.
 cons4 :: (Listable a, Listable b, Listable c, Listable d)
       => (a -> b -> c -> d -> e) -> [[e]]
-cons4 f = mapT (uncurry4 f) tiers `addWeight` 1
+cons4 f = delay $ mapT (uncurry4 f) tiers
 
 -- | Returns tiers of applications of a 5-argument constructor.
 --
@@ -262,22 +262,28 @@ cons4 f = mapT (uncurry4 f) tiers `addWeight` 1
 -- but are hidden from the Haddock documentation.
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
-cons5 f = mapT (uncurry5 f) tiers `addWeight` 1
+cons5 f = delay $ mapT (uncurry5 f) tiers
 
--- | Resets the weight of a constructor (or tiers)
--- Typically used as an infix constructor when defining Listable instances:
+-- | Delays the enumeration of 'tiers'.
+-- Conceptually this function adds to the weight of a constructor.
+-- Typically used when defining 'Listable' instances:
 --
--- > cons<N> `ofWeight` <W>
+-- > delay (cons<N> <Constr>)
+delay :: [[a]] -> [[a]]
+delay = ([]:)
+
+-- | Resets any delays in a list-of 'tiers'.
+-- Conceptually this function makes a constructor "weightless",
+-- assuring the first tier is non-empty.
+-- Typically used when defining Listable instances:
 --
--- Be careful: do not apply @`ofWeight` 0@ to recursive data structure
+-- > reset (cons<N> <Constr>)
+--
+-- Be careful: do not apply @reset@ to recursive data structure
 -- constructors.  In general this will make the list of size 0 infinite,
--- breaking the tier invariant (each tier must be finite).
-ofWeight :: [[a]] -> Int -> [[a]]
-ofWeight xss w = dropWhile null xss `addWeight` w
-
--- | Adds to the weight of tiers of a constructor
-addWeight :: [[a]] -> Int -> [[a]]
-addWeight xss w = replicate w [] ++ xss
+-- breaking the 'tiers' invariant (each tier must be finite).
+reset :: [[a]] -> [[a]]
+reset = dropWhile null
 
 -- | Tiers of values that follow a property
 --
@@ -344,7 +350,7 @@ productWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 productWith _ _ [] = []
 productWith _ [] _ = []
 productWith f (xs:xss) yss = map (xs **) yss
-                          \/ productWith f xss yss `addWeight` 1
+                          \/ delay (productWith f xss yss)
   where xs ** ys = [x `f` y | x <- xs, y <- ys]
 
 -- | 'Testable' values are functions

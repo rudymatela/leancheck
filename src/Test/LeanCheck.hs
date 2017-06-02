@@ -73,6 +73,8 @@ module Test.LeanCheck
   , cons11
   , cons12
 
+  , delay
+  , reset
   , ofWeight
   , addWeight
   , suchThat

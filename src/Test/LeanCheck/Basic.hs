@@ -12,7 +12,8 @@
 --   * support for 'Listable' 6-tuples up to 12-tuples;
 --   * 'tiers' constructors (@consN@) with arities from 6 up to 12;
 --   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational');
---   * a 'Listable' 'Word' instance.
+--   * a 'Listable' 'Word' instance;
+--   * the operators 'addWeight' and 'ofWeight'.
 --
 -- "Test.LeanCheck" already exports everything from this module.
 -- You are probably better off importing it.
@@ -29,6 +30,9 @@ module Test.LeanCheck.Basic
   , cons10
   , cons11
   , cons12
+
+  , ofWeight
+  , addWeight
   )
 where
 
@@ -83,39 +87,39 @@ instance (Listable a, Listable b, Listable c, Listable d,
 
 cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]
-cons6 f = mapT (uncurry6 f) tiers `addWeight` 1
+cons6 f = delay $ mapT (uncurry6 f) tiers
 
 cons7 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g)
       => (a -> b -> c -> d -> e -> f -> g -> h) -> [[h]]
-cons7 f = mapT (uncurry7 f) tiers `addWeight` 1
+cons7 f = delay $ mapT (uncurry7 f) tiers
 
 cons8 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i) -> [[i]]
-cons8 f = mapT (uncurry8 f) tiers `addWeight` 1
+cons8 f = delay $ mapT (uncurry8 f) tiers
 
 cons9 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j) -> [[j]]
-cons9 f = mapT (uncurry9 f) tiers `addWeight` 1
+cons9 f = delay $ mapT (uncurry9 f) tiers
 
 cons10 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
            Listable f, Listable g, Listable h, Listable i, Listable j)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k) -> [[k]]
-cons10 f = mapT (uncurry10 f) tiers `addWeight` 1
+cons10 f = delay $ mapT (uncurry10 f) tiers
 
 cons11 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l) -> [[l]]
-cons11 f = mapT (uncurry11 f) tiers `addWeight` 1
+cons11 f = delay $ mapT (uncurry11 f) tiers
 
 cons12 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k, Listable l)
        => (a->b->c->d->e->f->g->h->i->j->k->l->m) -> [[m]]
-cons12 f = mapT (uncurry12 f) tiers `addWeight` 1
+cons12 f = delay $ mapT (uncurry12 f) tiers
 
 uncurry6 :: (a->b->c->d->e->f->g) -> (a,b,c,d,e,f) -> g
 uncurry6 f (x,y,z,w,v,u) = f x y z w v u
@@ -141,9 +145,27 @@ uncurry12 :: (a->b->c->d->e->f->g->h->i->j->k->l->m)
 uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q) = f x y z w v u r s t o p q
 
 instance (Integral a, Listable a) => Listable (Ratio a) where
-  tiers = mapT (uncurry (%))
+  tiers = mapT (uncurry (%)) . reset
         $ tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
-                `ofWeight` 0 -- make size 0 not be "usually" empty
 
 instance Listable Word where
   list = [0..]
+
+-- | Resets the weight of a constructor (or tiers)
+-- Typically used as an infix constructor when defining Listable instances:
+--
+-- > cons<N> `ofWeight` <W>
+--
+-- Be careful: do not apply @`ofWeight` 0@ to recursive data structure
+-- constructors.  In general this will make the list of size 0 infinite,
+-- breaking the tier invariant (each tier must be finite).
+--
+-- 'ofWeight' is closely related to 'reset'.
+ofWeight :: [[a]] -> Int -> [[a]]
+ofWeight xss w = dropWhile null xss `addWeight` w
+
+-- | Adds to the weight of tiers of a constructor
+--
+-- 'addWeight' is closely related to 'delay'.
+addWeight :: [[a]] -> Int -> [[a]]
+addWeight xss w = replicate w [] ++ xss
