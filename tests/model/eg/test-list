@@ -1,0 +1,6 @@
+*** Failed! Falsifiable (after 4 tests):
+[] [0,0]
+*** Failed! Falsifiable (after 1 tests):
+[]
+*** Failed! Exception 'Prelude.head: empty list' (after 1 tests):
+[]

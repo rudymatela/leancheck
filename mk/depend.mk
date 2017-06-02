@@ -89,6 +89,17 @@ eg/test-bool.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   eg/test-bool.hs
+eg/test-list: \
+  eg/test-list.hs \
+  mk/toplibs
+eg/test-list.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  eg/test-list.hs
 eg/test-sort: \
   eg/test-sort.hs \
   mk/toplibs
