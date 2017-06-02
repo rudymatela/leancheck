@@ -43,11 +43,11 @@ update-diff-test: update-diff-test-tiers update-diff-test-funtiers $(patsubst %,
 %.test: %
 	./$<
 
-eg/%.diff-test: %
-	./$< | diff -rud tests/model/eg/$< -
+eg/%.diff-test: eg/%
+	./$< | diff -rud tests/model/$< -
 
-eg/%.update-diff-test: %
-	./$< >           tests/model/eg/$<
+eg/%.update-diff-test: eg/%
+	./$< >           tests/model/$<
 
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-colistable.hs
