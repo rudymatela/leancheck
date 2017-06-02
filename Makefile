@@ -52,7 +52,9 @@ eg/%.update-diff-test: %
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-colistable.hs
 	rm -f bench/tiers-listsofpairs.hs
-	rm -f $(TESTS) $(BENCHS) $(EGS)
+	rm -f bench/tiers-funlistable
+	rm -f bench/tiers-funlistable.hs
+	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
 ghci: mk/All.ghci
 
