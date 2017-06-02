@@ -69,6 +69,26 @@ bench/tiers.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   bench/tiers.hs
+eg/test-bool: \
+  eg/test-bool.hs \
+  mk/toplibs
+eg/test-bool.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/Show.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Error.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  eg/test-bool.hs
 eg/test-sort: \
   eg/test-sort.hs \
   mk/toplibs

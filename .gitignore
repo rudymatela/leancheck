@@ -29,6 +29,7 @@ bench/tiers-listsofpairs.hs
 bench/tiers-funlistable
 bench/tiers-funlistable.hs
 eg/test-sort
+eg/test-bool
 doc/*.html
 doc/*.css
 doc/*.js

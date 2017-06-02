@@ -13,6 +13,7 @@ TESTS = tests/test           \
         tests/test-tiers     \
         tests/test-types
 EGS = \
+	eg/test-bool \
 	eg/test-sort
 BENCHS = \
 	bench/tiers-colistable \
