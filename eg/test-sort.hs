@@ -27,3 +27,4 @@ main :: IO ()
 main = do
   check $ (prop_sortOrdered :: [Int] -> Bool)
   check $ (prop_sortCount :: Int -> [Int] -> Bool)
+  check $ \xs -> sort (sort xs :: [Int]) == sort xs
