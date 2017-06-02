@@ -12,6 +12,8 @@ TESTS = tests/test           \
         tests/test-operators \
         tests/test-tiers     \
         tests/test-types
+EGS = \
+	eg/test-sort
 BENCHS = \
 	bench/tiers-colistable \
 	bench/tiers-listsofpairs \
@@ -33,17 +35,23 @@ all-all: $(ALLOBJS)
 
 test: $(patsubst %,%.test,$(TESTS)) diff-test
 
-diff-test: diff-test-tiers diff-test-funtiers
+diff-test: diff-test-tiers diff-test-funtiers $(patsubst %,%.diff-test,$(EGS))
 
-update-diff-test: update-diff-test-tiers update-diff-test-funtiers
+update-diff-test: update-diff-test-tiers update-diff-test-funtiers $(patsubst %,%.update-diff-test,$(EGS))
 
 %.test: %
 	./$<
 
+%.diff-test: %
+	./$< | diff -rud tests/model/$< -
+
+%.update-diff-test: %
+	./$< >           tests/model/$<
+
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-colistable.hs
 	rm -f bench/tiers-listsofpairs.hs
-	rm -f $(TESTS) $(BENCHS)
+	rm -f $(TESTS) $(BENCHS) $(EGS)
 
 ghci: mk/All.ghci
 

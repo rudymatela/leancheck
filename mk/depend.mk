@@ -20,6 +20,25 @@ bench/tiers-colistable.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   bench/tiers-colistable.hs
+bench/tiers-funlistable: \
+  bench/tiers-funlistable.hs \
+  mk/toplibs
+bench/tiers-funlistable.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/Show.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/FunListable.hs \
+  src/Test/LeanCheck/Error.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  bench/tiers-funlistable.hs
 bench/tiers-listsofpairs: \
   bench/tiers-listsofpairs.hs \
   mk/toplibs
@@ -50,6 +69,17 @@ bench/tiers.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   bench/tiers.hs
+eg/test-sort: \
+  eg/test-sort.hs \
+  mk/toplibs
+eg/test-sort.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  eg/test-sort.hs
 mk/All.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Utils/TypeBinding.hs \
@@ -112,6 +142,18 @@ src/Test/LeanCheck/Function/CoListable.o: \
 src/Test/LeanCheck/Function/Eq.o: \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Core.hs
+src/Test/LeanCheck/Function/FunListable.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/FunListable.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
 src/Test/LeanCheck/Function/ListsOfPairs: \
   mk/toplibs
 src/Test/LeanCheck/Function/ListsOfPairs.o: \
