@@ -28,6 +28,9 @@
 --
 -- Take care: all the above 'Listable' instances are __experimental__.  Only
 -- one of the above can be imported at a time.
+--
+-- Warning: this is only intended to be used in testing modules.  Avoid
+-- importing this on modules that are used as libraries.
 module Test.LeanCheck.Function () where
 import Test.LeanCheck.Function.ListsOfPairs ()
 import Test.LeanCheck.Function.Show ()

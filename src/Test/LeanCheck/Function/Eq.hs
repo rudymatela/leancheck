@@ -8,6 +8,9 @@
 -- a simple enumerative property-based testing library.
 --
 -- A toy Eq instance for Functions.
+--
+-- Warning: this is only intended to be used in testing modules.  Avoid
+-- importing this on modules that are used as libraries.
 module Test.LeanCheck.Function.Eq () where
 
 import Test.LeanCheck.Core
