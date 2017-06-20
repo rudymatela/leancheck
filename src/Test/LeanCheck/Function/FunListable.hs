@@ -94,7 +94,7 @@ instance (FunListable a, FunListable b) => FunListable (Either a b) where
 -- have the equality check (or any other special checks) for types that have
 -- equality and ignore it for types that don't.
 instance (FunListable a) => FunListable [a] where
-  validResults _ [r1,r2]  {- | r1 == r2 -} =  False  -- The results cannot end with repetitions
+  validResults _ [r1,r2]  {- -- | r1 == r2 -} =  False  -- The results cannot end with repetitions
   validResults x (r:rs)   =  validResults x rs
   validResults _ _        =  True
   funtiers = [[ (1, \[r]  xs -> r) ]]
