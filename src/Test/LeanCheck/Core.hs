@@ -134,6 +134,8 @@ instance Listable () where
 listIntegral :: (Enum a, Num a) => [a]
 listIntegral = [0,-1..] +| [1..]
 
+-- | > tiers :: [[Int]] = [[0], [1], [-1], [2], [-2], [3], [-3], ...]
+--   > list :: [Int] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 instance Listable Int where
   list = listIntegral
 
@@ -151,9 +153,13 @@ instance Listable Char where
       +| ['['..'`']
       +| ['{'..'~']
 
+-- | > tiers :: [[Bool]] = [[False,True]]
+--   > list :: [[Bool]] = [False,True]
 instance Listable Bool where
   tiers = cons0 False \/ cons0 True
 
+-- | > tiers :: [[Maybe Int]] = [[Nothing], [Just 0], [Just 1], [Just -1], ...]
+--   > tiers :: [[Maybe Bool]] = [[Nothing], [Just False, Just True]]
 instance Listable a => Listable (Maybe a) where
   tiers = cons0 Nothing \/ cons1 Just
 
@@ -161,7 +167,8 @@ instance (Listable a, Listable b) => Listable (Either a b) where
   tiers = reset (cons1 Left)
      \\// reset (cons1 Right)
 
--- | > list :: [(Int,Int)] = [(0,0), (0,1), (1,0), (0,-1), (1,1), ...]
+-- | > tiers :: [[(Int,Int)]] = [ [(0,0)], [(0,1),(1,0)], [(0,-1),(1,1),(-1,0)], ...]
+--   > list :: [(Int,Int)] = [ (0,0), (0,1), (1,0), (0,-1), (1,1), (-1,0), ...]
 instance (Listable a, Listable b) => Listable (a,b) where
   tiers = tiers >< tiers
 
@@ -179,6 +186,12 @@ instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
          Listable (a,b,c,d,e) where
   tiers = productWith (\x (y,z,w,v) -> (x,y,z,w,v)) tiers tiers
 
+-- | > tiers :: [[ [Int] ]] = [ [ [] ]
+--   >                        , [ [0] ]
+--   >                        , [ [0,0], [1] ]
+--   >                        , [ [0,0,0], [0,1], [1,0], [-1] ]
+--   >                        , ... ]
+--   > list :: [ [Int] ] = [ [], [0], [0,0], [1], [0,0,0], [0,1], [1,0], [-1], ... ]
 instance (Listable a) => Listable [a] where
   tiers = cons0 []
        \/ cons2 (:)
