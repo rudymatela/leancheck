@@ -13,14 +13,16 @@ matrix:
     - ghc: '7.6'
       script: >
         make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make test GHCFLAGS="-fno-warn-unrecognised-pragmas"
+        make test GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
+        make haddock
     - ghc: '7.4'
       script: >
         make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make test GHCFLAGS="-fno-warn-unrecognised-pragmas"
+        make test GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
+        make haddock
 
 script:
-  - make && make test
+  - make && make test && make haddock
   - cabal test
 
 notifications:
