@@ -30,6 +30,7 @@ OBJS = src/Test/LeanCheck.o \
 GHCIMPORTDIRS = src
 # -dynamic is needed only for src/Test/LeanCheck/Derive.hs and tests/test-derive.hs
 GHCFLAGS = -dynamic -O2
+HADDOCKFLAGS = --no-print-missing-docs
 
 all: $(OBJS)
 
@@ -103,7 +104,7 @@ upload-haddock:
 
 doc/index.html: $(ALLHS)
 	./mk/haddock-i base template-haskell | xargs \
-	haddock --html -odoc $(ALLHS) --no-print-missing-docs --title=leancheck
+	haddock --html -odoc $(ALLHS) $(HADDOCKFLAGS) --title=leancheck
 	@echo 'NOTE: please ensure that there are *only* 7'
 	@echo '      undocumented functions on Test.LeanCheck'
 	@echo '      as "OPTIONS_HADDOCK prune" is active'
