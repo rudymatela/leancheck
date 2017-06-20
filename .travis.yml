@@ -14,12 +14,12 @@ matrix:
       script: >
         make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
         make test GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make haddock
+        make haddock HADDOCKFLAGS=
     - ghc: '7.4'
       script: >
         make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
         make test GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make haddock
+        make haddock HADDOCKFLAGS=
 
 script:
   - make && make test && make haddock
