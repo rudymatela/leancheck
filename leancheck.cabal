@@ -66,6 +66,7 @@ library
                  , Test.LeanCheck.Utils.Operators
                  , Test.LeanCheck.Function
                  , Test.LeanCheck.Function.ListsOfPairs
+                 , Test.LeanCheck.Function.FunListable
                  , Test.LeanCheck.Function.CoListable
                  , Test.LeanCheck.Function.Eq
                  , Test.LeanCheck.Function.Periodic
