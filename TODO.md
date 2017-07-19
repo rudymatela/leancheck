@@ -42,6 +42,12 @@ documentation
 v0.6.3
 ------
 
+* release!
+
+
+v0.6.4
+------
+
 * On `bench/tiers`, print if the enumeration has repetitions
   (import `Function.Eq` for that)
 
@@ -79,7 +85,7 @@ v0.6.3
   so that the user gets an enumeration of functions with repetitions, but using
   a mixed strategy for generation of values.
 
-v0.6.4
+v0.6.5
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
