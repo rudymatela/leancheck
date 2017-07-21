@@ -42,6 +42,8 @@ documentation
 v0.6.4
 ------
 
+* Document `X` and `Xs` on `Utils.Types`.
+
 * On `bench/tiers`, print if the enumeration has repetitions
   (import `Function.Eq` for that)
 
