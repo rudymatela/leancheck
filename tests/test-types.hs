@@ -76,6 +76,18 @@ tests =
   , (prefiXN :: [Word64]) `isPrefixOf` map (unX) list
   , (prefiXN :: [Word])   `isPrefixOf` map (unX) list
 
+  , (prefiXs :: [[Int8]])  `isPrefixOf` map (unXs) list
+  , (prefiXs :: [[Int16]]) `isPrefixOf` map (unXs) list
+  , (prefiXs :: [[Int32]]) `isPrefixOf` map (unXs) list
+  , (prefiXs :: [[Int64]]) `isPrefixOf` map (unXs) list
+  , (prefiXs :: [[Int]])   `isPrefixOf` map (unXs) list
+
+  , (prefiXNs :: [[Word8]])  `isPrefixOf` map (unXs) list
+  , (prefiXNs :: [[Word16]]) `isPrefixOf` map (unXs) list
+  , (prefiXNs :: [[Word32]]) `isPrefixOf` map (unXs) list
+  , (prefiXNs :: [[Word64]]) `isPrefixOf` map (unXs) list
+  , (prefiXNs :: [[Word]])   `isPrefixOf` map (unXs) list
+
 
   , [minBound..maxBound :: Int1] == signedRange 1
   , [minBound..maxBound :: Int2] == signedRange 2
@@ -113,6 +125,19 @@ prefiX =
   , maxBound-2, minBound+2
   ]
 
+prefiXs :: (Bounded a, Integral a) => [[a]]
+prefiXs =
+  [ []
+  , [0]
+  , [0,0], [1]
+  , [0,0,0], [0,1], [1,0], [-1]
+  , [0,0,0,0], [0,0,1], [0,1,0], [0,-1], [1,0,0], [1,1], [-1,0], [maxBound]
+  , [0,0,0,0,0], [0,0,0,1], [0,0,1,0], [0,0,-1]
+    , [0,1,0,0], [0,1,1], [0,-1,0], [0,maxBound]
+    , [1,0,0,0], [1,0,1], [1,1,0], [1,-1]
+    , [-1,0,0], [-1,1], [maxBound,0], [minBound]
+  ]
+
 prefiXN :: (Bounded a, Integral a) => [a]
 prefiXN =
   [ 0
@@ -124,6 +149,14 @@ prefiXN =
   , maxBound-2
   ]
 
+prefiXNs :: (Bounded a, Integral a) => [[a]]
+prefiXNs =
+  [ []
+  , [0]
+  , [0,0], [1]
+  , [0,0,0], [0,1], [1,0], [2]
+  , [0,0,0,0], [0,0,1], [0,1,0], [0,2], [1,0,0], [1,1], [2,0], [maxBound]
+  ]
 
 permutation :: Eq a => [a] -> [a] -> Bool
 []     `permutation` []    = True

@@ -52,6 +52,7 @@ module Test.LeanCheck.Utils.Types
 
   -- * Extreme Integers
   , X (..)
+  , Xs (..)
 
   -- * List-wrapper types
   , NoDup (..)
@@ -62,7 +63,7 @@ where
 -- TODO: Add Ix and Bits instances
 
 import Test.LeanCheck (Listable(..), listIntegral)
-import Test.LeanCheck.Core ((+|))
+import Test.LeanCheck.Core ((+|),cons1)
 import Test.LeanCheck.Tiers (noDupListCons, setCons, bagCons)
 import Data.Ratio ((%))
 
@@ -510,3 +511,8 @@ xs        ++| []      =  xs
 [x]       ++| ys      =  x:ys
 (x:x':xs) ++| (y:ys)  =  x:x':y:(xs ++| ys)
 infixr 5 ++|
+
+newtype Xs a = Xs {unXs :: [a]} deriving (Eq, Ord)
+instance Show a => Show (Xs a) where show (Xs xs) = show xs
+instance (Integral a, Bounded a) => Listable (Xs a) where
+  tiers = cons1 (Xs . map unX)
