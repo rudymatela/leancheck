@@ -1,8 +1,8 @@
 LeanCheck
 =========
 
-[![Build Status][build-status]][build-log]
-[![Hackage version][hackage-version]][leancheck-on-hackage]
+[![LeanCheck's Build Status][build-status]][build-log]
+[![LeanCheck on Hackage][hackage-version]][leancheck-on-hackage]
 [![LeanCheck on Stackage LTS][stackage-lts-badge]][leancheck-on-stackage-lts]
 [![LeanCheck on Stackage Nightly][stackage-nightly-badge]][leancheck-on-stackage-nightly]
 
