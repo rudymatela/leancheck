@@ -42,6 +42,12 @@ documentation
 v0.6.4
 ------
 
+* Release.
+
+
+v0.6.5
+------
+
 * Document `X` and `Xs` on `Utils.Types`.
 
 * On `bench/tiers`, print if the enumeration has repetitions
@@ -81,7 +87,7 @@ v0.6.4
   so that the user gets an enumeration of functions with repetitions, but using
   a mixed strategy for generation of values.
 
-v0.6.5
+v0.6.6
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
