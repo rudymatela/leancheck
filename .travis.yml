@@ -45,3 +45,24 @@ matrix:
   - ghc: '7.8'
     env:                                     GHCVER=7.8.4        CABALVER=1.18
     addons: {apt: {sources: hvr-ghc, packages: [ghc-7.8.4,  cabal-install-1.18]}}
+  # stack is only supported on GHC >= 7.8
+  - ghc: '7.6'
+    env:                                     GHCVER=7.6.3        CABALVER=1.18
+    addons: {apt: {sources: hvr-ghc, packages: [ghc-7.6.3,  cabal-install-1.18]}}
+    before_install:
+    - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
+    - ghc --version
+    - cabal --version
+    script:
+    - make && make test && make haddock HADDOCKFLAGS=
+    - cabal test
+  - ghc: '7.4'
+    env:                                     GHCVER=7.4.2        CABALVER=1.18
+    addons: {apt: {sources: hvr-ghc, packages: [ghc-7.4.2,  cabal-install-1.18]}}
+    before_install:
+    - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
+    - ghc --version
+    - cabal --version
+    script:
+    - make && make test && make haddock HADDOCKFLAGS=
+    - cabal test
