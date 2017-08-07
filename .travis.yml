@@ -1,53 +1,47 @@
 # .travis.yml file for LeanCheck
-sudo: false
-
 language: haskell
+
+notifications:
+  email:
+    on_failure: change
+
+sudo: false
 
 cache:
   directories:
   - $HOME/.ghc
   - $HOME/.cabal
+  - $HOME/.stack
 
-ghc:
-  #- "8.0"
-  #- "7.10"
-  - "7.8"
+before_install:
+- export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
+- ghc --version
+- cabal --version
+# Download and unpack the stack executable
+# "Once Travis whitelists the stack.dev files," simply include stack in the
+# addons section. -- https://docs.haskellstack.org/en/stable/travis_ci/
+- mkdir -p ~/.local/bin
+- export PATH=$HOME/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+- stack config set system-ghc --global true
+- stack --version
+
+script:
+- make && make test && make haddock HADDOCKFLAGS=
+- cabal test
+- stack --no-terminal --skip-ghc-check test
 
 matrix:
   include:
-    - ghc: '7.6'
-      script: >
-        make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make test GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make haddock HADDOCKFLAGS=
-    - ghc: '7.4'
-      script: >
-        make      GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make test GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
-        make haddock HADDOCKFLAGS=
-# see: https://docs.haskellstack.org/en/stable/travis_ci/
-# see: https://github.com/hvr/multi-ghc-travis
-    - ghc: '7.10'
-      addons:
-        apt:
-          sources:  hvr-ghc
-          packages: [cabal-install-1.22,ghc-7.10.1]
-      before_install:
-        - export PATH=/opt/ghc/7.10.1/bin:/opt/cabal/1.22/bin:$PATH
-        - ghc --version
-    - ghc: 'head'
-      addons:
-        apt:
-          sources:  hvr-ghc
-          packages: [cabal-install-head,ghc-head]
-      before_install:
-        - export PATH=/opt/ghc/head/bin:/opt/cabal/head/bin:$PATH
-        - ghc --version
-
-script:
-  - make && make test && make haddock HADDOCKFLAGS=
-  - cabal test
-
-notifications:
-  email:
-    on_failure: change
+  - ghc: 'head'
+    env:                                     GHCVER=head       CABALVER=head
+    addons: {apt: {sources: hvr-ghc, packages: [ghc-head, cabal-install-head]}}
+  - ghc: '8.0'
+    env:                                     GHCVER=8.0.2        CABALVER=1.24
+    addons: {apt: {sources: hvr-ghc, packages: [ghc-8.0.2,  cabal-install-1.24]}}
+  - ghc: '7.10'
+    env:                                     GHCVER=7.10.3       CABALVER=1.22
+    addons: {apt: {sources: hvr-ghc, packages: [ghc-7.10.3, cabal-install-1.22]}}
+  - ghc: '7.8'
+    env:                                     GHCVER=7.8.4        CABALVER=1.18
+    addons: {apt: {sources: hvr-ghc, packages: [ghc-7.8.4,  cabal-install-1.18]}}
