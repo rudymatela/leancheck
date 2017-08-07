@@ -38,7 +38,7 @@ matrix:
       before-install: export PATH=/opt/ghc/head/bin:$PATH
 
 script:
-  - make && make test && make haddock
+  - make && make test && make haddock HADDOCKFLAGS=
   - cabal test
 
 notifications:
