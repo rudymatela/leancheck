@@ -26,24 +26,23 @@ matrix:
         make test GHCFLAGS="-fno-warn-unrecognised-pragmas" &&
         make haddock HADDOCKFLAGS=
 # see: https://docs.haskellstack.org/en/stable/travis_ci/
+# see: https://github.com/hvr/multi-ghc-travis
     - ghc: '7.10'
       addons:
         apt:
           sources:  hvr-ghc
-          packages: ghc-7.10.1
+          packages: [cabal-install-1.22,ghc-7.10.1]
       before_install:
-        - export PATH=/opt/ghc/7.10.1/bin:$PATH
+        - export PATH=/opt/ghc/7.10.1/bin:/opt/cabal/1.22/bin:$PATH
         - ghc --version
-        - ghc-pkg init
     - ghc: 'head'
       addons:
         apt:
           sources:  hvr-ghc
-          packages: ghc-head
+          packages: [cabal-install-head,ghc-head]
       before_install:
-        - export PATH=/opt/ghc/head/bin:$PATH
+        - export PATH=/opt/ghc/head/bin:/opt/cabal/head/bin:$PATH
         - ghc --version
-        - ghc-pkg init
 
 script:
   - make && make test && make haddock HADDOCKFLAGS=
