@@ -34,6 +34,7 @@ matrix:
       before_install:
         - export PATH=/opt/ghc/7.10.1/bin:$PATH
         - ghc --version
+        - ghc-pkg init
     - ghc: 'head'
       addons:
         apt:
@@ -42,6 +43,7 @@ matrix:
       before_install:
         - export PATH=/opt/ghc/head/bin:$PATH
         - ghc --version
+        - ghc-pkg init
 
 script:
   - make && make test && make haddock HADDOCKFLAGS=
