@@ -30,12 +30,12 @@ matrix:
         apt:
           sources:  hvr-ghc
           packages: ghc-7.10.1
-      before-install: export PATH=/opt/ghc/7.10.1/bin:$PATH
+      before_install: export PATH=/opt/ghc/7.10.1/bin:$PATH
     - addons:
         apt:
           sources:  hvr-ghc
           packages: ghc-head
-      before-install: export PATH=/opt/ghc/head/bin:$PATH
+      before_install: export PATH=/opt/ghc/head/bin:$PATH
 
 script:
   - make && make test && make haddock HADDOCKFLAGS=
