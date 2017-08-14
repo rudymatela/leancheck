@@ -28,7 +28,7 @@ ALLOBJS  = $(shell $(LISTOBJS))
 OBJS = src/Test/LeanCheck.o \
        src/Test/LeanCheck/Function.o \
        src/Test/LeanCheck/Error.o
-GHCIMPORTDIRS = src
+GHCIMPORTDIRS = src:tests
 # -dynamic is needed only for src/Test/LeanCheck/Derive.hs and tests/test-derive.hs
 GHCFLAGS = -dynamic -O2
 HADDOCKFLAGS = --no-print-missing-docs
