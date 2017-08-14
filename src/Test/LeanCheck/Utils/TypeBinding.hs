@@ -92,6 +92,7 @@ module Test.LeanCheck.Utils.TypeBinding
   , int, integer
   , float, double
   , char, string
+  , ordering
   , mayb, eith
   -- ** Testing types
   , nat
@@ -289,6 +290,9 @@ char = undefinedOf "char"
 
 string :: String
 string = undefinedOf "string"
+
+ordering :: Ordering
+ordering = undefinedOf "ordering"
 
 -- | It might be better to just use 'Just'
 mayb :: a -> Maybe a
