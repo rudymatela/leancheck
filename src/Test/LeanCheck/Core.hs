@@ -158,7 +158,7 @@ instance Listable Char where
 instance Listable Bool where
   tiers = cons0 False \/ cons0 True
 
--- | > tiers :: [[Maybe Int]] = [[Nothing], [Just 0], [Just 1], [Just -1], ...]
+-- | > tiers :: [[Maybe Int]] = [[Nothing], [Just 0], [Just 1], ...]
 --   > tiers :: [[Maybe Bool]] = [[Nothing], [Just False, Just True]]
 instance Listable a => Listable (Maybe a) where
   tiers = cons0 Nothing \/ cons1 Just
@@ -167,8 +167,12 @@ instance (Listable a, Listable b) => Listable (Either a b) where
   tiers = reset (cons1 Left)
      \\// reset (cons1 Right)
 
--- | > tiers :: [[(Int,Int)]] = [ [(0,0)], [(0,1),(1,0)], [(0,-1),(1,1),(-1,0)], ...]
---   > list :: [(Int,Int)] = [ (0,0), (0,1), (1,0), (0,-1), (1,1), (-1,0), ...]
+-- | > tiers :: [[(Int,Int)]] =
+--   > [ [(0,0)]
+--   > , [(0,1),(1,0)]
+--   > , [(0,-1),(1,1),(-1,0)]
+--   > , ...]
+--   > list :: [(Int,Int)] = [ (0,0), (0,1), (1,0), (0,-1), (1,1), ...]
 instance (Listable a, Listable b) => Listable (a,b) where
   tiers = tiers >< tiers
 
@@ -191,7 +195,7 @@ instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
 --   >                        , [ [0,0], [1] ]
 --   >                        , [ [0,0,0], [0,1], [1,0], [-1] ]
 --   >                        , ... ]
---   > list :: [ [Int] ] = [ [], [0], [0,0], [1], [0,0,0], [0,1], [1,0], [-1], ... ]
+--   > list :: [ [Int] ] = [ [], [0], [0,0], [1], [0,0,0], ... ]
 instance (Listable a) => Listable [a] where
   tiers = cons0 []
        \/ cons2 (:)
