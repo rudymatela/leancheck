@@ -16,23 +16,9 @@ misc
 
 * add diff test for IO functions (diff w/ model output and exit status)
 
-* (?) on leancheck.cabal, add upper bound for template-haskell package
-
-* Show when test cases are exhausted after testing:
-
-	> check $ \p -> p == (p :: Bool)
-	+++ OK, passed 2 tests (test cases exhausted).
-
-  Instead of just:
-
-	> check $ \p -> p == (p :: Bool)
-	+++ OK, passed 2 tests.
-
 
 documentation
 -------------
-
-* add eg folder with some examples of testing using LeanCheck;
 
 * on tutorial.md, write about how to create test programs;
 
@@ -42,15 +28,8 @@ documentation
 v0.6.5
 ------
 
-* Document `X` and `Xs` on `Utils.Types`.
-
 * On `bench/tiers`, print if the enumeration has repetitions
   (import `Function.Eq` for that)
-
-* Add `names` function to the ShowFunction typeclass that lists templates of
-  names for variables of the type.
-  Sadly, there is no way to do this without introducing a typeclass restriction
-  on function arguments.  Make a separate `Argument` typeclass to do that?
 
 * add `classify` function to measure distribution of data:
   something like:
