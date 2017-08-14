@@ -13,6 +13,7 @@ TESTS = tests/test           \
         tests/test-tiers     \
         tests/test-types
 EGS = \
+	eg/overflow \
 	eg/test-bool \
 	eg/test-list \
 	eg/test-sort
