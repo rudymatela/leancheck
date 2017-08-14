@@ -24,8 +24,8 @@ GHC ?= ghc
 DEPMK ?= mk/depend.mk
 
 # By default, excludes dist and Setup.hs, so that a Makefile can coexist nicely
-# in a cabalized project.
-HSS ?= $(shell find \( -path "./dist" -o -path "./Setup.hs" \) -prune \
+# in a cabalized project.  Also excludes .stack-work.
+HSS ?= $(shell find \( -path "./dist" -o -path "./Setup.hs" -o -path "./.stack-work" \) -prune \
                  -o -name "*.*hs" -print)
 # You can override HSS in your main Makefile
 # It should include all Haskell sources to be compiled by different targets
