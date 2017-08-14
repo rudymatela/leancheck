@@ -465,9 +465,26 @@ instance Listable a => Listable (NoDup a) where tiers = noDupListCons NoDup
 instance Listable a => Listable (Bag a)   where tiers = bagCons Bag
 instance Listable a => Listable (Set a)   where tiers = setCons Set
 
+-- | 'X' type to be wrapped around integer types for an e-'X'-treme integer
+--   enumeration.  See the 'Listable' instance for 'X'.  Use 'X' when
+--   testing properties about overflows and the like:
+--
+-- > > check $ \x -> x + 1 > (x :: Int)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ \(X x) -> x + 1 > (x :: Int)
+-- > +++ Failed! Falsifiable (after 4 tests):
+-- > 9223372036854775807
 newtype X a = X {unX :: a} deriving (Eq, Ord)
 instance Show a => Show (X a) where show (X x) = show x
 instance (Integral a, Bounded a) => Listable (X a) where list = map X listXIntegral
+-- ^ Extremily large integers are intercalated with small integers.
+--
+--   > list :: [X Int] = map X
+--   >   [ 0, 1, -1, maxBound,   minBound
+--   >      , 2, -2, maxBound-1, minBound+1
+--   >      , 3, -3, maxBound-2, minBound+2
+--   >      , ... ]
 
 -- FIXME: make this work for Int2 / Word2 types
 --        by checking then using normal enumeration
@@ -516,3 +533,4 @@ newtype Xs a = Xs {unXs :: [a]} deriving (Eq, Ord)
 instance Show a => Show (Xs a) where show (Xs xs) = show xs
 instance (Integral a, Bounded a) => Listable (Xs a) where
   tiers = cons1 (Xs . map unX)
+-- ^ Lists with elements of the 'X' type.
