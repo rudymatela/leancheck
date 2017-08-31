@@ -17,7 +17,9 @@ of finite sublists of same-and-increasingly-sized values.  This enumeration is
 similar to [Feat]'s.  However, the ranking and ordering of values are defined
 differently.  The interface is also different.
 
-In this README, lines ending with `-- >` indicate expected return values.
+Throughout this README lines that begin with the [symbol `>`] indicate a line
+entered into an interactive interpreter (`ghci`).  The result of evaluating the
+expression is then printed on the following line.
 
 
 Installing
@@ -40,10 +42,12 @@ and a _property_ (function returning Bool),
 then, it returns a boolean indicating whether the property holds.
 See (ghci):
 
-	import Test.LeanCheck
-	import Data.List
-	holds 100 $ \xs -> sort (sort xs) == sort (xs::[Int])  -- > True
-	holds 100 $ \xs -> [] `union` xs == (xs::[Int])        -- > False
+	> import Test.LeanCheck
+	> import Data.List
+	> holds 100 $ \xs -> sort (sort xs) == sort (xs::[Int])
+	True
+	> holds 100 $ \xs -> [] `union` xs == (xs::[Int])
+	False
 
 
 Finding counter examples
@@ -58,17 +62,17 @@ Then, it returns Nothing if no results are found or Just a list of Strings
 representing the offending arguments to the property.
 See (ghci):
 
-	import Test.LeanCheck
-	import Data.List
+	> import Test.LeanCheck
+	> import Data.List
 
-	counterExample 100 $ \xs -> sort (sort xs) == sort (xs::[Int])
-	-- > Nothing
+	> counterExample 100 $ \xs -> sort (sort xs) == sort (xs::[Int])
+	Nothing
 
-	counterExample 100 $ \xs -> [] `union` xs == (xs::[Int])
-	-- > Just ["[0,0]"]
+	> counterExample 100 $ \xs -> [] `union` xs == (xs::[Int])
+	Just ["[0,0]"]
 
-	counterExample 100 $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
-	-- > Just ["[]","[0,0]"]
+	> counterExample 100 $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
+	Just ["[]","[0,0]"]
 
 
 Checking properties like in SmallCheck/QuickCheck
@@ -78,15 +82,15 @@ To "check" properties like in [SmallCheck] and [QuickCheck]
 automatically printing results on standard output,
 you can use the function [`check`] `:: Testable a => a -> IO ()`.
 
-	import Test.LeanCheck
-	import Data.List
+	> import Test.LeanCheck
+	> import Data.List
 
-	check $ \xs -> sort (sort xs) == sort (xs::[Int])
-	-- > +++ OK, passed 200 tests.
+	> check $ \xs -> sort (sort xs) == sort (xs::[Int])
+	+++ OK, passed 200 tests.
 
-	check $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
-	-- > *** Failed! Falsifiable (after 4 tests):
-	-- > [] [0,0]
+	> check $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
+	*** Failed! Falsifiable (after 4 tests):
+	[] [0,0]
 
 The function [`check`] tests for a maximum of 200 tests.
 To check for a maximum of `n` tests, use [`checkFor`] `n`.
@@ -123,7 +127,8 @@ of values of the bound type:
 
 So, for example:
 
-	take 5 (list :: [(Int,Int)]) -- > [(0,0),(0,1),(1,0),(0,-1),(1,1)]
+	> take 5 (list :: [(Int,Int)])
+	[(0,0),(0,1),(1,0),(0,-1),(1,1)]
 
 The `list` function can be used to debug your custom instances.
 
@@ -159,6 +164,8 @@ and a step-by-step guide to LeanCheck, see the
 [Feat]: https://hackage.haskell.org/package/testing-feat
 [SmallCheck]: https://hackage.haskell.org/package/smallcheck
 [QuickCheck]: https://hackage.haskell.org/package/QuickCheck
+
+[symbol `>`]: https://www.haskell.org/haddock/doc/html/ch03s08.html#idm140354810780208
 
 [build-status]: https://travis-ci.org/rudymatela/leancheck.svg?branch=master
 [build-log]:    https://travis-ci.org/rudymatela/leancheck
