@@ -115,6 +115,12 @@ LeanCheck works on properties with [`Listable`] argument types.
 	       \/ cons2 MyConsC
 	       \/ cons1 MyConsD
 
+For types that do not have a constraning data invariant, instances can be
+automatically derived with [Template Haskell] by using [`deriveListable`] like
+so:
+
+	deriveListable ''MyType
+
 The [`tiers`] function return a potentially infinite list of finite sub-lists
 (tiers).  Each successive tier has values of increasing size.
 
@@ -159,6 +165,7 @@ and a step-by-step guide to LeanCheck, see the
 [`checkResultFor`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:checkResultFor
 [`tiers`]:          https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:tiers
 [`list`]:           https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:list
+[`deriveListable`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:deriveListable
 
 [property-based testing]: https://github.com/rudymatela/leancheck/blob/master/doc/tutorial.md
 [Feat]: https://hackage.haskell.org/package/testing-feat
