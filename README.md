@@ -102,7 +102,7 @@ Testing user-defined types
 --------------------------
 
 LeanCheck works on properties with [`Listable`] argument types.
-`Listable` instances are declared similarly to SmallCheck:
+[`Listable`] instances are declared similarly to SmallCheck:
 
 	data MyType = MyConsA
 	            | MyConsB Int
