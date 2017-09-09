@@ -60,7 +60,21 @@ v0.6.6
   so that the user gets an enumeration of functions with repetitions, but using
   a mixed strategy for generation of values.
 
+
 v0.6.7
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
+
+
+v0.6.8
+------
+
+* somehow, improve the improve the enumeration of `Char`s:
+
+   list = [ ['a'], ['b','c'], ['d','e','f'], ... ]
+      ||| [ [' '], ['\n'] ]
+      ||| [ ['0'], ['1'], ['2'], ...]
+      ||| ...
+     where
+     ||| is something that interleaves tiers of different lists...
