@@ -1,5 +1,6 @@
 # .travis.yml file for LeanCheck
-language: haskell
+
+language: c  # not really
 
 notifications:
   email:
