@@ -31,6 +31,9 @@ v0.6.6
 * On `bench/tiers`, print if the enumeration has repetitions
   (import `Function.Eq` for that)
 
+* Port `discardLaterT`, `discardT` and `nubT` from Speculate here.
+  See `fitspec/eg/alga` for details.
+
 * add `classify` function to measure distribution of data:
   something like:
 
