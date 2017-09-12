@@ -49,6 +49,9 @@ module Test.LeanCheck.Tiers
   , normalizeT
   , catMaybesT
   , mapMaybeT
+  , discardT
+  , discardLaterT
+  , nubT
 
   -- * Tiers of choices
   , choices
@@ -270,6 +273,35 @@ catMaybesT = map catMaybes
 
 mapMaybeT :: (a -> Maybe b) -> [[a]] -> [[b]]
 mapMaybeT f = catMaybesT . mapT f
+
+-- | Discard elements _not_ matching a predicate.
+--
+-- > discardT odd [[1],[2,3],[4]] = [[],[2],[4]]
+discardT :: (a -> Bool) -> [[a]] -> [[a]]
+discardT p = filterT (not . p)
+
+-- | Discard later elements maching a binary predicate
+--   (in relation to an earlier element).
+--
+-- > discardLaterT (>) [[0],[1],[-1],[2],[-2],...] = [[0],[],[-1],[],[-2],...]
+-- > discardLaterT (==) [[0],[0,1],[0,1,2],[0,1,2,3],...] = [[0],[1],[2],[3]]
+--
+-- This function is quite innefficient, use with care.
+-- Consuming the n-th element takes @O(n^2)@ operations.
+discardLaterT :: (a -> a -> Bool) -> [[a]] -> [[a]]
+discardLaterT d []           = []
+discardLaterT d ([]:xss)     = [] : discardLaterT d xss
+discardLaterT d ((x:xs):xss) = [[x]]
+                            \/ discardLaterT d (discardT (`d` x) (xs:xss))
+
+-- | Removes repetitions from tiers.
+--
+-- > nubT [[0],[0,1],[0,1,2],[0,1,2,3],...] = [[0],[1],[2],[3],...]
+-- > nubT [[0],[-1,0,1],[-2,-1,0,1,2],...] = [[0],[-1,1],[-2,2],...]
+--
+-- Consuming the n-th element takes @O(n^2)@ operations.
+nubT :: Ord a => [[a]] -> [[a]]
+nubT = discardLaterT (==)
 
 -- | Takes as argument tiers of element values;
 --   returns tiers of lists with no repeated elements.

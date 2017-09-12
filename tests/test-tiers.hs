@@ -63,6 +63,11 @@ tests =
   , finite (tiers :: [[ Word4 ]])  == False
   , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool) ]]) == False
   , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool,Bool) ]]) == False
+
+  , holds 100 $ \xss -> ordered . concat $ discardLaterT (<)  (xss::[[Int]])
+  , holds 100 $ \xss -> ordered . concat $ discardLaterT (<=) (xss::[[Int]])
+  , (length . concat $ discardLaterT (<=) [[00..99],[100..199::Int]]) == 200
+  , holds 100 $ \xss -> nub (concat xss) == concat (nubT xss :: [[Int]])
   ]
 
 deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool
