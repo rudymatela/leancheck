@@ -31,6 +31,9 @@ v0.6.6
 * On `bench/tiers`, print if the enumeration has repetitions
   (import `Function.Eq` for that)
 
+* Modularize the `Derive` module by implementing
+  `deriveTiers` and `deriveList`.
+
 * Port `discardLaterT`, `discardT` and `nubT` from Speculate here.
   See `fitspec/eg/alga` for details.
 
