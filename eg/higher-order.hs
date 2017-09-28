@@ -16,4 +16,5 @@ prop_mapFilter f p xs  =  filter p (map f xs) == map f (filter p xs)
 main :: IO ()
 main = do
   check prop_foldlFoldr
+  check prop_foldl1Foldr1Reverse
   check prop_mapFilter
