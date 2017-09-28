@@ -28,6 +28,12 @@ documentation
 v0.6.6
 ------
 
+* release!
+
+
+v0.6.7
+------
+
 * On `bench/tiers`, print if the enumeration has repetitions
   (import `Function.Eq` for that)
 
@@ -67,13 +73,13 @@ v0.6.6
   a mixed strategy for generation of values.
 
 
-v0.6.7
+v0.6.8
 ------
 
 * implement stub `Test.LeanCheck.Function.*` modules;
 
 
-v0.6.8
+v0.6.9
 ------
 
 * somehow, improve the improve the enumeration of `Char`s:
