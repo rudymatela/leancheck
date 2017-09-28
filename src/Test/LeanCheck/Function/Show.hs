@@ -16,7 +16,5 @@ module Test.LeanCheck.Function.Show () where
 import Test.LeanCheck.Function.ShowFunction
 
 instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
-  showsPrec 0 = (++) . showFunction 8
-  showsPrec _ = (++) . paren . showFunctionLine 4
-    where paren s = "(" ++ s ++ ")"
+  showsPrec _ = (++) . showFunction 8
 
