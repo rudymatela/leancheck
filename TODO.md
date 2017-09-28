@@ -14,8 +14,6 @@ misc
 
 * parameterize number of tests in test programs and add slow-test target
 
-* add diff test for IO functions (diff w/ model output and exit status)
-
 
 documentation
 -------------
@@ -25,8 +23,8 @@ documentation
 * on data-invariant.md, write missing section;
 
 
-v0.6.7
-------
+other improvements
+------------------
 
 * On `bench/tiers`, print if the enumeration has repetitions
   (import `Function.Eq` for that)
@@ -96,14 +94,10 @@ v0.6.7
   a mixed strategy for generation of values.
 
 
-v0.6.8
-------
+later
+-----
 
 * implement stub `Test.LeanCheck.Function.*` modules;
-
-
-v0.6.9
-------
 
 * somehow, improve the improve the enumeration of `Char`s:
 
