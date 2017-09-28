@@ -32,6 +32,7 @@ bench/tiers-funlistable.hs
 eg/test-sort
 eg/test-bool
 eg/test-list
+eg/higher-order
 eg/overflow
 doc/*.html
 doc/*.css
