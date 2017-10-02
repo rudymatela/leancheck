@@ -13,7 +13,7 @@
 -- This module considers functions as a finite list of exceptional input-output
 -- cases to a default value (list of pairs of arguments and results).
 module Test.LeanCheck.Function.ListsOfPairs
-  ( functionPairs
+  ( exceptionPairs
   , associations
   )
 where
@@ -31,7 +31,7 @@ xss -->> yss
   | finite xss = mapT ((undefined `mutate`) . zip (concat xss))
                       (products $ replicate (length $ concat xss) yss)
   | otherwise  = concatMapT
-                   (\(r,yss) -> mapT (const r `mutate`) (functionPairs xss yss))
+                   (\(r,yss) -> mapT (const r `mutate`) (exceptionPairs xss yss))
                    (choices yss)
 
 
@@ -51,8 +51,8 @@ associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
 -- | Given tiers of input values and tiers of output values,
 -- return tiers with all possible lists of input-output pairs.
 -- Those represent functional relations.
-functionPairs :: [[a]] -> [[b]] -> [[ [(a,b)] ]]
-functionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
+exceptionPairs :: [[a]] -> [[b]] -> [[ [(a,b)] ]]
+exceptionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
 -- incompleteSetsOf is needed, instead of setsOf, because mutating *all* values
 -- of a constant function makes no sense (we would have already enumerated that
 -- function anyway).  As of 2c23c1a, it makes no difference whether
