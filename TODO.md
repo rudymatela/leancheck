@@ -26,9 +26,6 @@ documentation
 other improvements
 ------------------
 
-* Find out why some function enumerations have repetitions, see:
-  `$ grep "allUnique.*False" tests/diff/tiers*`
-
 * Modularize the `Derive` module by implementing
   `deriveTiers` and `deriveList`.
 
