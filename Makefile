@@ -206,15 +206,15 @@ update-diff-test-tiers: bench/tiers
 
 TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-listsofpairs.hs: bench/tiers.hs
-	sed -e "s/$(TLF)/$(TLF).ListsOfPairs\n$(TLF).Show/" $< > $@
+	sed -e "s/$(TLF)$$/$(TLF).ListsOfPairs\n$(TLF).Show/" $< > $@
 
 TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-colistable.hs: bench/tiers.hs
-	sed -e "s/$(TLF)/$(TLF).CoListable\n$(TLF).Show/" $< > $@
+	sed -e "s/$(TLF)$$/$(TLF).CoListable\n$(TLF).Show/" $< > $@
 
 TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-funlistable.hs: bench/tiers.hs
-	sed -e "s/$(TLF)/$(TLF).FunListable\n$(TLF).Show/" $< > $@
+	sed -e "s/$(TLF)$$/$(TLF).FunListable\n$(TLF).Show/" $< > $@
 
 bench/tiers-colistable: bench/tiers-colistable.hs src/Test/LeanCheck/Function/CoListable.hs
 
