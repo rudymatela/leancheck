@@ -13,7 +13,8 @@
 -- This module considers functions as a finite list of exceptional input-output
 -- cases to a default value (list of pairs of arguments and results).
 module Test.LeanCheck.Function.ListsOfPairs
-  ( exceptionPairs
+  ( (-->>)
+  , exceptionPairs
   )
 where
 
