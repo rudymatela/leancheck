@@ -26,9 +26,6 @@ documentation
 other improvements
 ------------------
 
-* On `bench/tiers`, print if the enumeration has repetitions
-  (import `Function.Eq` for that)
-
 * Modularize the `Derive` module by implementing
   `deriveTiers` and `deriveList`.
 

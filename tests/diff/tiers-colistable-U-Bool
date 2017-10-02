@@ -9,3 +9,5 @@ tiers :: [()->Bool]  =
 map length (tiers :: [[ ()->Bool ]])  =  [2]
 
 length (list :: [ ()->Bool ])  =  2
+
+allUnique (list :: [ ()->Bool ])  =  True

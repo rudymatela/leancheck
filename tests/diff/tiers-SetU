@@ -6,3 +6,5 @@ tiers :: [Set ()]  =
 map length (tiers :: [[ Set () ]])  =  [1,1]
 
 length (list :: [ Set () ])  =  2
+
+allUnique (list :: [ Set () ])  =  True

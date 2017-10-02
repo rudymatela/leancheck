@@ -13,3 +13,5 @@ tiers :: [Set Nat3]  =
 map length (tiers :: [[ Set Nat3 ]])  =  [1,1,1,2,1,1,1]
 
 length (list :: [ Set Nat3 ])  =  8
+
+allUnique (list :: [ Set Nat3 ])  =  True

@@ -89,3 +89,5 @@ tiers :: [[Nat]->[Nat]]  =
 map length (tiers :: [[ [Nat]->[Nat] ]])  =  [1,1,2,4,...]
 
 length (list :: [ [Nat]->[Nat] ])  =  Infinity
+
+allUnique (list :: [ [Nat]->[Nat] ])  =  True

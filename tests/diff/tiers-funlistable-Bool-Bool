@@ -17,3 +17,5 @@ tiers :: [Bool->Bool]  =
 map length (tiers :: [[ Bool->Bool ]])  =  [4]
 
 length (list :: [ Bool->Bool ])  =  4
+
+allUnique (list :: [ Bool->Bool ])  =  True

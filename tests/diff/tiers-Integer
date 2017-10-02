@@ -17,3 +17,5 @@ tiers :: [Integer]  =
 map length (tiers :: [[ Integer ]])  =  [1,1,1,1,1,1,1,1,1,1,1,1,...]
 
 length (list :: [ Integer ])  =  Infinity
+
+allUnique (list :: [ Integer ])  =  True

@@ -4,3 +4,5 @@ tiers :: [Int->Int]  =
 map length (tiers :: [[ Int->Int ]])  =  [0]
 
 length (list :: [ Int->Int ])  =  0
+
+allUnique (list :: [ Int->Int ])  =  True

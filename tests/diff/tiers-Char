@@ -17,3 +17,5 @@ tiers :: [Char]  =
 map length (tiers :: [[ Char ]])  =  [1,1,1,1,1,1,1,1,1,1,1,1,...]
 
 length (list :: [ Char ])  =  Infinity
+
+allUnique (list :: [ Char ])  =  True

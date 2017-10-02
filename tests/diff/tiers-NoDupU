@@ -6,3 +6,5 @@ tiers :: [NoDup ()]  =
 map length (tiers :: [[ NoDup () ]])  =  [1,1]
 
 length (list :: [ NoDup () ])  =  2
+
+allUnique (list :: [ NoDup () ])  =  True

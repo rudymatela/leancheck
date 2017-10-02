@@ -41,3 +41,5 @@ tiers :: [[Nat]]  =
 map length (tiers :: [[ [Nat] ]])  =  [1,1,2,4,8,16,...]
 
 length (list :: [ [Nat] ])  =  Infinity
+
+allUnique (list :: [ [Nat] ])  =  True

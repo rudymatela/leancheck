@@ -19,3 +19,5 @@ tiers :: [Nat2->Nat2]  =
 map length (tiers :: [[ Nat2->Nat2 ]])  =  [1,2,1]
 
 length (list :: [ Nat2->Nat2 ])  =  4
+
+allUnique (list :: [ Nat2->Nat2 ])  =  True

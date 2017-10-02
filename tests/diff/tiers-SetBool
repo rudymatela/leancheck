@@ -9,3 +9,5 @@ tiers :: [Set Bool]  =
 map length (tiers :: [[ Set Bool ]])  =  [1,2,1]
 
 length (list :: [ Set Bool ])  =  4
+
+allUnique (list :: [ Set Bool ])  =  True

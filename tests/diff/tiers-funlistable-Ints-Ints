@@ -89,3 +89,5 @@ tiers :: [[Int]->[Int]]  =
 map length (tiers :: [[ [Int]->[Int] ]])  =  [1,1,2,4,...]
 
 length (list :: [ [Int]->[Int] ])  =  Infinity
+
+allUnique (list :: [ [Int]->[Int] ])  =  True

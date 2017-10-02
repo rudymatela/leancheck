@@ -10,3 +10,5 @@ tiers :: [NoDup Nat2]  =
 map length (tiers :: [[ NoDup Nat2 ]])  =  [1,1,1,2]
 
 length (list :: [ NoDup Nat2 ])  =  5
+
+allUnique (list :: [ NoDup Nat2 ])  =  True

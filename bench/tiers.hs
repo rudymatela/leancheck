@@ -5,6 +5,7 @@
 import Test.LeanCheck
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Function
+import Test.LeanCheck.Function.Eq
 import Test.LeanCheck.Tiers (showTiers, finite)
 import System.Environment
 import Data.List (intercalate)
@@ -18,6 +19,11 @@ lengthT :: [[a]] -> Maybe Int
 lengthT xss | finite xss' = Just . length $ concat xss'
             | otherwise   = Nothing
   where xss' = dropEmptyTiersTail xss
+
+allUnique :: Eq a => [a] -> Bool
+allUnique [] = True
+allUnique (x:xs) = x `notElem` xs
+                && allUnique (filter (/= x) xs)
 
 
 showLengthT :: [[a]] -> String
@@ -35,7 +41,7 @@ showDotsLongerThan n xs = "["
 printTiers :: Show a => Int -> [[a]] -> IO ()
 printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
-put :: (Show a, Listable a) => String -> Int -> a -> IO ()
+put :: (Show a, Eq a, Listable a) => String -> Int -> a -> IO ()
 put t n a = do
   putStrLn $ "tiers :: [" ++ t ++ "]  ="
   printTiers n $ tiers `asTypeOf` [[a]]
@@ -45,6 +51,9 @@ put t n a = do
   putStrLn $ ""
   putStrLn $ "length (list :: [ " ++ t ++ " ])  =  "
           ++ showLengthT (tiers `asTypeOf` [[a]])
+  putStrLn $ ""
+  putStrLn $ "allUnique (list :: [ " ++ t ++ " ])  =  "
+          ++ show (allUnique . concat . take n $ tiers `asTypeOf` [[a]])
 
 u :: a
 u = undefined
