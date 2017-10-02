@@ -14,7 +14,6 @@
 -- cases to a default value (list of pairs of arguments and results).
 module Test.LeanCheck.Function.ListsOfPairs
   ( exceptionPairs
-  , associations
   )
 where
 
@@ -41,18 +40,17 @@ mutate f ms = foldr mut f ms
   mut (x',fx') f x = if x == x' then fx' else f x
 
 
--- | Given a list of domain values, and tiers of codomain values,
--- return tiers of lists of ordered pairs of domain and codomain values.
---
--- Technically: tiers of left-total functional relations.
-associations :: [a] -> [[b]] -> [[ [(a,b)] ]]
-associations xs sbs = zip xs `mapT` products (const sbs `map` xs)
-
 -- | Given tiers of input values and tiers of output values,
 -- return tiers with all possible lists of input-output pairs.
--- Those represent functional relations.
+-- These represent functional relations.
+-- In the implementation of '-->>',
+-- they represent exceptions to a constant function,
+-- hence the name 'exceptionPairs'.
 exceptionPairs :: [[a]] -> [[b]] -> [[ [(a,b)] ]]
-exceptionPairs xss yss = concatMapT (`associations` yss) (incompleteSetsOf xss)
+exceptionPairs xss yss = concatMapT (`excep` yss) (incompleteSetsOf xss)
+  where
+  excep :: [a] -> [[b]] -> [[ [(a,b)] ]]
+  excep xs sbs = zip xs `mapT` products (const sbs `map` xs)
 -- incompleteSetsOf is needed, instead of setsOf, because mutating *all* values
 -- of a constant function makes no sense (we would have already enumerated that
 -- function anyway).  As of 2c23c1a, it makes no difference whether
