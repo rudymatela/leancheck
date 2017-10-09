@@ -1,0 +1,228 @@
+tiers :: [Maybe Bool->Maybe Bool]  =
+  [ [ \x -> case x of
+              Nothing -> Nothing
+              Just False -> Nothing
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Nothing
+              Just True -> Nothing
+    ]
+  , [ \x -> case x of
+              Nothing -> Nothing
+              Just False -> Nothing
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Nothing
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just False
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just True
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Nothing
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Nothing
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just False
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just True
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Nothing
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Nothing
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Nothing
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Nothing
+              Just True -> Nothing
+    ]
+  , [ \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just False
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just False
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just True
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just True
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Nothing
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Nothing
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just False
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just True
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Nothing
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Nothing
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just False
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just True
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just False
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just True
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just False
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Nothing
+              Just False -> Just True
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just False
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just True
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Nothing
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Nothing
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just False
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just True
+              Just True -> Nothing
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Nothing
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Nothing
+              Just True -> Just True
+    ]
+  , [ \x -> case x of
+              Nothing -> Just False
+              Just False -> Just False
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just False
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just True
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just True
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just False
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just False
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just True
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just True
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just False
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just True
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just False
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just False
+              Just False -> Just True
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just False
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just True
+              Just True -> Just False
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just False
+              Just True -> Just True
+    , \x -> case x of
+              Nothing -> Just True
+              Just False -> Just True
+              Just True -> Just True
+    ]
+  ]
+
+map length (tiers :: [[ Maybe Bool->Maybe Bool ]])  =  [2,12,24,16]
+
+length (list :: [ Maybe Bool->Maybe Bool ])  =  Infinity
+
+allUnique (list :: [ Maybe Bool->Maybe Bool ])  =  False

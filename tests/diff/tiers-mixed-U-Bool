@@ -1,0 +1,17 @@
+tiers :: [()->Bool]  =
+  [ [ \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> True
+    , \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> True
+    ]
+  ]
+
+map length (tiers :: [[ ()->Bool ]])  =  [4]
+
+length (list :: [ ()->Bool ])  =  4
+
+allUnique (list :: [ ()->Bool ])  =  False

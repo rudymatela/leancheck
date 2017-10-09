@@ -1,0 +1,13 @@
+tiers :: [()->()]  =
+  [ [ \x -> case x of
+              () -> ()
+    , \x -> case x of
+              () -> ()
+    ]
+  ]
+
+map length (tiers :: [[ ()->() ]])  =  [2]
+
+length (list :: [ ()->() ])  =  2
+
+allUnique (list :: [ ()->() ])  =  False

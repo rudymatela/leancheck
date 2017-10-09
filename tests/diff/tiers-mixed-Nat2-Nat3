@@ -1,0 +1,67 @@
+tiers :: [Nat2->Nat3]  =
+  [ [ \x -> case x of
+              0 -> 0
+              1 -> 0
+    , \x -> case x of
+              0 -> 0
+              1 -> 0
+    ]
+  , [ \x -> case x of
+              0 -> 0
+              1 -> 1
+    , \x -> case x of
+              0 -> 1
+              1 -> 0
+    , \x -> case x of
+              0 -> 0
+              1 -> 1
+    , \x -> case x of
+              0 -> 1
+              1 -> 0
+    ]
+  , [ \x -> case x of
+              0 -> 0
+              1 -> 2
+    , \x -> case x of
+              0 -> 1
+              1 -> 1
+    , \x -> case x of
+              0 -> 2
+              1 -> 0
+    , \x -> case x of
+              0 -> 0
+              1 -> 2
+    , \x -> case x of
+              0 -> 1
+              1 -> 1
+    , \x -> case x of
+              0 -> 2
+              1 -> 0
+    ]
+  , [ \x -> case x of
+              0 -> 1
+              1 -> 2
+    , \x -> case x of
+              0 -> 2
+              1 -> 1
+    , \x -> case x of
+              0 -> 1
+              1 -> 2
+    , \x -> case x of
+              0 -> 2
+              1 -> 1
+    ]
+  , [ \x -> case x of
+              0 -> 2
+              1 -> 2
+    , \x -> case x of
+              0 -> 2
+              1 -> 2
+    ]
+  ]
+
+map length (tiers :: [[ Nat2->Nat3 ]])  =  [2,4,6,4,2]
+
+length (list :: [ Nat2->Nat3 ])  =  Infinity
+
+allUnique (list :: [ Nat2->Nat3 ])  =  False
