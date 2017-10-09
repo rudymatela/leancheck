@@ -26,9 +26,6 @@ documentation
 other improvements
 ------------------
 
-* Port `discardLaterT`, `discardT` and `nubT` from Speculate here.
-  See `fitspec/eg/alga` for details.
-
 * add `classify` function to measure distribution of data:
   something like:
 
