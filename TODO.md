@@ -32,6 +32,21 @@ other improvements
     classifyBy :: (a -> b) -> [a] -> [(b,a)]
     countsBy :: (a -> b) -> [a] -> [(b,Int)]
 
+
+later
+-----
+
+* implement stub `Test.LeanCheck.Function.*` modules;
+
+* somehow, improve the improve the enumeration of `Char`s:
+
+   list = [ ['a'], ['b','c'], ['d','e','f'], ... ]
+      ||| [ [' '], ['\n'] ]
+      ||| [ ['0'], ['1'], ['2'], ...]
+      ||| ...
+     where
+     ||| is something that interleaves tiers of different lists...
+
 * further improve showing of functions, indead of showing:
 
     \p q -> case (p,q) of
@@ -59,18 +74,3 @@ other improvements
             ...
 
   Where: `const (const 1) ->/ [(1,const 0)]`.
-
-
-later
------
-
-* implement stub `Test.LeanCheck.Function.*` modules;
-
-* somehow, improve the improve the enumeration of `Char`s:
-
-   list = [ ['a'], ['b','c'], ['d','e','f'], ... ]
-      ||| [ [' '], ['\n'] ]
-      ||| [ ['0'], ['1'], ['2'], ...]
-      ||| ...
-     where
-     ||| is something that interleaves tiers of different lists...
