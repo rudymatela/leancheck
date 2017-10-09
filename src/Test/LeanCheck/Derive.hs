@@ -19,6 +19,7 @@ module Test.LeanCheck.Derive
   ( deriveListable
   , deriveListableIfNeeded
   , deriveListableCascading
+  , deriveTiers
   )
 where
 
@@ -86,19 +87,23 @@ reallyDeriveListable t = do
 #endif
 #if __GLASGOW_HASKELL__ >= 708
   cxt |=>| [d| instance Listable $(return nt)
-                 where tiers = $(conse =<< typeConstructors t) |]
+                 where tiers = $(deriveTiers t) |]
 #else
-  tiersE <- conse =<< typeConstructors t
+  tiersE <- deriveTiers t
   return [ InstanceD
              cxt
              (AppT (ConT ''Listable) nt)
              [ValD (VarP 'tiers) (NormalB tiersE) []]
          ]
 #endif
-  where cone n as = do
-          (Just consN) <- lookupValueName $ "cons" ++ show (length as)
-          [| $(varE consN) $(conE n) |]
-        conse = foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
+
+deriveTiers :: Name -> ExpQ
+deriveTiers t = conse =<< typeConstructors t
+  where
+  cone n as = do
+    (Just consN) <- lookupValueName $ "cons" ++ show (length as)
+    [| $(varE consN) $(conE n) |]
+  conse = foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
 
 -- Not only really derive Listable instances,
 -- but cascade through argument types.

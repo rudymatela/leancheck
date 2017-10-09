@@ -5,7 +5,7 @@ import Test
 import Test.LeanCheck
 import Test.LeanCheck.Derive
 import System.Exit (exitFailure)
-import Data.List (elemIndices)
+import Data.List (elemIndices,sort)
 import Test.LeanCheck.Utils.Operators
 
 data D0       = D0                    deriving Show
@@ -85,6 +85,13 @@ tests n =
   , map unD1 list == (list :: [Bool])
   , map unD2 list == (list :: [(Bool,Bool)])
   , map unD3 list == (list :: [(Bool,Bool,Bool)])
+
+  , (tiers :: [[ Bool       ]]) =| 6 |= $(deriveTiers ''Bool)
+  , (tiers :: [[ [Int]      ]]) =| 6 |= $(deriveTiers ''[])
+  , (tiers :: [[ [Bool]     ]]) =| 6 |= $(deriveTiers ''[])
+  , (tiers :: [[ Maybe Int  ]]) =| 6 |= $(deriveTiers ''Maybe)
+  , (tiers :: [[ Maybe Bool ]]) =| 6 |= $(deriveTiers ''Maybe)
+  , ([]:tiers :: [[Either Bool Int]]) =$ map sort . take 6 $= $(deriveTiers ''Either)
   ]
   where
   unD0 (D0)       = ()
