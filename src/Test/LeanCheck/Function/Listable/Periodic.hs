@@ -11,7 +11,7 @@
 -- functions.
 --
 -- This module /barely works/ and is just a sketch.
-module Test.LeanCheck.Function.Periodic
+module Test.LeanCheck.Function.Listable.Periodic
 where
 
 

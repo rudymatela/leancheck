@@ -65,12 +65,16 @@ library
                  , Test.LeanCheck.Utils.TypeBinding
                  , Test.LeanCheck.Utils.Operators
                  , Test.LeanCheck.Function
-                 , Test.LeanCheck.Function.ListsOfPairs
-                 , Test.LeanCheck.Function.FunListable
-                 , Test.LeanCheck.Function.CoListable
                  , Test.LeanCheck.Function.Eq
-                 , Test.LeanCheck.Function.Periodic
                  , Test.LeanCheck.Function.Show
+                 , Test.LeanCheck.Function.Listable
+                 , Test.LeanCheck.Function.Listable.ListsOfPairs
+                 , Test.LeanCheck.Function.Listable.FunListable
+                 , Test.LeanCheck.Function.Listable.CoListable
+                 , Test.LeanCheck.Function.Listable.Periodic
+                 , Test.LeanCheck.Function.Listable.Mixed
+                 , Test.LeanCheck.Function.ListsOfPairs
+                 , Test.LeanCheck.Function.CoListable
                  , Test.LeanCheck.Function.ShowFunction
   hs-source-dirs:      src
   build-depends:       base >= 4 && < 5, template-haskell
