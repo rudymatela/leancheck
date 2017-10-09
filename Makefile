@@ -20,7 +20,9 @@ EGS = \
 	eg/test-sort
 BENCHS = \
 	bench/tiers-colistable \
+	bench/tiers-funlistable \
 	bench/tiers-listsofpairs \
+	bench/tiers-mixed \
 	bench/tiers
 LISTHS   = find src mk -name \*.hs
 LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
