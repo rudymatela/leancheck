@@ -92,6 +92,12 @@ tests n =
   , (tiers :: [[ Maybe Int  ]]) =| 6 |= $(deriveTiers ''Maybe)
   , (tiers :: [[ Maybe Bool ]]) =| 6 |= $(deriveTiers ''Maybe)
   , ([]:tiers :: [[Either Bool Int]]) =$ map sort . take 6 $= $(deriveTiers ''Either)
+
+  , (list :: [ Bool       ]) =| n |= $(deriveList ''Bool)
+  , (list :: [ [Int]      ]) =| n |= $(deriveList ''[])
+  , (list :: [ [Bool]     ]) =| n |= $(deriveList ''[])
+  , (list :: [ Maybe Int  ]) =| n |= $(deriveList ''Maybe)
+  , (list :: [ Maybe Bool ]) =| n |= $(deriveList ''Maybe)
   ]
   where
   unD0 (D0)       = ()

@@ -26,9 +26,6 @@ documentation
 other improvements
 ------------------
 
-* Modularize the `Derive` module by implementing
-  `deriveTiers` and `deriveList`.
-
 * Port `discardLaterT`, `discardT` and `nubT` from Speculate here.
   See `fitspec/eg/alga` for details.
 

@@ -20,6 +20,7 @@ module Test.LeanCheck.Derive
   , deriveListableIfNeeded
   , deriveListableCascading
   , deriveTiers
+  , deriveList
   )
 where
 
@@ -104,6 +105,9 @@ deriveTiers t = conse =<< typeConstructors t
     (Just consN) <- lookupValueName $ "cons" ++ show (length as)
     [| $(varE consN) $(conE n) |]
   conse = foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
+
+deriveList :: Name -> ExpQ
+deriveList t = [| concat $(deriveTiers t) |]
 
 -- Not only really derive Listable instances,
 -- but cascade through argument types.
