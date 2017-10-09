@@ -209,18 +209,16 @@ prepare-depend: bench/tiers-listsofpairs.hs \
                 bench/tiers-mixed.hs
 
 TLF = "import\ Test.LeanCheck.Function"
+
 bench/tiers-listsofpairs.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable.ListsOfPairs\n$(TLF).Show/" $< > $@
 
-TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-colistable.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable.CoListable\n$(TLF).Show/" $< > $@
 
-TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-funlistable.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable.FunListable\n$(TLF).Show/" $< > $@
 
-TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-mixed.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable.Mixed\n$(TLF).Show/" $< > $@
 
