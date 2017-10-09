@@ -30,7 +30,7 @@ other improvements
   something like:
 
     classifyBy :: (a -> b) -> [a] -> [(b,a)]
-	countsBy :: (a -> b) -> [a] -> [(b,Int)]
+    countsBy :: (a -> b) -> [a] -> [(b,Int)]
 
 * further improve showing of functions, indead of showing:
 
@@ -44,19 +44,19 @@ other improvements
 
     \p q -> case (p,q) of
             (True,False)  -> True
-			_             -> False
+            _             -> False
 
   Some thinking may have to be done for:
 
     \x y -> case (x,y) of
-	        (0,0) -> 0
-			(0,1) -> 0
-			(1,1) -> 1
-			(1,0) -> 1
-			(0,2) -> 0
-			(1,1) -> 1
-			(2,0) -> 1
-			...
+            (0,0) -> 0
+            (0,1) -> 0
+            (1,1) -> 1
+            (1,0) -> 1
+            (0,2) -> 0
+            (1,1) -> 1
+            (2,0) -> 1
+            ...
 
   Where: `const (const 1) ->/ [(1,const 0)]`.
 
