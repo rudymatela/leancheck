@@ -8,10 +8,10 @@
 -- a simple enumerative property-based testing library.
 --
 -- This module exports a 'Listable' instance for function enumeration by means
--- of a 'FunListable' typeclass (similar to 'FunListable').
+-- of a 'FunListable' typeclass (similar to 'CoListable').
 --
 -- This module /does not currently work/, it it just a sketch and a stub.
-module Test.LeanCheck.Function.FunListable
+module Test.LeanCheck.Function.Listable.FunListable
 where
 
 

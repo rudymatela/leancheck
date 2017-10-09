@@ -7,8 +7,7 @@
 -- This module is part of LeanCheck,
 -- a simple enumerative property-based testing library.
 --
--- This module exports a 'Listable' instance for function enumeration
--- via lists of pairs.
+-- This module exports means to enumerate functions via lists of pairs.
 --
 -- This module considers functions as a finite list of exceptional input-output
 -- cases to a default value (list of pairs of arguments and results).
@@ -21,10 +20,6 @@ where
 import Test.LeanCheck
 import Test.LeanCheck.Tiers
 import Data.Maybe (fromMaybe)
-
-instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
-  tiers = tiers -->> tiers
-
 
 (-->>) :: Eq a => [[a]] -> [[b]] -> [[a->b]]
 xss -->> yss

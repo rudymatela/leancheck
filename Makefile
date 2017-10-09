@@ -203,18 +203,21 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "NoDup Nat2"       > tests/diff/tiers-NoDupNat2
 	./bench/tiers "NoDup Nat3"       > tests/diff/tiers-NoDupNat3
 
+prepare-depend: bench/tiers-listsofpairs.hs \
+                bench/tiers-colistable.hs \
+                bench/tiers-funlistable.hs
 
 TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-listsofpairs.hs: bench/tiers.hs
-	sed -e "s/$(TLF)$$/$(TLF).ListsOfPairs\n$(TLF).Show/" $< > $@
+	sed -e "s/$(TLF)$$/$(TLF).Listable.ListsOfPairs\n$(TLF).Show/" $< > $@
 
 TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-colistable.hs: bench/tiers.hs
-	sed -e "s/$(TLF)$$/$(TLF).CoListable\n$(TLF).Show/" $< > $@
+	sed -e "s/$(TLF)$$/$(TLF).Listable.CoListable\n$(TLF).Show/" $< > $@
 
 TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-funlistable.hs: bench/tiers.hs
-	sed -e "s/$(TLF)$$/$(TLF).FunListable\n$(TLF).Show/" $< > $@
+	sed -e "s/$(TLF)$$/$(TLF).Listable.FunListable\n$(TLF).Show/" $< > $@
 
 bench/tiers-colistable: bench/tiers-colistable.hs src/Test/LeanCheck/Function/CoListable.hs
 

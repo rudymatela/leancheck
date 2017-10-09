@@ -14,6 +14,7 @@ bench/tiers-colistable.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Listable/CoListable.hs \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Function/CoListable.hs \
   src/Test/LeanCheck/Error.hs \
@@ -34,7 +35,7 @@ bench/tiers-funlistable.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
-  src/Test/LeanCheck/Function/FunListable.hs \
+  src/Test/LeanCheck/Function/Listable/FunListable.hs \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
@@ -52,6 +53,7 @@ bench/tiers-listsofpairs.o: \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
@@ -67,6 +69,8 @@ bench/tiers.o: \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
@@ -85,6 +89,8 @@ eg/higher-order.o: \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
@@ -120,6 +126,8 @@ eg/test-bool.o: \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
@@ -171,6 +179,8 @@ mk/Toplibs.o: \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
@@ -208,7 +218,7 @@ src/Test/LeanCheck/Function/CoListable.o: \
 src/Test/LeanCheck/Function/Eq.o: \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Core.hs
-src/Test/LeanCheck/Function/FunListable.o: \
+src/Test/LeanCheck/Function/Listable/CoListable.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Utils/TypeBinding.hs \
   src/Test/LeanCheck/Utils.hs \
@@ -216,7 +226,47 @@ src/Test/LeanCheck/Function/FunListable.o: \
   src/Test/LeanCheck/Tiers.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Function/FunListable.hs \
+  src/Test/LeanCheck/Function/Listable/CoListable.hs \
+  src/Test/LeanCheck/Function/CoListable.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Listable/FunListable.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Utils.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/Listable/FunListable.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Listable/ListsOfPairs.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Listable.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Listable/Periodic.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/Listable/Periodic.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
@@ -237,15 +287,9 @@ src/Test/LeanCheck/Function.o: \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Error.hs \
-  src/Test/LeanCheck/Derive.hs \
-  src/Test/LeanCheck/Core.hs \
-  src/Test/LeanCheck/Basic.hs
-src/Test/LeanCheck/Function/Periodic.o: \
-  src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck.hs \
-  src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Function/Periodic.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
