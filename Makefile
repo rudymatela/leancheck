@@ -129,7 +129,7 @@ include mk/haskell.mk
 
 diff-test-tiers: bench/tiers
 	# simple types
-	./bench/tiers "()"               | diff -rud tests/diff/tiers             -
+	./bench/tiers "()"               | diff -rud tests/diff/tiers.out             -
 	./bench/tiers "Int"              | diff -rud tests/diff/tiers-Int.out         -
 	./bench/tiers "Nat"              | diff -rud tests/diff/tiers-Nat.out         -
 	./bench/tiers "Integer"          | diff -rud tests/diff/tiers-Integer.out     -
