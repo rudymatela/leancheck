@@ -32,9 +32,6 @@ other improvements
     classifyBy :: (a -> b) -> [a] -> [(b,a)]
     countsBy :: (a -> b) -> [a] -> [(b,Int)]
 
-* make "sdist" carry everything including Makefile?
-  If so, improve "make test-sdist" accordingly.
-
 
 later
 -----
