@@ -130,80 +130,80 @@ include mk/haskell.mk
 diff-test-tiers: bench/tiers
 	# simple types
 	./bench/tiers "()"               | diff -rud tests/diff/tiers             -
-	./bench/tiers "Int"              | diff -rud tests/diff/tiers-Int         -
-	./bench/tiers "Nat"              | diff -rud tests/diff/tiers-Nat         -
-	./bench/tiers "Integer"          | diff -rud tests/diff/tiers-Integer     -
-	./bench/tiers "Bool"             | diff -rud tests/diff/tiers-Bool        -
-	./bench/tiers "Char"             | diff -rud tests/diff/tiers-Char        -
+	./bench/tiers "Int"              | diff -rud tests/diff/tiers-Int.out         -
+	./bench/tiers "Nat"              | diff -rud tests/diff/tiers-Nat.out         -
+	./bench/tiers "Integer"          | diff -rud tests/diff/tiers-Integer.out     -
+	./bench/tiers "Bool"             | diff -rud tests/diff/tiers-Bool.out        -
+	./bench/tiers "Char"             | diff -rud tests/diff/tiers-Char.out        -
 	# list s
-	./bench/tiers "[()]"             | diff -rud tests/diff/tiers-Us          -
-	./bench/tiers "[Int]"          6 | diff -rud tests/diff/tiers-Ints        -
-	./bench/tiers "[Nat]"          6 | diff -rud tests/diff/tiers-Nats        -
-	./bench/tiers "[Bool]"         6 | diff -rud tests/diff/tiers-Bools       -
-	./bench/tiers "String"         6 | diff -rud tests/diff/tiers-String      -
+	./bench/tiers "[()]"             | diff -rud tests/diff/tiers-Us.out          -
+	./bench/tiers "[Int]"          6 | diff -rud tests/diff/tiers-Ints.out        -
+	./bench/tiers "[Nat]"          6 | diff -rud tests/diff/tiers-Nats.out        -
+	./bench/tiers "[Bool]"         6 | diff -rud tests/diff/tiers-Bools.out       -
+	./bench/tiers "String"         6 | diff -rud tests/diff/tiers-String.out      -
 	# pairs
-	./bench/tiers "(Int,Int)"        | diff -rud tests/diff/tiers-Int,Int     -
-	./bench/tiers "(Nat,Nat)"        | diff -rud tests/diff/tiers-Nat,Nat     -
-	./bench/tiers "(Int,Int,Int)"  6 | diff -rud tests/diff/tiers-Int,Int,Int -
-	./bench/tiers "(Nat,Nat,Nat)"  6 | diff -rud tests/diff/tiers-Nat,Nat,Nat -
+	./bench/tiers "(Int,Int)"        | diff -rud tests/diff/tiers-Int,Int.out     -
+	./bench/tiers "(Nat,Nat)"        | diff -rud tests/diff/tiers-Nat,Nat.out     -
+	./bench/tiers "(Int,Int,Int)"  6 | diff -rud tests/diff/tiers-Int,Int,Int.out -
+	./bench/tiers "(Nat,Nat,Nat)"  6 | diff -rud tests/diff/tiers-Nat,Nat,Nat.out -
 	# lists & pairs
-	./bench/tiers "[((),())]"        | diff -rud tests/diff/tiers-U,Us        -
-	./bench/tiers "([()],[()])"      | diff -rud tests/diff/tiers-Us,Us       -
+	./bench/tiers "[((),())]"        | diff -rud tests/diff/tiers-U,Us.out        -
+	./bench/tiers "([()],[()])"      | diff -rud tests/diff/tiers-Us,Us.out       -
 	# special lists
-	./bench/tiers "Set Bool"         | diff -rud tests/diff/tiers-SetBool     -
-	./bench/tiers "Set ()"           | diff -rud tests/diff/tiers-SetU        -
-	./bench/tiers "Set Nat"          | diff -rud tests/diff/tiers-SetNat      -
-	./bench/tiers "Set Nat2"         | diff -rud tests/diff/tiers-SetNat2     -
-	./bench/tiers "Set Nat3"         | diff -rud tests/diff/tiers-SetNat3     -
-	./bench/tiers "Bag Bool"         | diff -rud tests/diff/tiers-BagBool     -
-	./bench/tiers "Bag ()"           | diff -rud tests/diff/tiers-BagU        -
-	./bench/tiers "Bag Nat"          | diff -rud tests/diff/tiers-BagNat      -
-	./bench/tiers "Bag Nat2"         | diff -rud tests/diff/tiers-BagNat2     -
-	./bench/tiers "Bag Nat3"         | diff -rud tests/diff/tiers-BagNat3     -
-	./bench/tiers "NoDup Bool"       | diff -rud tests/diff/tiers-NoDupBool   -
-	./bench/tiers "NoDup ()"         | diff -rud tests/diff/tiers-NoDupU      -
-	./bench/tiers "NoDup Nat"        | diff -rud tests/diff/tiers-NoDupNat    -
-	./bench/tiers "NoDup Nat2"       | diff -rud tests/diff/tiers-NoDupNat2   -
-	./bench/tiers "NoDup Nat3"       | diff -rud tests/diff/tiers-NoDupNat3   -
+	./bench/tiers "Set Bool"         | diff -rud tests/diff/tiers-SetBool.out     -
+	./bench/tiers "Set ()"           | diff -rud tests/diff/tiers-SetU.out        -
+	./bench/tiers "Set Nat"          | diff -rud tests/diff/tiers-SetNat.out      -
+	./bench/tiers "Set Nat2"         | diff -rud tests/diff/tiers-SetNat2.out     -
+	./bench/tiers "Set Nat3"         | diff -rud tests/diff/tiers-SetNat3.out     -
+	./bench/tiers "Bag Bool"         | diff -rud tests/diff/tiers-BagBool.out     -
+	./bench/tiers "Bag ()"           | diff -rud tests/diff/tiers-BagU.out        -
+	./bench/tiers "Bag Nat"          | diff -rud tests/diff/tiers-BagNat.out      -
+	./bench/tiers "Bag Nat2"         | diff -rud tests/diff/tiers-BagNat2.out     -
+	./bench/tiers "Bag Nat3"         | diff -rud tests/diff/tiers-BagNat3.out     -
+	./bench/tiers "NoDup Bool"       | diff -rud tests/diff/tiers-NoDupBool.out   -
+	./bench/tiers "NoDup ()"         | diff -rud tests/diff/tiers-NoDupU.out      -
+	./bench/tiers "NoDup Nat"        | diff -rud tests/diff/tiers-NoDupNat.out    -
+	./bench/tiers "NoDup Nat2"       | diff -rud tests/diff/tiers-NoDupNat2.out   -
+	./bench/tiers "NoDup Nat3"       | diff -rud tests/diff/tiers-NoDupNat3.out   -
 
 update-diff-test-tiers: bench/tiers
 	# simple types
 	./bench/tiers "()"               > tests/diff/tiers
-	./bench/tiers "Int"              > tests/diff/tiers-Int
-	./bench/tiers "Nat"              > tests/diff/tiers-Nat
-	./bench/tiers "Integer"          > tests/diff/tiers-Integer
-	./bench/tiers "Bool"             > tests/diff/tiers-Bool
-	./bench/tiers "Char"             > tests/diff/tiers-Char
+	./bench/tiers "Int"              > tests/diff/tiers-Int.out
+	./bench/tiers "Nat"              > tests/diff/tiers-Nat.out
+	./bench/tiers "Integer"          > tests/diff/tiers-Integer.out
+	./bench/tiers "Bool"             > tests/diff/tiers-Bool.out
+	./bench/tiers "Char"             > tests/diff/tiers-Char.out
 	# lists
-	./bench/tiers "[()]"             > tests/diff/tiers-Us
-	./bench/tiers "[Int]"          6 > tests/diff/tiers-Ints
-	./bench/tiers "[Nat]"          6 > tests/diff/tiers-Nats
-	./bench/tiers "[Bool]"         6 > tests/diff/tiers-Bools
-	./bench/tiers "String"         6 > tests/diff/tiers-String
+	./bench/tiers "[()]"             > tests/diff/tiers-Us.out
+	./bench/tiers "[Int]"          6 > tests/diff/tiers-Ints.out
+	./bench/tiers "[Nat]"          6 > tests/diff/tiers-Nats.out
+	./bench/tiers "[Bool]"         6 > tests/diff/tiers-Bools.out
+	./bench/tiers "String"         6 > tests/diff/tiers-String.out
 	# pairs
-	./bench/tiers "(Int,Int)"        > tests/diff/tiers-Int,Int
-	./bench/tiers "(Nat,Nat)"        > tests/diff/tiers-Nat,Nat
-	./bench/tiers "(Int,Int,Int)"  6 > tests/diff/tiers-Int,Int,Int
-	./bench/tiers "(Nat,Nat,Nat)"  6 > tests/diff/tiers-Nat,Nat,Nat
+	./bench/tiers "(Int,Int)"        > tests/diff/tiers-Int,Int.out
+	./bench/tiers "(Nat,Nat)"        > tests/diff/tiers-Nat,Nat.out
+	./bench/tiers "(Int,Int,Int)"  6 > tests/diff/tiers-Int,Int,Int.out
+	./bench/tiers "(Nat,Nat,Nat)"  6 > tests/diff/tiers-Nat,Nat,Nat.out
 	# lists & pairs
-	./bench/tiers "[((),())]"        > tests/diff/tiers-U,Us
-	./bench/tiers "([()],[()])"      > tests/diff/tiers-Us,Us
+	./bench/tiers "[((),())]"        > tests/diff/tiers-U,Us.out
+	./bench/tiers "([()],[()])"      > tests/diff/tiers-Us,Us.out
 	# special lists
-	./bench/tiers "Set Bool"         > tests/diff/tiers-SetBool
-	./bench/tiers "Set ()"           > tests/diff/tiers-SetU
-	./bench/tiers "Set Nat"          > tests/diff/tiers-SetNat
-	./bench/tiers "Set Nat2"         > tests/diff/tiers-SetNat2
-	./bench/tiers "Set Nat3"         > tests/diff/tiers-SetNat3
-	./bench/tiers "Bag Bool"         > tests/diff/tiers-BagBool
-	./bench/tiers "Bag ()"           > tests/diff/tiers-BagU
-	./bench/tiers "Bag Nat"          > tests/diff/tiers-BagNat
-	./bench/tiers "Bag Nat2"         > tests/diff/tiers-BagNat2
-	./bench/tiers "Bag Nat3"         > tests/diff/tiers-BagNat3
-	./bench/tiers "NoDup Bool"       > tests/diff/tiers-NoDupBool
-	./bench/tiers "NoDup ()"         > tests/diff/tiers-NoDupU
-	./bench/tiers "NoDup Nat"        > tests/diff/tiers-NoDupNat
-	./bench/tiers "NoDup Nat2"       > tests/diff/tiers-NoDupNat2
-	./bench/tiers "NoDup Nat3"       > tests/diff/tiers-NoDupNat3
+	./bench/tiers "Set Bool"         > tests/diff/tiers-SetBool.out
+	./bench/tiers "Set ()"           > tests/diff/tiers-SetU.out
+	./bench/tiers "Set Nat"          > tests/diff/tiers-SetNat.out
+	./bench/tiers "Set Nat2"         > tests/diff/tiers-SetNat2.out
+	./bench/tiers "Set Nat3"         > tests/diff/tiers-SetNat3.out
+	./bench/tiers "Bag Bool"         > tests/diff/tiers-BagBool.out
+	./bench/tiers "Bag ()"           > tests/diff/tiers-BagU.out
+	./bench/tiers "Bag Nat"          > tests/diff/tiers-BagNat.out
+	./bench/tiers "Bag Nat2"         > tests/diff/tiers-BagNat2.out
+	./bench/tiers "Bag Nat3"         > tests/diff/tiers-BagNat3.out
+	./bench/tiers "NoDup Bool"       > tests/diff/tiers-NoDupBool.out
+	./bench/tiers "NoDup ()"         > tests/diff/tiers-NoDupU.out
+	./bench/tiers "NoDup Nat"        > tests/diff/tiers-NoDupNat.out
+	./bench/tiers "NoDup Nat2"       > tests/diff/tiers-NoDupNat2.out
+	./bench/tiers "NoDup Nat3"       > tests/diff/tiers-NoDupNat3.out
 
 prepare-depend: bench/tiers-listsofpairs.hs \
                 bench/tiers-colistable.hs \
@@ -244,53 +244,53 @@ update-diff-test-funtiers: bench/tiers-listsofpairs.update-diff-test \
 
 bench/tiers-%.diff-test: bench/tiers-%
 	# functions
-	$< "()->()"           | diff -rud tests/diff/tiers-$*-U-U         -
-	$< "Bool->Bool"       | diff -rud tests/diff/tiers-$*-Bool-Bool   -
-	$< "Bool->()"         | diff -rud tests/diff/tiers-$*-Bool-U      -
-	$< "()->Bool"         | diff -rud tests/diff/tiers-$*-U-Bool      -
-	$< "Int->Int"       6 | diff -rud tests/diff/tiers-$*-Int-Int     -
-	$< "Nat->Nat"       6 | diff -rud tests/diff/tiers-$*-Nat-Nat     -
-	$< "()->Nat"        6 | diff -rud tests/diff/tiers-$*-U-Nat       -
-	$< "Nat->()"        6 | diff -rud tests/diff/tiers-$*-Nat-U       -
-	$< "Int->Int->Int"  4 | diff -rud tests/diff/tiers-$*-Int-Int-Int -
-	$< "Nat->Nat->Nat"  4 | diff -rud tests/diff/tiers-$*-Nat-Nat-Nat -
-	$< "(Nat,Nat)->Nat" 4 | diff -rud tests/diff/tiers-$*-Nat,Nat-Nat -
-	$< "Maybe Bool->Bool" | diff -rud tests/diff/tiers-$*-MBool-Bool  -
-	$< "Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-Bool-MBool  -
-	$< "Maybe Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-MBool-MBool -
+	$< "()->()"           | diff -rud tests/diff/tiers-$*-U-U.out         -
+	$< "Bool->Bool"       | diff -rud tests/diff/tiers-$*-Bool-Bool.out   -
+	$< "Bool->()"         | diff -rud tests/diff/tiers-$*-Bool-U.out      -
+	$< "()->Bool"         | diff -rud tests/diff/tiers-$*-U-Bool.out      -
+	$< "Int->Int"       6 | diff -rud tests/diff/tiers-$*-Int-Int.out     -
+	$< "Nat->Nat"       6 | diff -rud tests/diff/tiers-$*-Nat-Nat.out     -
+	$< "()->Nat"        6 | diff -rud tests/diff/tiers-$*-U-Nat.out       -
+	$< "Nat->()"        6 | diff -rud tests/diff/tiers-$*-Nat-U.out       -
+	$< "Int->Int->Int"  4 | diff -rud tests/diff/tiers-$*-Int-Int-Int.out -
+	$< "Nat->Nat->Nat"  4 | diff -rud tests/diff/tiers-$*-Nat-Nat-Nat.out -
+	$< "(Nat,Nat)->Nat" 4 | diff -rud tests/diff/tiers-$*-Nat,Nat-Nat.out -
+	$< "Maybe Bool->Bool" | diff -rud tests/diff/tiers-$*-MBool-Bool.out  -
+	$< "Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-Bool-MBool.out  -
+	$< "Maybe Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-MBool-MBool.out -
 	# functions of lists
-	$< "[Bool]->[Bool]" 4 | diff -rud tests/diff/tiers-$*-Bools-Bools -
-	$< "[Nat]->[Nat]"   4 | diff -rud tests/diff/tiers-$*-Nats-Nats   -
-	$< "[Int]->[Int]"   4 | diff -rud tests/diff/tiers-$*-Ints-Ints   -
+	$< "[Bool]->[Bool]" 4 | diff -rud tests/diff/tiers-$*-Bools-Bools.out -
+	$< "[Nat]->[Nat]"   4 | diff -rud tests/diff/tiers-$*-Nats-Nats.out   -
+	$< "[Int]->[Int]"   4 | diff -rud tests/diff/tiers-$*-Ints-Ints.out   -
 	# more functions
-	$< "Nat2->Nat2"       | diff -rud tests/diff/tiers-$*-Nat2-Nat2   -
-	$< "Nat2->Nat3"       | diff -rud tests/diff/tiers-$*-Nat2-Nat3   -
-	$< "Nat3->Nat2"       | diff -rud tests/diff/tiers-$*-Nat3-Nat2   -
-	$< "Nat3->Nat3"       | diff -rud tests/diff/tiers-$*-Nat3-Nat3   -
+	$< "Nat2->Nat2"       | diff -rud tests/diff/tiers-$*-Nat2-Nat2.out   -
+	$< "Nat2->Nat3"       | diff -rud tests/diff/tiers-$*-Nat2-Nat3.out   -
+	$< "Nat3->Nat2"       | diff -rud tests/diff/tiers-$*-Nat3-Nat2.out   -
+	$< "Nat3->Nat3"       | diff -rud tests/diff/tiers-$*-Nat3-Nat3.out   -
 
 bench/tiers-%.update-diff-test: bench/tiers-%
 	# functions
-	$< "()->()"           > tests/diff/tiers-$*-U-U
-	$< "Bool->Bool"       > tests/diff/tiers-$*-Bool-Bool
-	$< "Bool->()"         > tests/diff/tiers-$*-Bool-U
-	$< "()->Bool"         > tests/diff/tiers-$*-U-Bool
-	$< "Int->Int"       6 > tests/diff/tiers-$*-Int-Int
-	$< "Nat->Nat"       6 > tests/diff/tiers-$*-Nat-Nat
-	$< "Nat->()"        6 > tests/diff/tiers-$*-Nat-U
-	$< "()->Nat"        6 > tests/diff/tiers-$*-U-Nat
-	$< "Int->Int->Int"  4 > tests/diff/tiers-$*-Int-Int-Int
-	$< "Nat->Nat->Nat"  4 > tests/diff/tiers-$*-Nat-Nat-Nat
-	$< "(Nat,Nat)->Nat" 4 > tests/diff/tiers-$*-Nat,Nat-Nat
-	$< "Maybe Bool->Bool" > tests/diff/tiers-$*-MBool-Bool
-	$< "Bool->Maybe Bool" > tests/diff/tiers-$*-Bool-MBool
-	$< "Maybe Bool->Maybe Bool" > tests/diff/tiers-$*-MBool-MBool
+	$< "()->()"           > tests/diff/tiers-$*-U-U.out
+	$< "Bool->Bool"       > tests/diff/tiers-$*-Bool-Bool.out
+	$< "Bool->()"         > tests/diff/tiers-$*-Bool-U.out
+	$< "()->Bool"         > tests/diff/tiers-$*-U-Bool.out
+	$< "Int->Int"       6 > tests/diff/tiers-$*-Int-Int.out
+	$< "Nat->Nat"       6 > tests/diff/tiers-$*-Nat-Nat.out
+	$< "Nat->()"        6 > tests/diff/tiers-$*-Nat-U.out
+	$< "()->Nat"        6 > tests/diff/tiers-$*-U-Nat.out
+	$< "Int->Int->Int"  4 > tests/diff/tiers-$*-Int-Int-Int.out
+	$< "Nat->Nat->Nat"  4 > tests/diff/tiers-$*-Nat-Nat-Nat.out
+	$< "(Nat,Nat)->Nat" 4 > tests/diff/tiers-$*-Nat,Nat-Nat.out
+	$< "Maybe Bool->Bool" > tests/diff/tiers-$*-MBool-Bool.out
+	$< "Bool->Maybe Bool" > tests/diff/tiers-$*-Bool-MBool.out
+	$< "Maybe Bool->Maybe Bool" > tests/diff/tiers-$*-MBool-MBool.out
 	# functions of lists
-	$< "[()]->[()]"     4 > tests/diff/tiers-$*-Us-Us
-	$< "[Bool]->[Bool]" 4 > tests/diff/tiers-$*-Bools-Bools
-	$< "[Nat]->[Nat]"   4 > tests/diff/tiers-$*-Nats-Nats
-	$< "[Int]->[Int]"   4 > tests/diff/tiers-$*-Ints-Ints
+	$< "[()]->[()]"     4 > tests/diff/tiers-$*-Us-Us.out
+	$< "[Bool]->[Bool]" 4 > tests/diff/tiers-$*-Bools-Bools.out
+	$< "[Nat]->[Nat]"   4 > tests/diff/tiers-$*-Nats-Nats.out
+	$< "[Int]->[Int]"   4 > tests/diff/tiers-$*-Ints-Ints.out
 	# more functions
-	$< "Nat2->Nat2"       > tests/diff/tiers-$*-Nat2-Nat2
-	$< "Nat2->Nat3"       > tests/diff/tiers-$*-Nat2-Nat3
-	$< "Nat3->Nat2"       > tests/diff/tiers-$*-Nat3-Nat2
-	$< "Nat3->Nat3"       > tests/diff/tiers-$*-Nat3-Nat3
+	$< "Nat2->Nat2"       > tests/diff/tiers-$*-Nat2-Nat2.out
+	$< "Nat2->Nat3"       > tests/diff/tiers-$*-Nat2-Nat3.out
+	$< "Nat3->Nat2"       > tests/diff/tiers-$*-Nat3-Nat2.out
+	$< "Nat3->Nat3"       > tests/diff/tiers-$*-Nat3-Nat3.out
