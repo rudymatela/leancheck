@@ -29,7 +29,7 @@ other improvements
 * add `classify` function to measure distribution of data:
   something like:
 
-    classifyBy :: (a -> b) -> [a] -> [(b,a)]
+    classifyBy :: (a -> b) -> [a] -> [(b,[a])]
     countsBy :: (a -> b) -> [a] -> [(b,Int)]
 
 
