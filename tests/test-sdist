@@ -18,4 +18,14 @@ tar -xzf $pkg.tar.gz &&
 cd $pkg/ &&
 cabal configure --enable-tests --enable-benchmarks &&
 cabal build &&
-cabal test
+cabal test &&
+cd .. &&
+if [ -d ../.git ]
+then
+	git -C .. ls-files                                      | sort > ls-git   &&
+	tar -tf $pkg.tar.gz | grep -v "/$" | sed -e "s,$pkg/,," | sort > ls-cabal &&
+	diff -rud ls-git ls-cabal &&
+	rm -f ls-git ls-cabal
+else
+	true # skip test
+fi
