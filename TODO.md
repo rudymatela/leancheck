@@ -29,8 +29,23 @@ other improvements
 * add `classify` function to measure distribution of data:
   something like:
 
-    classifyBy :: (a -> b) -> [a] -> [(b,[a])]
-    countsBy :: (a -> b) -> [a] -> [(b,Int)]
+    module Test.LeanCheck.Stats
+
+    -- top-level functions
+    classStringStats      :: Listable a => Int -> (a -> String) -> IO ()
+    classStringStatsT     :: Listable a => Int -> (a -> String) -> IO ()
+    classStats  :: (Listable a, Show b) => Int -> (a -> b)      -> IO ()
+    classStatsT :: (Listable a, Show b) => Int -> (a -> b)      -> IO ()
+    conditionStats        :: Listable a => Int -> [a->Bool]     -> IO ()
+    conditionStatsT       :: Listable a => Int -> [a->Bool]     -> IO ()
+
+    -- auxiliary functions
+    classifyOn :: Eq b => (a -> b) -> [a] -> [[a]]
+    classifyBy :: (a -> a -> Bool) -> [a] -> [[a]]
+    classify   :: Eq a =>             [a] -> [[a]]
+    countsBy   :: (a -> a -> Bool) -> [a] -> [(a,Int)]
+    countsOn   :: Eq b => (a -> b) -> [a] -> [(b,Int)]
+    counts     :: Eq a =>             [a] -> [(a,Int)]
 
 
 later
