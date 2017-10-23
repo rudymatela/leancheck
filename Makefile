@@ -11,6 +11,7 @@ TESTS = tests/test           \
         tests/test-io        \
         tests/test-operators \
         tests/test-tiers     \
+        tests/test-stats     \
         tests/test-types
 EGS = \
 	eg/overflow \
