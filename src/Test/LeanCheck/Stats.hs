@@ -44,7 +44,14 @@ classStatsT :: (Listable a, Show b) => Int -> (a -> b) -> IO ()
 classStatsT = error "classStatsT: not implemented yet"
 
 conditionStats :: Listable a => Int -> [a->Bool] -> IO ()
-conditionStats = error "conditionStats: not implemented yet"
+conditionStats n = putStrLn . table " " . map show1
+  where
+  xs = take n list
+  len = length xs
+  show1 f = let c = count f xs
+            in [ show c ++ "/" ++ show len
+               , show (100 * c `div` len) ++ "%" ]
+  count f = length . filter f
 
 conditionStatsT :: Listable a => Int -> [a->Bool] -> IO ()
 conditionStatsT = error "conditionsStatsT: not implemented yet"
