@@ -43,14 +43,15 @@ classStats n f = putStrLn
 classStatsT :: (Listable a, Show b) => Int -> (a -> b) -> IO ()
 classStatsT = error "classStatsT: not implemented yet"
 
-conditionStats :: Listable a => Int -> [a->Bool] -> IO ()
+conditionStats :: Listable a => Int -> [(String,a->Bool)] -> IO ()
 conditionStats n = putStrLn . table " " . map show1
   where
   xs = take n list
   len = length xs
-  show1 f = let c = count f xs
-            in [ show c ++ "/" ++ show len
-               , show (100 * c `div` len) ++ "%" ]
+  show1 (s,f) = let c = count f xs
+                in [ s ++ ":"
+                   , show c ++ "/" ++ show len
+                   , show (100 * c `div` len) ++ "%" ]
   count f = length . filter f
 
 conditionStatsT :: Listable a => Int -> [a->Bool] -> IO ()

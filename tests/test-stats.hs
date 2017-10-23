@@ -12,14 +12,21 @@ import Data.Function (on)
 
 main :: IO ()
 main = do
-  classStats 100 (odd     :: Int -> Bool)
-  classStats 100 (even    :: Int -> Bool)
-  classStats 100 (ordered :: [Int] -> Bool)
+  putStrLn "sum :: [Int] -> Bool"
   classStats 100 (sum     :: [Int] -> Int)
+
+  putStrLn "length :: [Int] -> Int"
   classStats 100 (length  :: [Int] -> Int)
+
+  putStrLn "take 1 :: [Int] -> [Int]"
   classStats 100 (take 1  :: [Int] -> [Int])
-  conditionStats 1000 [odd :: Int -> Bool,even]
-  conditionStats 1000 [ordered :: [Int] -> Bool, ordered . reverse]
+
+  conditionStats 1000 [ ("odd",odd :: Int -> Bool)
+                      , ("even",even) ]
+
+  conditionStats 1000 [ ("ordered",ordered :: [Int] -> Bool)
+                      , ("ordered . reverse", ordered . reverse) ]
+
   case elemIndices False (tests 100) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
