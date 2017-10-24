@@ -54,7 +54,7 @@ conditionStats n = putStrLn . table " " . map show1
                    , show (100 * c `div` len) ++ "%" ]
   count f = length . filter f
 
-conditionStatsT :: Listable a => Int -> [a->Bool] -> IO ()
+conditionStatsT :: Listable a => Int -> [(String,a->Bool)] -> IO ()
 conditionStatsT = error "conditionsStatsT: not implemented yet"
 
 classify :: Eq a => [a] -> [[a]]
