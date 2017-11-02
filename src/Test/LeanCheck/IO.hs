@@ -90,13 +90,13 @@ showResult :: Int -> Result -> String
 showResult m (OK n)             = "+++ OK, passed " ++ show n ++ " tests"
                                ++ takeWhile (\_ -> n < m) " (exhausted)" ++ "."
 showResult m (Falsified i ce)   = "*** Failed! Falsifiable (after "
-                               ++ show i ++ " tests):\n" ++ join ce
+                               ++ show i ++ " tests):\n" ++ joinArgs ce
 showResult m (Exception i ce e) = "*** Failed! Exception '" ++ e ++ "' (after "
-                               ++ show i ++ " tests):\n" ++ join ce
+                               ++ show i ++ " tests):\n" ++ joinArgs ce
 
--- join the counter-example arguments
-join :: [String] -> String
-join ce | any ('\n' `elem`) ce = unlines $ map chopBreak ce
+-- joinArgs the counter-example arguments
+joinArgs :: [String] -> String
+joinArgs ce | any ('\n' `elem`) ce = unlines $ map chopBreak ce
         | otherwise            = unwords ce
 
 -- chops a line break at the end if there is any
