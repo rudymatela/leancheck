@@ -82,12 +82,12 @@ test-via-stack:
 
 legacy-test: # needs ghc-7.10 .. ghc-7.8 installed as such
 	make clean  &&  make test GHC=ghc-7.10 GHCFLAGS="-Werror -dynamic"
-	make clean  &&  make test GHC=ghc-7.8 GHCFLAGS="-Werror -dynamic"
+	make clean  &&  make test GHC=ghc-7.8  GHCFLAGS="-Werror -dynamic"
 	make clean  &&  make test
 
 legacy-test-via-cabal: # needs similarly named cabal wrappers
-	cabal clean  &&  cabal-ghc-7.10 configure --ghc-option=-dynamic  &&  cabal-ghc-7.10 test
-	cabal clean  &&  cabal-ghc-7.8  configure --ghc-option=-dynamic  &&  cabal-ghc-7.8 test
+	cabal clean  &&  cabal-ghc-7.10 configure  &&  cabal-ghc-7.10 test
+	cabal clean  &&  cabal-ghc-7.8  configure  &&  cabal-ghc-7.8 test
 	cabal clean  &&  cabal test
 
 hlint:
