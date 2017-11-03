@@ -112,6 +112,7 @@ upload-haddock:
 	@echo "use \`cabal upload -d' instead"
 	@echo "(but 1st: cabal install --only-dependencies --enable-documentation)"
 	@echo "(to just compile docs: cabal haddock --for-hackage)"
+	@echo "(on Arch Linux, use: cabal haddock --for-hackage --haddock-options=--optghc=-dynamic)"
 
 doc/index.html: $(ALLHS)
 	./mk/haddock-i base template-haskell | xargs \
