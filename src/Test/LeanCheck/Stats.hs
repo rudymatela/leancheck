@@ -40,8 +40,9 @@ classStats n f = putStrLn
                     , show (100 * n `div` len) ++ "%"
                     ]
 
+-- TODO: implement this
 classStatsT :: (Listable a, Show b) => Int -> (a -> b) -> IO ()
-classStatsT = error "classStatsT: not implemented yet"
+classStatsT = error "classStatsT: not implemented yet, use classStats for now"
 
 conditionStats :: Listable a => Int -> [(String,a->Bool)] -> IO ()
 conditionStats n = putStrLn . table " " . map show1
@@ -54,8 +55,9 @@ conditionStats n = putStrLn . table " " . map show1
                    , show (100 * c `div` len) ++ "%" ]
   count f = length . filter f
 
+-- TODO: implement this
 conditionStatsT :: Listable a => Int -> [(String,a->Bool)] -> IO ()
-conditionStatsT = error "conditionsStatsT: not implemented yet"
+conditionStatsT = error "conditionsStatsT: not implemented yet, use classStats for now"
 
 classify :: Eq a => [a] -> [[a]]
 classify = classifyBy (==)
