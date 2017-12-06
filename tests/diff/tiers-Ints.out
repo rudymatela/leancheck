@@ -43,3 +43,5 @@ map length (tiers :: [[ [Int] ]])  =  [1,1,2,4,8,16,...]
 length (list :: [ [Int] ])  =  Infinity
 
 allUnique (list :: [ [Int] ])  =  True
+
+ratioRepetitions (list :: [ [Int] ])  =  0 % 1

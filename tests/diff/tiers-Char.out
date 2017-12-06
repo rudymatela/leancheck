@@ -19,3 +19,5 @@ map length (tiers :: [[ Char ]])  =  [1,1,1,1,1,1,1,1,1,1,1,1,...]
 length (list :: [ Char ])  =  Infinity
 
 allUnique (list :: [ Char ])  =  True
+
+ratioRepetitions (list :: [ Char ])  =  0 % 1

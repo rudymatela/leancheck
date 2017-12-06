@@ -161,3 +161,5 @@ map length (tiers :: [[ [Bool]->[Bool] ]])  =  [1,2,4,8,...]
 length (list :: [ [Bool]->[Bool] ])  =  Infinity
 
 allUnique (list :: [ [Bool]->[Bool] ])  =  True
+
+ratioRepetitions (list :: [ [Bool]->[Bool] ])  =  0 % 1

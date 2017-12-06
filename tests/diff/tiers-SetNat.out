@@ -71,3 +71,5 @@ map length (tiers :: [[ Set Nat ]])  =  [1,1,1,2,2,3,4,5,6,8,10,12,...]
 length (list :: [ Set Nat ])  =  Infinity
 
 allUnique (list :: [ Set Nat ])  =  True
+
+ratioRepetitions (list :: [ Set Nat ])  =  0 % 1

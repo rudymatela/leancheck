@@ -65,3 +65,5 @@ map length (tiers :: [[ Nat2->Nat3 ]])  =  [2,4,6,4,2]
 length (list :: [ Nat2->Nat3 ])  =  Infinity
 
 allUnique (list :: [ Nat2->Nat3 ])  =  False
+
+ratioRepetitions (list :: [ Nat2->Nat3 ])  =  1 % 2

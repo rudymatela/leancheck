@@ -6,3 +6,5 @@ map length (tiers :: [[ Int->Int->Int ]])  =  [0]
 length (list :: [ Int->Int->Int ])  =  0
 
 allUnique (list :: [ Int->Int->Int ])  =  True
+
+ratioRepetitions (list :: [ Int->Int->Int ])  =  0 % 1

@@ -10,3 +10,5 @@ map length (tiers :: [[ Bool->() ]])  =  [1]
 length (list :: [ Bool->() ])  =  1
 
 allUnique (list :: [ Bool->() ])  =  True
+
+ratioRepetitions (list :: [ Bool->() ])  =  0 % 1

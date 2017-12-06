@@ -26,3 +26,5 @@ map length (tiers :: [[ NoDup Nat3 ]])  =  [1,1,1,3,2,2,6]
 length (list :: [ NoDup Nat3 ])  =  Infinity
 
 allUnique (list :: [ NoDup Nat3 ])  =  True
+
+ratioRepetitions (list :: [ NoDup Nat3 ])  =  0 % 1

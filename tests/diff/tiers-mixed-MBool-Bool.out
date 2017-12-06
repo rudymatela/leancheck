@@ -71,3 +71,5 @@ map length (tiers :: [[ Maybe Bool->Bool ]])  =  [16]
 length (list :: [ Maybe Bool->Bool ])  =  Infinity
 
 allUnique (list :: [ Maybe Bool->Bool ])  =  False
+
+ratioRepetitions (list :: [ Maybe Bool->Bool ])  =  1 % 2

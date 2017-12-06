@@ -9,3 +9,5 @@ map length (tiers :: [[ ()->() ]])  =  [1]
 length (list :: [ ()->() ])  =  1
 
 allUnique (list :: [ ()->() ])  =  True
+
+ratioRepetitions (list :: [ ()->() ])  =  0 % 1

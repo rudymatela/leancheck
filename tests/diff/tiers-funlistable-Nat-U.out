@@ -6,3 +6,5 @@ map length (tiers :: [[ Nat->() ]])  =  [0]
 length (list :: [ Nat->() ])  =  0
 
 allUnique (list :: [ Nat->() ])  =  True
+
+ratioRepetitions (list :: [ Nat->() ])  =  0 % 1

@@ -3621,3 +3621,5 @@ map length (tiers :: [[ Nat->Nat->Nat ]])  =  [4,12,58,287,...]
 length (list :: [ Nat->Nat->Nat ])  =  Infinity
 
 allUnique (list :: [ Nat->Nat->Nat ])  =  False
+
+ratioRepetitions (list :: [ Nat->Nat->Nat ])  =  313 % 361

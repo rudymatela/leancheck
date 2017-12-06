@@ -8,7 +8,8 @@ import Test.LeanCheck.Function
 import Test.LeanCheck.Function.Eq
 import Test.LeanCheck.Tiers (showTiers, finite)
 import System.Environment
-import Data.List (intercalate)
+import Data.List (intercalate, nub)
+import Data.Ratio ((%))
 
 dropEmptyTiersTail :: [[a]] -> [[a]]
 dropEmptyTiersTail ([]:[]:[]: []:[]:[]: _) = []
@@ -25,6 +26,12 @@ allUnique [] = True
 allUnique (x:xs) = x `notElem` xs
                 && allUnique (filter (/= x) xs)
 
+countRepetitions :: Eq a => [a] -> Int
+countRepetitions xs = length xs - length (nub xs)
+
+ratioRepetitions :: Eq a => [a] -> Rational
+ratioRepetitions [] = 0
+ratioRepetitions xs = fromIntegral (countRepetitions xs) % fromIntegral (length xs)
 
 showLengthT :: [[a]] -> String
 showLengthT xss = case lengthT xss of
@@ -54,6 +61,9 @@ put t n a = do
   putStrLn $ ""
   putStrLn $ "allUnique (list :: [ " ++ t ++ " ])  =  "
           ++ show (allUnique . concat . take n $ tiers `asTypeOf` [[a]])
+  putStrLn $ ""
+  putStrLn $ "ratioRepetitions (list :: [ " ++ t ++ " ])  =  "
+          ++ show (ratioRepetitions . concat . take n $ tiers `asTypeOf` [[a]])
 
 u :: a
 u = undefined

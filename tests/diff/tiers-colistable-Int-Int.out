@@ -2633,3 +2633,5 @@ map length (tiers :: [[ Int->Int ]])  =  [1,2,5,15,51,188,...]
 length (list :: [ Int->Int ])  =  Infinity
 
 allUnique (list :: [ Int->Int ])  =  False
+
+ratioRepetitions (list :: [ Int->Int ])  =  96 % 131

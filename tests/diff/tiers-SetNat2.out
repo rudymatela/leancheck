@@ -10,3 +10,5 @@ map length (tiers :: [[ Set Nat2 ]])  =  [1,1,1,1]
 length (list :: [ Set Nat2 ])  =  4
 
 allUnique (list :: [ Set Nat2 ])  =  True
+
+ratioRepetitions (list :: [ Set Nat2 ])  =  0 % 1

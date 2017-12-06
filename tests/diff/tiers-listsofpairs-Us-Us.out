@@ -111,3 +111,5 @@ map length (tiers :: [[ [()]->[()] ]])  =  [1,1,3,5,...]
 length (list :: [ [()]->[()] ])  =  Infinity
 
 allUnique (list :: [ [()]->[()] ])  =  True
+
+ratioRepetitions (list :: [ [()]->[()] ])  =  0 % 1

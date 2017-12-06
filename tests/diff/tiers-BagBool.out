@@ -96,3 +96,5 @@ map length (tiers :: [[ Bag Bool ]])  =  [1,2,3,4,5,6,7,8,9,10,11,12,...]
 length (list :: [ Bag Bool ])  =  Infinity
 
 allUnique (list :: [ Bag Bool ])  =  True
+
+ratioRepetitions (list :: [ Bag Bool ])  =  0 % 1

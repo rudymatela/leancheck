@@ -33,3 +33,5 @@ map length (tiers :: [[ Nat2->Nat2 ]])  =  [2,4,2]
 length (list :: [ Nat2->Nat2 ])  =  8
 
 allUnique (list :: [ Nat2->Nat2 ])  =  False
+
+ratioRepetitions (list :: [ Nat2->Nat2 ])  =  1 % 2

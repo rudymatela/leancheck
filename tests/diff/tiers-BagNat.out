@@ -212,3 +212,5 @@ map length (tiers :: [[ Bag Nat ]])  =  [1,1,2,3,5,7,11,15,22,30,42,56,...]
 length (list :: [ Bag Nat ])  =  Infinity
 
 allUnique (list :: [ Bag Nat ])  =  True
+
+ratioRepetitions (list :: [ Bag Nat ])  =  0 % 1
