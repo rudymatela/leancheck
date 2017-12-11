@@ -66,6 +66,7 @@ tests =
 
   , holds 100 $ \xss -> ordered . concat $ discardLaterT (<)  (xss::[[Int]])
   , holds 100 $ \xss -> ordered . concat $ discardLaterT (<=) (xss::[[Int]])
+  , (length . concat $ discardLaterT (<=) [[1..100]]) == 100
   , (length . concat $ discardLaterT (<=) [[00..99],[100..199::Int]]) == 200
   , holds 100 $ \xss -> nub (concat xss) == concat (nubT xss :: [[Int]])
   ]
