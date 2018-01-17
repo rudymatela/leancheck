@@ -105,6 +105,8 @@ main = do
     "([()],[()])"      -> put t n (u :: ([()],[()])          )
     "([Bool],[Bool])"  -> put t n (u :: ([Bool],[Bool])      )
     "([Int],[Int])"    -> put t n (u :: ([Int],[Int])        )
+    -- lists of lists
+    "[[Int]]"          -> put t n (u :: [[Int]]              )
     -- functions
     "()->()"           -> put t n (u :: () -> ()             )
     "()->Bool"         -> put t n (u :: () -> Bool           )
