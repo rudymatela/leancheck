@@ -1,3 +1,11 @@
+map length (tiers :: [[ [Bool]->[Bool] ]])  =  [2,5,20,83,...]
+
+length (list :: [ [Bool]->[Bool] ])  =  Infinity
+
+allUnique (list :: [ [Bool]->[Bool] ])  =  False
+
+ratioRepetitions (list :: [ [Bool]->[Bool] ])  =  43 % 110
+
 tiers :: [[Bool]->[Bool]]  =
   [ [ \x -> case x of
               [] -> []
@@ -1105,11 +1113,3 @@ tiers :: [[Bool]->[Bool]]  =
     ]
   , ...
   ]
-
-map length (tiers :: [[ [Bool]->[Bool] ]])  =  [2,5,20,83,...]
-
-length (list :: [ [Bool]->[Bool] ])  =  Infinity
-
-allUnique (list :: [ [Bool]->[Bool] ])  =  False
-
-ratioRepetitions (list :: [ [Bool]->[Bool] ])  =  43 % 110

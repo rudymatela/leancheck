@@ -1,3 +1,11 @@
+map length (tiers :: [[ Nat3->Nat2 ]])  =  [2,6,6,2]
+
+length (list :: [ Nat3->Nat2 ])  =  Infinity
+
+allUnique (list :: [ Nat3->Nat2 ])  =  False
+
+ratioRepetitions (list :: [ Nat3->Nat2 ])  =  1 % 2
+
 tiers :: [Nat3->Nat2]  =
   [ [ \x -> case x of
               0 -> 0
@@ -68,11 +76,3 @@ tiers :: [Nat3->Nat2]  =
               2 -> 1
     ]
   ]
-
-map length (tiers :: [[ Nat3->Nat2 ]])  =  [2,6,6,2]
-
-length (list :: [ Nat3->Nat2 ])  =  Infinity
-
-allUnique (list :: [ Nat3->Nat2 ])  =  False
-
-ratioRepetitions (list :: [ Nat3->Nat2 ])  =  1 % 2

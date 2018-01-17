@@ -1,3 +1,11 @@
+map length (tiers :: [[ Nat->Nat ]])  =  [2,3,8,20,61,204,...]
+
+length (list :: [ Nat->Nat ])  =  Infinity
+
+allUnique (list :: [ Nat->Nat ])  =  False
+
+ratioRepetitions (list :: [ Nat->Nat ])  =  85 % 149
+
 tiers :: [Nat->Nat]  =
   [ [ \x -> case x of
               0 -> 0
@@ -2987,11 +2995,3 @@ tiers :: [Nat->Nat]  =
     ]
   , ...
   ]
-
-map length (tiers :: [[ Nat->Nat ]])  =  [2,3,8,20,61,204,...]
-
-length (list :: [ Nat->Nat ])  =  Infinity
-
-allUnique (list :: [ Nat->Nat ])  =  False
-
-ratioRepetitions (list :: [ Nat->Nat ])  =  85 % 149

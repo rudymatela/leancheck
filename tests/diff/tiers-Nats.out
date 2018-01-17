@@ -1,3 +1,11 @@
+map length (tiers :: [[ [Nat] ]])  =  [1,1,2,4,8,16,...]
+
+length (list :: [ [Nat] ])  =  Infinity
+
+allUnique (list :: [ [Nat] ])  =  True
+
+ratioRepetitions (list :: [ [Nat] ])  =  0 % 1
+
 tiers :: [[Nat]]  =
   [ [[]]
   , [[0]]
@@ -37,11 +45,3 @@ tiers :: [[Nat]]  =
     ]
   , ...
   ]
-
-map length (tiers :: [[ [Nat] ]])  =  [1,1,2,4,8,16,...]
-
-length (list :: [ [Nat] ])  =  Infinity
-
-allUnique (list :: [ [Nat] ])  =  True
-
-ratioRepetitions (list :: [ [Nat] ])  =  0 % 1

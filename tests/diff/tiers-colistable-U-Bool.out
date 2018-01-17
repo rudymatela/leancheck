@@ -1,11 +1,3 @@
-tiers :: [()->Bool]  =
-  [ [ \x -> case x of
-              () -> False
-    , \x -> case x of
-              () -> True
-    ]
-  ]
-
 map length (tiers :: [[ ()->Bool ]])  =  [2]
 
 length (list :: [ ()->Bool ])  =  2
@@ -13,3 +5,11 @@ length (list :: [ ()->Bool ])  =  2
 allUnique (list :: [ ()->Bool ])  =  True
 
 ratioRepetitions (list :: [ ()->Bool ])  =  0 % 1
+
+tiers :: [()->Bool]  =
+  [ [ \x -> case x of
+              () -> False
+    , \x -> case x of
+              () -> True
+    ]
+  ]

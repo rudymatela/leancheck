@@ -1,3 +1,11 @@
+map length (tiers :: [[ [()]->[()] ]])  =  [1,2,4,8,...]
+
+length (list :: [ [()]->[()] ])  =  Infinity
+
+allUnique (list :: [ [()]->[()] ])  =  False
+
+ratioRepetitions (list :: [ [()]->[()] ])  =  1 % 3
+
 tiers :: [[()]->[()]]  =
   [ [ \x -> case x of
               [] -> []
@@ -155,11 +163,3 @@ tiers :: [[()]->[()]]  =
     ]
   , ...
   ]
-
-map length (tiers :: [[ [()]->[()] ]])  =  [1,2,4,8,...]
-
-length (list :: [ [()]->[()] ])  =  Infinity
-
-allUnique (list :: [ [()]->[()] ])  =  False
-
-ratioRepetitions (list :: [ [()]->[()] ])  =  1 % 3

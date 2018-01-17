@@ -1,3 +1,11 @@
+map length (tiers :: [[ Bag () ]])  =  [1,1,1,1,1,1,1,1,1,1,1,1,...]
+
+length (list :: [ Bag () ])  =  Infinity
+
+allUnique (list :: [ Bag () ])  =  True
+
+ratioRepetitions (list :: [ Bag () ])  =  0 % 1
+
 tiers :: [Bag ()]  =
   [ [Bag []]
   , [Bag [()]]
@@ -13,11 +21,3 @@ tiers :: [Bag ()]  =
   , [Bag [(),(),(),(),(),(),(),(),(),(),()]]
   , ...
   ]
-
-map length (tiers :: [[ Bag () ]])  =  [1,1,1,1,1,1,1,1,1,1,1,1,...]
-
-length (list :: [ Bag () ])  =  Infinity
-
-allUnique (list :: [ Bag () ])  =  True
-
-ratioRepetitions (list :: [ Bag () ])  =  0 % 1

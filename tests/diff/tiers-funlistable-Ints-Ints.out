@@ -1,3 +1,11 @@
+map length (tiers :: [[ [Int]->[Int] ]])  =  [1,1,2,4,...]
+
+length (list :: [ [Int]->[Int] ])  =  Infinity
+
+allUnique (list :: [ [Int]->[Int] ])  =  True
+
+ratioRepetitions (list :: [ [Int]->[Int] ])  =  0 % 1
+
 tiers :: [[Int]->[Int]]  =
   [ [ \x -> case x of
               [] -> []
@@ -85,11 +93,3 @@ tiers :: [[Int]->[Int]]  =
     ]
   , ...
   ]
-
-map length (tiers :: [[ [Int]->[Int] ]])  =  [1,1,2,4,...]
-
-length (list :: [ [Int]->[Int] ])  =  Infinity
-
-allUnique (list :: [ [Int]->[Int] ])  =  True
-
-ratioRepetitions (list :: [ [Int]->[Int] ])  =  0 % 1

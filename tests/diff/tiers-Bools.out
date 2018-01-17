@@ -1,3 +1,11 @@
+map length (tiers :: [[ [Bool] ]])  =  [1,2,4,8,16,32,...]
+
+length (list :: [ [Bool] ])  =  Infinity
+
+allUnique (list :: [ [Bool] ])  =  True
+
+ratioRepetitions (list :: [ [Bool] ])  =  0 % 1
+
 tiers :: [[Bool]]  =
   [ [[]]
   , [ [False]
@@ -69,11 +77,3 @@ tiers :: [[Bool]]  =
     ]
   , ...
   ]
-
-map length (tiers :: [[ [Bool] ]])  =  [1,2,4,8,16,32,...]
-
-length (list :: [ [Bool] ])  =  Infinity
-
-allUnique (list :: [ [Bool] ])  =  True
-
-ratioRepetitions (list :: [ [Bool] ])  =  0 % 1

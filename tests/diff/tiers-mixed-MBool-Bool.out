@@ -1,3 +1,11 @@
+map length (tiers :: [[ Maybe Bool->Bool ]])  =  [16]
+
+length (list :: [ Maybe Bool->Bool ])  =  Infinity
+
+allUnique (list :: [ Maybe Bool->Bool ])  =  False
+
+ratioRepetitions (list :: [ Maybe Bool->Bool ])  =  1 % 2
+
 tiers :: [Maybe Bool->Bool]  =
   [ [ \x -> case x of
               Nothing -> False
@@ -65,11 +73,3 @@ tiers :: [Maybe Bool->Bool]  =
               Just True -> True
     ]
   ]
-
-map length (tiers :: [[ Maybe Bool->Bool ]])  =  [16]
-
-length (list :: [ Maybe Bool->Bool ])  =  Infinity
-
-allUnique (list :: [ Maybe Bool->Bool ])  =  False
-
-ratioRepetitions (list :: [ Maybe Bool->Bool ])  =  1 % 2

@@ -50,9 +50,6 @@ printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
 put :: (Show a, Eq a, Listable a) => String -> Int -> a -> IO ()
 put t n a = do
-  putStrLn $ "tiers :: [" ++ t ++ "]  ="
-  printTiers n $ tiers `asTypeOf` [[a]]
-  putStrLn $ ""
   putStrLn $ "map length (tiers :: [[ " ++ t ++ " ]])  =  "
           ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
   putStrLn $ ""
@@ -64,6 +61,9 @@ put t n a = do
   putStrLn $ ""
   putStrLn $ "ratioRepetitions (list :: [ " ++ t ++ " ])  =  "
           ++ show (ratioRepetitions . concat . take n $ tiers `asTypeOf` [[a]])
+  putStrLn $ ""
+  putStrLn $ "tiers :: [" ++ t ++ "]  ="
+  printTiers n $ tiers `asTypeOf` [[a]]
 
 u :: a
 u = undefined

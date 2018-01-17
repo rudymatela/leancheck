@@ -1,9 +1,3 @@
-tiers :: [()->()]  =
-  [ [ \x -> case x of
-              () -> ()
-    ]
-  ]
-
 map length (tiers :: [[ ()->() ]])  =  [1]
 
 length (list :: [ ()->() ])  =  1
@@ -11,3 +5,9 @@ length (list :: [ ()->() ])  =  1
 allUnique (list :: [ ()->() ])  =  True
 
 ratioRepetitions (list :: [ ()->() ])  =  0 % 1
+
+tiers :: [()->()]  =
+  [ [ \x -> case x of
+              () -> ()
+    ]
+  ]

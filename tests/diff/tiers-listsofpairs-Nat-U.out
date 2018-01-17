@@ -1,3 +1,11 @@
+map length (tiers :: [[ Nat->() ]])  =  [1,0,0,0,0,0,...]
+
+length (list :: [ Nat->() ])  =  1
+
+allUnique (list :: [ Nat->() ])  =  True
+
+ratioRepetitions (list :: [ Nat->() ])  =  0 % 1
+
 tiers :: [Nat->()]  =
   [ [ \x -> case x of
               0 -> ()
@@ -17,11 +25,3 @@ tiers :: [Nat->()]  =
   , []
   , ...
   ]
-
-map length (tiers :: [[ Nat->() ]])  =  [1,0,0,0,0,0,...]
-
-length (list :: [ Nat->() ])  =  1
-
-allUnique (list :: [ Nat->() ])  =  True
-
-ratioRepetitions (list :: [ Nat->() ])  =  0 % 1

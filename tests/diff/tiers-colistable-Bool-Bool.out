@@ -1,3 +1,11 @@
+map length (tiers :: [[ Bool->Bool ]])  =  [4]
+
+length (list :: [ Bool->Bool ])  =  4
+
+allUnique (list :: [ Bool->Bool ])  =  True
+
+ratioRepetitions (list :: [ Bool->Bool ])  =  0 % 1
+
 tiers :: [Bool->Bool]  =
   [ [ \x -> case x of
               False -> False
@@ -13,11 +21,3 @@ tiers :: [Bool->Bool]  =
               True -> True
     ]
   ]
-
-map length (tiers :: [[ Bool->Bool ]])  =  [4]
-
-length (list :: [ Bool->Bool ])  =  4
-
-allUnique (list :: [ Bool->Bool ])  =  True
-
-ratioRepetitions (list :: [ Bool->Bool ])  =  0 % 1

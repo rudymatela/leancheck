@@ -1,9 +1,3 @@
-tiers :: [Bool]  =
-  [ [ False
-    , True
-    ]
-  ]
-
 map length (tiers :: [[ Bool ]])  =  [2]
 
 length (list :: [ Bool ])  =  2
@@ -11,3 +5,9 @@ length (list :: [ Bool ])  =  2
 allUnique (list :: [ Bool ])  =  True
 
 ratioRepetitions (list :: [ Bool ])  =  0 % 1
+
+tiers :: [Bool]  =
+  [ [ False
+    , True
+    ]
+  ]

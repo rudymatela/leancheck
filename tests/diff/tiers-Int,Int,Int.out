@@ -1,3 +1,11 @@
+map length (tiers :: [[ (Int,Int,Int) ]])  =  [1,3,6,10,15,21,...]
+
+length (list :: [ (Int,Int,Int) ])  =  Infinity
+
+allUnique (list :: [ (Int,Int,Int) ])  =  True
+
+ratioRepetitions (list :: [ (Int,Int,Int) ])  =  0 % 1
+
 tiers :: [(Int,Int,Int)]  =
   [ [(0,0,0)]
   , [ (0,0,1)
@@ -62,11 +70,3 @@ tiers :: [(Int,Int,Int)]  =
     ]
   , ...
   ]
-
-map length (tiers :: [[ (Int,Int,Int) ]])  =  [1,3,6,10,15,21,...]
-
-length (list :: [ (Int,Int,Int) ])  =  Infinity
-
-allUnique (list :: [ (Int,Int,Int) ])  =  True
-
-ratioRepetitions (list :: [ (Int,Int,Int) ])  =  0 % 1

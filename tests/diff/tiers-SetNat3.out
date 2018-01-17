@@ -1,3 +1,11 @@
+map length (tiers :: [[ Set Nat3 ]])  =  [1,1,1,2,1,1,1]
+
+length (list :: [ Set Nat3 ])  =  8
+
+allUnique (list :: [ Set Nat3 ])  =  True
+
+ratioRepetitions (list :: [ Set Nat3 ])  =  0 % 1
+
 tiers :: [Set Nat3]  =
   [ [Set []]
   , [Set [0]]
@@ -9,11 +17,3 @@ tiers :: [Set Nat3]  =
   , [Set [1,2]]
   , [Set [0,1,2]]
   ]
-
-map length (tiers :: [[ Set Nat3 ]])  =  [1,1,1,2,1,1,1]
-
-length (list :: [ Set Nat3 ])  =  8
-
-allUnique (list :: [ Set Nat3 ])  =  True
-
-ratioRepetitions (list :: [ Set Nat3 ])  =  0 % 1
