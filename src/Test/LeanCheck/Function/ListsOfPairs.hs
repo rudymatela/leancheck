@@ -51,7 +51,7 @@ exceptionPairs xss yss = concatMapT (`excep` yss) (incompleteSetsOf xss)
 -- of a constant function makes no sense (we would have already enumerated that
 -- function anyway).  As of 2c23c1a, it makes no difference whether
 -- incompleteSetsOf is used instead of setsOf for types with less than 12
--- values.
+-- values because of the finite guard on `-->>`.
 
 -- | Returns tiers of sets excluding the universe set.
 --
