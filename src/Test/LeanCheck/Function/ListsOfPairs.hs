@@ -43,10 +43,10 @@ mutate f ms = foldr mut f ms
 -- they represent exceptions to a constant function,
 -- hence the name 'exceptionPairs'.
 exceptionPairs :: [[a]] -> [[b]] -> [[ [(a,b)] ]]
-exceptionPairs xss yss = concatMapT (`excep` yss) (incompleteSetsOf xss)
+exceptionPairs xss yss = concatMapT exceptionsFor (incompleteSetsOf xss)
   where
-  excep :: [a] -> [[b]] -> [[ [(a,b)] ]]
-  excep xs sbs = zip xs `mapT` products (const sbs `map` xs)
+--exceptionsFor :: [a] -> [[ [(a,b)] ]]
+  exceptionsFor xs = zip xs `mapT` products (const yss `map` xs)
 -- incompleteSetsOf is needed, instead of setsOf, because mutating *all* values
 -- of a constant function makes no sense (we would have already enumerated that
 -- function anyway).  As of 2c23c1a, it makes no difference whether
