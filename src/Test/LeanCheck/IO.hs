@@ -69,8 +69,8 @@ data Result = OK        Int
             | Exception Int [String] String
   deriving (Eq, Show)
 
-resultsIO :: Testable a => Int -> a -> IO [Result]
-resultsIO n = sequence . zipWith torio [1..] . take n . results
+resultsIO :: Testable a => Int -> a -> [IO Result]
+resultsIO n = zipWith torio [1..] . take n . results
   where
     tor i (_,True) = OK i
     tor i (as,False) = Falsified i as
@@ -79,12 +79,13 @@ resultsIO n = sequence . zipWith torio [1..] . take n . results
                      in return (Exception i as (show e))
 
 resultIO :: Testable a => Int -> a -> IO Result
-resultIO n p = do
-  rs <- resultsIO n p
-  return . maybe (last rs) id
-         $ find isFailure rs
-  where isFailure (OK _) = False
-        isFailure _      = True
+resultIO n = computeResult . resultsIO n
+  where
+  computeResult []  = error "resultIO: no results, empty Listable enumeration?"
+  computeResult [r] = r
+  computeResult (r:rs) = r >>= \r -> case r of
+                                     (OK _) -> computeResult rs
+                                     _      -> return r
 
 showResult :: Int -> Result -> String
 showResult m (OK n)             = "+++ OK, passed " ++ show n ++ " tests"
