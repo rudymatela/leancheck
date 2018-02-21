@@ -1,0 +1,22 @@
+map length (tiers :: [[ Map Nat2 Nat2 ]])  =  [1,1,2,2,2,1]
+
+length (list :: [ Map Nat2 Nat2 ])  =  9
+
+allUnique (list :: [ Map Nat2 Nat2 ])  =  True
+
+ratioRepetitions (list :: [ Map Nat2 Nat2 ])  =  0 % 1
+
+tiers :: [Map Nat2 Nat2]  =
+  [ [Map []]
+  , [Map [(0,0)]]
+  , [ Map [(0,1)]
+    , Map [(1,0)]
+    ]
+  , [ Map [(1,1)]
+    , Map [(0,0),(1,0)]
+    ]
+  , [ Map [(0,0),(1,1)]
+    , Map [(0,1),(1,0)]
+    ]
+  , [Map [(0,1),(1,1)]]
+  ]

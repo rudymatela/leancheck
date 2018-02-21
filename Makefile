@@ -169,6 +169,11 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "NoDup Nat"        | diff -rud tests/diff/tiers-NoDupNat.out    -
 	./bench/tiers "NoDup Nat2"       | diff -rud tests/diff/tiers-NoDupNat2.out   -
 	./bench/tiers "NoDup Nat3"       | diff -rud tests/diff/tiers-NoDupNat3.out   -
+	./bench/tiers "Map Bool Bool"    | diff -rud tests/diff/tiers-MapBoolBool.out -
+	./bench/tiers "Map () ()"        | diff -rud tests/diff/tiers-MapUU.out       -
+	./bench/tiers "Map Nat Nat"      | diff -rud tests/diff/tiers-MapNatNat.out   -
+	./bench/tiers "Map Nat2 Nat2"    | diff -rud tests/diff/tiers-MapNat2Nat2.out -
+	./bench/tiers "Map Nat3 Nat3"    | diff -rud tests/diff/tiers-MapNat3Nat3.out -
 
 update-diff-test-tiers: bench/tiers
 	# simple types
@@ -208,6 +213,11 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "NoDup Nat"        > tests/diff/tiers-NoDupNat.out
 	./bench/tiers "NoDup Nat2"       > tests/diff/tiers-NoDupNat2.out
 	./bench/tiers "NoDup Nat3"       > tests/diff/tiers-NoDupNat3.out
+	./bench/tiers "Map Bool Bool"    > tests/diff/tiers-MapBoolBool.out
+	./bench/tiers "Map () ()"        > tests/diff/tiers-MapUU.out
+	./bench/tiers "Map Nat Nat"      > tests/diff/tiers-MapNatNat.out
+	./bench/tiers "Map Nat2 Nat2"    > tests/diff/tiers-MapNat2Nat2.out
+	./bench/tiers "Map Nat3 Nat3"    > tests/diff/tiers-MapNat3Nat3.out
 
 prepare-depend: bench/tiers-listsofpairs.hs \
                 bench/tiers-colistable.hs \

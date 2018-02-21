@@ -102,6 +102,7 @@ module Test.LeanCheck
   , setCons
   , bagCons
   , noDupListCons
+  , mapCons
 
   -- ** Products of tiers
   , product3With

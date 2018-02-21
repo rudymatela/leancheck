@@ -151,5 +151,10 @@ main = do
     "NoDup Nat"        -> put t n (u :: NoDup Nat            )
     "NoDup Nat2"       -> put t n (u :: NoDup Nat2           )
     "NoDup Nat3"       -> put t n (u :: NoDup Nat3           )
+    "Map Bool Bool"    -> put t n (u :: Map Bool Bool        )
+    "Map () ()"        -> put t n (u :: Map () ()            )
+    "Map Nat Nat"      -> put t n (u :: Map Nat Nat          )
+    "Map Nat2 Nat2"    -> put t n (u :: Map Nat2 Nat2        )
+    "Map Nat3 Nat3"    -> put t n (u :: Map Nat3 Nat3        )
     -- unhandled
     _                  -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"

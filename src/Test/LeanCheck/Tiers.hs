@@ -18,6 +18,7 @@ module Test.LeanCheck.Tiers
     listCons
   , setCons
   , bagCons
+  , mapCons
   , noDupListCons
 
   , maybeCons0
@@ -35,6 +36,7 @@ module Test.LeanCheck.Tiers
   , setsOf
   , noDupListsOf
   , products
+  , maps
   , listsOfLength
 
   -- * Tiers of pairs
@@ -107,6 +109,19 @@ bagCons = (`mapT` bagsOf tiers)
 -- Alternatively, you can use 'setsOf' direclty.
 setCons :: Listable a => ([a] -> b) -> [[b]]
 setCons = (`mapT` setsOf tiers)
+
+-- | Given a constructor that takes a map of elements (encoded as a list),
+--   lists tiers of applications of this constructor
+--
+--   So long as the underlying 'Listable' enumerations have no repetitions,
+--   this will generate no repetitions.
+--
+--   This allows defining an efficient implementation of `tiers` that does not
+--   repeat maps given by:
+--
+--   >   tiers = mapCons fromList
+mapCons :: (Listable a, Listable b) => ([(a,b)] -> c) -> [[c]]
+mapCons = (`mapT` maps tiers tiers)
 
 -- | Given a constructor that takes a list with no duplicate elements,
 --   return tiers of applications of this constructor.
@@ -355,6 +370,15 @@ bagsOf = ([[]]:) . concatT . bagChoicesWith (\x xss -> mapT (x:) (bagsOf xss))
 -- >   tiers = mapT fromList $ setsOf tiers
 setsOf :: [[a]] -> [[[a]]]
 setsOf = ([[]]:) . concatT . setChoicesWith (\x xss -> mapT (x:) (setsOf xss))
+
+-- | Takes as arguments tiers of source and target values;
+--   returns tiers of maps from the source to the target encoded as lists
+--   without repetition.
+maps :: [[a]] -> [[b]] -> [[[(a,b)]]]
+maps xss yss = concatMapT mapsFor (setsOf xss)
+  where
+--mapsFor :: [a] -> [[ [(a,b)] ]]
+  mapsFor xs = zip xs `mapT` products (const yss `map` xs)
 
 -- | Lists tiers of choices.
 -- Choices are pairs of values and tiers excluding that value.

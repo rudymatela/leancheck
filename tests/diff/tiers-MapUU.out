@@ -1,0 +1,12 @@
+map length (tiers :: [[ Map () () ]])  =  [1,1]
+
+length (list :: [ Map () () ])  =  2
+
+allUnique (list :: [ Map () () ])  =  True
+
+ratioRepetitions (list :: [ Map () () ])  =  0 % 1
+
+tiers :: [Map () ()]  =
+  [ [Map []]
+  , [Map [((),())]]
+  ]

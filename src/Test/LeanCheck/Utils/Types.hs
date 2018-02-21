@@ -58,13 +58,14 @@ module Test.LeanCheck.Utils.Types
   , NoDup (..)
   , Bag (..)
   , Set (..)
+  , Map (..)
   )
 where
 -- TODO: Add Ix and Bits instances
 
 import Test.LeanCheck (Listable(..), listIntegral)
 import Test.LeanCheck.Core ((+|),cons1)
-import Test.LeanCheck.Tiers (noDupListCons, setCons, bagCons)
+import Test.LeanCheck.Tiers (noDupListCons, setCons, bagCons, mapCons)
 import Data.Ratio ((%))
 
 narrowU :: Int -> Int -> Int
@@ -460,10 +461,13 @@ type UInt4 = Word4
 newtype NoDup a = NoDup [a] deriving (Show, Read, Eq, Ord)
 newtype Bag a = Bag [a] deriving (Show, Read, Eq, Ord)
 newtype Set a = Set [a] deriving (Show, Read, Eq, Ord)
+newtype Map a b = Map [(a,b)] deriving (Show, Read, Eq, Ord)
 
 instance Listable a => Listable (NoDup a) where tiers = noDupListCons NoDup
 instance Listable a => Listable (Bag a)   where tiers = bagCons Bag
 instance Listable a => Listable (Set a)   where tiers = setCons Set
+instance (Listable a, Listable b)
+                    => Listable (Map a b) where tiers = mapCons Map
 
 -- | 'X' type to be wrapped around integer types for an e-'X'-treme integer
 --   enumeration.  See the 'Listable' instance for 'X'.  Use 'X' when
