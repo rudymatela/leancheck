@@ -153,6 +153,8 @@ and a step-by-step guide to LeanCheck, see the
 [tutorial on property-based testing with LeanCheck]
 \(`doc/tutorial.md` in the source repository).
 
+LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
+
 [LeanCheck's Haddock documentation]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html
 [tutorial on property-based testing with LeanCheck]: https://github.com/rudymatela/leancheck/blob/master/doc/tutorial.md
 
@@ -171,6 +173,7 @@ and a step-by-step guide to LeanCheck, see the
 [Feat]: https://hackage.haskell.org/package/testing-feat
 [SmallCheck]: https://hackage.haskell.org/package/smallcheck
 [QuickCheck]: https://hackage.haskell.org/package/QuickCheck
+[PhD Thesis (2017)]: https://matela.com.br/paper/rudy-phd-thesis-2017.pdf
 
 [symbol `>`]: https://www.haskell.org/haddock/doc/html/ch03s08.html#idm140354810780208
 
