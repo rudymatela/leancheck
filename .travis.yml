@@ -33,6 +33,8 @@ script:
 - stack --no-terminal --skip-ghc-check test
 
 matrix:
+  allow_failures:
+  - ghc: 'head'
   include:
   - ghc: 'head'
     env:                   GHCVER=head         CABALVER=head
