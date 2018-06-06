@@ -11,7 +11,7 @@
 -- This is an experimental module for deriving 'Listable' instances.
 --
 -- Needs GHC and Template Haskell
--- (tested on GHC 7.4, 7.6, 7.8, 7.10 and 8.0).
+-- (tested on GHC 7.4, 7.6, 7.8, 7.10, 8.0, 8.2 and 8.4).
 --
 -- If LeanCheck does not compile under later GHCs, this module is probably the
 -- culprit.
