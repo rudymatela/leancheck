@@ -108,6 +108,14 @@ tests n =
   , holds n $ okEqOrd -:> [bool]
   , holds n $ okEqOrd -:> float  -- fails if NaN is included in enumeration
   , holds n $ okEqOrd -:> double -- fails if NaN is included in enumeration
+  , holds n $ okEqOrd -:> rational
+
+  -- TODO: fix the following tests:
+  , holds n $ okNum -:> int
+  , holds n $ okNum -:> integer
+--, holds n $ okNum -:> float   -- Infinity makes this fail
+--, holds n $ okNum -:> double  -- Infinity makes this fail
+  , holds n $ okNum -:> rational
 
   , holds n $ idempotent id   -:> int
   , holds n $ idempotent abs  -:> int

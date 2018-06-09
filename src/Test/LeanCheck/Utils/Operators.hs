@@ -52,6 +52,7 @@ module Test.LeanCheck.Utils.Operators
   , okEq
   , okOrd
   , okEqOrd
+  , okNum
   )
 where
 
@@ -228,6 +229,20 @@ okEqOrd :: (Eq a, Ord a) => a -> a -> a -> Bool
 okEqOrd x y z = okEq  x y z
              && okOrd x y z
              && (x == y) == (x `compare` y == EQ) -- consistent instances
+
+okNum :: (Eq a, Num a) => a -> a -> a -> Bool
+okNum x y z  =  commutative (+) x y
+             && commutative (*) x y
+             && associative (+) x y z
+             && associative (*) x y z
+             && distributive (*) (+) x y z
+             && idempotent (+0) x
+             && idempotent (*1) x
+             && idempotent abs x
+             && idempotent signum x
+             && negate (negate x) == x
+             && abs x * signum x == x
+             && x - x == 0
 
 -- | Equal under, a ternary operator with the same fixity as '=='.
 --
