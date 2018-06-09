@@ -91,6 +91,7 @@ module Test.LeanCheck.Utils.TypeBinding
   , bool
   , int, integer
   , float, double
+  , rational
   , char, string
   , ordering
   , mayb, eith
@@ -281,6 +282,9 @@ float = undefinedOf "float"
 
 double :: Double
 double = undefinedOf "double"
+
+rational :: Rational
+rational = undefinedOf "rational"
 
 bool :: Bool
 bool = undefinedOf "bool"
