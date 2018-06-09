@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 -- |
 -- Module      : Test.LeanCheck.Stats
 -- Copyright   : (c) 2017-2018 Rudy Matela
@@ -25,7 +26,22 @@ where
 
 import Test.LeanCheck.Core
 import Data.Function (on)
+#ifndef __HUGS__
 import Data.List (intercalate, transpose)
+#else
+import Data.List (transpose)
+
+intercalate :: [a] -> [[a]] -> [a]
+intercalate xs xss = concat (intersperse xs xss)
+  where
+  intersperse             :: a -> [a] -> [a]
+  intersperse _   []      = []
+  intersperse sep (x:xs)  = x : prependToAll sep xs
+    where
+    prependToAll            :: a -> [a] -> [a]
+    prependToAll _   []     = []
+    prependToAll sep (x:xs) = sep : x : prependToAll sep xs
+#endif
 
 classStats :: (Listable a, Show b) => Int -> (a -> b) -> IO ()
 classStats n f = putStrLn

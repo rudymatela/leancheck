@@ -36,6 +36,10 @@ GHCIMPORTDIRS = src:tests
 # -dynamic is needed only for src/Test/LeanCheck/Derive.hs and tests/test-derive.hs
 GHCFLAGS = -dynamic -O2
 HADDOCKFLAGS = --no-print-missing-docs
+HUGSIMPORTDIRS = .:./src:./tests:./etc/hugs-backports:/usr/lib/hugs/packages/*
+HUGSFLAGS = -98 -F"cpphs-hugs --noline -D__HUGS__" -h32M -P$(HUGSIMPORTDIRS)
+HUGS = hugs $(HUGSFLAGS)
+RUNHUGS = runhugs $(HUGSFLAGS)
 
 all: $(OBJS)
 
@@ -64,6 +68,25 @@ clean: clean-hi-o clean-haddock
 	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
 ghci: mk/All.ghci
+
+%.hugs: %.hs
+	$(HUGS) $<
+
+%.hugs-test: %.hs
+	$(RUNHUGS) $<
+
+hugs: src/Test/LeanCheck.hugs
+
+hugs-test: \
+  tests/test-fun.hugs-test \
+  tests/test-io.hugs-test \
+  tests/test-operators.hugs-test \
+  tests/test-stats.hugs-test \
+  tests/test-tiers.hugs-test \
+  tests/test.hugs-test
+# tests/test-error.hugs-test    # TODO: make this pass
+# tests/test-funshow.hugs-test  # TODO: make this pass
+# tests/test-types.hugs-test    # TODO: make this pass
 
 install:
 	@echo "use \`cabal install' instead"

@@ -24,7 +24,13 @@ import Prelude hiding (catch)
 import Test.LeanCheck.Core
 import Data.Maybe (listToMaybe)
 import Data.List (find)
+#ifdef __GLASGOW_HASKELL__
 import Control.Exception (SomeException, catch, evaluate)
+#else
+-- on Hugs
+import Control.Exception (Exception, catch, evaluate)
+type SomeException = Exception
+#endif
 
 -- | Checks a property printing results on 'stdout'
 --

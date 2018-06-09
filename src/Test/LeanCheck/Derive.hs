@@ -24,6 +24,8 @@ module Test.LeanCheck.Derive
   )
 where
 
+#ifdef __GLASGOW_HASKELL__
+
 import Language.Haskell.TH
 import Test.LeanCheck.Basic
 import Control.Monad (unless, liftM, liftM2, filterM)
@@ -297,3 +299,27 @@ nubMerge (x:xs) (y:ys) | x < y     = x :    xs  `nubMerge` (y:ys)
 
 nubMerges :: Ord a => [[a]] -> [a]
 nubMerges = foldr nubMerge []
+
+#else
+-- When using Hugs or other compiler without Template Haskell
+
+errorNotGHC :: a
+errorNotGHC = error "Only defined when using GHC"
+
+deriveListable :: a
+deriveListable = errorNotGHC
+
+deriveListableIfNeeded :: a
+deriveListableIfNeeded = errorNotGHC
+
+deriveListableCascading :: a
+deriveListableCascading = errorNotGHC
+
+deriveTiers :: a
+deriveTiers = errorNotGHC
+
+deriveList :: a
+deriveList = errorNotGHC
+
+-- closing #ifdef __GLASGOW_HASKELL__
+#endif

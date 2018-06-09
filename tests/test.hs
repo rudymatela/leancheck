@@ -49,7 +49,9 @@ tests =
   , counterExample 10 (\x y -> x + y == (x::Double)) == Just ["0.0","1.0"]
   , holds          50 (\x -> x + 1 /= (x::Int))
   , counterExample 50 (\x -> x + 1 /= (x::Float))  == Just ["Infinity"]
+    || counterExample 50 (\x -> x + 1 /= (x::Float)) == Just ["inf"] -- bug on Hugs 2006-09?
   , counterExample 50 (\x -> x + 1 /= (x::Double)) == Just ["Infinity"]
+    || counterExample 50 (\x -> x + 1 /= (x::Float)) == Just ["inf"] -- bug on Hugs 2006-09?
   , allUnique (take 100 list :: [Float])
   , allUnique (take 500 list :: [Double])
 
