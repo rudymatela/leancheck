@@ -32,7 +32,6 @@ tests =
   , tNatTripleOrd 200
   , tNatQuadrupleOrd 300
   , tNatQuintupleOrd 400
-  , tNatSixtupleOrd 500
   , tNatListOrd 500
   , tListsOfNatOrd 500
   , listsOf (tiers::[[Nat]]) =| 10 |= tiers

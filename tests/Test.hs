@@ -15,7 +15,6 @@ module Test
   , tNatTripleOrd
   , tNatQuadrupleOrd
   , tNatQuintupleOrd
-  , tNatSixtupleOrd
   , tNatListOrd
   , tListsOfNatOrd
   , tPairEqParams
@@ -104,10 +103,6 @@ tNatQuadrupleOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
 tNatQuintupleOrd :: Int -> Bool
 tNatQuintupleOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
   where sum' (x,y,z,w,v) = x+y+z+w+v :: Nat
-
-tNatSixtupleOrd :: Int -> Bool
-tNatSixtupleOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
-  where sum' (x,y,z,w,v,u) = x+y+z+w+v+u :: Nat
 
 tNatListOrd :: Int -> Bool
 tNatListOrd n = n `tStrictlyOrderedBy`  comparing sum' `thn` compare
