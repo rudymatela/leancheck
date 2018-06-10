@@ -86,3 +86,10 @@ matrix:
     script:
     - make GHCFLAGS=-O2 && make test GHCFLAGS=-O2 && make haddock HADDOCKFLAGS=
     - cabal test
+  - ghc: 'hugs'
+    env:                   GHCVER=hugs
+    addons: {apt: {packages: [hugs]}}
+    before_install:
+    - echo ":version" | hugs
+    script:
+    - make hugs-test
