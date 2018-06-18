@@ -84,7 +84,7 @@ depend:
 haddock: doc/index.html
 
 clean-haddock:
-	rm -f doc/*.{html,css,js,png,gif} README.html
+	rm -f doc/*.{html,css,js,png,gif,json} README.html
 
 upload-haddock:
 	@echo "use \`cabal upload -d' instead"
