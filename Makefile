@@ -55,6 +55,7 @@ clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-colistable.hs
 	rm -f bench/tiers-listsofpairs.hs
 	rm -f bench/tiers-funlistable.hs
+	rm -f bench/tiers-mixed.hs
 	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
 ghci: mk/All.ghci
