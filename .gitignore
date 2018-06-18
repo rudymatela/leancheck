@@ -42,5 +42,6 @@ doc/*.css
 doc/*.js
 doc/*.png
 doc/*.gif
+doc/*.json
 mk/toplibs
 README.html
