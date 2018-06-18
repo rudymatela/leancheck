@@ -25,13 +25,6 @@ BENCHS = \
 	bench/tiers-listsofpairs \
 	bench/tiers-mixed \
 	bench/tiers
-LISTHS   = find src mk -name \*.hs
-LISTOBJS = $(LISTHS) | sed -e 's/.hs$$/.o/'
-ALLHS    = $(shell $(LISTHS))
-ALLOBJS  = $(shell $(LISTOBJS))
-OBJS = src/Test/LeanCheck.o \
-       src/Test/LeanCheck/Function.o \
-       src/Test/LeanCheck/Error.o
 GHCIMPORTDIRS = src:tests
 # -dynamic is needed only for src/Test/LeanCheck/Derive.hs and tests/test-derive.hs
 GHCFLAGS = -dynamic -O2
@@ -39,9 +32,9 @@ HADDOCKFLAGS = --no-print-missing-docs
 HUGSIMPORTDIRS = .:./src:./tests:./etc/hugs-backports:/usr/lib/hugs/packages/*
 HUGSFLAGS = -98 -h32M
 
-all: $(OBJS)
+all: mk/toplibs
 
-all-all: $(ALLOBJS)
+all-all: mk/All.o
 
 test: $(patsubst %,%.test,$(TESTS)) diff-test
 
@@ -83,12 +76,6 @@ hugs-test: \
 install:
 	@echo "use \`cabal install' instead"
 
-list-hs:
-	$(LISTHS)
-
-list-objs:
-	$(LISTOBJS)
-
 test-sdist:
 	./tests/test-sdist
 
@@ -119,25 +106,6 @@ markdown:
 	pandoc README.md -o README.html
 	pandoc doc/tutorial.md -o doc/tutorial.html
 	pandoc doc/data-invariant.md -o doc/data-invariant.html
-
-haddock: doc/index.html
-
-clean-haddock:
-	rm -f doc/*.{html,css,js,png,gif} README.html
-
-upload-haddock:
-	@echo "use \`cabal upload -d' instead"
-	@echo "(but 1st: cabal install --only-dependencies --enable-documentation)"
-	@echo "(to just compile docs: cabal haddock --for-hackage)"
-	@echo "(on Arch Linux, use: cabal haddock --for-hackage --haddock-options=--optghc=-dynamic)"
-
-doc/index.html: $(ALLHS)
-	./mk/haddock-i base template-haskell | xargs \
-	haddock --html -odoc $(ALLHS) $(HADDOCKFLAGS) --title=leancheck
-	@echo 'NOTE: please ensure that there are *only* 7'
-	@echo '      undocumented functions on Test.LeanCheck'
-	@echo '      as "OPTIONS_HADDOCK prune" is active'
-	@echo '      to hide cons6...cons12'
 
 # NOTE: (very hacky!) the following target allows parallel compilation (-jN) of
 # eg and tests programs so long as they don't share dependencies _not_ stored

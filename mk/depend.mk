@@ -182,6 +182,8 @@ eg/test-sort.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   eg/test-sort.hs
+etc/hugs-backports/Data/Function.o: \
+  etc/hugs-backports/Data/Function.hs
 mk/All.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Utils/TypeBinding.hs \
@@ -215,6 +217,11 @@ mk/Toplibs.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   mk/Toplibs.hs
+Setup.o: \
+  Setup.hs
+Setup: \
+  Setup.hs \
+  mk/toplibs
 src/Test/LeanCheck/Basic.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs

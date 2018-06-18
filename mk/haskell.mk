@@ -34,15 +34,16 @@ RUNHUGSCMD = $(RUNHUGS) -F"$(CPPHS_HUGS)" -P$(HUGSIMPORTDIRS) $(HUGSFLAGS)
 # Makefile where to keep the dependencies
 DEPMK ?= mk/depend.mk
 
-# By default, excludes dist and Setup.hs, so that a Makefile can coexist nicely
-# in a cabalized project.  Also excludes .stack-work.
-HSS ?= $(shell find \( -path "./dist" -o -path "./Setup.hs" -o -path "./.stack-work" \) -prune \
-                 -o -name "*.*hs" -print)
-# You can override HSS in your main Makefile
-# It should include all Haskell sources to be compiled by different targets
-# (even those that are not a dependency to all)
-# It will be used to generate dependencies and for cleaning objects
+# LIB_HSS: all library Haskell files
+# ALL_HSS: all Haskell files
+# You can override ALL/LIB_HSS in your main Makefile
+LIST_LIB_HSS ?= find src -name "*.hs"
+LIST_ALL_HSS ?= find \( -path "./dist" -o -path "./.stack-work" \) -prune \
+                     -o -name "*.*hs" -print
+LIB_HSS ?= $(shell $(LIST_LIB_HSS))
+ALL_HSS ?= $(shell $(LIST_ALL_HSS))
 
+PKGNAME = $(shell cat *.cabal | grep "^name:"    | sed -e "s/name: *//")
 
 
 # Implicit rules
@@ -68,15 +69,42 @@ HSS ?= $(shell find \( -path "./dist" -o -path "./Setup.hs" -o -path "./.stack-w
 # Cleaning rule (add as a clean dependency)
 .PHONY: clean-hi-o
 clean-hi-o:
-	find $(HSS) | sed -e 's/hs$$/o/'      | xargs rm -f
-	find $(HSS) | sed -e 's/hs$$/hi/'     | xargs rm -f
-	find $(HSS) | sed -e 's/hs$$/dyn_o/'  | xargs rm -f
-	find $(HSS) | sed -e 's/hs$$/dyn_hi/' | xargs rm -f
+	find $(ALL_HSS) | sed -e 's/hs$$/o/'      | xargs rm -f
+	find $(ALL_HSS) | sed -e 's/hs$$/hi/'     | xargs rm -f
+	find $(ALL_HSS) | sed -e 's/hs$$/dyn_o/'  | xargs rm -f
+	find $(ALL_HSS) | sed -e 's/hs$$/dyn_hi/' | xargs rm -f
 
 
 # Update dependency file
 .PHONY: depend
 depend:
-	find $(HSS) | ./mk/ghcdeps -i$(GHCIMPORTDIRS) $(GHCFLAGS) > $(DEPMK)
+	find $(ALL_HSS) | ./mk/ghcdeps -i$(GHCIMPORTDIRS) $(GHCFLAGS) > $(DEPMK)
+
+# haddock rules
+haddock: doc/index.html
+
+clean-haddock:
+	rm -f doc/*.{html,css,js,png,gif} README.html
+
+upload-haddock:
+	@echo "use \`cabal upload -d' instead"
+	@echo "(but 1st: cabal install --only-dependencies --enable-documentation)"
+	@echo "(to just compile docs: cabal haddock --for-hackage)"
+	@echo "(on Arch Linux, use: cabal haddock --for-hackage --haddock-options=--optghc=-dynamic)"
+
+doc/index.html: $(LIB_HSS)
+	./mk/haddock-i base template-haskell | xargs \
+	haddock --html -odoc $(LIB_HSS) $(HADDOCKFLAGS) --title=$(PKGNAME)
+
+# lists all Haskell source files
+list-all-hss:
+	@find $(ALL_HSS)
+
+# lists library Haskell source files
+list-lib-hss:
+	@find $(LIB_HSS)
+
+show-pkgname:
+	@echo $(PKGNAME)
 
 include $(DEPMK)
