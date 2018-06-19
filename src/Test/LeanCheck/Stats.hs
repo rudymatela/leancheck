@@ -73,7 +73,7 @@ conditionStats n = putStrLn . table " " . map show1
 
 -- TODO: implement this
 conditionStatsT :: Listable a => Int -> [(String,a->Bool)] -> IO ()
-conditionStatsT = error "conditionsStatsT: not implemented yet, use classStats for now"
+conditionStatsT = error "conditionsStatsT: not implemented yet, use conditionStats for now"
 
 classify :: Eq a => [a] -> [[a]]
 classify = classifyBy (==)
