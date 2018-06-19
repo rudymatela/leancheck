@@ -66,7 +66,6 @@ classStatsT n f = putStrLn
                 . countsTOn (unquote . show . f)
                 $ take n tiers
   where
-  len = 100
   heading = "" : "tot " : map show [0..(n-1)]
   showCounts (s,n,ns) = (s ++ ":") : (show n ++ " ") : map show ns
   (_,n,ns) -+- (_,n',ns') = ("tot", n + n', zipWith (+) ns ns')
