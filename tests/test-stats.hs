@@ -21,8 +21,8 @@ main = do
   putStrLn "take 1 :: [Int] -> [Int]"
   classStats 100 (take 1  :: [Int] -> [Int])
 
-  conditionStats 1000 [ ("odd",odd :: Int -> Bool)
-                      , ("even",even) ]
+  conditionStats 1000 [ ("odd", odd :: Int -> Bool)
+                      , ("even", even) ]
 
   conditionStats 1000 [ ("ordered",ordered :: [Int] -> Bool)
                       , ("ordered . reverse", ordered . reverse) ]
