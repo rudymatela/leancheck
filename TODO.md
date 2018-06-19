@@ -21,7 +21,7 @@ documentation
 other improvements
 ------------------
 
-* implement `classStatsT` and `conditionStatsT`
+* implement `conditionStatsT` (see `classStatsT`)
 
 
 later
