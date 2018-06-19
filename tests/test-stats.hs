@@ -27,6 +27,16 @@ main = do
   conditionStats 1000 [ ("ordered",ordered :: [Int] -> Bool)
                       , ("ordered . reverse", ordered . reverse) ]
 
+  putStrLn "sum :: [Int] -> Bool"
+  classStatsT 6 (sum     :: [Int] -> Int)
+
+  putStrLn "length :: [Int] -> Int"
+  classStatsT 6 (length  :: [Int] -> Int)
+
+  putStrLn "take 1 :: [Int] -> [Int]"
+  classStatsT 6 (take 1  :: [Int] -> [Int])
+
+
   case elemIndices False (tests 100) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
