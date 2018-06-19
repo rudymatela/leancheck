@@ -56,9 +56,22 @@ classStats n f = putStrLn
                     , show (100 * n `div` len) ++ "%"
                     ]
 
--- TODO: implement this
 classStatsT :: (Listable a, Show b) => Int -> (a -> b) -> IO ()
-classStatsT = error "classStatsT: not implemented yet, use classStats for now"
+classStatsT n f = putStrLn
+                . table "  "
+                . (heading:)
+                . ([" "]:)
+                . map showCounts
+                . prependTotal
+                . countsTOn (unquote . show . f)
+                $ take n tiers
+  where
+  len = 100
+  heading = "" : "tot " : map show [0..(n-1)]
+  showCounts (s,n,ns) = (s ++ ":") : (show n ++ " ") : map show ns
+  (_,n,ns) -+- (_,n',ns') = ("tot", n + n', zipWith (+) ns ns')
+  totalizeCounts = foldr (-+-) (undefined, 0, repeat 0)
+  prependTotal cs = totalizeCounts cs : cs
 
 conditionStats :: Listable a => Int -> [(String,a->Bool)] -> IO ()
 conditionStats n = putStrLn . table " " . map show1
@@ -98,6 +111,14 @@ countsBy (==) = map headLength . classifyBy (==)
 
 countsOn :: Eq b => (a -> b) -> [a] -> [(b,Int)]
 countsOn f = map (\xs -> (f $ head xs, length xs)) . classifyOn f
+
+countsT :: Eq a => [[a]] -> [(a,Int,[Int])]
+countsT xss = [(x,n,map (count x) xss) | (x,n) <- counts (concat xss)]
+  where
+  count x = length . filter (== x)
+
+countsTOn :: Eq b => (a -> b) -> [[a]] -> [(b,Int,[Int])]
+countsTOn f = countsT . mapT f
 
 headLength :: [a] -> (a,Int)
 headLength xs = (head xs, length xs)
