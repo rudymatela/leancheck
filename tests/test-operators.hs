@@ -112,8 +112,8 @@ tests n =
 
   , holds n $ okNum -:> int
   , holds n $ okNum -:> integer
---, holds n $ okNum -:> float   -- Infinity makes this fail
---, holds n $ okNum -:> double  -- Infinity makes this fail
+  , holds n $ \x y z -> none isInfinite [x,y,z] ==> okNum x y (z -: float)
+  , holds n $ \x y z -> none isInfinite [x,y,z] ==> okNum x y (z -: double)
   , holds n $ okNum -:> rational
 
   , holds n $ idempotent id   -:> int
@@ -131,3 +131,6 @@ tests n =
   , fails n $ neverIdentity abs    -:> int
   , fails n $ neverIdentity negate -:> int
   ]
+
+none :: (a -> Bool) -> [a] -> Bool
+none p = not . or . map p
