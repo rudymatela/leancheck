@@ -110,7 +110,6 @@ tests n =
   , holds n $ okEqOrd -:> double -- fails if NaN is included in enumeration
   , holds n $ okEqOrd -:> rational
 
-  -- TODO: fix the following tests:
   , holds n $ okNum -:> int
   , holds n $ okNum -:> integer
 --, holds n $ okNum -:> float   -- Infinity makes this fail
