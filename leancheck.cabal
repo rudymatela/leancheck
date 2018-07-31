@@ -12,7 +12,7 @@
 
 name:                leancheck
 version:             0.7.1
-synopsis:            Cholesterol-free property-based testing
+synopsis:            Enumerative property-based testing
 description:
   LeanCheck is a simple enumerative property-based testing library.
   .
