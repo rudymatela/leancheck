@@ -176,6 +176,7 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 [PhD Thesis (2017)]: https://matela.com.br/paper/rudy-phd-thesis-2017.pdf
 
 [symbol `>`]: https://www.haskell.org/haddock/doc/html/ch03s08.html#idm140354810780208
+[Template Haskell]: https://wiki.haskell.org/Template_Haskell
 
 [build-status]: https://travis-ci.org/rudymatela/leancheck.svg?branch=master
 [build-log]:    https://travis-ci.org/rudymatela/leancheck
