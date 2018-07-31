@@ -184,7 +184,7 @@ instance (Listable a, Listable b, Listable c, Listable d) =>
   tiers = productWith (\x (y,z,w) -> (x,y,z,w)) tiers tiers
 
 -- | Instances for 'Listable' sixtuples up to 12-tuples are exported by default
---   form "Test.LeanCheck" but are hidden from Haddock documentation.  These
+--   from "Test.LeanCheck" but are hidden from Haddock documentation.  These
 --   instances are defined in "Test.LeanCheck.Basic".
 instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
          Listable (a,b,c,d,e) where
