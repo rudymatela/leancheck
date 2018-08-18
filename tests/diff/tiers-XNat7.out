@@ -1,0 +1,17 @@
+map length (tiers :: [[ X Nat7 ]])  =  [1,1,1,1,1,1,1]
+
+length (list :: [ X Nat7 ])  =  7
+
+allUnique (list :: [ X Nat7 ])  =  True
+
+ratioRepetitions (list :: [ X Nat7 ])  =  0 % 1
+
+tiers :: [X Nat7]  =
+  [ [0]
+  , [1]
+  , [2]
+  , [6]
+  , [3]
+  , [4]
+  , [5]
+  ]

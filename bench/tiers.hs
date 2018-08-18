@@ -156,5 +156,16 @@ main = do
     "Map Nat Nat"      -> put t n (u :: Map Nat Nat          )
     "Map Nat2 Nat2"    -> put t n (u :: Map Nat2 Nat2        )
     "Map Nat3 Nat3"    -> put t n (u :: Map Nat3 Nat3        )
+    -- extreme integers
+    "X Int"            -> put t n (u :: X Int   ) -- device dependent
+    "X Word"           -> put t n (u :: X Word  ) -- device dependent
+    "X Int4"           -> put t n (u :: X Int4  )
+    "X Word4"          -> put t n (u :: X Word4 )
+    "X Nat7"           -> put t n (u :: X Nat7  )
+    "Xs Int"           -> put t n (u :: Xs Int  ) -- device dependent
+    "Xs Word"          -> put t n (u :: Xs Word ) -- device dependent
+    "Xs Int4"          -> put t n (u :: Xs Int4 )
+    "Xs Word4"         -> put t n (u :: Xs Word4)
+    "Xs Nat7"          -> put t n (u :: Xs Nat7 )
     -- unhandled
     _                  -> putStrLn $ "unknown/unhandled type `" ++ t ++ "'"

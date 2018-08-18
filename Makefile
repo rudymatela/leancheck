@@ -159,6 +159,13 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "Map Nat Nat"      | diff -rud tests/diff/tiers-MapNatNat.out   -
 	./bench/tiers "Map Nat2 Nat2"    | diff -rud tests/diff/tiers-MapNat2Nat2.out -
 	./bench/tiers "Map Nat3 Nat3"    | diff -rud tests/diff/tiers-MapNat3Nat3.out -
+	# extreme integers
+	./bench/tiers "X Int4"           | diff -rud tests/diff/tiers-XInt4.out       -
+	./bench/tiers "X Word4"          | diff -rud tests/diff/tiers-XWord4.out      -
+	./bench/tiers "X Nat7"           | diff -rud tests/diff/tiers-XNat7.out       -
+	./bench/tiers "Xs Int4"          | diff -rud tests/diff/tiers-XsInt4.out      -
+	./bench/tiers "Xs Word4"         | diff -rud tests/diff/tiers-XsWord4.out     -
+	./bench/tiers "Xs Nat7"          | diff -rud tests/diff/tiers-XsNat7.out      -
 
 update-diff-test-tiers: bench/tiers
 	# simple types
@@ -203,6 +210,13 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Map Nat Nat"      > tests/diff/tiers-MapNatNat.out
 	./bench/tiers "Map Nat2 Nat2"    > tests/diff/tiers-MapNat2Nat2.out
 	./bench/tiers "Map Nat3 Nat3"    > tests/diff/tiers-MapNat3Nat3.out
+	# extreme integers
+	./bench/tiers "X Int4"           > tests/diff/tiers-XInt4.out
+	./bench/tiers "X Word4"          > tests/diff/tiers-XWord4.out
+	./bench/tiers "X Nat7"           > tests/diff/tiers-XNat7.out
+	./bench/tiers "Xs Int4"          > tests/diff/tiers-XsInt4.out
+	./bench/tiers "Xs Word4"         > tests/diff/tiers-XsWord4.out
+	./bench/tiers "Xs Nat7"          > tests/diff/tiers-XsNat7.out
 
 prepare-depend: bench/tiers-listsofpairs.hs \
                 bench/tiers-colistable.hs \
