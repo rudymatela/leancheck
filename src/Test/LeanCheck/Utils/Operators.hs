@@ -154,6 +154,18 @@ asymmetric r = \x y -> x `r` y ==> not (y `r` x)
 
 -- | Is the given binary relation an equivalence?
 --   Is the given relation reflexive, symmetric and transitive?
+--
+-- > > check (equivalence (==) :: Int -> Int -> Int -> Bool)
+-- > +++ OK, passed 200 tests.
+-- > > check (equivalence (<=) :: Int -> Int -> Int -> Bool)
+-- > *** Failed! Falsifiable (after 3 tests):
+-- > 0 1 0
+--
+-- Or, using "Test.LeanCheck.Utils.TypeBinding":
+--
+-- > > check $ equivalence (<=) -:> int
+-- > *** Failed! Falsifiable (after 3 tests):
+-- > 0 1 0
 equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
 equivalence (==) = \x y z -> reflexive  (==) x
                           && symmetric  (==) x y
