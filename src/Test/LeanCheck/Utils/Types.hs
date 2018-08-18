@@ -581,8 +581,7 @@ infixr 5 ++|
 -- > > check $ \(Xs xs) -> all (>=0) xs ==> sum (take 1 xs :: [Int]) <= sum xs
 -- > *** Failed! Falsifiable (after 56 tests):
 -- > [1,9223372036854775807]
-newtype Xs a = Xs {unXs :: [a]} deriving (Eq, Ord)
-instance Show a => Show (Xs a) where show (Xs xs) = show xs
+newtype Xs a = Xs [a] deriving (Eq, Ord, Show, Read)
 instance (Integral a, Bounded a) => Listable (Xs a) where
   tiers = cons1 (Xs . map unX)
 -- ^ Lists with elements of the 'X' type.

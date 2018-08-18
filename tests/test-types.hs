@@ -115,6 +115,8 @@ tests =
   , holds 100 (\(Nat n) -> n >= 0)
   , holds 100 (\(Natural n) -> n >= 0)
   ]
+  where
+  unXs (Xs xs) = xs
 
 
 prefiX :: (Bounded a, Integral a) => [a]
