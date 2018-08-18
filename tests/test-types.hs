@@ -26,7 +26,6 @@ unsignedRange n = map fromIntegral [0..(2^n)-1]
 tests =
   [ True
 
-
   , list `permutation` [minBound..maxBound :: Int1]
   , list `permutation` [minBound..maxBound :: Int2]
   , list `permutation` [minBound..maxBound :: Int3]
@@ -112,6 +111,9 @@ tests =
   , fails 100 (\i -> i + 1 < (i::Int2))
   , fails 100 (\i -> i + 1 < (i::Int3))
   , fails 100 (\i -> i + 1 < (i::Int4))
+
+  , holds 100 (\(Nat n) -> n >= 0)
+  , holds 100 (\(Natural n) -> n >= 0)
   ]
 
 

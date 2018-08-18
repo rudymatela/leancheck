@@ -109,6 +109,8 @@ tests n =
   , holds n $ okEqOrd -:> float  -- fails if NaN is included in enumeration
   , holds n $ okEqOrd -:> double -- fails if NaN is included in enumeration
   , holds n $ okEqOrd -:> rational
+  , holds n $ okEqOrd -:> nat
+  , holds n $ okEqOrd -:> natural
 
   , holds n $ okNum -:> int
   , holds n $ okNum -:> integer
@@ -116,6 +118,8 @@ tests n =
 --, holds n $ \x y z -> none isInfinite [x,y,z] ==> okNum x y (z -: float)
 --, holds n $ \x y z -> none isInfinite [x,y,z] ==> okNum x y (z -: double)
   , holds n $ okNum -:> rational
+  , holds n $ okNum -:> nat
+  , holds n $ okNum -:> natural
 
   , holds n $ idempotent id   -:> int
   , holds n $ idempotent abs  -:> int

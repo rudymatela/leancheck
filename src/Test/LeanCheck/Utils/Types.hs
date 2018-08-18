@@ -43,6 +43,7 @@ module Test.LeanCheck.Utils.Types
   , Nat5 (..)
   , Nat6 (..)
   , Nat7 (..)
+  , Natural (..)
 
   -- ** Aliases to word types (deprecated)
   , UInt1
@@ -131,6 +132,12 @@ newtype Word4 = Word4 { unWord4 :: Int } deriving (Eq, Ord)
 
 -- | Natural numbers (including 0): 0, 1, 2, 3, 4, 5, 6, 7, ...
 --
+-- Internally, this type is represented as an 'Integer'
+-- allowing for an infinity of possible values.
+newtype Natural = Natural { unNatural :: Int } deriving (Eq, Ord)
+
+-- | Natural numbers (including 0): 0, 1, 2, 3, 4, 5, 6, 7, ...
+--
 -- Internally, this type is represented as an 'Int'.
 -- So, it is limited by the 'maxBound' of 'Int'.
 newtype Nat = Nat { unNat :: Int } deriving (Eq, Ord)
@@ -188,6 +195,8 @@ oNat4  ::(Int->Int->Int)->(Nat4->Nat4->Nat4)   ; oNat4  = oNewtype nat4  unNat4
 oNat5  ::(Int->Int->Int)->(Nat5->Nat5->Nat5)   ; oNat5  = oNewtype nat5  unNat5
 oNat6  ::(Int->Int->Int)->(Nat6->Nat6->Nat6)   ; oNat6  = oNewtype nat6  unNat6
 oNat7  ::(Int->Int->Int)->(Nat7->Nat7->Nat7)   ; oNat7  = oNewtype nat7  unNat7
+oNatural :: (Int->Int->Int) -> (Natural->Natural->Natural)
+oNatural = oNewtype Natural unNatural
 
 fInt1  :: (Int->Int) -> (Int1->Int1)   ; fInt1  = fNewtype int1  unInt1
 fInt2  :: (Int->Int) -> (Int2->Int2)   ; fInt2  = fNewtype int2  unInt2
@@ -205,6 +214,8 @@ fNat4  :: (Int->Int) -> (Nat4->Nat4)   ; fNat4  = fNewtype nat4  unNat4
 fNat5  :: (Int->Int) -> (Nat5->Nat5)   ; fNat5  = fNewtype nat5  unNat5
 fNat6  :: (Int->Int) -> (Nat6->Nat6)   ; fNat6  = fNewtype nat6  unNat6
 fNat7  :: (Int->Int) -> (Nat7->Nat7)   ; fNat7  = fNewtype nat7  unNat7
+fNatural :: (Int->Int) -> (Natural->Natural)
+fNatural = fNewtype Natural unNatural
 
 instance Show Int1 where show = show . unInt1
 instance Show Int2 where show = show . unInt2
@@ -222,6 +233,7 @@ instance Show Nat4 where show = show . unNat4
 instance Show Nat5 where show = show . unNat5
 instance Show Nat6 where show = show . unNat6
 instance Show Nat7 where show = show . unNat7
+instance Show Natural where show (Natural x) = show x
 
 instance Read Int1 where readsPrec = readsPrecNewtype int1
 instance Read Int2 where readsPrec = readsPrecNewtype int2
@@ -239,6 +251,7 @@ instance Read Nat4 where readsPrec = readsPrecNewtype nat4
 instance Read Nat5 where readsPrec = readsPrecNewtype nat5
 instance Read Nat6 where readsPrec = readsPrecNewtype nat6
 instance Read Nat7 where readsPrec = readsPrecNewtype nat7
+instance Read Natural where readsPrec = readsPrecNewtype Natural
 
 
 instance Num Int1 where (+) = oInt1 (+);  abs    = fInt1 abs
@@ -305,6 +318,11 @@ instance Num Nat7 where (+) = oNat7 (+);  abs    = fNat7 abs
                         (-) = oNat7 (-);  signum = fNat7 signum
                         (*) = oNat7 (*);  fromInteger = nat7 . fromInteger
 
+instance Num Natural where
+  (+) = oNatural (+);  abs    = fNatural abs
+  (-) = oNatural (-);  signum = fNatural signum
+  (*) = oNatural (*);  fromInteger = Natural . fromInteger
+
 
 instance Real Int1 where toRational (Int1 x) = fromIntegral x % 1
 instance Real Int2 where toRational (Int2 x) = fromIntegral x % 1
@@ -322,6 +340,7 @@ instance Real Nat4 where toRational (Nat4 x) = fromIntegral x % 1
 instance Real Nat5 where toRational (Nat5 x) = fromIntegral x % 1
 instance Real Nat6 where toRational (Nat6 x) = fromIntegral x % 1
 instance Real Nat7 where toRational (Nat7 x) = fromIntegral x % 1
+instance Real Natural where toRational (Natural x) = fromIntegral x % 1
 
 instance Integral Int1 where quotRem = otNewtype int1 unInt1 quotRem
                              toInteger = toInteger . unInt1
@@ -370,6 +389,9 @@ instance Integral Nat6 where quotRem = otNewtype nat6 unNat6 quotRem
 
 instance Integral Nat7 where quotRem = otNewtype nat7 unNat7 quotRem
                              toInteger = toInteger . unNat7
+
+instance Integral Natural where quotRem = otNewtype Natural unNatural quotRem
+                                toInteger = toInteger . unNatural
 
 instance Bounded Int1 where maxBound = Int1 0; minBound = Int1 (-1)
 instance Bounded Int2 where maxBound = Int2 1; minBound = Int2 (-2)
@@ -436,6 +458,12 @@ instance Enum Nat6 where toEnum   = nat6;   enumFrom     = boundedEnumFrom
 instance Enum Nat7 where toEnum   = nat7;   enumFrom     = boundedEnumFrom
                          fromEnum = unNat7; enumFromThen = boundedEnumFromThen
 
+instance Enum Natural where
+  toEnum   = Natural
+  fromEnum = unNatural;
+  enumFrom     (Natural x)             = map Natural [x..]
+  enumFromThen (Natural x) (Natural s) = map Natural [x,s..]
+
 instance Listable Int1 where list = [0,minBound]
 instance Listable Int2 where list = listIntegral
 instance Listable Int3 where list = listIntegral
@@ -452,6 +480,7 @@ instance Listable Nat4 where list = [0..]
 instance Listable Nat5 where list = [0..]
 instance Listable Nat6 where list = [0..]
 instance Listable Nat7 where list = [0..]
+instance Listable Natural where list = [0..]
 
 -- | Deprecated.  Use 'Word1'.
 type UInt1 = Word1

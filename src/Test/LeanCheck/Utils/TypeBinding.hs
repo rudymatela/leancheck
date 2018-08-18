@@ -96,6 +96,7 @@ module Test.LeanCheck.Utils.TypeBinding
   , ordering
   , mayb, eith
   -- ** Testing types
+  , natural
   , nat
   , int1
   , int2
@@ -354,6 +355,10 @@ eith = undefinedOf "eith"
 
 
 -- Dummy values of Test.LeanCheck.Types's types:
+
+-- | Undefined 'Natural' value.
+natural :: Natural
+natural = undefinedOf "natural"
 
 -- | Undefined 'Nat' value.
 nat :: Nat
