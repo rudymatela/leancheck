@@ -497,10 +497,20 @@ type UInt3 = Word3
 -- | Deprecated.  Use 'Word4'.
 type UInt4 = Word4
 
-newtype NoDup a = NoDup [a] deriving (Show, Read, Eq, Ord)
-newtype Bag a = Bag [a] deriving (Show, Read, Eq, Ord)
-newtype Set a = Set [a] deriving (Show, Read, Eq, Ord)
-newtype Map a b = Map [(a,b)] deriving (Show, Read, Eq, Ord)
+newtype NoDup a = NoDup [a] deriving (Eq, Ord)
+newtype Bag a = Bag [a] deriving (Eq, Ord)
+newtype Set a = Set [a] deriving (Eq, Ord)
+newtype Map a b = Map [(a,b)] deriving (Eq, Ord)
+
+instance Show a => Show (NoDup a) where show (NoDup xs) = show xs
+instance Show a => Show (Bag a) where show (Bag xs) = show xs
+instance Show a => Show (Set a) where show (Set xs) = show xs
+instance (Show a, Show b) => Show (Map a b) where show (Map xys) = show xys
+
+instance Read a => Read (NoDup a) where readsPrec = readsPrecNewtype NoDup
+instance Read a => Read (Bag a) where readsPrec = readsPrecNewtype Bag
+instance Read a => Read (Set a) where readsPrec = readsPrecNewtype Set
+instance (Read a, Read b) => Read (Map a b) where readsPrec = readsPrecNewtype Map
 
 instance Listable a => Listable (NoDup a) where tiers = noDupListCons NoDup
 instance Listable a => Listable (Bag a)   where tiers = bagCons Bag

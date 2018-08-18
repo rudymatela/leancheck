@@ -7,6 +7,6 @@ allUnique (list :: [ Set () ])  =  True
 ratioRepetitions (list :: [ Set () ])  =  0 % 1
 
 tiers :: [Set ()]  =
-  [ [Set []]
-  , [Set [()]]
+  [ [[]]
+  , [[()]]
   ]

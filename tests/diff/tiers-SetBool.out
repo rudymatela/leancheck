@@ -7,9 +7,9 @@ allUnique (list :: [ Set Bool ])  =  True
 ratioRepetitions (list :: [ Set Bool ])  =  0 % 1
 
 tiers :: [Set Bool]  =
-  [ [Set []]
-  , [ Set [False]
-    , Set [True]
+  [ [[]]
+  , [ [False]
+    , [True]
     ]
-  , [Set [False,True]]
+  , [[False,True]]
   ]

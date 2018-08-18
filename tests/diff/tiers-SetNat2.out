@@ -7,8 +7,8 @@ allUnique (list :: [ Set Nat2 ])  =  True
 ratioRepetitions (list :: [ Set Nat2 ])  =  0 % 1
 
 tiers :: [Set Nat2]  =
-  [ [Set []]
-  , [Set [0]]
-  , [Set [1]]
-  , [Set [0,1]]
+  [ [[]]
+  , [[0]]
+  , [[1]]
+  , [[0,1]]
   ]
