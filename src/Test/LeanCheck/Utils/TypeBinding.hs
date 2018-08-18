@@ -178,74 +178,92 @@ infixl 1 ->>:>
 (->>>:) = const
 infixl 1 ->>>:
 
+-- | Forces the 4th argument type.
 (->>>:>) :: (a -> b -> c -> d -> e) -> d -> (a -> b -> c -> d -> e)
 (->>>:>) = const
 infixl 1 ->>>:>
 
+-- | Forces the result type of a 4-argument function.
 (->>>>:) :: (a -> b -> c -> d -> e) -> e -> (a -> b -> c -> d -> e)
 (->>>>:) = const
 infixl 1 ->>>>:
 
+-- | Forces the 5th argument type.
 (->>>>:>) :: (a -> b -> c -> d -> e -> f) -> e -> (a -> b -> c -> d -> e -> f)
 (->>>>:>) = const
 infixl 1 ->>>>:>
 
+-- | Forces the result type of a 5-argument function.
 (->>>>>:) :: (a -> b -> c -> d -> e -> f) -> f -> (a -> b -> c -> d -> e -> f)
 (->>>>>:) = const
 infixl 1 ->>>>>:
 
+-- | Forces the 6th argument type.
 (->>>>>:>) :: (a->b->c->d->e->f->g) -> f -> (a->b->c->d->e->f->g)
 (->>>>>:>) = const
 infixl 1 ->>>>>:>
 
+-- | Forces the result type of a 6-argument function.
 (->>>>>>:) :: (a->b->c->d->e->f->g) -> g -> (a->b->c->d->e->f->g)
 (->>>>>>:) = const
 infixl 1 ->>>>>>:
 
+-- | Forces the 7th argument type.
 (->>>>>>:>) :: (a->b->c->d->e->f->g->h) -> g -> (a->b->c->d->e->f->g->h)
 (->>>>>>:>) = const
 infixl 1 ->>>>>>:>
 
+-- | Forces the result type of a 7-argument function.
 (->>>>>>>:) :: (a->b->c->d->e->f->g->h) -> h -> (a->b->c->d->e->f->g->h)
 (->>>>>>>:) = const
 infixl 1 ->>>>>>>:
 
+-- | Forces the 8th argument type.
 (->>>>>>>:>) :: (a->b->c->d->e->f->g->h->i) -> h -> (a->b->c->d->e->f->g->h->i)
 (->>>>>>>:>) = const
 infixl 1 ->>>>>>>:>
 
+-- | Forces the result type of a 8-argument function.
 (->>>>>>>>:) :: (a->b->c->d->e->f->g->h->i) -> i -> (a->b->c->d->e->f->g->h->i)
 (->>>>>>>>:) = const
 infixl 1 ->>>>>>>>:
 
+-- | Forces the 9th argument type.
 (->>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j) -> i -> (a->b->c->d->e->f->g->h->i->j)
 (->>>>>>>>:>) = const
 infixl 1 ->>>>>>>>:>
 
+-- | Forces the result type of a 9-argument function.
 (->>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j) -> j -> (a->b->c->d->e->f->g->h->i->j)
 (->>>>>>>>>:) = const
 infixl 1 ->>>>>>>>>:
 
+-- | Forces the type of the 10th argument.
 (->>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k) -> j -> (a->b->c->d->e->f->g->h->i->j->k)
 (->>>>>>>>>:>) = const
 infixl 1 ->>>>>>>>>:>
 
+-- | Forces the result type of a 10-argument function.
 (->>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k) -> k -> (a->b->c->d->e->f->g->h->i->j->k)
 (->>>>>>>>>>:) = const
 infixl 1 ->>>>>>>>>>:
 
+-- | Forces the type of the 11th argument.
 (->>>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k->l) -> k -> (a->b->c->d->e->f->g->h->i->j->k->l)
 (->>>>>>>>>>:>) = const
 infixl 1 ->>>>>>>>>>:>
 
+-- | Forces the result type of a 11-argument function.
 (->>>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k->l) -> l -> (a->b->c->d->e->f->g->h->i->j->k->l)
 (->>>>>>>>>>>:) = const
 infixl 1 ->>>>>>>>>>>:
 
+-- | Forces the type of the 12th argument.
 (->>>>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k->l->m) -> m -> (a->b->c->d->e->f->g->h->i->j->k->l->m)
 (->>>>>>>>>>>:>) = const
 infixl 1 ->>>>>>>>>>>:>
 
+-- | Forces the result type of a 12-argument function.
 (->>>>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k->l->m) -> m -> (a->b->c->d->e->f->g->h->i->j->k->l->m)
 (->>>>>>>>>>>>:) = const
 infixl 1 ->>>>>>>>>>>>:
@@ -271,66 +289,95 @@ infixr 9 >-
 und :: a
 und = undefinedOf "und"
 
+-- | Undefined 'Int' value for use with type binding operators.
+--
+-- > check $ (\x y -> x + y == y + x) ->:> int
 int :: Int
 int = undefinedOf "int"
 
+-- | Undefined 'Integer' value for use with type binding operators.
+--
+-- > check $ (\x y -> x + y == y + x) ->:> integer
 integer :: Integer
 integer = undefinedOf "integer"
 
+-- | Undefined 'Float' value for use with type binding operators.
 float :: Float
 float = undefinedOf "float"
 
+-- | Undefined 'Double' value for use with type binding operators.
 double :: Double
 double = undefinedOf "double"
 
+-- | Undefined 'Rational' value for use with type binding operators.
 rational :: Rational
 rational = undefinedOf "rational"
 
+-- | Undefined 'Bool' value.
 bool :: Bool
 bool = undefinedOf "bool"
 
+-- | Undefined 'Char' value.
 char :: Char
 char = undefinedOf "char"
 
+-- | Undefined 'String' value.
 string :: String
 string = undefinedOf "string"
 
+-- | Undefined 'Ordering' value.
 ordering :: Ordering
 ordering = undefinedOf "ordering"
 
--- | It might be better to just use 'Just'
+-- | Undefined 'Maybe' value.  Uses the type of the given value as the argument
+--   type.  For use with type binding operators.
+--
+-- To check a property with the first argument bound to 'Maybe' 'Int', do:
+--
+-- > check $ prop -:> mayb int
 mayb :: a -> Maybe a
 mayb = undefinedOf "mayb"
 
+-- | Undefined 'Either' value.  Uses the types of the given values as the
+--   argument types.  For use with type binding operators.
 eith :: a -> b -> Either a b
 eith = undefinedOf "eith"
 
 
 -- Dummy values of Test.LeanCheck.Types's types:
 
+-- | Undefined 'Nat' value.
 nat :: Nat
 nat = undefinedOf "nat"
 
+-- | Undefined 'Int1' value.
 int1 :: Int1
 int1 = undefinedOf "int1"
 
+-- | Undefined 'Int2' value.
 int2 :: Int2
 int2 = undefinedOf "int2"
 
+-- | Undefined 'Int3' value.
 int3 :: Int3
 int3 = undefinedOf "int3"
 
+-- | Undefined 'Int4' value.
 int4 :: Int4
 int4 = undefinedOf "int4"
 
+-- | Undefined 'UInt1' value.
 uint1 :: UInt1
 uint1 = undefinedOf "uint1"
 
+-- | Undefined 'UInt2' value.
 uint2 :: UInt2
 uint2 = undefinedOf "uint2"
 
+-- | Undefined 'UInt3' value.
 uint3 :: UInt3
 uint3 = undefinedOf "uint3"
 
+-- | Undefined 'UInt4' value.
 uint4 :: UInt4
 uint4 = undefinedOf "uint4"
