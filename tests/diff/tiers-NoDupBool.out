@@ -7,11 +7,11 @@ allUnique (list :: [ NoDup Bool ])  =  True
 ratioRepetitions (list :: [ NoDup Bool ])  =  0 % 1
 
 tiers :: [NoDup Bool]  =
-  [ [[]]
-  , [ [False]
-    , [True]
+  [ [NoDup []]
+  , [ NoDup [False]
+    , NoDup [True]
     ]
-  , [ [False,True]
-    , [True,False]
+  , [ NoDup [False,True]
+    , NoDup [True,False]
     ]
   ]

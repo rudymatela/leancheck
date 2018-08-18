@@ -7,6 +7,6 @@ allUnique (list :: [ Map () () ])  =  True
 ratioRepetitions (list :: [ Map () () ])  =  0 % 1
 
 tiers :: [Map () ()]  =
-  [ [[]]
-  , [[((),())]]
+  [ [Map []]
+  , [Map [((),())]]
   ]

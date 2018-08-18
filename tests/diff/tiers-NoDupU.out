@@ -7,6 +7,6 @@ allUnique (list :: [ NoDup () ])  =  True
 ratioRepetitions (list :: [ NoDup () ])  =  0 % 1
 
 tiers :: [NoDup ()]  =
-  [ [[]]
-  , [[()]]
+  [ [NoDup []]
+  , [NoDup [()]]
   ]
