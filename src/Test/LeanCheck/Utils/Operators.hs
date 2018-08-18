@@ -152,26 +152,34 @@ antisymmetric r = \x y -> x `r` y && y `r` x ==> x == y
 asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 asymmetric r = \x y -> x `r` y ==> not (y `r` x)
 
+-- | Is the given binary relation an equivalence?
+--   Is the given relation reflexive, symmetric and transitive?
 equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
 equivalence (==) = \x y z -> reflexive  (==) x
                           && symmetric  (==) x y
                           && transitive (==) x y z
 
+-- | Is the given binary relation a partial order?
+--   Is the given relation reflexive, antisymmetric and transitive?
 partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 partialOrder (<=) = \x y z -> reflexive     (<=) x
                            && antisymmetric (<=) x y
                            && transitive    (<=) x y z
 
+-- | Is the given binary relation a strict partial order?
+--   Is the given relation irreflexive, asymmetric and transitive?
 strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
 strictPartialOrder (<) = \x y z -> irreflexive (<) x
                                 && asymmetric  (<) x y -- implied?
                                 && transitive  (<) x y z
 
+-- | Is the given binary relation a total order?
 totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 totalOrder (<=) = \x y z -> (x <= y || y <= x)
                          && antisymmetric (<=) x y
                          && transitive    (<=) x y z
 
+-- | Is the given binary relation a strict total order?
 strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 strictTotalOrder (<) = \x y z -> (x /= y ==> x < y || y < x)
                               && irreflexive (<) x
