@@ -100,6 +100,10 @@ reallyDeriveListable t = do
          ]
 #endif
 
+-- | Given a type 'Name', derives an expression to be placed as the result of
+--   'tiers':
+--
+-- > consN C1 \/ consN C2 \/ ... \/ consN CN
 deriveTiers :: Name -> ExpQ
 deriveTiers t = conse =<< typeConstructors t
   where
@@ -108,6 +112,10 @@ deriveTiers t = conse =<< typeConstructors t
     [| $(varE consN) $(conE n) |]
   conse = foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
 
+-- | Given a type 'Name', derives an expression to be placed as the result of
+--   'list':
+--
+-- > concat $ consN C1 \/ consN C2 \/ ... \/ consN CN
 deriveList :: Name -> ExpQ
 deriveList t = [| concat $(deriveTiers t) |]
 
