@@ -56,6 +56,9 @@ module Test.LeanCheck.Utils.Operators
   )
 where
 
+-- TODO: Add examples in the haddock documentation of most functions in this
+--       module.
+
 -- TODO: review terminology in this module.  Some names aren't quite right!
 
 import Test.LeanCheck ((==>))
