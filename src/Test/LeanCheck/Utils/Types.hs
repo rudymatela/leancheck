@@ -497,9 +497,42 @@ type UInt3 = Word3
 -- | Deprecated.  Use 'Word4'.
 type UInt4 = Word4
 
+-- | Lists without repeated elements.
+--
+-- > > take 6 $ list :: [NoDup Nat]
+-- > [NoDup [],NoDup [0],NoDup [1],NoDup [0,1],NoDup [1,0],NoDup [2]]
+--
+-- Example, checking the property that @nub@ is an identity:
+--
+-- > import Data.List (nub)
+-- > > check $ \xs -> nub xs == (xs :: [Int])
+-- > *** Failed! Falsifiable (after 3 tests):
+-- > [0,0]
+-- > > check $ \(NoDup xs) -> nub xs == (xs :: [Int])
+-- > +++ OK, passed 200 tests.
 newtype NoDup a = NoDup [a] deriving (Show, Read, Eq, Ord)
+
+-- | Lists representing bags (multisets).
+--   The 'Listable' 'tiers' enumeration will not have repeated bags.
+--
+-- > > take 6 (list :: [Bag Nat])
+-- > [Bag [],Bag [0],Bag [0,0],Bag [1],Bag [0,0,0],Bag [0,1]]
+--
+-- See also: 'bagsOf' and 'bagCons'.
 newtype Bag a = Bag [a] deriving (Show, Read, Eq, Ord)
+
+-- | Lists representing sets.
+--   The 'Listable' 'tiers' enumeration will not have repeated sets.
+--
+-- > > take 6 (list :: [Set Nat])
+-- > [Set [],Set [0],Set [1],Set [0,1],Set [2],Set [0,2]]
 newtype Set a = Set [a] deriving (Show, Read, Eq, Ord)
+
+-- | Lists of pairs representing maps.
+--   The 'Listable' 'tiers' enumeration will not have repeated maps.
+--
+-- > > take 6 (list :: [Map Nat Nat])
+-- > [Map [],Map [(0,0)],Map [(0,1)],Map [(1,0)],Map [(0,2)],Map [(1,1)]]
 newtype Map a b = Map [(a,b)] deriving (Show, Read, Eq, Ord)
 
 instance Listable a => Listable (NoDup a) where tiers = noDupListCons NoDup
