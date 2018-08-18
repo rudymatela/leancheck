@@ -404,6 +404,7 @@ instance Bounded Word1 where maxBound = Word1 1; minBound = Word1 0
 instance Bounded Word2 where maxBound = Word2 3; minBound = Word2 0
 instance Bounded Word3 where maxBound = Word3 7; minBound = Word3 0
 instance Bounded Word4 where maxBound = Word4 15; minBound = Word4 0
+instance Bounded Nat where maxBound = Nat maxBound; minBound = Nat 0
 instance Bounded Nat1 where maxBound = Nat1 0; minBound = Nat1 0
 instance Bounded Nat2 where maxBound = Nat2 1; minBound = Nat2 0
 instance Bounded Nat3 where maxBound = Nat3 2; minBound = Nat3 0
@@ -436,9 +437,8 @@ instance Enum Word3 where toEnum   = word3;   enumFrom     = boundedEnumFrom
 instance Enum Word4 where toEnum   = word4;   enumFrom     = boundedEnumFrom
                           fromEnum = unWord4; enumFromThen = boundedEnumFromThen
 
-instance Enum Nat where
-  toEnum   = Nat;    enumFrom     (Nat x)         = map Nat [x..]
-  fromEnum = unNat;  enumFromThen (Nat x) (Nat s) = map Nat [x,s..]
+instance Enum Nat where toEnum   = Nat;   enumFrom     = boundedEnumFrom
+                        fromEnum = unNat; enumFromThen = boundedEnumFromThen
 
 instance Enum Nat1 where toEnum   = nat1;   enumFrom     = boundedEnumFrom
                          fromEnum = unNat1; enumFromThen = boundedEnumFromThen
