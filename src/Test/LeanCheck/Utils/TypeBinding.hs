@@ -97,10 +97,19 @@ module Test.LeanCheck.Utils.TypeBinding
   , mayb, eith
   -- ** Testing types
   , nat
-  , int1, word1, uint1
-  , int2, word2, uint2
-  , int3, word3, uint3
-  , int4, word4, uint4
+  , int1
+  , int2
+  , int3
+  , int4
+  , word1
+  , word2
+  , word3
+  , word4
+  -- *** Deprecated testing types
+  , uint1
+  , uint2
+  , uint3
+  , uint4
   )
 where
 
