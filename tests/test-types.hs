@@ -44,49 +44,49 @@ tests =
   , list `permutation` [minBound..maxBound :: Nat6]
   , list `permutation` [minBound..maxBound :: Nat7]
 
-  , map (unX) list `permutation` [minBound..maxBound :: Int8]
-  , map (unX) list `permutation` [minBound..maxBound :: Int4]
-  , map (unX) list `permutation` [minBound..maxBound :: Int3]
+  , map unX list `permutation` [minBound..maxBound :: Int8]
+  , map unX list `permutation` [minBound..maxBound :: Int4]
+  , map unX list `permutation` [minBound..maxBound :: Int3]
 -- TODO: make the following commented tests pass:
---, map (unX) list `permutation` [minBound..maxBound :: Int2]
---, map (unX) list `permutation` [minBound..maxBound :: Int1]
-  , map (unX) list `permutation` [minBound..maxBound :: Word8]
-  , map (unX) list `permutation` [minBound..maxBound :: Word4]
-  , map (unX) list `permutation` [minBound..maxBound :: Word3]
-  , map (unX) list `permutation` [minBound..maxBound :: Word2]
-  , map (unX) list `permutation` [minBound..maxBound :: Word1]
-  , map (unX) list `permutation` [minBound..maxBound :: Nat7]
-  , map (unX) list `permutation` [minBound..maxBound :: Nat6]
-  , map (unX) list `permutation` [minBound..maxBound :: Nat5]
-  , map (unX) list `permutation` [minBound..maxBound :: Nat4]
+--, map unX list `permutation` [minBound..maxBound :: Int2]
+--, map unX list `permutation` [minBound..maxBound :: Int1]
+  , map unX list `permutation` [minBound..maxBound :: Word8]
+  , map unX list `permutation` [minBound..maxBound :: Word4]
+  , map unX list `permutation` [minBound..maxBound :: Word3]
+  , map unX list `permutation` [minBound..maxBound :: Word2]
+  , map unX list `permutation` [minBound..maxBound :: Word1]
+  , map unX list `permutation` [minBound..maxBound :: Nat7]
+  , map unX list `permutation` [minBound..maxBound :: Nat6]
+  , map unX list `permutation` [minBound..maxBound :: Nat5]
+  , map unX list `permutation` [minBound..maxBound :: Nat4]
 -- TODO: make the following commented tests pass:
---, map (unX) list `permutation` [minBound..maxBound :: Nat3]
---, map (unX) list `permutation` [minBound..maxBound :: Nat2]
---, map (unX) list `permutation` [minBound..maxBound :: Nat1]
+--, map unX list `permutation` [minBound..maxBound :: Nat3]
+--, map unX list `permutation` [minBound..maxBound :: Nat2]
+--, map unX list `permutation` [minBound..maxBound :: Nat1]
 
-  , (prefiX :: [Int8])  `isPrefixOf` map (unX) list
-  , (prefiX :: [Int16]) `isPrefixOf` map (unX) list
-  , (prefiX :: [Int32]) `isPrefixOf` map (unX) list
-  , (prefiX :: [Int64]) `isPrefixOf` map (unX) list
-  , (prefiX :: [Int])   `isPrefixOf` map (unX) list
+  , (prefiX :: [Int8])  `isPrefixOf` map unX list
+  , (prefiX :: [Int16]) `isPrefixOf` map unX list
+  , (prefiX :: [Int32]) `isPrefixOf` map unX list
+  , (prefiX :: [Int64]) `isPrefixOf` map unX list
+  , (prefiX :: [Int])   `isPrefixOf` map unX list
 
-  , (prefiXN :: [Word8])  `isPrefixOf` map (unX) list
-  , (prefiXN :: [Word16]) `isPrefixOf` map (unX) list
-  , (prefiXN :: [Word32]) `isPrefixOf` map (unX) list
-  , (prefiXN :: [Word64]) `isPrefixOf` map (unX) list
-  , (prefiXN :: [Word])   `isPrefixOf` map (unX) list
+  , (prefiXN :: [Word8])  `isPrefixOf` map unX list
+  , (prefiXN :: [Word16]) `isPrefixOf` map unX list
+  , (prefiXN :: [Word32]) `isPrefixOf` map unX list
+  , (prefiXN :: [Word64]) `isPrefixOf` map unX list
+  , (prefiXN :: [Word])   `isPrefixOf` map unX list
 
-  , (prefiXs :: [[Int8]])  `isPrefixOf` map (unXs) list
-  , (prefiXs :: [[Int16]]) `isPrefixOf` map (unXs) list
-  , (prefiXs :: [[Int32]]) `isPrefixOf` map (unXs) list
-  , (prefiXs :: [[Int64]]) `isPrefixOf` map (unXs) list
-  , (prefiXs :: [[Int]])   `isPrefixOf` map (unXs) list
+  , (prefiXs :: [[Int8]])  `isPrefixOf` map unXs list
+  , (prefiXs :: [[Int16]]) `isPrefixOf` map unXs list
+  , (prefiXs :: [[Int32]]) `isPrefixOf` map unXs list
+  , (prefiXs :: [[Int64]]) `isPrefixOf` map unXs list
+  , (prefiXs :: [[Int]])   `isPrefixOf` map unXs list
 
-  , (prefiXNs :: [[Word8]])  `isPrefixOf` map (unXs) list
-  , (prefiXNs :: [[Word16]]) `isPrefixOf` map (unXs) list
-  , (prefiXNs :: [[Word32]]) `isPrefixOf` map (unXs) list
-  , (prefiXNs :: [[Word64]]) `isPrefixOf` map (unXs) list
-  , (prefiXNs :: [[Word]])   `isPrefixOf` map (unXs) list
+  , (prefiXNs :: [[Word8]])  `isPrefixOf` map unXs list
+  , (prefiXNs :: [[Word16]]) `isPrefixOf` map unXs list
+  , (prefiXNs :: [[Word32]]) `isPrefixOf` map unXs list
+  , (prefiXNs :: [[Word64]]) `isPrefixOf` map unXs list
+  , (prefiXNs :: [[Word]])   `isPrefixOf` map unXs list
 
 
   , [minBound..maxBound :: Int1] == signedRange 1
