@@ -97,10 +97,10 @@ module Test.LeanCheck.Utils.TypeBinding
   , mayb, eith
   -- ** Testing types
   , nat
-  , int1, uint1
-  , int2, uint2
-  , int3, uint3
-  , int4, uint4
+  , int1, word1, uint1
+  , int2, word2, uint2
+  , int3, word3, uint3
+  , int4, word4, uint4
   )
 where
 
@@ -366,18 +366,34 @@ int3 = undefinedOf "int3"
 int4 :: Int4
 int4 = undefinedOf "int4"
 
--- | Undefined 'UInt1' value.
+-- | Undefined 'Word1' value.
+word1 :: Word1
+word1 = undefinedOf "word1"
+
+-- | Undefined 'Word2' value.
+word2 :: Word2
+word2 = undefinedOf "word2"
+
+-- | Undefined 'Word3' value.
+word3 :: Word3
+word3 = undefinedOf "word3"
+
+-- | Undefined 'Word4' value.
+word4 :: Word4
+word4 = undefinedOf "word4"
+
+-- | Deprecated.  Use 'word1'.
 uint1 :: UInt1
 uint1 = undefinedOf "uint1"
 
--- | Undefined 'UInt2' value.
+-- | Deprecated.  Use 'word2'.
 uint2 :: UInt2
 uint2 = undefinedOf "uint2"
 
--- | Undefined 'UInt3' value.
+-- | Deprecated.  Use 'word3'.
 uint3 :: UInt3
 uint3 = undefinedOf "uint3"
 
--- | Undefined 'UInt4' value.
+-- | Deprecated.  Use 'word4'.
 uint4 :: UInt4
 uint4 = undefinedOf "uint4"
