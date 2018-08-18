@@ -453,9 +453,16 @@ instance Listable Nat5 where list = [0..]
 instance Listable Nat6 where list = [0..]
 instance Listable Nat7 where list = [0..]
 
+-- | Deprecated.  Use 'Word1'.
 type UInt1 = Word1
+
+-- | Deprecated.  Use 'Word2'.
 type UInt2 = Word2
+
+-- | Deprecated.  Use 'Word3'.
 type UInt3 = Word3
+
+-- | Deprecated.  Use 'Word4'.
 type UInt4 = Word4
 
 newtype NoDup a = NoDup [a] deriving (Show, Read, Eq, Ord)
