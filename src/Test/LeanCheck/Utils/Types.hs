@@ -540,6 +540,15 @@ xs        ++| []      =  xs
 (x:x':xs) ++| (y:ys)  =  x:x':y:(xs ++| ys)
 infixr 5 ++|
 
+-- | Wrap around lists of integers for an enumeration containing e-'X'-treme
+--   integer values.
+--
+-- > > check $ \xs -> all (>=0) xs ==> sum (take 1 xs :: [Int]) <= sum xs
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ \(Xs xs) -> all (>=0) xs ==> sum (take 1 xs :: [Int]) <= sum xs
+-- > *** Failed! Falsifiable (after 56 tests):
+-- > [1,9223372036854775807]
 newtype Xs a = Xs {unXs :: [a]} deriving (Eq, Ord)
 instance Show a => Show (Xs a) where show (Xs xs) = show xs
 instance (Integral a, Bounded a) => Listable (Xs a) where
