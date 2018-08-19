@@ -29,6 +29,12 @@ xss \+:/ yss = xss \/ ([]:yss)
 infixr 9 \+:/
 
 
+-- | This _does not currently work_.  Its just a sketch and a stub.
+--
+--   Generation of 'Listable' functions using 'cotiers'.
+--   This is similar to SmallCheck's coseries.
+--
+--   The current implementation generates repetitions.
 class CoListable a where
   cotiers :: [[b]] -> [[a -> b]]
 
