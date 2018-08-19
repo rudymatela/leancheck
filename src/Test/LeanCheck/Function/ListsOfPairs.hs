@@ -21,6 +21,8 @@ import Test.LeanCheck
 import Test.LeanCheck.Tiers
 import Data.Maybe (fromMaybe)
 
+-- | Given tiers of argument and result values,
+--   return tiers of functional values.
 (-->>) :: Eq a => [[a]] -> [[b]] -> [[a->b]]
 xss -->> yss
   | finite xss = mapT ((undefined `mutate`) . zip (concat xss))
