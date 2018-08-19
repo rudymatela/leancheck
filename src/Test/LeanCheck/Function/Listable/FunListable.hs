@@ -36,6 +36,10 @@ xss \+:/ yss = xss \/ ([]:yss)
 infixr 9 \+:/
 
 
+-- | This typeclass _does not currently work_.  It is a stub and a sketch.
+--
+-- 'FunListable' is similar to 'CoListable' but a bit more complex to avoid
+-- some repetitions.
 class FunListable a where
   validResults   :: a -> [b] -> Bool
   validResults   x  =  not . invalidResults x
