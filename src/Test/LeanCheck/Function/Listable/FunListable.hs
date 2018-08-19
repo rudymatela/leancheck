@@ -11,8 +11,7 @@
 -- of a 'FunListable' typeclass (similar to 'CoListable').
 --
 -- This module /does not currently work/, it it just a sketch and a stub.
-module Test.LeanCheck.Function.Listable.FunListable
-where
+module Test.LeanCheck.Function.Listable.FunListable (FunListable (..)) where
 
 
 import Test.LeanCheck
