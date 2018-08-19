@@ -11,8 +11,7 @@
 -- functions.
 --
 -- This module /barely works/ and is just a sketch.
-module Test.LeanCheck.Function.Listable.Periodic
-where
+module Test.LeanCheck.Function.Listable.Periodic () where
 
 
 import Test.LeanCheck
