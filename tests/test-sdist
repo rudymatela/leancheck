@@ -4,9 +4,6 @@
 #
 # Copyright (c) 2015-2018 Rudy Matela.
 # Distributed under the 3-Clause BSD licence.
-#
-# TODO: also run "make test"
-# TODO: also run "stack test"
 pkgver=` cat *.cabal | grep "^version:" | sed -e "s/version: *//"`
 pkgname=`cat *.cabal | grep "^name:"    | sed -e "s/name: *//"`
 pkg=$pkgname-$pkgver
@@ -15,11 +12,6 @@ cabal sdist &&
 cd dist &&
 rm -rf $pkg/ &&
 tar -xzf $pkg.tar.gz &&
-cd $pkg/ &&
-cabal configure --enable-tests --enable-benchmarks &&
-cabal build &&
-cabal test &&
-cd .. &&
 if [ -d ../.git ]
 then
 	git -C .. ls-files                                      | sort > ls-git   &&
@@ -28,4 +20,8 @@ then
 	rm -f ls-git ls-cabal
 else
 	true # skip test
-fi
+fi &&
+cd $pkg/ &&
+cabal configure --enable-tests --enable-benchmarks &&
+cabal build &&
+cabal test

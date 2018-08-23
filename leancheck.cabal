@@ -59,6 +59,7 @@ extra-source-files: .gitignore
                   , mk/Toplibs.hs
                   , tests/diff/*.out
                   , tests/diff/eg/*.out
+                  , etc/hugs-backports/Data/Function.hs
 tested-with: GHC==8.4, GHC==8.2, GHC==8.0, GHC==7.10, GHC==7.8, GHC==7.6, GHC==7.4
 
 
