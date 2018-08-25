@@ -33,6 +33,7 @@ before_install:
 
 script:
 - make && make test && make haddock
+- make test-sdist
 - cabal test
 - stack --no-terminal --skip-ghc-check test
 
@@ -65,6 +66,7 @@ matrix:
     - cabal --version
     script:
     - make && make test && make haddock HADDOCKFLAGS=
+    - make test-sdist
     - cabal test
   - ghc: '7.6'
     env:                   GHCVER=7.6.3        CABALVER=1.18
@@ -75,6 +77,7 @@ matrix:
     - cabal --version
     script:
     - make && make test && make haddock HADDOCKFLAGS=
+    - make test-sdist
     - cabal test
   - ghc: '7.4'
     env:                   GHCVER=7.4.2        CABALVER=1.18
@@ -85,6 +88,7 @@ matrix:
     - cabal --version
     script:
     - make && make test && make haddock HADDOCKFLAGS=
+    - make test-sdist
     - cabal test
   - ghc: 'hugs'
     env:                   GHCVER=hugs
