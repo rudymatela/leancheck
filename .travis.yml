@@ -32,7 +32,7 @@ before_install:
 - stack --version
 
 script:
-- make && make test && make haddock HADDOCKFLAGS=
+- make && make test && make haddock
 - cabal test
 - stack --no-terminal --skip-ghc-check test
 
