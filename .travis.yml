@@ -64,7 +64,7 @@ matrix:
     - ghc --version
     - cabal --version
     script:
-    - make GHCFLAGS=-O2 && make test GHCFLAGS=-O2 && make haddock HADDOCKFLAGS=
+    - make && make test && make haddock HADDOCKFLAGS=
     - cabal test
   - ghc: '7.6'
     env:                   GHCVER=7.6.3        CABALVER=1.18
@@ -74,7 +74,7 @@ matrix:
     - ghc --version
     - cabal --version
     script:
-    - make GHCFLAGS=-O2 && make test GHCFLAGS=-O2 && make haddock HADDOCKFLAGS=
+    - make && make test && make haddock HADDOCKFLAGS=
     - cabal test
   - ghc: '7.4'
     env:                   GHCVER=7.4.2        CABALVER=1.18
@@ -84,7 +84,7 @@ matrix:
     - ghc --version
     - cabal --version
     script:
-    - make GHCFLAGS=-O2 && make test GHCFLAGS=-O2 && make haddock HADDOCKFLAGS=
+    - make && make test && make haddock HADDOCKFLAGS=
     - cabal test
   - ghc: 'hugs'
     env:                   GHCVER=hugs
