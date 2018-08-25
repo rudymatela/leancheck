@@ -27,7 +27,7 @@ BENCHS = \
 	bench/tiers
 GHCIMPORTDIRS = src:tests
 # -dynamic is needed only for src/Test/LeanCheck/Derive.hs and tests/test-derive.hs
-GHCFLAGS = -dynamic -O2
+GHCFLAGS = -O2 $(shell grep -q "Arch Linux" /etc/lsb-release && echo -dynamic)
 HADDOCKFLAGS = --no-print-missing-docs
 HUGSIMPORTDIRS = .:./src:./tests:./etc/hugs-backports:/usr/lib/hugs/packages/*
 HUGSFLAGS = -98 -h32M
