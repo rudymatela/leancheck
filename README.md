@@ -142,6 +142,20 @@ The `list` function can be used to debug your custom instances.
 check source comments or haddock documentation for details.
 
 
+Providers for Tasty, test-framework and Hspec
+---------------------------------------------
+
+The following providers allow including LeanCheck properties into
+[Tasty], [test-framework] or [Hspec] test suites.
+
+* [LeanCheck provider for Tasty]
+  -- `$ cabal install tasty-leancheck` ;
+* [LeanCheck provider for test-framework]
+  -- `$ cabal install test-framework-leancheck` ;
+* [LeanCheck provider for Hspec]
+  -- `$ cabal install hspec-leancheck` .
+
+
 Further reading
 ---------------
 
@@ -177,6 +191,13 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 
 [symbol `>`]: https://www.haskell.org/haddock/doc/html/ch03s08.html#idm140354810780208
 [Template Haskell]: https://wiki.haskell.org/Template_Haskell
+
+[Tasty]:          https://github.com/feuerbach/tasty#readme
+[test-framework]: https://haskell.github.io/test-framework/
+[Hspec]:          https://hspec.github.io/
+[LeanCheck provider for Tasty]:          https://hackage.haskell.org/package/tasty-leancheck
+[LeanCheck provider for test-framework]: https://hackage.haskell.org/package/test-framework-leancheck
+[LeanCheck provider for Hspec]:          https://hackage.haskell.org/package/hspec-leancheck
 
 [build-status]: https://travis-ci.org/rudymatela/leancheck.svg?branch=master
 [build-log]:    https://travis-ci.org/rudymatela/leancheck
