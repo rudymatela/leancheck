@@ -101,10 +101,10 @@ showResult m (Falsified i ce)   = "*** Failed! Falsifiable (after "
 showResult m (Exception i ce e) = "*** Failed! Exception '" ++ e ++ "' (after "
                                ++ show i ++ " tests):\n" ++ joinArgs ce
 
--- joinArgs the counter-example arguments
+-- joins the counter-example arguments
 joinArgs :: [String] -> String
 joinArgs ce | any ('\n' `elem`) ce = unlines $ map chopBreak ce
-        | otherwise            = unwords ce
+            | otherwise            = unwords ce
 
 -- chops a line break at the end if there is any
 chopBreak :: String -> String
