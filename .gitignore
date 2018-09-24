@@ -12,7 +12,7 @@ log/
 *.hi
 *.dyn_hi
 *.dyn_o
-tests/test
+tests/test-main
 tests/test-derive
 tests/test-error
 tests/test-fun

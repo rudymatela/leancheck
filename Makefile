@@ -3,7 +3,7 @@
 # Copyright:   (c) 2015-2018 Rudy Matela
 # License:     3-Clause BSD  (see the file LICENSE)
 # Maintainer:  Rudy Matela <rudy@matela.com.br>
-TESTS = tests/test           \
+TESTS = tests/test-main      \
         tests/test-derive    \
         tests/test-error     \
         tests/test-fun       \
