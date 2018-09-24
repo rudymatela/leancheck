@@ -68,7 +68,7 @@ hugs-test: \
   tests/test-operators.runhugs \
   tests/test-stats.runhugs \
   tests/test-tiers.runhugs \
-  tests/test.runhugs
+  tests/test-main.runhugs
 # tests/test-error.runhugs    # TODO: make this pass
 # tests/test-funshow.runhugs  # TODO: make this pass
 # tests/test-types.runhugs    # TODO: make this pass
