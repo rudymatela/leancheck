@@ -226,6 +226,9 @@ prepare-depend: bench/tiers-listsofpairs.hs \
                 bench/tiers-funlistable.hs \
                 bench/tiers-mixed.hs
 
+prepare-depend-and-depend: prepare-depend
+	make depend
+
 TLF = "import\ Test.LeanCheck.Function"
 
 bench/tiers-listsofpairs.hs: bench/tiers.hs
