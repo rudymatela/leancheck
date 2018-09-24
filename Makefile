@@ -79,6 +79,9 @@ install:
 test-sdist:
 	./tests/test-sdist
 
+test-via-cabal:
+	cabal test
+
 test-via-stack:
 	stack test
 
