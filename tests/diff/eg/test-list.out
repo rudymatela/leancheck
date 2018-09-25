@@ -2,5 +2,5 @@
 [] [0,0]
 *** Failed! Falsifiable (after 1 tests):
 []
-*** Failed! Exception 'Prelude.head: empty list' (after 1 tests):
+*** Failed! Exception '...' (after 1 tests):
 []

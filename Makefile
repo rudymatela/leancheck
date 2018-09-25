@@ -51,6 +51,14 @@ eg/%.diff-test: eg/%
 eg/%.update-diff-test: eg/%
 	./$< >           tests/diff/$<.out
 
+# Evaluation order changed from GHC 8.4 to GHC 8.6, so we need to skip the
+# contents of the exception for test-list.diff-test.
+eg/test-list.diff-test: eg/test-list
+	./$< | sed -e "s/Exception '[^']*'/Exception '...'/" | diff -rud tests/diff/$<.out -
+
+eg/test-list.update-diff-test: eg/test-list
+	./$< | sed -e "s/Exception '[^']*'/Exception '...'/" >           tests/diff/$<.out
+
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-colistable.hs
 	rm -f bench/tiers-listsofpairs.hs
