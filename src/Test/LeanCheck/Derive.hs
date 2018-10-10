@@ -53,6 +53,10 @@ reportWarning = report False
 -- > instance Listable a => Listable (Stack a) where
 -- >   tiers = cons2 Stack \/ cons0 Empty
 --
+-- __Warning:__ if the values in your type need to follow a data invariant, the
+--              derived instance won't respect it.  Use only on "free"
+--              datatypes.
+--
 -- Needs the @TemplateHaskell@ extension.
 deriveListable :: Name -> DecsQ
 deriveListable = deriveListableX True False
