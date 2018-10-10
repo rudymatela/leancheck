@@ -19,9 +19,24 @@ where
 import GHC.Generics
 import Test.LeanCheck.Core
 
+-- | A generic implementation of 'list' for instances of 'Generic'.
+--
+-- Use it to define your 'Listable' instances like so:
+--
+-- > instance Listable MyType where
+-- >   list = genericList
+--
+-- Consider using 'genericTiers' instead of this
+-- (unless you know what you're doing).
 genericList :: (Generic a, Listable' (Rep a)) => [a]
 genericList = concat genericTiers
 
+-- | A generic implementation of 'tiers' for instances of 'Generic'.
+--
+-- Use it to define your 'Listable' instances like so:
+--
+-- > instance Listable MyType where
+-- >   tiers = genericTiers
 genericTiers :: (Generic a, Listable' (Rep a)) => [[a]]
 genericTiers = mapT to tiers'
 
