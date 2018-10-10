@@ -13,6 +13,9 @@
 --
 -- If LeanCheck does not compile under later GHCs, this module is probably the
 -- culprit.
+--
+-- If you rather do this through GHC Generics, please see:
+-- "Test.LeanCheck.Generic" (experimental).
 module Test.LeanCheck.Derive
   ( deriveListable
   , deriveListableIfNeeded

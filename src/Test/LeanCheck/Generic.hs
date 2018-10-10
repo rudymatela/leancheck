@@ -10,6 +10,9 @@
 --
 -- This is an experimental module for deriving 'Listable' instances through
 -- GHC's generic.
+--
+-- If you rather do this through Template Haskell please see:
+-- "Test.LeanCheck.Derive".
 module Test.LeanCheck.Generic
   ( genericList
   , genericTiers
