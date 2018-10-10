@@ -54,15 +54,16 @@ reportWarning = report False
 -- >   tiers = cons2 Stack \/ cons0 Empty
 --
 -- __Warning:__ if the values in your type need to follow a data invariant, the
---              derived instance won't respect it.  Use only on "free"
+--              derived instance won't respect it.  Use this only on "free"
 --              datatypes.
 --
 -- Needs the @TemplateHaskell@ extension.
 deriveListable :: Name -> DecsQ
 deriveListable = deriveListableX True False
 
--- | Same as 'deriveListable' but does not warn when instance already exists
---   ('deriveListable' is preferable).
+-- | Same as 'deriveListable' but does not warn when the requested instance
+--   already exists.  The function 'deriveListable' is preferable in most
+--   situations.
 deriveListableIfNeeded :: Name -> DecsQ
 deriveListableIfNeeded = deriveListableX False False
 
@@ -139,6 +140,11 @@ reallyDeriveListable t = do
 --   'tiers':
 --
 -- > consN C1 \/ consN C2 \/ ... \/ consN CN
+--
+-- This function can be used in the definition of 'Listable' instances:
+--
+-- > instance Listable MyType where
+-- >   tiers = $(deriveTiers)
 deriveTiers :: Name -> ExpQ
 deriveTiers t = conse =<< typeConstructors t
   where
