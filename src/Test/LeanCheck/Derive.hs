@@ -68,6 +68,36 @@ deriveListableIfNeeded = deriveListableX False False
 
 -- | Derives a 'Listable' instance for a given type 'Name'
 --   cascading derivation of type arguments as well.
+--
+-- Consider the following series of datatypes:
+--
+-- > data Position = CEO | Manager | Programmer
+-- >
+-- > data Person = Person
+-- >             { name :: String
+-- >             , age :: Int
+-- >             , position :: Position
+-- >             }
+-- >
+-- > data Company = Company
+-- >              { name :: String
+-- >              , employees :: [Person]
+-- >              }
+--
+-- Writing
+--
+-- > deriveListableCascading ''Company
+--
+-- will automatically derive the following three 'Listable' instances:
+--
+-- > instance Listable Position where
+-- >   tiers = cons0 CEO \/ cons0 Manager \/ cons0 Programmer
+-- >
+-- > instance Listable Person where
+-- >   tiers = cons3 Person
+-- >
+-- > instance Listable Company where
+-- >   tiers = cons2 Company
 deriveListableCascading :: Name -> DecsQ
 deriveListableCascading = deriveListableX True True
 
