@@ -193,6 +193,7 @@ mk/All.o: \
   src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Generic.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
@@ -206,6 +207,7 @@ mk/Toplibs.o: \
   src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Generic.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function.hs \
@@ -368,6 +370,9 @@ src/Test/LeanCheck/Function/Show.o: \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Generic.o: \
+  src/Test/LeanCheck/Generic.hs \
+  src/Test/LeanCheck/Core.hs
 src/Test/LeanCheck/IO.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Core.hs
@@ -488,6 +493,22 @@ tests/test-funshow: \
 tests/test-fun: \
   tests/Test.hs \
   tests/test-fun.hs \
+  mk/toplibs
+tests/test-generic.o: \
+  tests/Test.hs \
+  tests/test-generic.hs \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/Operators.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Generic.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+tests/test-generic: \
+  tests/Test.hs \
+  tests/test-generic.hs \
   mk/toplibs
 tests/test-io.o: \
   tests/Test.hs \

@@ -8,6 +8,7 @@ TESTS = tests/test-main      \
         tests/test-error     \
         tests/test-fun       \
         tests/test-funshow   \
+        tests/test-generic   \
         tests/test-io        \
         tests/test-operators \
         tests/test-tiers     \

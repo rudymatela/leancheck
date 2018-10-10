@@ -17,6 +17,7 @@ tests/test-derive
 tests/test-error
 tests/test-fun
 tests/test-funshow
+tests/test-generic
 tests/test-io
 tests/test-most
 tests/test-operators
