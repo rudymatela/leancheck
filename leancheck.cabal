@@ -99,7 +99,7 @@ library
                  , Test.LeanCheck.Function.CoListable
                  , Test.LeanCheck.Function.ShowFunction
   hs-source-dirs:      src
-  if impl(ghc <= 7.4)
+  if impl(ghc < 7.6)
     -- GHC.Generics is inly included in base after 7.6
     build-depends:     base >= 4 && < 5, template-haskell, ghc-prim
   else
