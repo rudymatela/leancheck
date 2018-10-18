@@ -2,8 +2,8 @@ Changelog for LeanCheck
 =======================
 
 
-upcoming
---------
+v0.7.7
+------
 
 * Add a `changelog.md` file with the contents of git tag annotations:
   `git tag -ln99`.
