@@ -38,6 +38,7 @@ cabal-version:       1.18
 extra-doc-files: README.md
                , CREDITS.md
                , TODO.md
+               , changelog.md
                , doc/data-invariant.md
                , doc/tutorial.md
 extra-source-files: .gitignore
