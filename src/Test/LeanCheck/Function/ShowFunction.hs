@@ -31,6 +31,7 @@ module Test.LeanCheck.Function.ShowFunction
   , tBindingsShow
   -- * Re-exports
   , Listable
+  , name
   )
 where
 
@@ -203,3 +204,39 @@ instance ShowFunction Word1 where tBindings = tBindingsShow
 instance ShowFunction Word2 where tBindings = tBindingsShow
 instance ShowFunction Word3 where tBindings = tBindingsShow
 instance ShowFunction Word4 where tBindings = tBindingsShow
+
+-- | Hard coded function names and bindings
+--   Search this list for a short name for your function.
+functionNames :: [(String, [Binding])]
+functionNames =
+  [ "id"          `for` (id          :: () -> ())
+  , "const"       `for` (const       :: () -> () -> ())
+
+  , "id"          `for` (id          :: Bool -> Bool)
+  , "not"         `for` (not         :: Bool -> Bool)
+  , "const False" `for` (const False :: Bool -> Bool)
+  , "const True"  `for` (const True  :: Bool -> Bool)
+  , "const"       `for` (const :: Bool -> Bool -> Bool)
+
+  , "(&&)" `for` (&&)
+  , "(||)" `for` (||)
+
+  , "id"      `for` (id      :: Int -> Int)
+  , "const 0" `for` (const 0 :: Int -> Int)
+  , "const 1" `for` (const 1 :: Int -> Int)
+  , "abs"     `for` (abs     :: Int -> Int)
+  , "negate"  `for` (negate  :: Int -> Int)
+  , "(+)"     `for` ((+)     :: Int -> Int -> Int)
+  , "(*)"     `for` ((*)     :: Int -> Int -> Int)
+  , "(-)"     `for` ((-)     :: Int -> Int -> Int)
+  , "const"   `for` (const   :: Int -> Int -> Int)
+  , "odd"     `for` (odd     :: Int -> Bool)
+  , "even"    `for` (even    :: Int -> Bool)
+  ]
+  where
+  n `for` f = (n, bindings f)
+
+-- | Tries to name a function heuristically
+name :: ShowFunction a => Int -> a -> Maybe String
+name n f = listToMaybe [ nm | (nm, bs) <- functionNames
+                            , take n bs == take n (bindings f)]
