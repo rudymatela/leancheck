@@ -5,6 +5,7 @@ module All
   , module Test.LeanCheck.Utils
   , module Test.LeanCheck.Tiers
   , module Test.LeanCheck.Generic
+  , module Test.LeanCheck.Function
   )
 where
 
@@ -14,3 +15,4 @@ import Test.LeanCheck.Basic
 import Test.LeanCheck.Utils
 import Test.LeanCheck.Tiers
 import Test.LeanCheck.Generic
+import Test.LeanCheck.Function
