@@ -52,7 +52,7 @@ later
             (True,False)  -> True
             _             -> False
 
-  Some thinking may have to be done for:
+  Instead of showing:
 
     \x y -> case (x,y) of
             (0,0) -> 0
@@ -64,4 +64,8 @@ later
             (2,0) -> 1
             ...
 
-  Where: `const (const 1) ->/ [(1,const 0)]`.
+  Just show:
+
+    \x y -> case (x,y) of
+            (1,_) -> 0
+            _     -> 1
