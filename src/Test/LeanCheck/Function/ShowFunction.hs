@@ -112,10 +112,7 @@ showTuple xs | all (== "_") xs  =  "_"
 showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
 showNBindingsOf m n f = take n bs
                      ++ ["..." | length bs' >= m || length bs > n]
-  where bsRaw = take m $ bindings f
-        bsSpl = clarifyBindings bsRaw
-        bs' | length bsSpl <= n && length bsSpl < length bsRaw = bsSpl
-            | otherwise        = bsRaw
+  where bs' = clarifiedBindings m n f
         bs = [ showTuple as ++ " -> " ++ r
              | (as, Just r) <- bs' ]
 
@@ -290,6 +287,14 @@ _        ~> _       =  False
 
 (<~~) :: Binding -> Binding -> Bool
 (as,r) <~~ (as',r') = as <~ as' && r == r'
+
+clarifiedBindings :: ShowFunction a => Int -> Int -> a -> [Binding]
+clarifiedBindings m n f
+  | length bs1 <= n  =  bs1
+  | otherwise        =  bs0
+  where
+  bs0  =  take m $ bindings f
+  bs1  =  clarifyBindings bs0
 
 clarifyBindings :: [Binding] -> [Binding]
 clarifyBindings bs = head $ sortOn length $
