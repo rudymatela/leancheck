@@ -38,9 +38,8 @@ later
      where
      ||| is something that interleaves tiers of different lists...
 
-* Refactor T.L.F.ShowFunction module by adding SimplifiedBindings &
-  ClarifiedBindings
+* Document simplification functions on T.L.F.ShowFunction
 
-* Replace unused arguments by `_` when showing functions:
+* Remove unused arguments when showing functions:
   Instead of showing `\x y -> case (x,y) of (_,0) -> 0; _ -> 1`,
-  show               `\x y -> case (_,y) of (_,0) -> 0; _ -> 1`.
+  show               `\_ y -> case y of 0 -> 0; _ -> 1`.
