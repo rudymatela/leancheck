@@ -12,6 +12,8 @@ log/
 *.hi
 *.dyn_hi
 *.dyn_o
+TAGS
+tags
 tests/test-main
 tests/test-derive
 tests/test-error
