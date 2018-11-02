@@ -69,18 +69,18 @@ tests =
     == "\\x y -> case (x,y) of\n"
     ++ "        (False,_) -> False\n"
     ++ "        (_,False) -> False\n"
-    ++ "        (_,_) -> True\n"
+    ++ "        _ -> True\n"
   , showFunction 4 (&&)
     == "\\x y -> case (x,y) of\n"
     ++ "        (False,_) -> False\n"
     ++ "        (_,False) -> False\n"
-    ++ "        (_,_) -> True\n"
+    ++ "        _ -> True\n"
   , showFunction 3 (||)
     == "\\x y -> case (x,y) of\n"
     ++ "        (False,False) -> False\n"
-    ++ "        (_,_) -> True\n"
+    ++ "        _ -> True\n"
   , showFunction 4 (||)
     == "\\x y -> case (x,y) of\n"
     ++ "        (False,False) -> False\n"
-    ++ "        (_,_) -> True\n"
+    ++ "        _ -> True\n"
   ]

@@ -10,7 +10,7 @@ All boolean operators are commutative (wrong).
 \x y -> case (x,y) of
         (False,_) -> False
         (_,False) -> True
-        (_,_) -> False
+        _ -> False
 False
 True
 
@@ -20,7 +20,7 @@ All boolean operators are associative (wrong).
 \x y -> case (x,y) of
         (False,_) -> False
         (_,False) -> True
-        (_,_) -> False
+        _ -> False
 True
 False
 True

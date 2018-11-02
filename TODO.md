@@ -42,9 +42,7 @@ later
 
     \x y -> case (x,y) of
             (True,True) -> True
-            (_,_) -> False
-
-* When showing functions, show `(_,_)` as just `_`.
+            _ -> False
 
 * Try simplifying with most specific cases first (the ones that have less
   occurences of return values) to see if it is possible to get a smaller
@@ -52,7 +50,7 @@ later
 
 * Improve showing of constant functions.
   Instead of showing `\x -> case x of _ -> 0`, show just `\x -> 0`
-  Instead of showing `\x y -> case (x,y) of (_,_) -> 0`, show just `\x y -> 0`
+  Instead of showing `\x y -> case (x,y) of _ -> 0`, show just `\x y -> 0`
 
 * Replace unused arguments by `_` when showing functions:
   Instead of showing `\x y -> case (x,y) of (_,0) -> 0; _ -> 1`,

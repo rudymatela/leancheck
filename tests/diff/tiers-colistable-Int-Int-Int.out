@@ -8,17 +8,17 @@ ratioRepetitions (list :: [ Int->Int->Int ])  =  37 % 61
 
 tiers :: [Int->Int->Int]  =
   [ [ \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     ]
   , [ \x y -> case (x,y) of
-              (_,_) -> 1
+              _ -> 1
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     ]
   , [ \x y -> case (x,y) of
-              (_,_) -> -1
+              _ -> -1
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -30,7 +30,7 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 1
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 1
               (0,1) -> 1
@@ -42,7 +42,7 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -54,9 +54,9 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 1
               (0,1) -> 1
@@ -68,12 +68,12 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 1
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     ]
   , [ \x y -> case (x,y) of
-              (_,_) -> 2
+              _ -> 2
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -95,16 +95,16 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (_,0) -> 0
               (_,1) -> 0
               (_,-1) -> 1
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 1
+              _ -> 1
     , \x y -> case (x,y) of
               (0,0) -> 1
               (0,1) -> 1
@@ -126,7 +126,7 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 1
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> -1
               (0,1) -> -1
@@ -139,9 +139,9 @@ tiers :: [Int->Int->Int]  =
               ...
     , \x y -> case (x,y) of
               (_,0) -> 1
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 1
@@ -153,7 +153,7 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -175,7 +175,7 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -187,7 +187,7 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -199,20 +199,20 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,_) -> 0
               (1,_) -> 0
               (-1,_) -> 1
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 1
+              _ -> 1
     , \x y -> case (x,y) of
               (0,0) -> 1
               (0,1) -> 1
@@ -244,9 +244,9 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -258,9 +258,9 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> -1
               (0,1) -> -1
@@ -282,7 +282,7 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 1
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 1
               (0,1) -> 1
@@ -294,14 +294,14 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 0
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,_) -> 1
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
               (0,0) -> 0
               (0,1) -> 0
@@ -313,9 +313,9 @@ tiers :: [Int->Int->Int]  =
               (1,-1) -> 1
               ...
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     , \x y -> case (x,y) of
-              (_,_) -> 0
+              _ -> 0
     ]
   , ...
   ]

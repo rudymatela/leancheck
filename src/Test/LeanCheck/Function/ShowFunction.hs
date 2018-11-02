@@ -103,8 +103,9 @@ varnamesFor = zipWith const varnames . fst . head . bindings
   where varnames = ["x","y","z","w"] ++ map (++"'") varnames
 
 showTuple :: [String] -> String
-showTuple [x] = x
-showTuple xs  = paren $ intercalate "," xs
+showTuple [x]  =  x
+showTuple xs | all (== "_") xs  =  "_"
+             | otherwise        =  paren $ intercalate "," xs
 
 showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
 showNBindingsOf m n f = take n bs
