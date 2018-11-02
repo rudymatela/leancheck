@@ -16,8 +16,4 @@ module Test.LeanCheck.Function.Show () where
 import Test.LeanCheck.Function.ShowFunction
 
 instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
-  showsPrec _ = (++) . shw
-    where
-    shw f = case name 60 f of
-            Nothing -> showFunction 8 f
-            Just nm -> nm
+  showsPrec _ = (++) . showFunction 8

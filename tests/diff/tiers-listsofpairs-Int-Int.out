@@ -7,8 +7,28 @@ allUnique (list :: [ Int->Int ])  =  True
 ratioRepetitions (list :: [ Int->Int ])  =  0 % 1
 
 tiers :: [Int->Int]  =
-  [ [const 0]
-  , [const 1]
+  [ [ \x -> case x of
+              0 -> 0
+              1 -> 0
+              -1 -> 0
+              2 -> 0
+              -2 -> 0
+              3 -> 0
+              -3 -> 0
+              4 -> 0
+              ...
+    ]
+  , [ \x -> case x of
+              0 -> 1
+              1 -> 1
+              -1 -> 1
+              2 -> 1
+              -2 -> 1
+              3 -> 1
+              -3 -> 1
+              4 -> 1
+              ...
+    ]
   , [ \x -> case x of
               0 -> 1
               1 -> 0

@@ -26,7 +26,16 @@
 [0,0,0]
 
 *** Failed! Falsifiable (after 36 tests):
-const 0
+\x -> case x of
+        0 -> 0
+        1 -> 0
+        -1 -> 0
+        2 -> 0
+        -2 -> 0
+        3 -> 0
+        -3 -> 0
+        4 -> 0
+        ...
 \x -> case x of
         0 -> True
         1 -> False
