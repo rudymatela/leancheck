@@ -34,11 +34,9 @@ tiers :: [Int->Int->Int]  =
               (0,_) -> -1
               _ -> 0
     , \x y -> case (x,y) of
-              (0,_) -> 0
               (1,_) -> 1
               _ -> 0
     , \x y -> case (x,y) of
-              (0,_) -> 1
               (1,_) -> 0
               _ -> 1
     , \x y -> case (x,y) of
@@ -56,11 +54,9 @@ tiers :: [Int->Int->Int]  =
               (_,0) -> -1
               _ -> 0
     , \x y -> case (x,y) of
-              (_,0) -> 0
               (_,1) -> 1
               _ -> 0
     , \x y -> case (x,y) of
-              (_,0) -> 1
               (_,1) -> 0
               _ -> 1
     , \x y -> case (x,y) of

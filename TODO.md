@@ -38,15 +38,8 @@ later
      where
      ||| is something that interleaves tiers of different lists...
 
-
-* Try simplifying with most specific cases first (the ones that have less
-  occurences of return values) to see if it is possible to get a smaller
-  function.  If not, return whatever the normal algorithm produces.
-  This should improve `show (&&)` to become:
-
-    \x y -> case (x,y) of
-            (True,True) -> True
-            _ -> False
+* Refactor T.L.F.ShowFunction module by adding SimplifiedBindings &
+  ClarifiedBindings
 
 * Replace unused arguments by `_` when showing functions:
   Instead of showing `\x y -> case (x,y) of (_,0) -> 0; _ -> 1`,

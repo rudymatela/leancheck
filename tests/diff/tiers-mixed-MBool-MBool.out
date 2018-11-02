@@ -11,21 +11,17 @@ tiers :: [Maybe Bool->Maybe Bool]  =
     , \_ -> Nothing
     ]
   , [ \x -> case x of
-            Nothing -> Nothing
-            Just False -> Nothing
             Just True -> Just False
+            _ -> Nothing
     , \x -> case x of
-            Nothing -> Nothing
-            Just False -> Nothing
             Just True -> Just True
+            _ -> Nothing
     , \x -> case x of
-            Nothing -> Nothing
             Just False -> Just False
-            Just True -> Nothing
+            _ -> Nothing
     , \x -> case x of
-            Nothing -> Nothing
             Just False -> Just True
-            Just True -> Nothing
+            _ -> Nothing
     , \x -> case x of
             Nothing -> Just False
             _ -> Nothing
@@ -33,21 +29,17 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Nothing -> Just True
             _ -> Nothing
     , \x -> case x of
-            Nothing -> Nothing
             Just False -> Just False
-            Just True -> Nothing
+            _ -> Nothing
     , \x -> case x of
-            Nothing -> Nothing
             Just False -> Just True
-            Just True -> Nothing
+            _ -> Nothing
     , \x -> case x of
-            Nothing -> Nothing
-            Just False -> Nothing
             Just True -> Just False
+            _ -> Nothing
     , \x -> case x of
-            Nothing -> Nothing
-            Just False -> Nothing
             Just True -> Just True
+            _ -> Nothing
     , \x -> case x of
             Nothing -> Just False
             _ -> Nothing
@@ -70,17 +62,15 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Nothing -> Nothing
             _ -> Just True
     , \x -> case x of
-            Nothing -> Just False
             Just False -> Nothing
-            Just True -> Just False
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just False
             Just False -> Nothing
             Just True -> Just True
     , \x -> case x of
-            Nothing -> Just False
-            Just False -> Just False
             Just True -> Nothing
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just False
             Just False -> Just True
@@ -90,17 +80,15 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Just False -> Nothing
             Just True -> Just False
     , \x -> case x of
-            Nothing -> Just True
             Just False -> Nothing
-            Just True -> Just True
+            _ -> Just True
     , \x -> case x of
             Nothing -> Just True
             Just False -> Just False
             Just True -> Nothing
     , \x -> case x of
-            Nothing -> Just True
-            Just False -> Just True
             Just True -> Nothing
+            _ -> Just True
     , \x -> case x of
             Nothing -> Nothing
             _ -> Just False
@@ -116,17 +104,15 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Nothing -> Nothing
             _ -> Just True
     , \x -> case x of
-            Nothing -> Just False
-            Just False -> Just False
             Just True -> Nothing
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just False
             Just False -> Just True
             Just True -> Nothing
     , \x -> case x of
-            Nothing -> Just False
             Just False -> Nothing
-            Just True -> Just False
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just False
             Just False -> Nothing
@@ -136,27 +122,23 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Just False -> Just False
             Just True -> Nothing
     , \x -> case x of
-            Nothing -> Just True
-            Just False -> Just True
             Just True -> Nothing
+            _ -> Just True
     , \x -> case x of
             Nothing -> Just True
             Just False -> Nothing
             Just True -> Just False
     , \x -> case x of
-            Nothing -> Just True
             Just False -> Nothing
-            Just True -> Just True
+            _ -> Just True
     ]
   , [ \_ -> Just False
     , \x -> case x of
-            Nothing -> Just False
-            Just False -> Just False
             Just True -> Just True
+            _ -> Just False
     , \x -> case x of
-            Nothing -> Just False
             Just False -> Just True
-            Just True -> Just False
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just False
             _ -> Just True
@@ -164,23 +146,19 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Nothing -> Just True
             _ -> Just False
     , \x -> case x of
-            Nothing -> Just True
             Just False -> Just False
-            Just True -> Just True
+            _ -> Just True
     , \x -> case x of
-            Nothing -> Just True
-            Just False -> Just True
             Just True -> Just False
+            _ -> Just True
     , \_ -> Just True
     , \_ -> Just False
     , \x -> case x of
-            Nothing -> Just False
             Just False -> Just True
-            Just True -> Just False
+            _ -> Just False
     , \x -> case x of
-            Nothing -> Just False
-            Just False -> Just False
             Just True -> Just True
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just False
             _ -> Just True
@@ -188,13 +166,11 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Nothing -> Just True
             _ -> Just False
     , \x -> case x of
-            Nothing -> Just True
-            Just False -> Just True
             Just True -> Just False
+            _ -> Just True
     , \x -> case x of
-            Nothing -> Just True
             Just False -> Just False
-            Just True -> Just True
+            _ -> Just True
     , \_ -> Just True
     ]
   ]

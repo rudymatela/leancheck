@@ -27,6 +27,7 @@ module Test.LeanCheck.Function.ShowFunction
   , showFunctionLine
   , Binding
   , bindings
+  , clarifyBindings
   , simplifyBindings
   , ShowFunction (..)
   , tBindingsShow
@@ -39,6 +40,7 @@ where
 import Test.LeanCheck.Core
 import Test.LeanCheck.Error (errorToNothing)
 import Test.LeanCheck.Utils.Types
+import Test.LeanCheck.Stats (classifyOn)
 import Data.List
 import Data.Maybe
 import Data.Function (on)
@@ -111,7 +113,7 @@ showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
 showNBindingsOf m n f = take n bs
                      ++ ["..." | length bs' >= m || length bs > n]
   where bsRaw = take m $ bindings f
-        bsSpl = simplifyBindings bsRaw
+        bsSpl = clarifyBindings bsRaw
         bs' | length bsSpl <= n && length bsSpl < length bsRaw = bsSpl
             | otherwise        = bsRaw
         bs = [ showTuple as ++ " -> " ++ r
@@ -288,6 +290,13 @@ _        ~> _       =  False
 
 (<~~) :: Binding -> Binding -> Bool
 (as,r) <~~ (as',r') = as <~ as' && r == r'
+
+clarifyBindings :: [Binding] -> [Binding]
+clarifyBindings bs = head $ sortOn length $
+  [ bs
+  , simplifyBindings bs
+  , simplifyBindings . concat . sortOn length $ classifyOn snd bs
+  ]
 
 simplifyBindings :: [Binding] -> [Binding]
 simplifyBindings = simplify []

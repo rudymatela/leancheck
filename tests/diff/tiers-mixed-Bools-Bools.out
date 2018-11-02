@@ -98,45 +98,33 @@ tiers :: [[Bool]->[Bool]]  =
             [] -> [True,True]
             _ -> []
     , \x -> case x of
-            [] -> []
             [False] -> [False]
             _ -> []
     , \x -> case x of
-            [] -> []
             [False] -> [True]
             _ -> []
     , \x -> case x of
-            [] -> []
-            [False] -> []
             [True] -> [False]
             _ -> []
     , \x -> case x of
-            [] -> []
-            [False] -> []
             [True] -> [True]
             _ -> []
     , \x -> case x of
             [] -> [True]
             _ -> [False]
     , \x -> case x of
-            [] -> [False]
             [False] -> []
             _ -> [False]
     , \x -> case x of
-            [] -> [False]
-            [False] -> [False]
             [True] -> []
             _ -> [False]
     , \x -> case x of
             [] -> [False]
             _ -> [True]
     , \x -> case x of
-            [] -> [True]
             [False] -> []
             _ -> [True]
     , \x -> case x of
-            [] -> [True]
-            [False] -> [True]
             [True] -> []
             _ -> [True]
     , \x -> case x of
@@ -250,11 +238,9 @@ tiers :: [[Bool]->[Bool]]  =
             ...
     , \_ -> []
     , \x -> case x of
-            [] -> []
             [False] -> [False]
             _ -> []
     , \x -> case x of
-            [] -> []
             [False] -> [True]
             _ -> []
     , \x -> case x of
@@ -407,13 +393,9 @@ tiers :: [[Bool]->[Bool]]  =
             ...
     , \_ -> []
     , \x -> case x of
-            [] -> []
-            [False] -> []
             [True] -> [False]
             _ -> []
     , \x -> case x of
-            [] -> []
-            [False] -> []
             [True] -> [True]
             _ -> []
     , \x -> case x of
