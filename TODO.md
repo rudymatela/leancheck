@@ -69,3 +69,7 @@ later
     \x y -> case (x,y) of
             (1,_) -> 0
             _     -> 1
+
+  To test on ghci, use:
+
+    let fun = (\x y -> case (x,y) of (1,_) -> 0; _ -> 1) :: Int -> Int -> Int
