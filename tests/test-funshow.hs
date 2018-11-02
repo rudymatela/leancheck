@@ -77,4 +77,16 @@ tests =
     ++ "        (False,True) -> False\n"
     ++ "        (True,False) -> False\n"
     ++ "        (True,True) -> True\n"
+  , showFunction 3 (||)
+    == "\\x y -> case (x,y) of\n"
+    ++ "        (False,False) -> False\n"
+    ++ "        (False,True) -> True\n"
+    ++ "        (True,False) -> True\n"
+    ++ "        ...\n"
+  , showFunction 4 (||)
+    == "\\x y -> case (x,y) of\n"
+    ++ "        (False,False) -> False\n"
+    ++ "        (False,True) -> True\n"
+    ++ "        (True,False) -> True\n"
+    ++ "        (True,True) -> True\n"
   ]
