@@ -7,7 +7,4 @@ allUnique (list :: [ ()->() ])  =  True
 ratioRepetitions (list :: [ ()->() ])  =  0 % 1
 
 tiers :: [()->()]  =
-  [ [ \x -> case x of
-              () -> ()
-    ]
-  ]
+  [[id]]

@@ -7,9 +7,7 @@ allUnique (list :: [ ()->() ])  =  False
 ratioRepetitions (list :: [ ()->() ])  =  1 % 2
 
 tiers :: [()->()]  =
-  [ [ \x -> case x of
-              () -> ()
-    , \x -> case x of
-              () -> ()
+  [ [ id
+    , id
     ]
   ]
