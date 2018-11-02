@@ -38,38 +38,22 @@ later
      where
      ||| is something that interleaves tiers of different lists...
 
-* further improve showing of functions, indead of showing:
-
-    \p q -> case (p,q) of
-            (False,False) -> False
-            (False,True)  -> False
-            (True,False)  -> True
-            (True,True)   -> False
-
-  actually show just:
-
-    \p q -> case (p,q) of
-            (True,False)  -> True
-            _             -> False
-
-  Instead of showing:
+* Improve `show (&&)` to:
 
     \x y -> case (x,y) of
-            (0,0) -> 0
-            (0,1) -> 0
-            (1,1) -> 1
-            (1,0) -> 1
-            (0,2) -> 0
-            (1,1) -> 1
-            (2,0) -> 1
-            ...
+            (True,True) -> True
+            (_,_) -> False
 
-  Just show:
+* When showing functions, show `(_,_)` as just `_`.
 
-    \x y -> case (x,y) of
-            (1,_) -> 0
-            _     -> 1
+* Try simplifying with most specific cases first (the ones that have less
+  occurences of return values) to see if it is possible to get a smaller
+  function.  If not, return whatever the normal algorithm produces.
 
-  To test on ghci, use:
+* Improve showing of constant functions.
+  Instead of showing `\x -> case x of _ -> 0`, show just `\x -> 0`
+  Instead of showing `\x y -> case (x,y) of (_,_) -> 0`, show just `\x y -> 0`
 
-    let fun = (\x y -> case (x,y) of (1,_) -> 0; _ -> 1) :: Int -> Int -> Int
+* Replace unused arguments by `_` when showing functions:
+  Instead of showing `\x y -> case (x,y) of (_,0) -> 0; _ -> 1`,
+  show               `\x y -> case (_,y) of (_,0) -> 0; _ -> 1`.

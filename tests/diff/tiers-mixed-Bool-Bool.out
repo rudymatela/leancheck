@@ -8,8 +8,7 @@ ratioRepetitions (list :: [ Bool->Bool ])  =  1 % 2
 
 tiers :: [Bool->Bool]  =
   [ [ \x -> case x of
-            False -> False
-            True -> False
+            _ -> False
     , \x -> case x of
             False -> False
             True -> True
@@ -17,11 +16,9 @@ tiers :: [Bool->Bool]  =
             False -> True
             True -> False
     , \x -> case x of
-            False -> True
-            True -> True
+            _ -> True
     , \x -> case x of
-            False -> False
-            True -> False
+            _ -> False
     , \x -> case x of
             False -> True
             True -> False
@@ -29,7 +26,6 @@ tiers :: [Bool->Bool]  =
             False -> False
             True -> True
     , \x -> case x of
-            False -> True
-            True -> True
+            _ -> True
     ]
   ]

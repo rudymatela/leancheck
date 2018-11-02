@@ -27,6 +27,7 @@ module Test.LeanCheck.Function.ShowFunction
   , showFunctionLine
   , Binding
   , bindings
+  , simplifyBindings
   , ShowFunction (..)
   , tBindingsShow
   -- * Re-exports
@@ -40,6 +41,7 @@ import Test.LeanCheck.Error (errorToNothing)
 import Test.LeanCheck.Utils.Types
 import Data.List
 import Data.Maybe
+import Data.Function (on)
 
 -- | A functional binding in a showable format.
 type Binding = ([String], Maybe String)
@@ -107,7 +109,10 @@ showTuple xs  = paren $ intercalate "," xs
 showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
 showNBindingsOf m n f = take n bs
                      ++ ["..." | length bs' >= m || length bs > n]
-  where bs' = take m $ bindings f
+  where bsRaw = take m $ bindings f
+        bsSpl = simplifyBindings bsRaw
+        bs' | length bsSpl <= n && length bsSpl < length bsRaw = bsSpl
+            | otherwise        = bsRaw
         bs = [ showTuple as ++ " -> " ++ r
              | (as, Just r) <- bs' ]
 
@@ -239,3 +244,56 @@ functionNames =
 name :: ShowFunction a => Int -> a -> Maybe String
 name n f = listToMaybe [ nm | (nm, bs) <- functionNames
                             , take n bs == take n (bindings f)]
+
+generalizations :: [String] -> [[String]]
+generalizations []     = [[]]
+generalizations (v:vs) = map ("_":) gvs ++ map (v:) gvs
+  where
+  gvs = generalizations vs
+
+-- Should be read as "is generalization of":
+--
+-- > > ["_","_","_"] ~> ["1","2","3"]
+-- > True
+-- > > ["1","2","3"] ~> ["_","_","_"]
+-- > False
+-- > > ["_","3"] ~> ["1","3"]
+-- > True
+-- > > ["_","3"] ~> ["_","4"]
+-- > False
+(~>) :: [String] -> [String] -> Bool
+[]       ~> []      =  True
+("_":ws) ~> (v:vs)  =  ws ~> vs
+(w:ws)   ~> (v:vs)  =  w == v && ws ~> vs
+_        ~> _       =  False
+
+(<~) :: [String] -> [String] -> Bool
+(<~) = flip (~>)
+
+(<~~) :: Binding -> Binding -> Bool
+(as,r) <~~ (as',r') = as <~ as' && r == r'
+
+simplifyBindings :: [Binding] -> [Binding]
+simplifyBindings = simplify []
+  where
+  simplify :: [Binding] -> [Binding] -> [Binding]
+  simplify bs' []           =  reverse bs'
+  simplify bs' ((as,r):bs)  =  simplify (bs''++bs') [b | b <- bs, none (b <~~) bs'']
+    where
+    bs'' = discardLater (<~~)
+         [ (gas,r) | gas <- generalizations as
+                   , and [r' == r | (as',r') <- bs, gas ~> as'] ]
+
+-- general auxiliary functions
+
+discard :: (a -> Bool) -> [a] -> [a]
+discard p = filter (not . p)
+
+discardLater :: (a -> a -> Bool) -> [a] -> [a]
+discardLater (?>) = dl
+  where
+  dl []     = []
+  dl (x:xs) = x : discard (?> x) (dl xs)
+
+none :: (a -> Bool) -> [a] -> Bool
+none p = not . any p

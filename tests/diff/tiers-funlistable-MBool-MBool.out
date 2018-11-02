@@ -8,9 +8,7 @@ ratioRepetitions (list :: [ Maybe Bool->Maybe Bool ])  =  0 % 1
 
 tiers :: [Maybe Bool->Maybe Bool]  =
   [ [ \x -> case x of
-            Nothing -> Nothing
-            Just False -> Nothing
-            Just True -> Nothing
+            _ -> Nothing
     ]
   , [ \x -> case x of
             Nothing -> Nothing
@@ -30,17 +28,14 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Just True -> Just True
     , \x -> case x of
             Nothing -> Just False
-            Just False -> Nothing
-            Just True -> Nothing
+            _ -> Nothing
     , \x -> case x of
             Nothing -> Just True
-            Just False -> Nothing
-            Just True -> Nothing
+            _ -> Nothing
     ]
   , [ \x -> case x of
             Nothing -> Nothing
-            Just False -> Just False
-            Just True -> Just False
+            _ -> Just False
     , \x -> case x of
             Nothing -> Nothing
             Just False -> Just True
@@ -51,8 +46,7 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Just True -> Just True
     , \x -> case x of
             Nothing -> Nothing
-            Just False -> Just True
-            Just True -> Just True
+            _ -> Just True
     , \x -> case x of
             Nothing -> Just False
             Just False -> Just False
@@ -87,9 +81,7 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Just True -> Just True
     ]
   , [ \x -> case x of
-            Nothing -> Just False
-            Just False -> Just False
-            Just True -> Just False
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just False
             Just False -> Just True
@@ -100,12 +92,10 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Just True -> Just True
     , \x -> case x of
             Nothing -> Just False
-            Just False -> Just True
-            Just True -> Just True
+            _ -> Just True
     , \x -> case x of
             Nothing -> Just True
-            Just False -> Just False
-            Just True -> Just False
+            _ -> Just False
     , \x -> case x of
             Nothing -> Just True
             Just False -> Just True
@@ -115,8 +105,6 @@ tiers :: [Maybe Bool->Maybe Bool]  =
             Just False -> Just False
             Just True -> Just True
     , \x -> case x of
-            Nothing -> Just True
-            Just False -> Just True
-            Just True -> Just True
+            _ -> Just True
     ]
   ]

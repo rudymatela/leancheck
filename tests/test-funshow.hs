@@ -32,7 +32,7 @@ tests =
   , showFunctionLine 10 (\x -> case (x::Int) of 3 -> (4::Int); 5 -> 6)
                     == "\\x -> case x of 3 -> 4; 5 -> 6; ..."
   , showFunctionLine 10 (\x y -> case (x::Int,y::Int) of (1,2) -> (3::Int); (2,1) -> 3)
-                    == "\\x y -> case (x,y) of (1,2) -> 3; (2,1) -> 3; ..."
+                    == "\\x y -> case (x,y) of (1,2) -> 3; (2,1) -> 3"
 
   -- fully defined, infinite --
   , showFunction 3 ((+) -:> int)
@@ -67,26 +67,20 @@ tests =
     ++ "      True -> False\n"
   , showFunction 3 (&&)
     == "\\x y -> case (x,y) of\n"
-    ++ "        (False,False) -> False\n"
-    ++ "        (False,True) -> False\n"
-    ++ "        (True,False) -> False\n"
-    ++ "        ...\n"
+    ++ "        (False,_) -> False\n"
+    ++ "        (_,False) -> False\n"
+    ++ "        (_,_) -> True\n"
   , showFunction 4 (&&)
     == "\\x y -> case (x,y) of\n"
-    ++ "        (False,False) -> False\n"
-    ++ "        (False,True) -> False\n"
-    ++ "        (True,False) -> False\n"
-    ++ "        (True,True) -> True\n"
+    ++ "        (False,_) -> False\n"
+    ++ "        (_,False) -> False\n"
+    ++ "        (_,_) -> True\n"
   , showFunction 3 (||)
     == "\\x y -> case (x,y) of\n"
     ++ "        (False,False) -> False\n"
-    ++ "        (False,True) -> True\n"
-    ++ "        (True,False) -> True\n"
-    ++ "        ...\n"
+    ++ "        (_,_) -> True\n"
   , showFunction 4 (||)
     == "\\x y -> case (x,y) of\n"
     ++ "        (False,False) -> False\n"
-    ++ "        (False,True) -> True\n"
-    ++ "        (True,False) -> True\n"
-    ++ "        (True,True) -> True\n"
+    ++ "        (_,_) -> True\n"
   ]

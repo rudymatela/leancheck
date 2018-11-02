@@ -8,8 +8,7 @@ ratioRepetitions (list :: [ Nat2->Nat2 ])  =  0 % 1
 
 tiers :: [Nat2->Nat2]  =
   [ [ \x -> case x of
-            0 -> 0
-            1 -> 0
+            _ -> 0
     ]
   , [ \x -> case x of
             0 -> 0
@@ -19,7 +18,6 @@ tiers :: [Nat2->Nat2]  =
             1 -> 0
     ]
   , [ \x -> case x of
-            0 -> 1
-            1 -> 1
+            _ -> 1
     ]
   ]

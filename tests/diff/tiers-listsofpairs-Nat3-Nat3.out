@@ -8,9 +8,7 @@ ratioRepetitions (list :: [ Nat3->Nat3 ])  =  0 % 1
 
 tiers :: [Nat3->Nat3]  =
   [ [ \x -> case x of
-            0 -> 0
-            1 -> 0
-            2 -> 0
+            _ -> 0
     ]
   , [ \x -> case x of
             0 -> 0
@@ -22,8 +20,7 @@ tiers :: [Nat3->Nat3]  =
             2 -> 0
     , \x -> case x of
             0 -> 1
-            1 -> 0
-            2 -> 0
+            _ -> 0
     ]
   , [ \x -> case x of
             0 -> 0
@@ -31,8 +28,7 @@ tiers :: [Nat3->Nat3]  =
             2 -> 2
     , \x -> case x of
             0 -> 0
-            1 -> 1
-            2 -> 1
+            _ -> 1
     , \x -> case x of
             0 -> 0
             1 -> 2
@@ -47,8 +43,7 @@ tiers :: [Nat3->Nat3]  =
             2 -> 0
     , \x -> case x of
             0 -> 2
-            1 -> 0
-            2 -> 0
+            _ -> 0
     ]
   , [ \x -> case x of
             0 -> 0
@@ -63,9 +58,7 @@ tiers :: [Nat3->Nat3]  =
             1 -> 0
             2 -> 2
     , \x -> case x of
-            0 -> 1
-            1 -> 1
-            2 -> 1
+            _ -> 1
     , \x -> case x of
             0 -> 1
             1 -> 2
@@ -81,8 +74,7 @@ tiers :: [Nat3->Nat3]  =
     ]
   , [ \x -> case x of
             0 -> 0
-            1 -> 2
-            2 -> 2
+            _ -> 2
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -97,8 +89,7 @@ tiers :: [Nat3->Nat3]  =
             2 -> 2
     , \x -> case x of
             0 -> 2
-            1 -> 1
-            2 -> 1
+            _ -> 1
     , \x -> case x of
             0 -> 2
             1 -> 2
@@ -106,8 +97,7 @@ tiers :: [Nat3->Nat3]  =
     ]
   , [ \x -> case x of
             0 -> 1
-            1 -> 2
-            2 -> 2
+            _ -> 2
     , \x -> case x of
             0 -> 2
             1 -> 1
@@ -118,8 +108,6 @@ tiers :: [Nat3->Nat3]  =
             2 -> 1
     ]
   , [ \x -> case x of
-            0 -> 2
-            1 -> 2
-            2 -> 2
+            _ -> 2
     ]
   ]

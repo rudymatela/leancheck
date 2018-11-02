@@ -8,9 +8,7 @@ ratioRepetitions (list :: [ Maybe Bool->Bool ])  =  0 % 1
 
 tiers :: [Maybe Bool->Bool]  =
   [ [ \x -> case x of
-            Nothing -> False
-            Just False -> False
-            Just True -> False
+            _ -> False
     , \x -> case x of
             Nothing -> False
             Just False -> False
@@ -21,23 +19,19 @@ tiers :: [Maybe Bool->Bool]  =
             Just True -> False
     , \x -> case x of
             Nothing -> False
-            Just False -> True
-            Just True -> True
+            _ -> True
+    , \x -> case x of
+            Nothing -> True
+            _ -> False
     , \x -> case x of
             Nothing -> True
             Just False -> False
-            Just True -> False
-    , \x -> case x of
-            Nothing -> True
-            Just False -> False
             Just True -> True
     , \x -> case x of
             Nothing -> True
             Just False -> True
             Just True -> False
     , \x -> case x of
-            Nothing -> True
-            Just False -> True
-            Just True -> True
+            _ -> True
     ]
   ]
