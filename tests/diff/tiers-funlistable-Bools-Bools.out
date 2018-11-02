@@ -7,39 +7,23 @@ allUnique (list :: [ [Bool]->[Bool] ])  =  True
 ratioRepetitions (list :: [ [Bool]->[Bool] ])  =  0 % 1
 
 tiers :: [[Bool]->[Bool]]  =
-  [ [ \x -> case x of
-            _ -> []
+  [ [\_ -> []]
+  , [ \_ -> [False]
+    , \_ -> [True]
     ]
-  , [ \x -> case x of
-            _ -> [False]
-    , \x -> case x of
-            _ -> [True]
+  , [ \_ -> [False,False]
+    , \_ -> [False,True]
+    , \_ -> [True,False]
+    , \_ -> [True,True]
     ]
-  , [ \x -> case x of
-            _ -> [False,False]
-    , \x -> case x of
-            _ -> [False,True]
-    , \x -> case x of
-            _ -> [True,False]
-    , \x -> case x of
-            _ -> [True,True]
-    ]
-  , [ \x -> case x of
-            _ -> [False,False,False]
-    , \x -> case x of
-            _ -> [False,False,True]
-    , \x -> case x of
-            _ -> [False,True,False]
-    , \x -> case x of
-            _ -> [False,True,True]
-    , \x -> case x of
-            _ -> [True,False,False]
-    , \x -> case x of
-            _ -> [True,False,True]
-    , \x -> case x of
-            _ -> [True,True,False]
-    , \x -> case x of
-            _ -> [True,True,True]
+  , [ \_ -> [False,False,False]
+    , \_ -> [False,False,True]
+    , \_ -> [False,True,False]
+    , \_ -> [False,True,True]
+    , \_ -> [True,False,False]
+    , \_ -> [True,False,True]
+    , \_ -> [True,True,False]
+    , \_ -> [True,True,True]
     ]
   , ...
   ]

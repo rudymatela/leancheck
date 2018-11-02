@@ -7,9 +7,7 @@ allUnique (list :: [ ()->Bool ])  =  True
 ratioRepetitions (list :: [ ()->Bool ])  =  0 % 1
 
 tiers :: [()->Bool]  =
-  [ [ \x -> case x of
-            () -> False
-    , \x -> case x of
-            () -> True
+  [ [ \_ -> False
+    , \_ -> True
     ]
   ]

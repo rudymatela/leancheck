@@ -38,19 +38,15 @@ later
      where
      ||| is something that interleaves tiers of different lists...
 
-* Improve `show (&&)` to:
-
-    \x y -> case (x,y) of
-            (True,True) -> True
-            _ -> False
 
 * Try simplifying with most specific cases first (the ones that have less
   occurences of return values) to see if it is possible to get a smaller
   function.  If not, return whatever the normal algorithm produces.
+  This should improve `show (&&)` to become:
 
-* Improve showing of constant functions.
-  Instead of showing `\x -> case x of _ -> 0`, show just `\x -> 0`
-  Instead of showing `\x y -> case (x,y) of _ -> 0`, show just `\x y -> 0`
+    \x y -> case (x,y) of
+            (True,True) -> True
+            _ -> False
 
 * Replace unused arguments by `_` when showing functions:
   Instead of showing `\x y -> case (x,y) of (_,0) -> 0; _ -> 1`,

@@ -7,143 +7,76 @@ allUnique (list :: [ Nat->() ])  =  False
 ratioRepetitions (list :: [ Nat->() ])  =  65 % 66
 
 tiers :: [Nat->()]  =
-  [ [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
+  [ [ \_ -> ()
+    , \_ -> ()
     ]
-  , [ \x -> case x of
-            _ -> ()
+  , [\_ -> ()]
+  , [ \_ -> ()
+    , \_ -> ()
     ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
+  , [ \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
     ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
+  , [ \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
     ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
+  , [ \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
     ]
   , ...
   ]

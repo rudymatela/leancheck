@@ -7,23 +7,11 @@ allUnique (list :: [ ()->Nat ])  =  True
 ratioRepetitions (list :: [ ()->Nat ])  =  0 % 1
 
 tiers :: [()->Nat]  =
-  [ [ \x -> case x of
-            () -> 0
-    ]
-  , [ \x -> case x of
-            () -> 1
-    ]
-  , [ \x -> case x of
-            () -> 2
-    ]
-  , [ \x -> case x of
-            () -> 3
-    ]
-  , [ \x -> case x of
-            () -> 4
-    ]
-  , [ \x -> case x of
-            () -> 5
-    ]
+  [ [\_ -> 0]
+  , [\_ -> 1]
+  , [\_ -> 2]
+  , [\_ -> 3]
+  , [\_ -> 4]
+  , [\_ -> 5]
   , ...
   ]

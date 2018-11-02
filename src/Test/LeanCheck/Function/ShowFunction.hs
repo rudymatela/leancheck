@@ -159,10 +159,25 @@ showFunctionLine n = showFunctionL True (n*n+1) n
 isUndefined :: ShowFunction a => Int -> a -> Bool
 isUndefined m = all (isNothing . snd) . take m . bindings
 
+-- | checks if a function is constant
+--   for the given maximum number of values
+isConstant :: ShowFunction a => Int -> a -> Bool
+isConstant m f = case take m $ bindings f of
+                 []          -> False -- uninhabited type?
+                 ((_,r'):bs) -> all (\(_,r) -> r == r') bs
+
+-- | shows a constant function
+showConstant :: ShowFunction a => Int -> a -> String
+showConstant m f = "\\" ++ unwords vs ++ " -> " ++ fromMaybe "undefined" r
+  where
+  (as,r) = head $ bindings f
+  vs = replicate (length as) "_"
+
 -- The first boolean parameter tells if we are showing
 -- the function on a single line
 showFunctionL :: ShowFunction a => Bool -> Int -> Int -> a -> String
 showFunctionL singleLine m n f | isValue f = showValueOf f
+showFunctionL singleLine m n f | isConstant m f = showConstant m f
 showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
   where
     vs = varnamesFor f

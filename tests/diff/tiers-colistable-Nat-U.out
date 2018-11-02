@@ -7,141 +7,74 @@ allUnique (list :: [ Nat->() ])  =  False
 ratioRepetitions (list :: [ Nat->() ])  =  64 % 65
 
 tiers :: [Nat->()]  =
-  [ [ \x -> case x of
-            _ -> ()
+  [ [\_ -> ()]
+  , [\_ -> ()]
+  , [ \_ -> ()
+    , \_ -> ()
     ]
-  , [ \x -> case x of
-            _ -> ()
+  , [ \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
     ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
+  , [ \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
     ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    ]
-  , [ \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
-    , \x -> case x of
-            _ -> ()
+  , [ \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
+    , \_ -> ()
     ]
   , ...
   ]

@@ -7,9 +7,7 @@ allUnique (list :: [ Nat->() ])  =  True
 ratioRepetitions (list :: [ Nat->() ])  =  0 % 1
 
 tiers :: [Nat->()]  =
-  [ [ \x -> case x of
-            _ -> ()
-    ]
+  [ [\_ -> ()]
   , []
   , []
   , []

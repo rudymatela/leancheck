@@ -7,8 +7,7 @@ allUnique (list :: [ Maybe Bool->Bool ])  =  False
 ratioRepetitions (list :: [ Maybe Bool->Bool ])  =  1 % 2
 
 tiers :: [Maybe Bool->Bool]  =
-  [ [ \x -> case x of
-            _ -> False
+  [ [ \_ -> False
     , \x -> case x of
             Nothing -> False
             Just False -> False
@@ -31,10 +30,8 @@ tiers :: [Maybe Bool->Bool]  =
             Nothing -> True
             Just False -> True
             Just True -> False
-    , \x -> case x of
-            _ -> True
-    , \x -> case x of
-            _ -> False
+    , \_ -> True
+    , \_ -> False
     , \x -> case x of
             Nothing -> False
             Just False -> True
@@ -57,7 +54,6 @@ tiers :: [Maybe Bool->Bool]  =
             Nothing -> True
             Just False -> False
             Just True -> True
-    , \x -> case x of
-            _ -> True
+    , \_ -> True
     ]
   ]

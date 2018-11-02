@@ -12,8 +12,7 @@
 [0,0,0]
 
 *** Failed! Falsifiable (after 36 tests):
-\x -> case x of
-      _ -> 0
+\_ -> 0
 \x -> case x of
       0 -> True
       _ -> False

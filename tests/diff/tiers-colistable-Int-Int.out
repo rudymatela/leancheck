@@ -7,16 +7,11 @@ allUnique (list :: [ Int->Int ])  =  False
 ratioRepetitions (list :: [ Int->Int ])  =  96 % 131
 
 tiers :: [Int->Int]  =
-  [ [ \x -> case x of
-            _ -> 0
+  [ [\_ -> 0]
+  , [ \_ -> 1
+    , \_ -> 0
     ]
-  , [ \x -> case x of
-            _ -> 1
-    , \x -> case x of
-            _ -> 0
-    ]
-  , [ \x -> case x of
-            _ -> -1
+  , [ \_ -> -1
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -27,8 +22,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -39,11 +33,9 @@ tiers :: [Int->Int]  =
             -3 -> 0
             4 -> 1
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     ]
-  , [ \x -> case x of
-            _ -> 2
+  , [ \_ -> 2
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -64,17 +56,14 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
             -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 1
+    , \_ -> 0
+    , \_ -> 1
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -95,8 +84,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> -1
             1 -> -1
@@ -110,8 +98,7 @@ tiers :: [Int->Int]  =
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 1
@@ -122,11 +109,9 @@ tiers :: [Int->Int]  =
             -3 -> 0
             4 -> 1
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     ]
-  , [ \x -> case x of
-            _ -> -2
+  , [ \_ -> -2
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -157,8 +142,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -166,8 +150,7 @@ tiers :: [Int->Int]  =
             2 -> 0
             -2 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -193,8 +176,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -205,12 +187,9 @@ tiers :: [Int->Int]  =
             1 -> 0
             -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -276,15 +255,13 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
             -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> -1
             1 -> -1
@@ -328,8 +305,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             _ -> 1
@@ -353,8 +329,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 2
             1 -> 2
@@ -368,15 +343,12 @@ tiers :: [Int->Int]  =
     , \x -> case x of
             0 -> -1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -400,8 +372,7 @@ tiers :: [Int->Int]  =
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> -1
@@ -416,8 +387,7 @@ tiers :: [Int->Int]  =
             0 -> 0
             1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -428,11 +398,9 @@ tiers :: [Int->Int]  =
             -3 -> 0
             4 -> 1
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     ]
-  , [ \x -> case x of
-            _ -> 3
+  , [ \_ -> 3
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -473,8 +441,7 @@ tiers :: [Int->Int]  =
             -3 -> 0
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -484,8 +451,7 @@ tiers :: [Int->Int]  =
             3 -> 0
             -3 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -513,8 +479,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -529,12 +494,9 @@ tiers :: [Int->Int]  =
             2 -> 0
             -2 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -592,8 +554,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -601,8 +562,7 @@ tiers :: [Int->Int]  =
             2 -> 0
             -2 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -643,20 +603,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            0 -> 0
-            1 -> 0
-            -1 -> 0
-            2 -> 0
-            -2 -> 1
-            3 -> 0
-            -3 -> 1
-            4 -> 0
-            ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -667,8 +614,18 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
+    , \_ -> 0
     , \x -> case x of
-            _ -> 0
+            0 -> 0
+            1 -> 0
+            -1 -> 0
+            2 -> 0
+            -2 -> 1
+            3 -> 0
+            -3 -> 1
+            4 -> 0
+            ...
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -679,41 +636,31 @@ tiers :: [Int->Int]  =
             1 -> 0
             -1 -> -1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
             -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            0 -> 0
-            1 -> 0
-            -1 -> 1
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
             -1 -> 1
             _ -> 0
+    , \_ -> 0
     , \x -> case x of
+            0 -> 0
+            1 -> 0
+            -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -771,8 +718,7 @@ tiers :: [Int->Int]  =
             -3 -> 0
             4 -> 1
             ...
-    , \x -> case x of
-            _ -> 1
+    , \_ -> 1
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -878,8 +824,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -887,8 +832,7 @@ tiers :: [Int->Int]  =
             2 -> 0
             -2 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -914,8 +858,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -926,14 +869,10 @@ tiers :: [Int->Int]  =
             1 -> 0
             -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> -1
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> -1
     , \x -> case x of
             0 -> -1
             1 -> -1
@@ -1025,15 +964,13 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
             -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 1
@@ -1099,15 +1036,13 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
             -1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 2
             1 -> 2
@@ -1151,8 +1086,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -1163,8 +1097,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             1 -> 0
@@ -1188,10 +1121,8 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 1
+    , \_ -> 0
+    , \_ -> 1
     , \x -> case x of
             0 -> 1
             1 -> 1
@@ -1238,8 +1169,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> -1
@@ -1284,8 +1214,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -1310,8 +1239,7 @@ tiers :: [Int->Int]  =
             -3 -> 1
             4 -> 0
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> -2
             1 -> -2
@@ -1325,38 +1253,28 @@ tiers :: [Int->Int]  =
     , \x -> case x of
             0 -> 2
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             _ -> 0
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> -1
             _ -> 0
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> -1
             1 -> 1
@@ -1410,15 +1328,12 @@ tiers :: [Int->Int]  =
     , \x -> case x of
             0 -> -1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             1 -> -1
@@ -1450,8 +1365,7 @@ tiers :: [Int->Int]  =
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 1
             1 -> 0
@@ -1475,8 +1389,7 @@ tiers :: [Int->Int]  =
     , \x -> case x of
             0 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 2
@@ -1491,16 +1404,13 @@ tiers :: [Int->Int]  =
             0 -> 0
             1 -> -1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 1
@@ -1525,8 +1435,7 @@ tiers :: [Int->Int]  =
             0 -> 0
             1 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -1543,8 +1452,7 @@ tiers :: [Int->Int]  =
             -1 -> 0
             2 -> 1
             _ -> 0
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     , \x -> case x of
             0 -> 0
             1 -> 0
@@ -1555,8 +1463,7 @@ tiers :: [Int->Int]  =
             -3 -> 0
             4 -> 1
             ...
-    , \x -> case x of
-            _ -> 0
+    , \_ -> 0
     ]
   , ...
   ]
