@@ -27,6 +27,7 @@ module Test.LeanCheck.Function.ShowFunction
   , showFunctionLine
   , Binding
   , bindings
+  , clarifiedBindings
   , clarifyBindings
   , simplifyBindings
   , ShowFunction (..)
