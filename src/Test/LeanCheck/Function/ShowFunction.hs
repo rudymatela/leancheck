@@ -168,7 +168,7 @@ showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
         | otherwise = "\n"
     cases | singleLine = intercalate "; " bs
           | otherwise  = unlines
-                       $ (replicate (length lambdaPat + 2) ' ' ++) `map` bs
+                       $ (replicate (length lambdaPat) ' ' ++) `map` bs
     caseExp = if isUndefined m f
                 then "undefined"
                 else casePat ++ sep ++ cases

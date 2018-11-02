@@ -8,60 +8,60 @@ ratioRepetitions (list :: [ Bool->Maybe Bool ])  =  1 % 2
 
 tiers :: [Bool->Maybe Bool]  =
   [ [ \x -> case x of
-              False -> Nothing
-              True -> Nothing
+            False -> Nothing
+            True -> Nothing
     , \x -> case x of
-              False -> Nothing
-              True -> Nothing
+            False -> Nothing
+            True -> Nothing
     ]
   , [ \x -> case x of
-              False -> Nothing
-              True -> Just False
+            False -> Nothing
+            True -> Just False
     , \x -> case x of
-              False -> Nothing
-              True -> Just True
+            False -> Nothing
+            True -> Just True
     , \x -> case x of
-              False -> Just False
-              True -> Nothing
+            False -> Just False
+            True -> Nothing
     , \x -> case x of
-              False -> Just True
-              True -> Nothing
+            False -> Just True
+            True -> Nothing
     , \x -> case x of
-              False -> Just False
-              True -> Nothing
+            False -> Just False
+            True -> Nothing
     , \x -> case x of
-              False -> Just True
-              True -> Nothing
+            False -> Just True
+            True -> Nothing
     , \x -> case x of
-              False -> Nothing
-              True -> Just False
+            False -> Nothing
+            True -> Just False
     , \x -> case x of
-              False -> Nothing
-              True -> Just True
+            False -> Nothing
+            True -> Just True
     ]
   , [ \x -> case x of
-              False -> Just False
-              True -> Just False
+            False -> Just False
+            True -> Just False
     , \x -> case x of
-              False -> Just False
-              True -> Just True
+            False -> Just False
+            True -> Just True
     , \x -> case x of
-              False -> Just True
-              True -> Just False
+            False -> Just True
+            True -> Just False
     , \x -> case x of
-              False -> Just True
-              True -> Just True
+            False -> Just True
+            True -> Just True
     , \x -> case x of
-              False -> Just False
-              True -> Just False
+            False -> Just False
+            True -> Just False
     , \x -> case x of
-              False -> Just True
-              True -> Just False
+            False -> Just True
+            True -> Just False
     , \x -> case x of
-              False -> Just False
-              True -> Just True
+            False -> Just False
+            True -> Just True
     , \x -> case x of
-              False -> Just True
-              True -> Just True
+            False -> Just True
+            True -> Just True
     ]
   ]

@@ -8,6 +8,6 @@ ratioRepetitions (list :: [ ()->() ])  =  0 % 1
 
 tiers :: [()->()]  =
   [ [ \x -> case x of
-              () -> ()
+            () -> ()
     ]
   ]

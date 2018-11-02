@@ -8,10 +8,10 @@ ratioRepetitions (list :: [ Bool->() ])  =  1 % 2
 
 tiers :: [Bool->()]  =
   [ [ \x -> case x of
-              False -> ()
-              True -> ()
+            False -> ()
+            True -> ()
     , \x -> case x of
-              False -> ()
-              True -> ()
+            False -> ()
+            True -> ()
     ]
   ]

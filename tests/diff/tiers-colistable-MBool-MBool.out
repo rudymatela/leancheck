@@ -8,115 +8,115 @@ ratioRepetitions (list :: [ Maybe Bool->Maybe Bool ])  =  0 % 1
 
 tiers :: [Maybe Bool->Maybe Bool]  =
   [ [ \x -> case x of
-              Nothing -> Nothing
-              Just False -> Nothing
-              Just True -> Nothing
+            Nothing -> Nothing
+            Just False -> Nothing
+            Just True -> Nothing
     ]
   , [ \x -> case x of
-              Nothing -> Nothing
-              Just False -> Just False
-              Just True -> Nothing
+            Nothing -> Nothing
+            Just False -> Just False
+            Just True -> Nothing
     , \x -> case x of
-              Nothing -> Nothing
-              Just False -> Just True
-              Just True -> Nothing
+            Nothing -> Nothing
+            Just False -> Just True
+            Just True -> Nothing
     , \x -> case x of
-              Nothing -> Nothing
-              Just False -> Nothing
-              Just True -> Just False
+            Nothing -> Nothing
+            Just False -> Nothing
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Nothing
-              Just False -> Nothing
-              Just True -> Just True
+            Nothing -> Nothing
+            Just False -> Nothing
+            Just True -> Just True
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Nothing
-              Just True -> Nothing
+            Nothing -> Just False
+            Just False -> Nothing
+            Just True -> Nothing
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Nothing
-              Just True -> Nothing
+            Nothing -> Just True
+            Just False -> Nothing
+            Just True -> Nothing
     ]
   , [ \x -> case x of
-              Nothing -> Nothing
-              Just False -> Just False
-              Just True -> Just False
+            Nothing -> Nothing
+            Just False -> Just False
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Nothing
-              Just False -> Just True
-              Just True -> Just False
+            Nothing -> Nothing
+            Just False -> Just True
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Nothing
-              Just False -> Just False
-              Just True -> Just True
+            Nothing -> Nothing
+            Just False -> Just False
+            Just True -> Just True
     , \x -> case x of
-              Nothing -> Nothing
-              Just False -> Just True
-              Just True -> Just True
+            Nothing -> Nothing
+            Just False -> Just True
+            Just True -> Just True
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Just False
-              Just True -> Nothing
+            Nothing -> Just False
+            Just False -> Just False
+            Just True -> Nothing
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Just True
-              Just True -> Nothing
+            Nothing -> Just False
+            Just False -> Just True
+            Just True -> Nothing
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Nothing
-              Just True -> Just False
+            Nothing -> Just False
+            Just False -> Nothing
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Nothing
-              Just True -> Just True
+            Nothing -> Just False
+            Just False -> Nothing
+            Just True -> Just True
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Just False
-              Just True -> Nothing
+            Nothing -> Just True
+            Just False -> Just False
+            Just True -> Nothing
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Just True
-              Just True -> Nothing
+            Nothing -> Just True
+            Just False -> Just True
+            Just True -> Nothing
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Nothing
-              Just True -> Just False
+            Nothing -> Just True
+            Just False -> Nothing
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Nothing
-              Just True -> Just True
+            Nothing -> Just True
+            Just False -> Nothing
+            Just True -> Just True
     ]
   , [ \x -> case x of
-              Nothing -> Just False
-              Just False -> Just False
-              Just True -> Just False
+            Nothing -> Just False
+            Just False -> Just False
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Just True
-              Just True -> Just False
+            Nothing -> Just False
+            Just False -> Just True
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Just False
-              Just True -> Just True
+            Nothing -> Just False
+            Just False -> Just False
+            Just True -> Just True
     , \x -> case x of
-              Nothing -> Just False
-              Just False -> Just True
-              Just True -> Just True
+            Nothing -> Just False
+            Just False -> Just True
+            Just True -> Just True
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Just False
-              Just True -> Just False
+            Nothing -> Just True
+            Just False -> Just False
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Just True
-              Just True -> Just False
+            Nothing -> Just True
+            Just False -> Just True
+            Just True -> Just False
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Just False
-              Just True -> Just True
+            Nothing -> Just True
+            Just False -> Just False
+            Just True -> Just True
     , \x -> case x of
-              Nothing -> Just True
-              Just False -> Just True
-              Just True -> Just True
+            Nothing -> Just True
+            Just False -> Just True
+            Just True -> Just True
     ]
   ]

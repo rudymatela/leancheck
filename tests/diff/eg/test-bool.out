@@ -8,10 +8,10 @@ not . not === id
 All boolean operators are commutative (wrong).
 *** Failed! Falsifiable (after 10 tests):
 \x y -> case (x,y) of
-          (False,False) -> False
-          (False,True) -> False
-          (True,False) -> True
-          (True,True) -> False
+        (False,False) -> False
+        (False,True) -> False
+        (True,False) -> True
+        (True,True) -> False
 False
 True
 
@@ -19,10 +19,10 @@ True
 All boolean operators are associative (wrong).
 *** Failed! Falsifiable (after 22 tests):
 \x y -> case (x,y) of
-          (False,False) -> False
-          (False,True) -> False
-          (True,False) -> True
-          (True,True) -> False
+        (False,False) -> False
+        (False,True) -> False
+        (True,False) -> True
+        (True,True) -> False
 True
 False
 True
