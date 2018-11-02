@@ -23,7 +23,7 @@ tests =
   , showFunction 2 int == "undefined"
   , showFunction 2 bool == "undefined"
   , showFunction 2 char == "undefined"
-  , showFunctionLine 10 (int  >- int) == "\\x -> case x of ..."
+  , showFunctionLine 10 (int  >- int) == "\\x -> undefined"
   , showFunctionLine 10 (bool >- bool) == "\\x -> undefined"
 
   -- partially defined --

@@ -148,11 +148,10 @@ showFunction n = showFunctionL False (n*n+1) n
 showFunctionLine :: ShowFunction a => Int -> a -> String
 showFunctionLine n = showFunctionL True (n*n+1) n
 
--- | isUndefined checks if a function is totally undefined.
--- When it is not possible to check all values, it returns false
+-- | isUndefined checks if a function is totally undefined
+--   for the given maximum number of values
 isUndefined :: ShowFunction a => Int -> a -> Bool
-isUndefined m f = length bs < m && all (isNothing . snd) bs
-  where bs = take m $ bindings f
+isUndefined m = all (isNothing . snd) . take m . bindings
 
 -- The first boolean parameter tells if we are showing
 -- the function on a single line
