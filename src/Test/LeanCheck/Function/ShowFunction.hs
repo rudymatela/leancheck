@@ -42,7 +42,7 @@ import Test.LeanCheck.Core
 import Test.LeanCheck.Error (errorToNothing)
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Stats (classifyOn)
-import Data.List
+import Data.List (intercalate, sortBy)
 import Data.Maybe
 import Data.Function (on)
 
@@ -328,3 +328,7 @@ discardLater (?>) = dl
 
 none :: (a -> Bool) -> [a] -> Bool
 none p = not . any p
+
+-- sortOn is only available on GHC > 7.8
+sortOn :: Ord b => (a -> b) -> [a] -> [a]
+sortOn f = sortBy (compare `on` f)
