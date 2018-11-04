@@ -110,12 +110,10 @@ showTuple [x]  =  x
 showTuple xs | all (== "_") xs  =  "_"
              | otherwise        =  paren $ intercalate "," xs
 
-showNBindingsOf :: ShowFunction a => Int -> Int -> a -> [String]
-showNBindingsOf m n f = take n bs
-                     ++ ["..." | length bs' >= m || length bs > n]
-  where bs' = clarifiedBindings m n f
-        bs = [ showTuple as ++ " -> " ++ r
-             | (as, Just r) <- bs' ]
+showBindings :: Bool -> Int -> [Binding] -> [String]
+showBindings infinite n bs' = take n bs ++ ["..." | infinite || length bs > n]
+  where
+  bs = [ showTuple as ++ " -> " ++ r | (as, Just r) <- bs' ]
 
 isValue :: ShowFunction a => a -> Bool
 isValue f = case bindings f of
@@ -183,7 +181,8 @@ showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
     vs = varnamesFor f
     lambdaPat = "\\" ++ unwords vs ++ " -> "
     casePat = "case " ++ showTuple vs ++ " of"
-    bs = showNBindingsOf m n f
+    bindings = clarifiedBindings m n f
+    bs = showBindings (length bindings >= m) n bindings
     sep | singleLine = " "
         | otherwise = "\n"
     cases | singleLine = intercalate "; " bs
