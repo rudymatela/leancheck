@@ -103,6 +103,15 @@ tests =
     == "\\x y z -> case (x,y,z) of\n"
     ++ "          (_,2,_) -> False\n"
     ++ "          _ -> True\n"
+  , showFunction 4 args1or3of3are0
+    == "\\x y z -> case (x,y,z) of\n"
+    ++ "          (0,_,_) -> True\n"
+    ++ "          (_,_,0) -> True\n"
+    ++ "          _ -> False\n"
+  , showFunction 4 args13of3arent0
+    == "\\x y z -> case (x,y,z) of\n"
+    ++ "          (0,_,0) -> False\n"
+    ++ "          _ -> True\n"
   ]
 
 arg1of1is0 :: Int -> Bool
@@ -133,4 +142,17 @@ arg2of3isnt2 :: Int -> Int -> Int -> Bool
 arg2of3isnt2 =
   \x y z -> case (x,y,z) of
             (_,2,_) -> False
+            _ -> True
+
+args1or3of3are0 :: Int -> Int -> Int -> Bool
+args1or3of3are0 =
+  \x y z -> case (x,y,z) of
+            (0,_,_) -> True
+            (_,_,0) -> True
+            _ -> False
+
+args13of3arent0 :: Int -> Int -> Int -> Bool
+args13of3arent0 =
+  \x y z -> case (x,y,z) of
+            (0,_,0) -> False
             _ -> True
