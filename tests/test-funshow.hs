@@ -81,4 +81,34 @@ tests =
     == "\\x y -> case (x,y) of\n"
     ++ "        (False,False) -> False\n"
     ++ "        _ -> True\n"
+
+  , showFunction 4 (== (0 :: Int))
+    == "\\x -> case x of\n"
+    ++ "      0 -> True\n"
+    ++ "      _ -> False\n"
+  , showFunction 4 (/= (1 :: Int))
+    == "\\x -> case x of\n"
+    ++ "      1 -> False\n"
+    ++ "      _ -> True\n"
+
+  , showFunction 4 arg1of2is0
+    == "\\x y -> case (x,y) of\n"
+    ++ "        (0,_) -> True\n"
+    ++ "        _ -> False\n"
+  , showFunction 4 arg2of2is0
+    == "\\x y -> case (x,y) of\n"
+    ++ "        (_,0) -> True\n"
+    ++ "        _ -> False\n"
   ]
+
+arg1of2is0 :: Int -> Int -> Bool
+arg1of2is0 =
+  \x y -> case (x,y) of
+          (0,_) -> True
+          _ -> False
+
+arg2of2is0 :: Int -> Int -> Bool
+arg2of2is0 =
+  \x y -> case (x,y) of
+          (_,0) -> True
+          _ -> False
