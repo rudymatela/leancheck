@@ -82,11 +82,11 @@ tests =
     ++ "        (False,False) -> False\n"
     ++ "        _ -> True\n"
 
-  , showFunction 4 (== (0 :: Int))
+  , showFunction 4 arg1of1is0
     == "\\x -> case x of\n"
     ++ "      0 -> True\n"
     ++ "      _ -> False\n"
-  , showFunction 4 (/= (1 :: Int))
+  , showFunction 4 arg1of1isnt1
     == "\\x -> case x of\n"
     ++ "      1 -> False\n"
     ++ "      _ -> True\n"
@@ -100,6 +100,18 @@ tests =
     ++ "        (_,0) -> True\n"
     ++ "        _ -> False\n"
   ]
+
+arg1of1is0 :: Int -> Bool
+arg1of1is0 =
+  \x -> case x of
+        0 -> True
+        _ -> False
+
+arg1of1isnt1 :: Int -> Bool
+arg1of1isnt1 =
+  \x -> case x of
+        1 -> False
+        _ -> True
 
 arg1of2is0 :: Int -> Int -> Bool
 arg1of2is0 =
