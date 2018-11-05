@@ -135,6 +135,12 @@ main = do
     "Nat2->Nat3"       -> put t n (u :: Nat2 -> Nat3         )
     "Nat3->Nat2"       -> put t n (u :: Nat3 -> Nat2         )
     "Nat3->Nat3"       -> put t n (u :: Nat3 -> Nat3         )
+    -- functions with mixed arguments
+    "Bool->Int->Bool"  -> put t n (u :: Bool -> Int -> Bool  )
+    "Int->Bool->Bool"  -> put t n (u :: Int -> Bool -> Bool  )
+    -- functions with 3 arguments
+    "Int->Int->Int->Int"     -> put t n (u :: Int -> Int -> Int -> Int)
+    "Bool->Bool->Bool->Bool" -> put t n (u :: Bool -> Bool -> Bool -> Bool)
     -- special lists
     "Set Bool"         -> put t n (u :: Set Bool             )
     "Set ()"           -> put t n (u :: Set ()               )
