@@ -1,0 +1,100 @@
+map length (tiers :: [[ Bool->Int->Bool ]])  =  [4,8,12,...]
+
+length (list :: [ Bool->Int->Bool ])  =  Infinity
+
+allUnique (list :: [ Bool->Int->Bool ])  =  True
+
+ratioRepetitions (list :: [ Bool->Int->Bool ])  =  0 % 1
+
+tiers :: [Bool->Int->Bool]  =
+  [ [ \_ _ -> False
+    , \x y -> case (x,y) of
+              (False,_) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,_) -> True
+              _ -> False
+    , \_ _ -> True
+    ]
+  , [ \x y -> case (x,y) of
+              (True,0) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,_) -> False
+              (_,0) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,_) -> True
+              (_,0) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (True,0) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,0) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (_,0) -> True
+              (False,_) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (_,0) -> False
+              (False,_) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,0) -> False
+              _ -> True
+    ]
+  , [ \x y -> case (x,y) of
+              (True,1) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,_) -> False
+              (_,0) -> True
+              (_,1) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,_) -> True
+              (_,0) -> False
+              (_,1) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (True,1) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (_,0) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,0) -> True
+              (_,0) -> False
+              (False,_) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,0) -> False
+              (_,0) -> True
+              (False,_) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (_,0) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,1) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,0) -> False
+              (True,_) -> True
+              (_,0) -> True
+              (_,1) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,0) -> True
+              (True,_) -> False
+              (_,0) -> False
+              (_,1) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,1) -> False
+              _ -> True
+    ]
+  , ...
+  ]

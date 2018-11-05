@@ -276,6 +276,12 @@ bench/tiers-%.diff-test: bench/tiers-%
 	$< "Maybe Bool->Bool" | diff -rud tests/diff/tiers-$*-MBool-Bool.out  -
 	$< "Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-Bool-MBool.out  -
 	$< "Maybe Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-MBool-MBool.out -
+	# functions with mixed arguments
+	$< "Bool->Int->Bool" 3 | diff -rud tests/diff/tiers-$*-Bool-Int-Bool.out -
+	$< "Int->Bool->Bool" 3 | diff -rud tests/diff/tiers-$*-Int-Bool-Bool.out -
+	# functions with 3 arguments
+	$< "Int->Int->Int->Int"     3 | diff -rud tests/diff/tiers-$*-Int-Int-Int-Int.out -
+	$< "Bool->Bool->Bool->Bool"   | diff -rud tests/diff/tiers-$*-Bool-Bool-Bool-Bool.out -
 	# functions of lists
 	$< "[Bool]->[Bool]" 4 | diff -rud tests/diff/tiers-$*-Bools-Bools.out -
 	$< "[Nat]->[Nat]"   4 | diff -rud tests/diff/tiers-$*-Nats-Nats.out   -
@@ -302,6 +308,12 @@ bench/tiers-%.update-diff-test: bench/tiers-%
 	$< "Maybe Bool->Bool" > tests/diff/tiers-$*-MBool-Bool.out
 	$< "Bool->Maybe Bool" > tests/diff/tiers-$*-Bool-MBool.out
 	$< "Maybe Bool->Maybe Bool" > tests/diff/tiers-$*-MBool-MBool.out
+	# functions with mixed arguments
+	$< "Bool->Int->Bool" 3 > tests/diff/tiers-$*-Bool-Int-Bool.out
+	$< "Int->Bool->Bool" 3 > tests/diff/tiers-$*-Int-Bool-Bool.out
+	# functions with 3 arguments
+	$< "Int->Int->Int->Int"     3 > tests/diff/tiers-$*-Int-Int-Int-Int.out
+	$< "Bool->Bool->Bool->Bool"   > tests/diff/tiers-$*-Bool-Bool-Bool-Bool.out
 	# functions of lists
 	$< "[()]->[()]"     4 > tests/diff/tiers-$*-Us-Us.out
 	$< "[Bool]->[Bool]" 4 > tests/diff/tiers-$*-Bools-Bools.out
