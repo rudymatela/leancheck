@@ -50,6 +50,7 @@ bench/tiers-listsofpairs: \
 bench/tiers-listsofpairs.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
@@ -88,6 +89,7 @@ bench/tiers-mixed.o: \
 bench/tiers.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
@@ -108,6 +110,7 @@ eg/higher-order: \
 eg/higher-order.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
@@ -194,6 +197,13 @@ mk/All.o: \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Generic.hs \
+  src/Test/LeanCheck/Function/Show.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
+  src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
@@ -337,6 +347,7 @@ src/Test/LeanCheck/Function/ListsOfPairs.o: \
 src/Test/LeanCheck/Function.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
@@ -352,6 +363,7 @@ src/Test/LeanCheck/Function.o: \
 src/Test/LeanCheck/Function/ShowFunction.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
@@ -362,6 +374,7 @@ src/Test/LeanCheck/Function/ShowFunction.o: \
 src/Test/LeanCheck/Function/Show.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
@@ -478,6 +491,7 @@ tests/test-funshow.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Utils/TypeBinding.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
