@@ -34,7 +34,7 @@ module Test.LeanCheck.Function.ShowFunction
   , explainBindings
   , describeBindings
   , ShowFunction (..)
-  , tBindingsShow
+  , bindtiersShow
   -- * Re-exports
   , Listable
   , name
@@ -59,9 +59,9 @@ type Binding = ([String], Maybe String)
 --
 -- Non functional instances should be defined by:
 --
--- > instance ShowFunction Ty where tBindings = tBindingsShow
+-- > instance ShowFunction Ty where bindtiers = bindtiersShow
 class ShowFunction a where
-  tBindings :: a -> [[Binding]]
+  bindtiers :: a -> [[Binding]]
 
 -- | Given a 'ShowFunction' value, return a list of bindings
 --   for printing.  Examples:
@@ -74,31 +74,31 @@ class ShowFunction a where
 -- >                  , (["True","True"], "True")
 -- >                  ]
 bindings :: ShowFunction a => a -> [Binding]
-bindings = concat . tBindings
+bindings = concat . bindtiers
 
 
 -- instances for (algebraic/numeric) data types --
--- | A default implementation of tBindings for already 'Show'-able types.
-tBindingsShow :: Show a => a -> [[Binding]]
-tBindingsShow x = [[([],errorToNothing $ show x)]]
+-- | A default implementation of bindtiers for already 'Show'-able types.
+bindtiersShow :: Show a => a -> [[Binding]]
+bindtiersShow x = [[([],errorToNothing $ show x)]]
 
-instance ShowFunction ()       where tBindings = tBindingsShow
-instance ShowFunction Bool     where tBindings = tBindingsShow
-instance ShowFunction Int      where tBindings = tBindingsShow
-instance ShowFunction Integer  where tBindings = tBindingsShow
-instance ShowFunction Char     where tBindings = tBindingsShow
-instance ShowFunction Float    where tBindings = tBindingsShow
-instance ShowFunction Double   where tBindings = tBindingsShow
-instance ShowFunction Ordering where tBindings = tBindingsShow
-instance Show a => ShowFunction [a]       where tBindings = tBindingsShow
-instance Show a => ShowFunction (Maybe a) where tBindings = tBindingsShow
-instance (Show a, Show b) => ShowFunction (Either a b) where tBindings = tBindingsShow
-instance (Show a, Show b) => ShowFunction (a,b) where tBindings = tBindingsShow
+instance ShowFunction ()       where bindtiers = bindtiersShow
+instance ShowFunction Bool     where bindtiers = bindtiersShow
+instance ShowFunction Int      where bindtiers = bindtiersShow
+instance ShowFunction Integer  where bindtiers = bindtiersShow
+instance ShowFunction Char     where bindtiers = bindtiersShow
+instance ShowFunction Float    where bindtiers = bindtiersShow
+instance ShowFunction Double   where bindtiers = bindtiersShow
+instance ShowFunction Ordering where bindtiers = bindtiersShow
+instance Show a => ShowFunction [a]       where bindtiers = bindtiersShow
+instance Show a => ShowFunction (Maybe a) where bindtiers = bindtiersShow
+instance (Show a, Show b) => ShowFunction (Either a b) where bindtiers = bindtiersShow
+instance (Show a, Show b) => ShowFunction (a,b) where bindtiers = bindtiersShow
 
 -- instance for functional value type --
 instance (Show a, Listable a, ShowFunction b) => ShowFunction (a->b) where
-  tBindings f = concatMapT tBindingsFor tiers
-    where tBindingsFor x = mapFst (show x:) `mapT` tBindings (f x)
+  bindtiers f = concatMapT bindtiersFor tiers
+    where bindtiersFor x = mapFst (show x:) `mapT` bindtiers (f x)
           mapFst f (x,y) = (f x, y)
 
 paren :: String -> String
@@ -199,35 +199,35 @@ showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
 
 -- instances for further tuple arities --
 instance (Show a, Show b, Show c)
-      => ShowFunction (a,b,c) where tBindings = tBindingsShow
+      => ShowFunction (a,b,c) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d)
-      => ShowFunction (a,b,c,d) where tBindings = tBindingsShow
+      => ShowFunction (a,b,c,d) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e)
-      => ShowFunction (a,b,c,d,e) where tBindings = tBindingsShow
+      => ShowFunction (a,b,c,d,e) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f)
-      => ShowFunction (a,b,c,d,e,f) where tBindings = tBindingsShow
+      => ShowFunction (a,b,c,d,e,f) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g)
-      => ShowFunction (a,b,c,d,e,f,g) where tBindings = tBindingsShow
+      => ShowFunction (a,b,c,d,e,f,g) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g, Show h)
-      => ShowFunction (a,b,c,d,e,f,g,h) where tBindings = tBindingsShow
+      => ShowFunction (a,b,c,d,e,f,g,h) where bindtiers = bindtiersShow
 
 -- instance for types from Test.LeanCheck.Utils.Types
-instance ShowFunction Nat   where tBindings = tBindingsShow
-instance ShowFunction Nat1  where tBindings = tBindingsShow
-instance ShowFunction Nat2  where tBindings = tBindingsShow
-instance ShowFunction Nat3  where tBindings = tBindingsShow
-instance ShowFunction Nat4  where tBindings = tBindingsShow
-instance ShowFunction Nat5  where tBindings = tBindingsShow
-instance ShowFunction Nat6  where tBindings = tBindingsShow
-instance ShowFunction Nat7  where tBindings = tBindingsShow
-instance ShowFunction Int1  where tBindings = tBindingsShow
-instance ShowFunction Int2  where tBindings = tBindingsShow
-instance ShowFunction Int3  where tBindings = tBindingsShow
-instance ShowFunction Int4  where tBindings = tBindingsShow
-instance ShowFunction Word1 where tBindings = tBindingsShow
-instance ShowFunction Word2 where tBindings = tBindingsShow
-instance ShowFunction Word3 where tBindings = tBindingsShow
-instance ShowFunction Word4 where tBindings = tBindingsShow
+instance ShowFunction Nat   where bindtiers = bindtiersShow
+instance ShowFunction Nat1  where bindtiers = bindtiersShow
+instance ShowFunction Nat2  where bindtiers = bindtiersShow
+instance ShowFunction Nat3  where bindtiers = bindtiersShow
+instance ShowFunction Nat4  where bindtiers = bindtiersShow
+instance ShowFunction Nat5  where bindtiers = bindtiersShow
+instance ShowFunction Nat6  where bindtiers = bindtiersShow
+instance ShowFunction Nat7  where bindtiers = bindtiersShow
+instance ShowFunction Int1  where bindtiers = bindtiersShow
+instance ShowFunction Int2  where bindtiers = bindtiersShow
+instance ShowFunction Int3  where bindtiers = bindtiersShow
+instance ShowFunction Int4  where bindtiers = bindtiersShow
+instance ShowFunction Word1 where bindtiers = bindtiersShow
+instance ShowFunction Word2 where bindtiers = bindtiersShow
+instance ShowFunction Word3 where bindtiers = bindtiersShow
+instance ShowFunction Word4 where bindtiers = bindtiersShow
 
 -- | Hard coded function names and bindings
 --   Search this list for a short name for your function.
