@@ -271,28 +271,6 @@ generalizations (v:vs) = map ("_":) gvs ++ map (v:) gvs
   where
   gvs = generalizations vs
 
--- Should be read as "is generalization of":
---
--- > > ["_","_","_"] ~> ["1","2","3"]
--- > True
--- > > ["1","2","3"] ~> ["_","_","_"]
--- > False
--- > > ["_","3"] ~> ["1","3"]
--- > True
--- > > ["_","3"] ~> ["_","4"]
--- > False
-(~>) :: [String] -> [String] -> Bool
-[]       ~> []      =  True
-("_":ws) ~> (v:vs)  =  ws ~> vs
-(w:ws)   ~> (v:vs)  =  w == v && ws ~> vs
-_        ~> _       =  False
-
-(<~) :: [String] -> [String] -> Bool
-(<~) = flip (~>)
-
-(<~~) :: Binding -> Binding -> Bool
-(as,r) <~~ (as',r') = as <~ as' && r == r'
-
 clarifiedBindings :: ShowFunction a => Int -> Int -> a -> ([String],[Binding])
 clarifiedBindings m n = clarifyBindings . describedBindings m n
 
@@ -349,7 +327,28 @@ explainBindings = explain []
     where
     bs'' = discardLater (<~~)
          [ (gas,r) | gas <- generalizations as
-                   , and [r' == r | (as',r') <- bs, gas ~> as'] ]
+                   , and [r' == r | (as',r') <- bs, as' <~ gas] ]
+
+-- Should be read as "is generalized by":
+--
+-- > > ["1","2","3"] <~ ["_","_","_"]
+-- > True
+-- > > ["_","_","_"] <~ ["1","2","3"]
+-- > False
+-- > > ["1","3"] <~ ["_","3"]
+-- > True
+-- > > ["_","3"] <~ ["_","4"]
+-- > False
+(<~) :: [String] -> [String] -> Bool
+[]     <~ []       =  True
+(v:vs) <~ ("_":ws) =  vs <~ ws
+(v:vs) <~ (w:ws)   =  v == w && vs <~ ws
+_      <~ _        =  False
+
+-- | Should be read as "is generalized by".
+(<~~) :: Binding -> Binding -> Bool
+(as,r) <~~ (as',r') = as <~ as' && r == r'
+
 
 -- general auxiliary functions
 
