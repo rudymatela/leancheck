@@ -31,19 +31,27 @@
 -- "Test.LeanCheck.Function.Show"
 -- exports an instance like the one above.
 module Test.LeanCheck.Function.ShowFunction
-  ( showFunction
+  (
+  -- * Showing functions
+    showFunction
   , showFunctionLine
-  , Binding
-  , bindings
+
+  -- * Support for user-defined algebraic datatypes on return values
   , ShowFunction (..)
   , bindtiersShow
 
-  , clarifiedBindings
+  -- * Listing functional bindings
+  , Binding
+  , bindings
+
+  -- * Explaining, describing and clarifying bindings
   , explainedBindings
   , describedBindings
-  , clarifyBindings
+  , clarifiedBindings
   , explainBindings
   , describeBindings
+  , clarifyBindings
+
   -- * Re-exports
   , Listable
   )
