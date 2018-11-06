@@ -27,9 +27,9 @@ module Test.LeanCheck.Function.ShowFunction
   , showFunctionLine
   , Binding
   , bindings
+  , explainBindings
   , clarifiedBindings
   , clarifyBindings
-  , simplifyBindings
   , ShowFunction (..)
   , tBindingsShow
   -- * Re-exports
@@ -299,16 +299,16 @@ clarifiedBindings m n f
 clarifyBindings :: [Binding] -> [Binding]
 clarifyBindings bs = head $ sortOn length $
   [ bs
-  , simplifyBindings bs
-  , simplifyBindings . concat . sortOn length $ classifyOn snd bs
+  , explainBindings bs
+  , explainBindings . concat . sortOn length $ classifyOn snd bs
   ]
 
-simplifyBindings :: [Binding] -> [Binding]
-simplifyBindings = simplify []
+explainBindings :: [Binding] -> [Binding]
+explainBindings = explain []
   where
-  simplify :: [Binding] -> [Binding] -> [Binding]
-  simplify bs' []           =  reverse bs'
-  simplify bs' ((as,r):bs)  =  simplify (bs''++bs') [b | b <- bs, none (b <~~) bs'']
+  explain :: [Binding] -> [Binding] -> [Binding]
+  explain bs' []           =  reverse bs'
+  explain bs' ((as,r):bs)  =  explain (bs''++bs') [b | b <- bs, none (b <~~) bs'']
     where
     bs'' = discardLater (<~~)
          [ (gas,r) | gas <- generalizations as
