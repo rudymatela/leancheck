@@ -260,26 +260,26 @@ bench/tiers-%.diff-test: bench/tiers-%
 	$< "Bool->Bool"       | diff -rud tests/diff/tiers-$*-Bool-Bool.out   -
 	$< "Bool->()"         | diff -rud tests/diff/tiers-$*-Bool-U.out      -
 	$< "()->Bool"         | diff -rud tests/diff/tiers-$*-U-Bool.out      -
-	$< "Int->Int"       6 | diff -rud tests/diff/tiers-$*-Int-Int.out     -
-	$< "Nat->Nat"       6 | diff -rud tests/diff/tiers-$*-Nat-Nat.out     -
+	$< "Int->Int"       9 | diff -rud tests/diff/tiers-$*-Int-Int.out     -
+	$< "Nat->Nat"       9 | diff -rud tests/diff/tiers-$*-Nat-Nat.out     -
 	$< "()->Nat"        6 | diff -rud tests/diff/tiers-$*-U-Nat.out       -
 	$< "Nat->()"        6 | diff -rud tests/diff/tiers-$*-Nat-U.out       -
-	$< "Int->Int->Int"  4 | diff -rud tests/diff/tiers-$*-Int-Int-Int.out -
-	$< "Nat->Nat->Nat"  4 | diff -rud tests/diff/tiers-$*-Nat-Nat-Nat.out -
-	$< "(Nat,Nat)->Nat" 4 | diff -rud tests/diff/tiers-$*-Nat,Nat-Nat.out -
+	$< "Int->Int->Int"  6 | diff -rud tests/diff/tiers-$*-Int-Int-Int.out -
+	$< "Nat->Nat->Nat"  6 | diff -rud tests/diff/tiers-$*-Nat-Nat-Nat.out -
+	$< "(Nat,Nat)->Nat" 6 | diff -rud tests/diff/tiers-$*-Nat,Nat-Nat.out -
 	$< "Maybe Bool->Bool" | diff -rud tests/diff/tiers-$*-MBool-Bool.out  -
 	$< "Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-Bool-MBool.out  -
 	$< "Maybe Bool->Maybe Bool" | diff -rud tests/diff/tiers-$*-MBool-MBool.out -
 	# functions with mixed arguments
-	$< "Bool->Int->Bool" 3 | diff -rud tests/diff/tiers-$*-Bool-Int-Bool.out -
-	$< "Int->Bool->Bool" 3 | diff -rud tests/diff/tiers-$*-Int-Bool-Bool.out -
+	$< "Bool->Int->Bool" 6 | diff -rud tests/diff/tiers-$*-Bool-Int-Bool.out -
+	$< "Int->Bool->Bool" 6 | diff -rud tests/diff/tiers-$*-Int-Bool-Bool.out -
 	# functions with 3 arguments
-	$< "Int->Int->Int->Int"     3 | diff -rud tests/diff/tiers-$*-Int-Int-Int-Int.out -
+	$< "Int->Int->Int->Int"     4 | diff -rud tests/diff/tiers-$*-Int-Int-Int-Int.out -
 	$< "Bool->Bool->Bool->Bool"   | diff -rud tests/diff/tiers-$*-Bool-Bool-Bool-Bool.out -
 	# functions of lists
-	$< "[Bool]->[Bool]" 4 | diff -rud tests/diff/tiers-$*-Bools-Bools.out -
-	$< "[Nat]->[Nat]"   4 | diff -rud tests/diff/tiers-$*-Nats-Nats.out   -
-	$< "[Int]->[Int]"   4 | diff -rud tests/diff/tiers-$*-Ints-Ints.out   -
+	$< "[Bool]->[Bool]" 6 | diff -rud tests/diff/tiers-$*-Bools-Bools.out -
+	$< "[Nat]->[Nat]"   6 | diff -rud tests/diff/tiers-$*-Nats-Nats.out   -
+	$< "[Int]->[Int]"   6 | diff -rud tests/diff/tiers-$*-Ints-Ints.out   -
 	# more functions
 	$< "Nat2->Nat2"       | diff -rud tests/diff/tiers-$*-Nat2-Nat2.out   -
 	$< "Nat2->Nat3"       | diff -rud tests/diff/tiers-$*-Nat2-Nat3.out   -
@@ -292,27 +292,27 @@ bench/tiers-%.update-diff-test: bench/tiers-%
 	$< "Bool->Bool"       > tests/diff/tiers-$*-Bool-Bool.out
 	$< "Bool->()"         > tests/diff/tiers-$*-Bool-U.out
 	$< "()->Bool"         > tests/diff/tiers-$*-U-Bool.out
-	$< "Int->Int"       6 > tests/diff/tiers-$*-Int-Int.out
-	$< "Nat->Nat"       6 > tests/diff/tiers-$*-Nat-Nat.out
+	$< "Int->Int"       9 > tests/diff/tiers-$*-Int-Int.out
+	$< "Nat->Nat"       9 > tests/diff/tiers-$*-Nat-Nat.out
 	$< "Nat->()"        6 > tests/diff/tiers-$*-Nat-U.out
 	$< "()->Nat"        6 > tests/diff/tiers-$*-U-Nat.out
-	$< "Int->Int->Int"  4 > tests/diff/tiers-$*-Int-Int-Int.out
-	$< "Nat->Nat->Nat"  4 > tests/diff/tiers-$*-Nat-Nat-Nat.out
-	$< "(Nat,Nat)->Nat" 4 > tests/diff/tiers-$*-Nat,Nat-Nat.out
+	$< "Int->Int->Int"  6 > tests/diff/tiers-$*-Int-Int-Int.out
+	$< "Nat->Nat->Nat"  6 > tests/diff/tiers-$*-Nat-Nat-Nat.out
+	$< "(Nat,Nat)->Nat" 6 > tests/diff/tiers-$*-Nat,Nat-Nat.out
 	$< "Maybe Bool->Bool" > tests/diff/tiers-$*-MBool-Bool.out
 	$< "Bool->Maybe Bool" > tests/diff/tiers-$*-Bool-MBool.out
 	$< "Maybe Bool->Maybe Bool" > tests/diff/tiers-$*-MBool-MBool.out
 	# functions with mixed arguments
-	$< "Bool->Int->Bool" 3 > tests/diff/tiers-$*-Bool-Int-Bool.out
-	$< "Int->Bool->Bool" 3 > tests/diff/tiers-$*-Int-Bool-Bool.out
+	$< "Bool->Int->Bool" 6 > tests/diff/tiers-$*-Bool-Int-Bool.out
+	$< "Int->Bool->Bool" 6 > tests/diff/tiers-$*-Int-Bool-Bool.out
 	# functions with 3 arguments
-	$< "Int->Int->Int->Int"     3 > tests/diff/tiers-$*-Int-Int-Int-Int.out
+	$< "Int->Int->Int->Int"     4 > tests/diff/tiers-$*-Int-Int-Int-Int.out
 	$< "Bool->Bool->Bool->Bool"   > tests/diff/tiers-$*-Bool-Bool-Bool-Bool.out
 	# functions of lists
-	$< "[()]->[()]"     4 > tests/diff/tiers-$*-Us-Us.out
-	$< "[Bool]->[Bool]" 4 > tests/diff/tiers-$*-Bools-Bools.out
-	$< "[Nat]->[Nat]"   4 > tests/diff/tiers-$*-Nats-Nats.out
-	$< "[Int]->[Int]"   4 > tests/diff/tiers-$*-Ints-Ints.out
+	$< "[()]->[()]"     6 > tests/diff/tiers-$*-Us-Us.out
+	$< "[Bool]->[Bool]" 6 > tests/diff/tiers-$*-Bools-Bools.out
+	$< "[Nat]->[Nat]"   6 > tests/diff/tiers-$*-Nats-Nats.out
+	$< "[Int]->[Int]"   6 > tests/diff/tiers-$*-Ints-Ints.out
 	# more functions
 	$< "Nat2->Nat2"       > tests/diff/tiers-$*-Nat2-Nat2.out
 	$< "Nat2->Nat3"       > tests/diff/tiers-$*-Nat2-Nat3.out
