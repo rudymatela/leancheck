@@ -22,7 +22,6 @@ EGS = \
 	eg/test-sort
 BENCHS = \
 	bench/tiers-colistable \
-	bench/tiers-funlistable \
 	bench/tiers-listsofpairs \
 	bench/tiers
 GHCIMPORTDIRS = src:tests
@@ -62,7 +61,6 @@ eg/test-list.update-diff-test: eg/test-list
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-colistable.hs
 	rm -f bench/tiers-listsofpairs.hs
-	rm -f bench/tiers-funlistable.hs
 	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
 full-clean: clean
@@ -233,8 +231,7 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Xs Nat7"          > tests/diff/tiers-XsNat7.out
 
 prepare-depend: bench/tiers-listsofpairs.hs \
-                bench/tiers-colistable.hs \
-                bench/tiers-funlistable.hs
+                bench/tiers-colistable.hs
 
 prepare-depend-and-depend: prepare-depend
 	make depend
@@ -247,21 +244,14 @@ bench/tiers-listsofpairs.hs: bench/tiers.hs
 bench/tiers-colistable.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable.CoListable\n$(TLF).Show/" $< > $@
 
-bench/tiers-funlistable.hs: bench/tiers.hs
-	sed -e "s/$(TLF)$$/$(TLF).Listable.FunListable\n$(TLF).Show/" $< > $@
-
 bench/tiers-colistable:   bench/tiers-colistable.hs   src/Test/LeanCheck/Function/Listable/CoListable.hs
 
 bench/tiers-listsofpairs: bench/tiers-listsofpairs.hs src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs
 
-bench/tiers-funlistable:  bench/tiers-funlistable.hs  src/Test/LeanCheck/Function/Listable/FunListable.hs
-
 diff-test-funtiers: bench/tiers-listsofpairs.diff-test \
-                    bench/tiers-funlistable.diff-test \
                     bench/tiers-colistable.diff-test
 
 update-diff-test-funtiers: bench/tiers-listsofpairs.update-diff-test \
-                           bench/tiers-funlistable.update-diff-test \
                            bench/tiers-colistable.update-diff-test
 
 bench/tiers-%.diff-test: bench/tiers-%

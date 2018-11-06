@@ -92,7 +92,6 @@ library
                  , Test.LeanCheck.Function.Show
                  , Test.LeanCheck.Function.Listable
                  , Test.LeanCheck.Function.Listable.ListsOfPairs
-                 , Test.LeanCheck.Function.Listable.FunListable
                  , Test.LeanCheck.Function.Listable.CoListable
                  , Test.LeanCheck.Function.Listable.Periodic
                  , Test.LeanCheck.Function.ListsOfPairs
