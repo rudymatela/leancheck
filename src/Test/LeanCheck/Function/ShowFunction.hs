@@ -67,7 +67,7 @@ class ShowFunction a where
 --   for printing.  Examples:
 --
 -- > bindings True == [([],True)]
--- > bindings (id::Int) == [(["0"],"0"), (["1"],"1"), (["-1"],"-1"), ...
+-- > bindings (id::Int) == [(["0"],"0"), (["1"],"1"), (["-1"],"-1"), ...]
 -- > bindings (&&) == [ (["False","False"], "False")
 -- >                  , (["False","True"], "False")
 -- >                  , (["True","False"], "False")
