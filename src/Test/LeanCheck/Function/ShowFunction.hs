@@ -27,8 +27,9 @@ module Test.LeanCheck.Function.ShowFunction
   , showFunctionLine
   , Binding
   , bindings
-  , explainBindings
+  , explainedBindings
   , clarifiedBindings
+  , explainBindings
   , clarifyBindings
   , ShowFunction (..)
   , tBindingsShow
@@ -302,6 +303,9 @@ clarifyBindings bs = head $ sortOn length $
   , explainBindings bs
   , explainBindings . concat . sortOn length $ classifyOn snd bs
   ]
+
+explainedBindings :: ShowFunction a => Int -> a -> [Binding]
+explainedBindings m = explainBindings . take m . bindings
 
 explainBindings :: [Binding] -> [Binding]
 explainBindings = explain []
