@@ -22,6 +22,7 @@ EGS = \
 	eg/test-sort
 BENCHS = \
 	bench/tiers-default \
+	bench/tiers-4cases \
 	bench/tiers
 GHCIMPORTDIRS = src:tests
 # -dynamic is needed only for src/Test/LeanCheck/Derive.hs and tests/test-derive.hs
@@ -59,6 +60,7 @@ eg/test-list.update-diff-test: eg/test-list
 
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-default.hs
+	rm -f bench/tiers-4cases.hs
 	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
 full-clean: clean
@@ -228,7 +230,8 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Xs Word4"         > tests/diff/tiers-XsWord4.out
 	./bench/tiers "Xs Nat7"          > tests/diff/tiers-XsNat7.out
 
-prepare-depend: bench/tiers-default.hs
+prepare-depend: bench/tiers-default.hs \
+                bench/tiers-4cases.hs
 
 prepare-depend-and-depend: prepare-depend
 	make depend
@@ -238,11 +241,18 @@ TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-default.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable.ListsOfPairs\n$(TLF).Show/" $< > $@
 
+bench/tiers-4cases.hs: bench/tiers.hs
+	sed -e "s/$(TLF)$$/$(TLF).Listable\n$(TLF).Show.FourCases/" $< > $@
+
 bench/tiers-default: bench/tiers-default.hs src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs
 
-diff-test-funtiers: bench/tiers-default.diff-test
+bench/tiers-4cases: bench/tiers-4cases.hs
 
-update-diff-test-funtiers: bench/tiers-default.update-diff-test
+diff-test-funtiers: bench/tiers-default.diff-test \
+                    bench/tiers-4cases.diff-test
+
+update-diff-test-funtiers: bench/tiers-default.update-diff-test \
+                           bench/tiers-4cases.update-diff-test
 
 bench/tiers-%.diff-test: bench/tiers-%
 	# functions

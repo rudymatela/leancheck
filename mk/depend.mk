@@ -1,3 +1,23 @@
+bench/tiers-4cases: \
+  bench/tiers-4cases.hs \
+  mk/toplibs
+bench/tiers-4cases.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/FourCases.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Eq.hs \
+  src/Test/LeanCheck/Error.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  bench/tiers-4cases.hs
 bench/tiers: \
   bench/tiers.hs \
   mk/toplibs

@@ -1,0 +1,15 @@
+map length (tiers :: [[ Nat2->Nat2 ]])  =  [1,2,1]
+
+length (list :: [ Nat2->Nat2 ])  =  4
+
+allUnique (list :: [ Nat2->Nat2 ])  =  True
+
+ratioRepetitions (list :: [ Nat2->Nat2 ])  =  0 % 1
+
+tiers :: [Nat2->Nat2]  =
+  [ [\_ -> 0]
+  , [ \x -> case x of 0 -> 0; 1 -> 1
+    , \x -> case x of 0 -> 1; 1 -> 0
+    ]
+  , [\_ -> 1]
+  ]

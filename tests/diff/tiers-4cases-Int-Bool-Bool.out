@@ -1,0 +1,42 @@
+map length (tiers :: [[ Int->Bool->Bool ]])  =  [4,12,12,...]
+
+length (list :: [ Int->Bool->Bool ])  =  Infinity
+
+allUnique (list :: [ Int->Bool->Bool ])  =  True
+
+ratioRepetitions (list :: [ Int->Bool->Bool ])  =  0 % 1
+
+tiers :: [Int->Bool->Bool]  =
+  [ [ \_ _ -> False
+    , \x y -> case (x,y) of (_,False) -> False; _ -> True
+    , \x y -> case (x,y) of (_,False) -> True; _ -> False
+    , \_ _ -> True
+    ]
+  , [ \x y -> case (x,y) of (0,True) -> True; _ -> False
+    , \x y -> case (x,y) of (0,False) -> True; _ -> False
+    , \x y -> case (x,y) of (0,_) -> True; _ -> False
+    , \x y -> case (x,y) of (0,_) -> False; (_,False) -> False; _ -> True
+    , \x y -> case (x,y) of (0,False) -> True; (0,_) -> False; (_,False) -> False; _ -> True
+    , \x y -> case (x,y) of (0,_) -> True; (_,False) -> False; _ -> True
+    , \x y -> case (x,y) of (0,_) -> False; (_,False) -> True; _ -> False
+    , \x y -> case (x,y) of (0,False) -> False; (0,_) -> True; (_,False) -> True; _ -> False
+    , \x y -> case (x,y) of (0,_) -> True; (_,False) -> True; _ -> False
+    , \x y -> case (x,y) of (0,_) -> False; _ -> True
+    , \x y -> case (x,y) of (0,False) -> False; _ -> True
+    , \x y -> case (x,y) of (0,True) -> False; _ -> True
+    ]
+  , [ \x y -> case (x,y) of (1,True) -> True; _ -> False
+    , \x y -> case (x,y) of (1,False) -> True; _ -> False
+    , \x y -> case (x,y) of (1,_) -> True; _ -> False
+    , \x y -> case (x,y) of (_,False) -> False; (0,_) -> True; (1,_) -> False; _ -> True
+    , \x y -> case (x,y) of (0,False) -> False; (0,True) -> True; (1,False) -> True; (1,True) -> False; ...
+    , \x y -> case (x,y) of (0,False) -> False; (0,True) -> True; (1,False) -> True; (1,True) -> True; ...
+    , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> False; (1,True) -> False; ...
+    , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
+    , \x y -> case (x,y) of (_,False) -> True; (0,_) -> False; (1,_) -> True; _ -> False
+    , \x y -> case (x,y) of (1,_) -> False; _ -> True
+    , \x y -> case (x,y) of (1,False) -> False; _ -> True
+    , \x y -> case (x,y) of (1,True) -> False; _ -> True
+    ]
+  , ...
+  ]

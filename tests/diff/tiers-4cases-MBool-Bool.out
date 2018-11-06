@@ -1,0 +1,19 @@
+map length (tiers :: [[ Maybe Bool->Bool ]])  =  [8]
+
+length (list :: [ Maybe Bool->Bool ])  =  8
+
+allUnique (list :: [ Maybe Bool->Bool ])  =  True
+
+ratioRepetitions (list :: [ Maybe Bool->Bool ])  =  0 % 1
+
+tiers :: [Maybe Bool->Bool]  =
+  [ [ \_ -> False
+    , \x -> case x of Just True -> True; _ -> False
+    , \x -> case x of Just False -> True; _ -> False
+    , \x -> case x of Nothing -> False; _ -> True
+    , \x -> case x of Nothing -> True; _ -> False
+    , \x -> case x of Just False -> False; _ -> True
+    , \x -> case x of Just True -> False; _ -> True
+    , \_ -> True
+    ]
+  ]

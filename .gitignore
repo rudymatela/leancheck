@@ -37,6 +37,8 @@ bench/tiers-funlistable
 bench/tiers-funlistable.hs
 bench/tiers-mixed
 bench/tiers-mixed.hs
+bench/tiers-4cases
+bench/tiers-4cases.hs
 eg/test-sort
 eg/test-bool
 eg/test-list

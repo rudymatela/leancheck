@@ -1,0 +1,33 @@
+map length (tiers :: [[ Nat->Nat->Nat ]])  =  [1,1,5,13,...]
+
+length (list :: [ Nat->Nat->Nat ])  =  Infinity
+
+allUnique (list :: [ Nat->Nat->Nat ])  =  True
+
+ratioRepetitions (list :: [ Nat->Nat->Nat ])  =  0 % 1
+
+tiers :: [Nat->Nat->Nat]  =
+  [ [\_ _ -> 0]
+  , [\_ _ -> 1]
+  , [ \x y -> case (x,y) of (0,_) -> 1; _ -> 0
+    , \x y -> case (x,y) of (0,_) -> 0; _ -> 1
+    , \x y -> case (x,y) of (_,0) -> 1; _ -> 0
+    , \x y -> case (x,y) of (_,0) -> 0; _ -> 1
+    , \_ _ -> 2
+    ]
+  , [ \x y -> case (x,y) of (0,0) -> 1; _ -> 0
+    , \x y -> case (x,y) of (_,0) -> 0; (0,_) -> 1; _ -> 0
+    , \x y -> case (x,y) of (0,_) -> 2; _ -> 0
+    , \x y -> case (x,y) of (1,_) -> 1; _ -> 0
+    , \x y -> case (x,y) of (1,_) -> 0; _ -> 1
+    , \x y -> case (x,y) of (0,_) -> 0; (_,0) -> 1; _ -> 0
+    , \x y -> case (x,y) of (0,_) -> 0; (_,0) -> 0; _ -> 1
+    , \x y -> case (x,y) of (0,_) -> 0; _ -> 2
+    , \x y -> case (x,y) of (_,0) -> 2; _ -> 0
+    , \x y -> case (x,y) of (_,1) -> 1; _ -> 0
+    , \x y -> case (x,y) of (_,1) -> 0; _ -> 1
+    , \x y -> case (x,y) of (_,0) -> 0; _ -> 2
+    , \_ _ -> 3
+    ]
+  , ...
+  ]
