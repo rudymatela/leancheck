@@ -28,9 +28,9 @@ module Test.LeanCheck.Function.ShowFunction
   , Binding
   , bindings
   , explainedBindings
-  , clarifiedBindings
+  , describedBindings
   , explainBindings
-  , clarifyBindings
+  , describeBindings
   , ShowFunction (..)
   , tBindingsShow
   -- * Re-exports
@@ -182,7 +182,7 @@ showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
     vs = varnamesFor f
     lambdaPat = "\\" ++ unwords vs ++ " -> "
     casePat = "case " ++ showTuple vs ++ " of"
-    bindings = clarifiedBindings m n f
+    bindings = describedBindings m n f
     bs = showBindings (length bindings >= m) n bindings
     sep | singleLine = " "
         | otherwise = "\n"
@@ -289,16 +289,16 @@ _        ~> _       =  False
 (<~~) :: Binding -> Binding -> Bool
 (as,r) <~~ (as',r') = as <~ as' && r == r'
 
-clarifiedBindings :: ShowFunction a => Int -> Int -> a -> [Binding]
-clarifiedBindings m n f
+describedBindings :: ShowFunction a => Int -> Int -> a -> [Binding]
+describedBindings m n f
   | length bs1 <= n  =  bs1
   | otherwise        =  bs0
   where
   bs0  =  take m $ bindings f
-  bs1  =  clarifyBindings bs0
+  bs1  =  describeBindings bs0
 
-clarifyBindings :: [Binding] -> [Binding]
-clarifyBindings bs = head $ sortOn length $
+describeBindings :: [Binding] -> [Binding]
+describeBindings bs = head $ sortOn length $
   [ bs
   , explainBindings bs
   , explainBindings . concat . sortOn length $ classifyOn snd bs
