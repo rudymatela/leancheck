@@ -239,7 +239,7 @@ prepare-depend-and-depend: prepare-depend
 TLF = "import\ Test.LeanCheck.Function"
 
 bench/tiers-default.hs: bench/tiers.hs
-	sed -e "s/$(TLF)$$/$(TLF).Listable.ListsOfPairs\n$(TLF).Show/" $< > $@
+	cp $< $@
 
 bench/tiers-4cases.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable\n$(TLF).Show.FourCases/" $< > $@
