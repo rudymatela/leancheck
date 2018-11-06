@@ -35,7 +35,7 @@ all: mk/toplibs
 
 all-all: mk/All.o
 
-test: $(patsubst %,%.test,$(TESTS)) diff-test
+test: $(patsubst %,%.test,$(TESTS)) diff-test test-sdist
 
 diff-test: diff-test-tiers diff-test-funtiers $(patsubst %,%.diff-test,$(EGS))
 
