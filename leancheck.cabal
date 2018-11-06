@@ -92,9 +92,7 @@ library
                  , Test.LeanCheck.Function.Show
                  , Test.LeanCheck.Function.Listable
                  , Test.LeanCheck.Function.Listable.ListsOfPairs
-                 , Test.LeanCheck.Function.Listable.CoListable
                  , Test.LeanCheck.Function.ListsOfPairs
-                 , Test.LeanCheck.Function.CoListable
                  , Test.LeanCheck.Function.ShowFunction
   hs-source-dirs:      src
   build-depends:     base >= 4 && < 5, template-haskell

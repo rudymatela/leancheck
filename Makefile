@@ -21,7 +21,6 @@ EGS = \
 	eg/test-list \
 	eg/test-sort
 BENCHS = \
-	bench/tiers-colistable \
 	bench/tiers-listsofpairs \
 	bench/tiers
 GHCIMPORTDIRS = src:tests
@@ -59,7 +58,6 @@ eg/test-list.update-diff-test: eg/test-list
 	./$< | sed -e "s/Exception '[^']*'/Exception '...'/" >           tests/diff/$<.out
 
 clean: clean-hi-o clean-haddock
-	rm -f bench/tiers-colistable.hs
 	rm -f bench/tiers-listsofpairs.hs
 	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
@@ -230,8 +228,7 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Xs Word4"         > tests/diff/tiers-XsWord4.out
 	./bench/tiers "Xs Nat7"          > tests/diff/tiers-XsNat7.out
 
-prepare-depend: bench/tiers-listsofpairs.hs \
-                bench/tiers-colistable.hs
+prepare-depend: bench/tiers-listsofpairs.hs
 
 prepare-depend-and-depend: prepare-depend
 	make depend
@@ -241,18 +238,11 @@ TLF = "import\ Test.LeanCheck.Function"
 bench/tiers-listsofpairs.hs: bench/tiers.hs
 	sed -e "s/$(TLF)$$/$(TLF).Listable.ListsOfPairs\n$(TLF).Show/" $< > $@
 
-bench/tiers-colistable.hs: bench/tiers.hs
-	sed -e "s/$(TLF)$$/$(TLF).Listable.CoListable\n$(TLF).Show/" $< > $@
-
-bench/tiers-colistable:   bench/tiers-colistable.hs   src/Test/LeanCheck/Function/Listable/CoListable.hs
-
 bench/tiers-listsofpairs: bench/tiers-listsofpairs.hs src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs
 
-diff-test-funtiers: bench/tiers-listsofpairs.diff-test \
-                    bench/tiers-colistable.diff-test
+diff-test-funtiers: bench/tiers-listsofpairs.diff-test
 
-update-diff-test-funtiers: bench/tiers-listsofpairs.update-diff-test \
-                           bench/tiers-colistable.update-diff-test
+update-diff-test-funtiers: bench/tiers-listsofpairs.update-diff-test
 
 bench/tiers-%.diff-test: bench/tiers-%
 	# functions
