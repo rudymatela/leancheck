@@ -65,6 +65,10 @@ clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-funlistable.hs
 	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
+full-clean: clean
+	rm -rf .stack-work
+	rm -f tags TAGS
+
 ghci: mk/All.ghci
 
 hugs: src/Test/LeanCheck.hugs
