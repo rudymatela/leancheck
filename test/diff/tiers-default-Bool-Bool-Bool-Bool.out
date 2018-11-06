@@ -14,14 +14,14 @@ tiers :: [Bool->Bool->Bool->Bool]  =
     , \x y z -> case (x,y,z) of
                 (True,True,False) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (True,True,_) -> True
+    , \x y _ -> case (x,y) of
+                (True,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (True,False,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (True,_,True) -> True
+    , \x _ z -> case (x,z) of
+                (True,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (True,False,True) -> True
@@ -38,15 +38,15 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (True,False,False) -> True
                 (True,True,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (True,_,False) -> True
+    , \x _ z -> case (x,z) of
+                (True,False) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (True,_,False) -> True
                 (True,True,_) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (True,False,_) -> True
+    , \x y _ -> case (x,y) of
+                (True,False) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (True,False,_) -> True
@@ -56,14 +56,14 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (True,False,_) -> True
                 (True,_,False) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (False,_,_) -> False
+    , \x _ _ -> case x of
+                False -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,True,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (_,True,True) -> True
+    , \_ y z -> case (y,z) of
+                (True,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,True,True) -> True
@@ -133,8 +133,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,True,False) -> True
                 (True,True,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (_,True,False) -> True
+    , \_ y z -> case (y,z) of
+                (True,False) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (_,True,False) -> True
@@ -193,8 +193,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,False,_) -> False
                 (False,_,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,True,_) -> True
+    , \x y _ -> case (x,y) of
+                (False,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,True,_) -> True
@@ -204,8 +204,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,True,_) -> True
                 (_,True,False) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (_,False,_) -> False
+    , \_ y _ -> case y of
+                False -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,True,_) -> True
@@ -243,9 +243,9 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,False,_) -> False
                 (_,False,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,False,_) -> False
-                (True,True,_) -> False
+    , \x y _ -> case (x,y) of
+                (False,False) -> False
+                (True,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,False,_) -> False
@@ -255,8 +255,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,False,_) -> False
                 (True,True,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,False,_) -> False
+    , \x y _ -> case (x,y) of
+                (False,False) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,False,True) -> True
@@ -273,8 +273,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,False,True) -> True
                 (True,True,_) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (_,False,True) -> True
+    , \_ y z -> case (y,z) of
+                (False,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (_,False,True) -> True
@@ -325,8 +325,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,_,False) -> False
                 (False,True,_) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,_,True) -> True
+    , \x _ z -> case (x,z) of
+                (False,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,_,True) -> True
@@ -345,8 +345,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,_,True) -> True
                 (_,False,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (_,_,False) -> False
+    , \_ _ z -> case z of
+                False -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,_,False) -> False
@@ -366,9 +366,9 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (True,False,True) -> False
                 (_,True,False) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,_,False) -> False
-                (True,_,True) -> False
+    , \x _ z -> case (x,z) of
+                (False,False) -> False
+                (True,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,_,False) -> False
@@ -387,8 +387,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,_,False) -> False
                 (True,True,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,_,False) -> False
+    , \x _ z -> case (x,z) of
+                (False,False) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,False,True) -> True
@@ -417,9 +417,9 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,True,True) -> False
                 (True,_,False) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (_,False,False) -> False
-                (_,True,True) -> False
+    , \_ y z -> case (y,z) of
+                (False,False) -> False
+                (True,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (_,False,False) -> False
@@ -495,8 +495,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (_,False,False) -> False
                 (True,True,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (_,False,False) -> False
+    , \_ y z -> case (y,z) of
+                (False,False) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,False,False) -> False
@@ -564,8 +564,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,_,_) -> False
                 (_,False,False) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (_,False,False) -> True
+    , \_ y z -> case (y,z) of
+                (False,False) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (_,False,False) -> True
@@ -641,9 +641,9 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (_,False,False) -> True
                 (False,True,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (_,False,False) -> True
-                (_,True,True) -> True
+    , \_ y z -> case (y,z) of
+                (False,False) -> True
+                (True,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (_,False,False) -> True
@@ -672,8 +672,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,False,True) -> False
                 (False,True,False) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,_,False) -> True
+    , \x _ z -> case (x,z) of
+                (False,False) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,_,False) -> True
@@ -692,9 +692,9 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,_,False) -> True
                 (True,False,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (False,_,False) -> True
-                (True,_,True) -> True
+    , \x _ z -> case (x,z) of
+                (False,False) -> True
+                (True,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,_,False) -> True
@@ -714,8 +714,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (_,False,False) -> True
                 (True,True,True) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (_,_,False) -> True
+    , \_ _ z -> case z of
+                False -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,_,True) -> False
@@ -734,8 +734,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,_,True) -> False
                 (_,True,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,_,True) -> False
+    , \x _ z -> case (x,z) of
+                (False,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,_,False) -> True
@@ -786,8 +786,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (_,False,True) -> False
                 (True,_,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (_,False,True) -> False
+    , \_ y z -> case (y,z) of
+                (False,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,False,True) -> False
@@ -804,8 +804,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
     , \x y z -> case (x,y,z) of
                 (False,False,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,False,_) -> True
+    , \x y _ -> case (x,y) of
+                (False,False) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,False,_) -> True
@@ -815,9 +815,9 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,False,_) -> True
                 (True,True,False) -> True
                 _ -> False
-    , \x y z -> case (x,y,z) of
-                (False,False,_) -> True
-                (True,True,_) -> True
+    , \x y _ -> case (x,y) of
+                (False,False) -> True
+                (True,True) -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,False,_) -> True
@@ -855,8 +855,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,True,_) -> False
                 (True,False,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (_,False,_) -> True
+    , \_ y _ -> case y of
+                False -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (False,True,_) -> False
@@ -866,8 +866,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,True,_) -> False
                 (_,True,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,True,_) -> False
+    , \x y _ -> case (x,y) of
+                (False,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,False,_) -> True
@@ -926,8 +926,8 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (_,True,False) -> False
                 (True,True,_) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (_,True,False) -> False
+    , \_ y z -> case (y,z) of
+                (True,False) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,True,False) -> False
@@ -997,14 +997,14 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (False,True,True) -> False
                 (True,True,False) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (_,True,True) -> False
+    , \_ y z -> case (y,z) of
+                (True,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (False,True,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (False,_,_) -> True
+    , \x _ _ -> case x of
+                False -> True
                 _ -> False
     , \x y z -> case (x,y,z) of
                 (True,False,_) -> False
@@ -1014,15 +1014,15 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (True,False,_) -> False
                 (True,_,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (True,False,_) -> False
+    , \x y _ -> case (x,y) of
+                (True,False) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (True,_,False) -> False
                 (True,True,_) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (True,_,False) -> False
+    , \x _ z -> case (x,z) of
+                (True,False) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (True,False,False) -> False
@@ -1039,14 +1039,14 @@ tiers :: [Bool->Bool->Bool->Bool]  =
                 (True,False,True) -> False
                 (True,True,False) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (True,_,True) -> False
+    , \x _ z -> case (x,z) of
+                (True,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (True,False,True) -> False
                 _ -> True
-    , \x y z -> case (x,y,z) of
-                (True,True,_) -> False
+    , \x y _ -> case (x,y) of
+                (True,True) -> False
                 _ -> True
     , \x y z -> case (x,y,z) of
                 (True,True,False) -> False

@@ -8,8 +8,8 @@ ratioRepetitions (list :: [ Bool->Int->Bool ])  =  0 % 1
 
 tiers :: [Bool->Int->Bool]  =
   [ [ \_ _ -> False
-    , \x y -> case (x,y) of (False,_) -> False; _ -> True
-    , \x y -> case (x,y) of (False,_) -> True; _ -> False
+    , \x _ -> case x of False -> False; _ -> True
+    , \x _ -> case x of False -> True; _ -> False
     , \_ _ -> True
     ]
   , [ \x y -> case (x,y) of (True,0) -> True; _ -> False
@@ -25,10 +25,10 @@ tiers :: [Bool->Int->Bool]  =
     , \x y -> case (x,y) of (False,_) -> False; (_,0) -> True; (_,1) -> False; _ -> True
     , \x y -> case (x,y) of (False,_) -> True; (_,0) -> False; (_,1) -> True; _ -> False
     , \x y -> case (x,y) of (True,1) -> False; _ -> True
-    , \x y -> case (x,y) of (_,0) -> True; _ -> False
+    , \_ y -> case y of 0 -> True; _ -> False
     , \x y -> case (x,y) of (False,0) -> True; (_,0) -> False; (False,_) -> False; _ -> True
     , \x y -> case (x,y) of (False,0) -> False; (_,0) -> True; (False,_) -> True; _ -> False
-    , \x y -> case (x,y) of (_,0) -> False; _ -> True
+    , \_ y -> case y of 0 -> False; _ -> True
     , \x y -> case (x,y) of (False,1) -> True; _ -> False
     , \x y -> case (x,y) of (False,0) -> False; (True,0) -> True; (False,1) -> True; (True,1) -> True; ...
     , \x y -> case (x,y) of (False,0) -> True; (True,0) -> False; (False,1) -> False; (True,1) -> False; ...
@@ -75,10 +75,10 @@ tiers :: [Bool->Int->Bool]  =
     , \x y -> case (x,y) of (False,0) -> False; (True,0) -> False; (False,1) -> True; (True,1) -> False; ...
     , \x y -> case (x,y) of (_,0) -> False; (True,1) -> False; _ -> True
     , \x y -> case (x,y) of (False,0) -> False; (True,-1) -> False; _ -> True
-    , \x y -> case (x,y) of (_,1) -> True; _ -> False
+    , \_ y -> case y of 1 -> True; _ -> False
     , \x y -> case (x,y) of (False,0) -> False; (True,0) -> True; (False,1) -> True; (True,1) -> False; ...
     , \x y -> case (x,y) of (False,0) -> True; (True,0) -> False; (False,1) -> False; (True,1) -> True; ...
-    , \x y -> case (x,y) of (_,1) -> False; _ -> True
+    , \_ y -> case y of 1 -> False; _ -> True
     , \x y -> case (x,y) of (_,0) -> True; (False,1) -> True; _ -> False
     , \x y -> case (x,y) of (False,0) -> True; (True,0) -> False; (False,1) -> True; (True,1) -> True; ...
     , \x y -> case (x,y) of (True,0) -> True; (False,-1) -> True; _ -> False

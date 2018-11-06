@@ -1,13 +1,13 @@
 *** Failed! Falsifiable (after 75 tests):
-\x y -> case (x,y) of
-        (0,_) -> 1
+\x _ -> case x of
+        0 -> 1
         _ -> 0
 0
 [0,0]
 
 *** Failed! Falsifiable (after 130 tests):
-\x y -> case (x,y) of
-        (0,_) -> 1
+\x _ -> case x of
+        0 -> 1
         _ -> 0
 [0,0,0]
 

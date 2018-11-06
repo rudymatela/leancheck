@@ -27,8 +27,10 @@ module Test.LeanCheck.Function.ShowFunction
   , showFunctionLine
   , Binding
   , bindings
+  , clarifiedBindings
   , explainedBindings
   , describedBindings
+  , clarifyBindings
   , explainBindings
   , describeBindings
   , ShowFunction (..)
@@ -179,10 +181,9 @@ showFunctionL singleLine m n f | isValue f = showValueOf f
 showFunctionL singleLine m n f | isConstant m f = showConstant m f
 showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
   where
-    vs = varnamesFor f
     lambdaPat = "\\" ++ unwords vs ++ " -> "
-    casePat = "case " ++ showTuple vs ++ " of"
-    bindings = describedBindings m n f
+    casePat = "case " ++ showTuple (filter (/= "_") vs) ++ " of"
+    (vs, bindings) = clarifiedBindings m n f
     bs = showBindings (length bindings >= m) n bindings
     sep | singleLine = " "
         | otherwise = "\n"
@@ -289,6 +290,35 @@ _        ~> _       =  False
 (<~~) :: Binding -> Binding -> Bool
 (as,r) <~~ (as',r') = as <~ as' && r == r'
 
+clarifiedBindings :: ShowFunction a => Int -> Int -> a -> ([String],[Binding])
+clarifiedBindings m n = clarifyBindings . describedBindings m n
+
+-- Removes uneeded variables on the bindings and returns a pair:
+--
+-- * the list of variables, removed vars are _
+-- * the new list of bindings, with the variables excluded
+--
+-- > > removars [0 _ -> 0, _ _ -> 1]
+-- > [([x,_], [0 -> 0, _ -> 1])]
+--
+-- TODO: improve the above description
+clarifyBindings :: [Binding] -> ([String],[Binding])
+clarifyBindings bs  =  (varnamesByUsage used, map (mapFst $ select used) bs)
+  where
+  mapFst f (x,y) = (f x, y)
+  used = usedArgs bs
+
+varnamesByUsage :: [Bool] -> [String]
+varnamesByUsage = zipWith used varnames
+  where
+  used s False = "_"
+  used s True  = s
+  varnames = ["x","y","z","w"] ++ map (++"'") varnames
+
+usedArgs :: [Binding] -> [Bool]
+usedArgs = foldr1 (zipWith (||))
+         . map (map (/= "_") . fst)
+
 describedBindings :: ShowFunction a => Int -> Int -> a -> [Binding]
 describedBindings m n f
   | length bs1 <= n  =  bs1
@@ -335,3 +365,8 @@ none p = not . any p
 -- sortOn is only available on GHC > 7.8
 sortOn :: Ord b => (a -> b) -> [a] -> [a]
 sortOn f = sortBy (compare `on` f)
+
+select :: [Bool] -> [a] -> [a]
+select [] _ = []
+select _ [] = []
+select (p:ps) (x:xs) = if p then x : xs' else xs' where xs' = select ps xs

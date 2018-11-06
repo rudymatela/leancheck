@@ -8,33 +8,33 @@ ratioRepetitions (list :: [ Int->Bool->Bool ])  =  0 % 1
 
 tiers :: [Int->Bool->Bool]  =
   [ [ \_ _ -> False
-    , \x y -> case (x,y) of (_,False) -> False; _ -> True
-    , \x y -> case (x,y) of (_,False) -> True; _ -> False
+    , \_ y -> case y of False -> False; _ -> True
+    , \_ y -> case y of False -> True; _ -> False
     , \_ _ -> True
     ]
   , [ \x y -> case (x,y) of (0,True) -> True; _ -> False
     , \x y -> case (x,y) of (0,False) -> True; _ -> False
-    , \x y -> case (x,y) of (0,_) -> True; _ -> False
+    , \x _ -> case x of 0 -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> False; (_,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,False) -> True; (0,_) -> False; (_,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> True; (_,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> False; (_,False) -> True; _ -> False
     , \x y -> case (x,y) of (0,False) -> False; (0,_) -> True; (_,False) -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> True; (_,False) -> True; _ -> False
-    , \x y -> case (x,y) of (0,_) -> False; _ -> True
+    , \x _ -> case x of 0 -> False; _ -> True
     , \x y -> case (x,y) of (0,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,True) -> False; _ -> True
     ]
   , [ \x y -> case (x,y) of (1,True) -> True; _ -> False
     , \x y -> case (x,y) of (1,False) -> True; _ -> False
-    , \x y -> case (x,y) of (1,_) -> True; _ -> False
+    , \x _ -> case x of 1 -> True; _ -> False
     , \x y -> case (x,y) of (_,False) -> False; (0,_) -> True; (1,_) -> False; _ -> True
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> True; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> True; (1,False) -> True; (1,True) -> True; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> False; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
     , \x y -> case (x,y) of (_,False) -> True; (0,_) -> False; (1,_) -> True; _ -> False
-    , \x y -> case (x,y) of (1,_) -> False; _ -> True
+    , \x _ -> case x of 1 -> False; _ -> True
     , \x y -> case (x,y) of (1,False) -> False; _ -> True
     , \x y -> case (x,y) of (1,True) -> False; _ -> True
     ]
@@ -46,10 +46,10 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,False) -> True; (1,_) -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> True; (1,True) -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> True; (1,False) -> True; _ -> False
-    , \x y -> case (x,y) of (0,_) -> True; (1,_) -> True; _ -> False
+    , \x _ -> case x of 0 -> True; 1 -> True; _ -> False
     , \x y -> case (x,y) of (-1,True) -> True; _ -> False
     , \x y -> case (x,y) of (-1,False) -> True; _ -> False
-    , \x y -> case (x,y) of (-1,_) -> True; _ -> False
+    , \x _ -> case x of -1 -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> False; (_,False) -> False; (1,_) -> False; _ -> True
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,_) -> False; (1,_) -> True; (_,False) -> False; _ -> True
@@ -74,7 +74,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
-    , \x y -> case (x,y) of (0,_) -> False; (1,_) -> False; _ -> True
+    , \x _ -> case x of 0 -> False; 1 -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> False; (1,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> False; (1,True) -> False; _ -> True
     , \x y -> case (x,y) of (0,False) -> False; (1,_) -> False; _ -> True
@@ -83,7 +83,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,True) -> False; (1,_) -> False; _ -> True
     , \x y -> case (x,y) of (0,True) -> False; (1,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,True) -> False; (1,True) -> False; _ -> True
-    , \x y -> case (x,y) of (-1,_) -> False; _ -> True
+    , \x _ -> case x of -1 -> False; _ -> True
     , \x y -> case (x,y) of (-1,False) -> False; _ -> True
     , \x y -> case (x,y) of (-1,True) -> False; _ -> True
     ]
@@ -95,10 +95,10 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,False) -> True; (-1,_) -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> True; (-1,True) -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> True; (-1,False) -> True; _ -> False
-    , \x y -> case (x,y) of (0,_) -> True; (-1,_) -> True; _ -> False
+    , \x _ -> case x of 0 -> True; -1 -> True; _ -> False
     , \x y -> case (x,y) of (2,True) -> True; _ -> False
     , \x y -> case (x,y) of (2,False) -> True; _ -> False
-    , \x y -> case (x,y) of (2,_) -> True; _ -> False
+    , \x _ -> case x of 2 -> True; _ -> False
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
@@ -123,7 +123,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
-    , \x y -> case (x,y) of (0,_) -> False; (-1,_) -> False; _ -> True
+    , \x _ -> case x of 0 -> False; -1 -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> False; (-1,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> False; (-1,True) -> False; _ -> True
     , \x y -> case (x,y) of (0,False) -> False; (-1,_) -> False; _ -> True
@@ -132,7 +132,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,True) -> False; (-1,_) -> False; _ -> True
     , \x y -> case (x,y) of (0,True) -> False; (-1,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,True) -> False; (-1,True) -> False; _ -> True
-    , \x y -> case (x,y) of (2,_) -> False; _ -> True
+    , \x _ -> case x of 2 -> False; _ -> True
     , \x y -> case (x,y) of (2,False) -> False; _ -> True
     , \x y -> case (x,y) of (2,True) -> False; _ -> True
     ]
@@ -144,7 +144,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,False) -> True; (2,_) -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> True; (2,True) -> True; _ -> False
     , \x y -> case (x,y) of (0,_) -> True; (2,False) -> True; _ -> False
-    , \x y -> case (x,y) of (0,_) -> True; (2,_) -> True; _ -> False
+    , \x _ -> case x of 0 -> True; 2 -> True; _ -> False
     , \x y -> case (x,y) of (1,True) -> True; (-1,True) -> True; _ -> False
     , \x y -> case (x,y) of (1,True) -> True; (-1,False) -> True; _ -> False
     , \x y -> case (x,y) of (1,True) -> True; (-1,_) -> True; _ -> False
@@ -153,10 +153,10 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (1,False) -> True; (-1,_) -> True; _ -> False
     , \x y -> case (x,y) of (1,_) -> True; (-1,True) -> True; _ -> False
     , \x y -> case (x,y) of (1,_) -> True; (-1,False) -> True; _ -> False
-    , \x y -> case (x,y) of (1,_) -> True; (-1,_) -> True; _ -> False
+    , \x _ -> case x of 1 -> True; -1 -> True; _ -> False
     , \x y -> case (x,y) of (-2,True) -> True; _ -> False
     , \x y -> case (x,y) of (-2,False) -> True; _ -> False
-    , \x y -> case (x,y) of (-2,_) -> True; _ -> False
+    , \x _ -> case x of -2 -> True; _ -> False
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
     , \x y -> case (x,y) of (0,False) -> False; (0,True) -> False; (1,False) -> False; (1,True) -> True; ...
@@ -199,7 +199,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
     , \x y -> case (x,y) of (0,False) -> True; (0,True) -> False; (1,False) -> True; (1,True) -> False; ...
-    , \x y -> case (x,y) of (0,_) -> False; (2,_) -> False; _ -> True
+    , \x _ -> case x of 0 -> False; 2 -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> False; (2,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,_) -> False; (2,True) -> False; _ -> True
     , \x y -> case (x,y) of (0,False) -> False; (2,_) -> False; _ -> True
@@ -208,7 +208,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (0,True) -> False; (2,_) -> False; _ -> True
     , \x y -> case (x,y) of (0,True) -> False; (2,False) -> False; _ -> True
     , \x y -> case (x,y) of (0,True) -> False; (2,True) -> False; _ -> True
-    , \x y -> case (x,y) of (1,_) -> False; (-1,_) -> False; _ -> True
+    , \x _ -> case x of 1 -> False; -1 -> False; _ -> True
     , \x y -> case (x,y) of (1,_) -> False; (-1,False) -> False; _ -> True
     , \x y -> case (x,y) of (1,_) -> False; (-1,True) -> False; _ -> True
     , \x y -> case (x,y) of (1,False) -> False; (-1,_) -> False; _ -> True
@@ -217,7 +217,7 @@ tiers :: [Int->Bool->Bool]  =
     , \x y -> case (x,y) of (1,True) -> False; (-1,_) -> False; _ -> True
     , \x y -> case (x,y) of (1,True) -> False; (-1,False) -> False; _ -> True
     , \x y -> case (x,y) of (1,True) -> False; (-1,True) -> False; _ -> True
-    , \x y -> case (x,y) of (-2,_) -> False; _ -> True
+    , \x _ -> case x of -2 -> False; _ -> True
     , \x y -> case (x,y) of (-2,False) -> False; _ -> True
     , \x y -> case (x,y) of (-2,True) -> False; _ -> True
     ]

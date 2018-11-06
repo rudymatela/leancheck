@@ -9,38 +9,38 @@ ratioRepetitions (list :: [ Int->Int->Int->Int ])  =  0 % 1
 tiers :: [Int->Int->Int->Int]  =
   [ [\_ _ _ -> 0]
   , [\_ _ _ -> 1]
-  , [ \x y z -> case (x,y,z) of (0,_,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (0,_,_) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (_,0,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,0,_) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (_,_,0) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,_,0) -> 0; _ -> 1
+  , [ \x _ _ -> case x of 0 -> 1; _ -> 0
+    , \x _ _ -> case x of 0 -> 0; _ -> 1
+    , \_ y _ -> case y of 0 -> 1; _ -> 0
+    , \_ y _ -> case y of 0 -> 0; _ -> 1
+    , \_ _ z -> case z of 0 -> 1; _ -> 0
+    , \_ _ z -> case z of 0 -> 0; _ -> 1
     , \_ _ _ -> -1
     ]
-  , [ \x y z -> case (x,y,z) of (0,0,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,0,_) -> 0; (0,_,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (0,_,0) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,_,0) -> 0; (0,_,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (0,_,_) -> -1; _ -> 0
-    , \x y z -> case (x,y,z) of (1,_,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (1,_,_) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (0,_,_) -> 0; (_,0,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (0,_,_) -> 0; (_,0,_) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (0,_,_) -> 0; (_,_,0) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (0,_,_) -> 0; (_,_,0) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (0,_,_) -> 0; _ -> -1
-    , \x y z -> case (x,y,z) of (_,0,0) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,_,0) -> 0; (_,0,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,0,_) -> -1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,1,_) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,1,_) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (_,0,_) -> 0; (_,_,0) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,0,_) -> 0; (_,_,0) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (_,0,_) -> 0; _ -> -1
-    , \x y z -> case (x,y,z) of (_,_,0) -> -1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,_,1) -> 1; _ -> 0
-    , \x y z -> case (x,y,z) of (_,_,1) -> 0; _ -> 1
-    , \x y z -> case (x,y,z) of (_,_,0) -> 0; _ -> -1
+  , [ \x y _ -> case (x,y) of (0,0) -> 1; _ -> 0
+    , \x y _ -> case (x,y) of (_,0) -> 0; (0,_) -> 1; _ -> 0
+    , \x _ z -> case (x,z) of (0,0) -> 1; _ -> 0
+    , \x _ z -> case (x,z) of (_,0) -> 0; (0,_) -> 1; _ -> 0
+    , \x _ _ -> case x of 0 -> -1; _ -> 0
+    , \x _ _ -> case x of 1 -> 1; _ -> 0
+    , \x _ _ -> case x of 1 -> 0; _ -> 1
+    , \x y _ -> case (x,y) of (0,_) -> 0; (_,0) -> 1; _ -> 0
+    , \x y _ -> case (x,y) of (0,_) -> 0; (_,0) -> 0; _ -> 1
+    , \x _ z -> case (x,z) of (0,_) -> 0; (_,0) -> 1; _ -> 0
+    , \x _ z -> case (x,z) of (0,_) -> 0; (_,0) -> 0; _ -> 1
+    , \x _ _ -> case x of 0 -> 0; _ -> -1
+    , \_ y z -> case (y,z) of (0,0) -> 1; _ -> 0
+    , \_ y z -> case (y,z) of (_,0) -> 0; (0,_) -> 1; _ -> 0
+    , \_ y _ -> case y of 0 -> -1; _ -> 0
+    , \_ y _ -> case y of 1 -> 1; _ -> 0
+    , \_ y _ -> case y of 1 -> 0; _ -> 1
+    , \_ y z -> case (y,z) of (0,_) -> 0; (_,0) -> 1; _ -> 0
+    , \_ y z -> case (y,z) of (0,_) -> 0; (_,0) -> 0; _ -> 1
+    , \_ y _ -> case y of 0 -> 0; _ -> -1
+    , \_ _ z -> case z of 0 -> -1; _ -> 0
+    , \_ _ z -> case z of 1 -> 1; _ -> 0
+    , \_ _ z -> case z of 1 -> 0; _ -> 1
+    , \_ _ z -> case z of 0 -> 0; _ -> -1
     , \_ _ _ -> 2
     ]
   , ...

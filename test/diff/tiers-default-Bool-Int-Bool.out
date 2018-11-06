@@ -8,11 +8,11 @@ ratioRepetitions (list :: [ Bool->Int->Bool ])  =  0 % 1
 
 tiers :: [Bool->Int->Bool]  =
   [ [ \_ _ -> False
-    , \x y -> case (x,y) of
-              (False,_) -> False
+    , \x _ -> case x of
+              False -> False
               _ -> True
-    , \x y -> case (x,y) of
-              (False,_) -> True
+    , \x _ -> case x of
+              False -> True
               _ -> False
     , \_ _ -> True
     ]
@@ -61,8 +61,8 @@ tiers :: [Bool->Int->Bool]  =
     , \x y -> case (x,y) of
               (True,1) -> False
               _ -> True
-    , \x y -> case (x,y) of
-              (_,0) -> True
+    , \_ y -> case y of
+              0 -> True
               _ -> False
     , \x y -> case (x,y) of
               (False,0) -> True
@@ -74,8 +74,8 @@ tiers :: [Bool->Int->Bool]  =
               (_,0) -> True
               (False,_) -> True
               _ -> False
-    , \x y -> case (x,y) of
-              (_,0) -> False
+    , \_ y -> case y of
+              0 -> False
               _ -> True
     , \x y -> case (x,y) of
               (False,1) -> True
@@ -287,8 +287,8 @@ tiers :: [Bool->Int->Bool]  =
               (False,0) -> False
               (True,-1) -> False
               _ -> True
-    , \x y -> case (x,y) of
-              (_,1) -> True
+    , \_ y -> case y of
+              1 -> True
               _ -> False
     , \x y -> case (x,y) of
               (False,0) -> False
@@ -304,8 +304,8 @@ tiers :: [Bool->Int->Bool]  =
               (_,1) -> True
               (False,_) -> True
               _ -> False
-    , \x y -> case (x,y) of
-              (_,1) -> False
+    , \_ y -> case y of
+              1 -> False
               _ -> True
     , \x y -> case (x,y) of
               (_,0) -> True

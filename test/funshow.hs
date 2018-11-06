@@ -92,25 +92,25 @@ tests =
     ++ "      _ -> True\n"
 
   , showFunction 4 arg1of2is0
-    == "\\x y -> case (x,y) of\n"
-    ++ "        (0,_) -> True\n"
+    == "\\x _ -> case x of\n"
+    ++ "        0 -> True\n"
     ++ "        _ -> False\n"
   , showFunction 4 arg2of2is0
-    == "\\x y -> case (x,y) of\n"
-    ++ "        (_,0) -> True\n"
+    == "\\_ y -> case y of\n"
+    ++ "        0 -> True\n"
     ++ "        _ -> False\n"
   , showFunction 4 arg2of3isnt2
-    == "\\x y z -> case (x,y,z) of\n"
-    ++ "          (_,2,_) -> False\n"
+    == "\\_ y _ -> case y of\n"
+    ++ "          2 -> False\n"
     ++ "          _ -> True\n"
   , showFunction 4 args1or3of3are0
-    == "\\x y z -> case (x,y,z) of\n"
-    ++ "          (0,_,_) -> True\n"
-    ++ "          (_,_,0) -> True\n"
+    == "\\x _ z -> case (x,z) of\n"
+    ++ "          (0,_) -> True\n"
+    ++ "          (_,0) -> True\n"
     ++ "          _ -> False\n"
   , showFunction 4 args13of3arent0
-    == "\\x y z -> case (x,y,z) of\n"
-    ++ "          (0,_,0) -> False\n"
+    == "\\x _ z -> case (x,z) of\n"
+    ++ "          (0,0) -> False\n"
     ++ "          _ -> True\n"
   ]
 
