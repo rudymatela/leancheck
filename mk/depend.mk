@@ -12,6 +12,7 @@ bench/tiers-colistable.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
@@ -29,6 +30,7 @@ bench/tiers-listsofpairs.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Eq.hs \
@@ -48,6 +50,7 @@ bench/tiers-mixed.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
@@ -62,6 +65,7 @@ bench/tiers.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable.hs \
@@ -83,6 +87,7 @@ eg/higher-order.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable.hs \
@@ -122,6 +127,7 @@ eg/test-bool.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable.hs \
@@ -167,6 +173,7 @@ mk/All.o: \
   src/Test/LeanCheck/Generic.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable.hs \
@@ -188,6 +195,7 @@ mk/Toplibs.o: \
   src/Test/LeanCheck/Generic.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable.hs \
@@ -257,10 +265,23 @@ src/Test/LeanCheck/Function.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable.hs \
   src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
+  src/Test/LeanCheck/Error.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Show/EightLines.o: \
+  src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
@@ -284,6 +305,7 @@ src/Test/LeanCheck/Function/Show.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
@@ -401,6 +423,7 @@ tests/test-funshow.o: \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
