@@ -11,7 +11,7 @@
 -- its instances and related functions.
 --
 -- Using this module, it is possible to implement
--- a Show instance for functions:
+-- a 'Show' instance for functions:
 --
 -- > import Test.LeanCheck.ShowFunction
 -- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
@@ -19,25 +19,33 @@
 --
 -- This shows functions as a case pattern with up to 8 cases.
 --
--- The module
--- @Test.LeanCheck.Function.Show@ ('Test.LeanCheck.Function.Show')
+-- It will only work for functions whose ultimate return value is an instance
+-- of 'ShowFunction'.  This module provides instances for most standard data
+-- types ('Int', 'Bool', 'Maybe', ...).  Please see the 'ShowFunction'
+-- typeclass documentation for how to declare istances for user-defined data
+-- types.
+--
+-- The modules
+-- "Test.LeanCheck.Function"
+-- and
+-- "Test.LeanCheck.Function.Show"
 -- exports an instance like the one above.
 module Test.LeanCheck.Function.ShowFunction
   ( showFunction
   , showFunctionLine
   , Binding
   , bindings
+  , ShowFunction (..)
+  , bindtiersShow
+
   , clarifiedBindings
   , explainedBindings
   , describedBindings
   , clarifyBindings
   , explainBindings
   , describeBindings
-  , ShowFunction (..)
-  , bindtiersShow
   -- * Re-exports
   , Listable
-  , name
   )
 where
 
@@ -55,30 +63,42 @@ type Binding = ([String], Maybe String)
 -- | 'ShowFunction' values are those for which
 --   we can return a list of functional bindings.
 --
--- As a user, you probably want 'showFunction' and 'showFunctionLine'.
---
--- Non functional instances should be defined by:
+-- Instances for 'show'able algebraic datatypes are defined using
+-- 'bindtiersShow':
 --
 -- > instance ShowFunction Ty where bindtiers = bindtiersShow
 class ShowFunction a where
   bindtiers :: a -> [[Binding]]
 
--- | Given a 'ShowFunction' value, return a list of bindings
---   for printing.  Examples:
+-- | Given a 'ShowFunction' value, return a list of 'Binding's.
+--   Examples:
 --
--- > bindings True == [([],True)]
--- > bindings (id::Int) == [(["0"],"0"), (["1"],"1"), (["-1"],"-1"), ...]
--- > bindings (&&) == [ (["False","False"], "False")
--- >                  , (["False","True"], "False")
--- >                  , (["True","False"], "False")
--- >                  , (["True","True"], "True")
--- >                  ]
+-- > > bindings True
+-- > [([],True)]
+--
+-- > > bindings (id::Int->Int)
+-- > [ (["0"],"0")
+-- > , (["1"],"1")
+-- > , (["-1"],"-1")
+-- > , ...
+-- > ]
+--
+-- > > bindings (&&)
+-- > [ (["False","False"], "False")
+-- > , (["False","True"], "False")
+-- > , (["True","False"], "False")
+-- > , (["True","True"], "True")
+-- > ]
 bindings :: ShowFunction a => a -> [Binding]
 bindings = concat . bindtiers
 
 
--- instances for (algebraic/numeric) data types --
--- | A default implementation of bindtiers for already 'Show'-able types.
+-- | A drop-in implementation of 'bindtiers' for 'show'able types.
+--
+-- Define instances for 'show'able algebraic datatypes as:
+--
+-- > instance ShowFunction Ty where bindtiers = bindtiersShow
+
 bindtiersShow :: Show a => a -> [[Binding]]
 bindtiersShow x = [[([],errorToNothing $ show x)]]
 
@@ -131,30 +151,46 @@ showValueOf x = case snd . head . bindings $ x of
                   Nothing -> "undefined"
                   Just x' -> x'
 
--- | Given a number of patterns to show, shows a 'ShowFunction' value.
+-- | Given the number of patterns to show, shows a 'ShowFunction' value.
 --
--- > showFunction undefined True == "True"
--- > showFunction 3 (id::Int) == "\\x -> case x of\n\
--- >                              \        0 -> 0\n\
--- >                              \        1 -> 1\n\
--- >                              \        -1 -> -1\n\
--- >                              \        ...\n"
--- > showFunction 4 (&&) == "\\x y -> case (x,y) of\n\
--- >                         \          (False,False) -> False\n\
--- >                         \          (False,True) -> False\n\
--- >                         \          (True,False) -> False\n\
--- >                         \          (True,True) -> True\n"
+-- > > putStrLn $ showFunction undefined True
+-- > True
+-- >
+-- > > putStrLn $ showFunction 3 (id::Int->Int)
+-- > \x -> case x of
+-- >       0 -> 0
+-- >       1 -> 1
+-- >       -1 -> -1
+-- >       ...
+-- >
+-- > > putStrLn $ showFunction 4 (&&)
+-- > \x y -> case (x,y) of
+-- >         (True,True) -> True
+-- >         _ -> False
+-- >
 --
--- This can be used as an implementation of show for functions:
+-- In the examples above, "@...@" should be interpreted literally.
+--
+-- This can be used as an implementation of 'show' for functions:
 --
 -- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
 -- >   show = showFunction 8
+--
+-- See 'showFunctionLine' for an alternative without line breaks.
 showFunction :: ShowFunction a => Int -> a -> String
 showFunction n = showFunctionL False (n*n+1) n
 
--- | Same as showFunction, but has no line breaks.
+-- | Same as 'showFunction', but has no line breaks.
 --
--- > showFunction 2 (id::Int) == "\\x -> case x of 0 -> 0; 1 -> 1; ..."
+-- > > putStrLn $ showFunctionLine 3 (id::Int->Int)
+-- > \x -> case x of 0 -> 0; 1 -> 1; -1 -> -1; ...
+-- > > putStrLn $ showFunctionLine 3 (&&)
+-- > \x y -> case (x,y) of (True,True) -> True; _ -> False
+--
+-- This can be used as an implementation of 'show' for functions:
+--
+-- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
+-- >   show = showFunction 8
 showFunctionLine :: ShowFunction a => Int -> a -> String
 showFunctionLine n = showFunctionL True (n*n+1) n
 
