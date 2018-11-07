@@ -284,6 +284,7 @@ showConstant m f = "\\" ++ unwords vs ++ " -> " ++ fromMaybe "undefined" r
 showFunctionL :: ShowFunction a => Bool -> Int -> Int -> a -> String
 showFunctionL singleLine m n f | isValue f = showValueOf f
 showFunctionL singleLine m n f | isConstant m f = showConstant m f
+--showFunctionL singleLine m n f | canName m f = showName m f
 showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
   where
     lambdaPat = "\\" ++ unwords vs ++ " -> "
@@ -369,6 +370,12 @@ functionNames =
 name :: ShowFunction a => Int -> a -> Maybe String
 name n f = listToMaybe [ nm | (nm, bs) <- functionNames
                             , take n bs == take n (bindings f)]
+
+canName :: ShowFunction a => Int -> a -> Bool
+canName n = isJust . name n
+
+showName :: ShowFunction a => Int -> a -> String
+showName n = fromMaybe "unknown" . name n
 
 -- | Returns a set of variables and a set of bindings
 --   describing how a function works.
