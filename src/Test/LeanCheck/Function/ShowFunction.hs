@@ -44,13 +44,10 @@ module Test.LeanCheck.Function.ShowFunction
   , Binding
   , bindings
 
-  -- * Explaining, describing and clarifying bindings
+  -- * Pipeline for explaining, describing and clarifying bindings
   , explainedBindings
   , describedBindings
   , clarifiedBindings
-  , explainBindings
-  , describeBindings
-  , clarifyBindings
 
   -- * Re-exports
   , Listable
@@ -66,6 +63,9 @@ import Data.Maybe
 import Data.Function (on)
 
 -- | A functional binding in a showable format.
+--   Argument values are represented as a list of strings.
+--   The result value is represented by 'Just' a 'String' when defined
+--   or by 'Nothing' when 'undefined'.
 type Binding = ([String], Maybe String)
 
 -- | 'ShowFunction' values are those for which
@@ -79,24 +79,82 @@ class ShowFunction a where
   bindtiers :: a -> [[Binding]]
 
 -- | Given a 'ShowFunction' value, return a list of 'Binding's.
---   Examples:
+--   If the domain of the given argument function is infinite,
+--   the resulting list is infinite.
 --
--- > > bindings True
--- > [([],True)]
+-- Some examples follow.  These are used as running examples in the definition
+-- of 'explainedBindings', 'describedBindings' and 'clarifiedBindings'.
 --
--- > > bindings (id::Int->Int)
--- > [ (["0"],"0")
--- > , (["1"],"1")
--- > , (["-1"],"-1")
--- > , ...
--- > ]
+-- * Defined return values are represented as 'Just' 'String's:
 --
--- > > bindings (&&)
--- > [ (["False","False"], "False")
--- > , (["False","True"], "False")
--- > , (["True","False"], "False")
--- > , (["True","True"], "True")
--- > ]
+--     > > bindings True
+--     > [([],Just "True")]
+--
+-- * Undefined return values are represented as @Nothing@:
+--
+--     > > bindings undefined
+--     > [([],Nothing)]
+--
+-- * Infinite domains result in an infinite bindings list:
+--
+--     > > bindings (id::Int->Int)
+--     > [ (["0"], Just "0")
+--     > , (["1"], Just "1")
+--     > , (["-1"], Just "-1")
+--     > , ...
+--     > ]
+--
+-- * Finite domains result in a finite bindings list:
+--
+--     > > bindings (&&)
+--     > [ (["False","False"], Just "False")
+--     > , (["False","True"], Just "False")
+--     > , (["True","False"], Just "False")
+--     > , (["True","True"], Just "True")
+--     > ]
+--
+--     > > bindings (||)
+--     > [ (["False","False"], Just "False")
+--     > , (["False","True"], Just "True")
+--     > , (["True","False"], Just "True")
+--     > , (["True","True"], Just "True")
+--     > ]
+--
+-- * Even very simple functions are represented by an infinite list of bindings:
+--
+--     > > bindings (== 0)
+--     > [ (["0"], Just "True")
+--     > , (["1"], Just "False")
+--     > , (["-1"], Just "False")
+--     > , ...
+--     > ]
+--
+--     > > bindings (== 1)
+--     > [ (["0"], Just "False")
+--     > , (["1"], Just "True")
+--     > , (["-1"], Just "False")
+--     > , ...
+--     > ]
+--
+-- * Ignored arguments are still listed:
+--
+--     > > bindings ((\_ y -> y == 1) :: Int -> Int -> Bool)
+--     > [ (["0","0"], Just "False")
+--     > , (["0","1"], Just "True")
+--     > , (["1","0"], Just "False")
+--     > , ...
+--     > ]
+--
+-- * Again, undefined values are represented as 'Nothing'.
+--   Here, the 'head' of an empty list is undefined:
+--
+--     > > bindings (head :: [Int] -> Int)
+--     > [ (["[]"], Nothing)
+--     > , (["[0]"], Just "0")
+--     > , (["[0,0]"], Just "0")
+--     > , (["[1]"], Just "1")
+--     > , ...
+--     > ]
 bindings :: ShowFunction a => a -> [Binding]
 bindings = concat . bindtiers
 
@@ -309,24 +367,39 @@ name :: ShowFunction a => Int -> a -> Maybe String
 name n f = listToMaybe [ nm | (nm, bs) <- functionNames
                             , take n bs == take n (bindings f)]
 
-generalizations :: [String] -> [[String]]
-generalizations []     = [[]]
-generalizations (v:vs) = map ("_":) gvs ++ map (v:) gvs
-  where
-  gvs = generalizations vs
-
+-- | Returns a set of variables and a set of bindings
+--   describing how a function works.
+--
+-- Some argument values are generalized to "@_@" when possible.
+-- If one of the function arguments is not used altogether, it is ommited in
+-- the set of bindings and appears as "_" in the variables list.
+--
+-- This is the /last/ function in the clarification pipeline.
+--
+-- It takes two integer arguments:
+--
+-- 1. @m@: the maximum number of cases considered for computing the description;
+-- 2. @n@: the maximum number of cases in the actual description.
+--
+-- As a general rule of thumb, set @m=n*n+1@.
+--
+-- Some examples follow:
+--
+-- * When all arguments are used, the result is the same as 'describedBindings':
+--
+--     > > clarifiedBindings 100 10 (==1)
+--     > ( ["x"], [ (["1"],Just "True"),
+--     >          , (["_"],Just "False") ] )
+--
+-- * When some arguments are unused, they are omitted in the list of bindings and
+--   appear as @"_"@ in the list of variables.
+--
+--     > > clarifiedBindings 100 10 (\_ y -> y == 1)
+--     > ( ["_", "y"], [ (["1"],Just "True")
+--     >               , (["_"],Just "False") ] )
 clarifiedBindings :: ShowFunction a => Int -> Int -> a -> ([String],[Binding])
 clarifiedBindings m n = clarifyBindings . describedBindings m n
 
--- Removes uneeded variables on the bindings and returns a pair:
---
--- * the list of variables, removed vars are _
--- * the new list of bindings, with the variables excluded
---
--- > > removars [0 _ -> 0, _ _ -> 1]
--- > [([x,_], [0 -> 0, _ -> 1])]
---
--- TODO: improve the above description
 clarifyBindings :: [Binding] -> ([String],[Binding])
 clarifyBindings bs  =  (varnamesByUsage used, map (mapFst $ select used) bs)
   where
@@ -344,6 +417,51 @@ usedArgs :: [Binding] -> [Bool]
 usedArgs = foldr1 (zipWith (||))
          . map (map (/= "_") . fst)
 
+-- | Returns a set of bindings describing how a function works.
+-- Some argument values are generalized to "@_@" when possible.
+-- It takes two integer arguments:
+--
+-- 1. @m@: the maximum number of cases considered for computing description;
+-- 2. @n@: the maximum number of cases in the actual description.
+--
+-- As a general rule of thumb, set @m=n*n+1@.
+--
+-- This is the /second/ function in the clarification pipeline.
+--
+-- This function processes the result of 'explainedBindings'
+-- to sometimes return shorter descriptions.
+-- It chooses the shortest of the following (in order):
+--
+-- * regular unexplained-undescribed 'bindings';
+-- * regular 'explainedBindings';
+-- * 'explainedBindings' with least occurring cases generalized first;
+--
+-- Here are some examples:
+--
+-- * Sometimes the result is the same as 'explainedBindings':
+--
+--     > > describedBindings 100 10 (||)
+--     > [ (["False","False"],Just "False")
+--     > , (["_","_"],Just "True") ]
+--
+--     > > describedBindings 100 10 (==0)
+--     > [ (["0"],Just "True")
+--     > , (["_"],Just "False") ]
+--
+-- * but sometimes it is shorter because we consider generalizing least
+--   occurring cases first:
+--
+--     > > describedBindings 100 10 (&&)
+--     > [ ( ["True","True"],Just "True")
+--     > , ( ["_","_"],Just "False") ]
+--
+--     > > describedBindings 100 10 (==1)
+--     > [ (["1"],Just "True"),
+--     > , (["_"],Just "False") ]
+--
+--     > > describedBindings 100 10 (\_ y -> y == 1)
+--     > [ (["_","1"],Just "True")
+--     > , (["_","_"],Just "False") ]
 describedBindings :: ShowFunction a => Int -> Int -> a -> [Binding]
 describedBindings m n f
   | length bs1 <= n  =  bs1
@@ -359,6 +477,59 @@ describeBindings bs = head $ sortOn length $
   , explainBindings . concat . sortOn length $ classifyOn snd bs
   ]
 
+-- | Returns a set of bindings explaining how a function works.
+--   Some argument values are generalized to "@_@" when possible.
+--   It takes as argument the maximum number of cases
+--   considered for computing the explanation.
+--
+-- A measure of success in this generalization process is if this function
+-- returns less values than the asked maximum number of cases.
+--
+-- This is the /first/ function in the clarification pipeline.
+--
+-- * In some cases, 'bindings' cannot be "explained"
+--   an almost unchanged result of 'bindings' is returned
+--   with the last binding having variables replaced by "@_@":
+--
+--     > > explainedBindings 4 (id::Int->Int)
+--     > [ (["0"],Just "0")
+--     > , (["1"],Just "1")
+--     > , (["-1"],Just "-1")
+--     > , (["_"],Just "2") ]
+--
+-- * When possible, some cases are generalized using @_@:
+--
+--     > > explainedBindings 10 (||)
+--     > [ (["False","False"],Just "False")
+--     > , (["_","_"],Just "True") ]
+--
+--     but the resulting "explanation" might not be the shortest possible
+--     (cf. 'describedBindings'):
+--
+--     > > explainedBindings 10 (&&)
+--     > [ ( ["False","_"],Just "False")
+--     > , (["_","False"],Just "False")
+--     > , (["_","_"],Just "True") ]
+--
+-- * Generalization works for infinite domains (heuristically):
+--
+--     > > explainedBindings 10 (==0)
+--     > [ (["0"],Just "True")
+--     > , (["_"],Just "False") ]
+--
+-- * Generalization for each item is processed in the order they are generated by 'bindings'
+--   hence explanations are not always the shortest possible (cf. 'describedBindings').
+--   In the following examples, the first case is redundant.
+--
+--     > > explainedBindings 10 (==1)
+--     > [ (["0"],Just "False")
+--     > , (["1"],Just "True"),
+--     > , (["_"],Just "False") ]
+--
+--     > > explainedBindings 10 (\_ y -> y == 1)
+--     > [ (["_","0"],Just "False")
+--     > , (["_","1"],Just "True")
+--     > , (["_","_"],Just "False") ]
 explainedBindings :: ShowFunction a => Int -> a -> [Binding]
 explainedBindings m = explainBindings . take m . bindings
 
@@ -373,7 +544,13 @@ explainBindings = explain []
          [ (gas,r) | gas <- generalizations as
                    , and [r' == r | (as',r') <- bs, as' <~ gas] ]
 
--- Should be read as "is generalized by":
+generalizations :: [String] -> [[String]]
+generalizations []     = [[]]
+generalizations (v:vs) = map ("_":) gvs ++ map (v:) gvs
+  where
+  gvs = generalizations vs
+
+-- | Should be read as "is generalized by":
 --
 -- > > ["1","2","3"] <~ ["_","_","_"]
 -- > True
