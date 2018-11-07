@@ -258,6 +258,7 @@ bench/tiers-%.diff-test: bench/tiers-%
 	# functions
 	$< "()->()"           | diff -rud test/diff/tiers-$*-U-U.out         -
 	$< "Bool->Bool"       | diff -rud test/diff/tiers-$*-Bool-Bool.out   -
+	$< "Bool->Bool->Bool" | diff -rud test/diff/tiers-$*-Bool-Bool-Bool.out -
 	$< "Bool->()"         | diff -rud test/diff/tiers-$*-Bool-U.out      -
 	$< "()->Bool"         | diff -rud test/diff/tiers-$*-U-Bool.out      -
 	$< "Int->Int"       9 | diff -rud test/diff/tiers-$*-Int-Int.out     -
@@ -290,6 +291,7 @@ bench/tiers-%.update-diff-test: bench/tiers-%
 	# functions
 	$< "()->()"           > test/diff/tiers-$*-U-U.out
 	$< "Bool->Bool"       > test/diff/tiers-$*-Bool-Bool.out
+	$< "Bool->Bool->Bool" > test/diff/tiers-$*-Bool-Bool-Bool.out
 	$< "Bool->()"         > test/diff/tiers-$*-Bool-U.out
 	$< "()->Bool"         > test/diff/tiers-$*-U-Bool.out
 	$< "Int->Int"       9 > test/diff/tiers-$*-Int-Int.out

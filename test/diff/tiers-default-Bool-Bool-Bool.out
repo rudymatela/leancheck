@@ -1,0 +1,57 @@
+map length (tiers :: [[ Bool->Bool->Bool ]])  =  [16]
+
+length (list :: [ Bool->Bool->Bool ])  =  Infinity
+
+allUnique (list :: [ Bool->Bool->Bool ])  =  True
+
+ratioRepetitions (list :: [ Bool->Bool->Bool ])  =  0 % 1
+
+tiers :: [Bool->Bool->Bool]  =
+  [ [ \_ _ -> False
+    , \x y -> case (x,y) of
+              (True,True) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (True,False) -> True
+              _ -> False
+    , \x _ -> case x of
+              False -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,True) -> True
+              _ -> False
+    , \_ y -> case y of
+              False -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,False) -> False
+              (True,True) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,False) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (False,False) -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,False) -> True
+              (True,True) -> True
+              _ -> False
+    , \_ y -> case y of
+              False -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (False,True) -> False
+              _ -> True
+    , \x _ -> case x of
+              False -> True
+              _ -> False
+    , \x y -> case (x,y) of
+              (True,False) -> False
+              _ -> True
+    , \x y -> case (x,y) of
+              (True,True) -> False
+              _ -> True
+    , \_ _ -> True
+    ]
+  ]
