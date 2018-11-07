@@ -335,27 +335,30 @@ instance ShowFunction Word4 where bindtiers = bindtiersShow
 --   Search this list for a short name for your function.
 functionNames :: [(String, [Binding])]
 functionNames =
-  [ "id"          `for` (id          :: () -> ())
-  , "const"       `for` (const       :: () -> () -> ())
+  [ "id"    `for` (id          :: () -> ())
+  , "const" `for` (const       :: () -> () -> ())
 
-  , "id"          `for` (id          :: Bool -> Bool)
-  , "not"         `for` (not         :: Bool -> Bool)
-  , "const False" `for` (const False :: Bool -> Bool)
-  , "const True"  `for` (const True  :: Bool -> Bool)
-  , "const"       `for` (const :: Bool -> Bool -> Bool)
+  -- booleans
+  , "id"    `for` (id          :: Bool -> Bool)
+  , "not"   `for` (not         :: Bool -> Bool)
+  , "const" `for` (const :: Bool -> Bool -> Bool)
 
-  , "(&&)" `for` (&&)
-  , "(||)" `for` (||)
+  , "(&&)"  `for` (&&)
+  , "(||)"  `for` (||)
 
+  -- numeric types
   , "id"      `for` (id      :: Int -> Int)
-  , "const 0" `for` (const 0 :: Int -> Int)
-  , "const 1" `for` (const 1 :: Int -> Int)
-  , "abs"     `for` (abs     :: Int -> Int)
-  , "negate"  `for` (negate  :: Int -> Int)
-  , "(+)"     `for` ((+)     :: Int -> Int -> Int)
-  , "(*)"     `for` ((*)     :: Int -> Int -> Int)
-  , "(-)"     `for` ((-)     :: Int -> Int -> Int)
   , "const"   `for` (const   :: Int -> Int -> Int)
+
+  -- Num typeclass
+  , "(+)"     `for` ((+)     :: Int -> Int -> Int)
+  , "(-)"     `for` ((-)     :: Int -> Int -> Int)
+  , "(*)"     `for` ((*)     :: Int -> Int -> Int)
+  , "negate"  `for` (negate  :: Int -> Int)
+  , "abs"     `for` (abs     :: Int -> Int)
+  , "signum"  `for` (signum  :: Int -> Int)
+
+  -- integer properties
   , "odd"     `for` (odd     :: Int -> Bool)
   , "even"    `for` (even    :: Int -> Bool)
   ]
