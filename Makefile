@@ -136,6 +136,9 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "Integer"          | diff -rud test/diff/tiers-Integer.out     -
 	./bench/tiers "Bool"             | diff -rud test/diff/tiers-Bool.out        -
 	./bench/tiers "Char"             | diff -rud test/diff/tiers-Char.out        -
+	./bench/tiers "Float"            | diff -rud test/diff/tiers-Float.out       -
+	./bench/tiers "Double"           | diff -rud test/diff/tiers-Double.out      -
+	./bench/tiers "Rational"         | diff -rud test/diff/tiers-Rational.out    -
 	# list s
 	./bench/tiers "[()]"             | diff -rud test/diff/tiers-Us.out          -
 	./bench/tiers "[Int]"          6 | diff -rud test/diff/tiers-Ints.out        -
@@ -187,6 +190,9 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Integer"          > test/diff/tiers-Integer.out
 	./bench/tiers "Bool"             > test/diff/tiers-Bool.out
 	./bench/tiers "Char"             > test/diff/tiers-Char.out
+	./bench/tiers "Float"            > test/diff/tiers-Float.out
+	./bench/tiers "Double"           > test/diff/tiers-Double.out
+	./bench/tiers "Rational"         > test/diff/tiers-Rational.out
 	# lists
 	./bench/tiers "[()]"             > test/diff/tiers-Us.out
 	./bench/tiers "[Int]"          6 > test/diff/tiers-Ints.out

@@ -83,6 +83,9 @@ main = do
     "Integer"          -> put t n (u :: Integer              )
     "Bool"             -> put t n (u :: Bool                 )
     "Char"             -> put t n (u :: Char                 )
+    "Float"            -> put t n (u :: Float                )
+    "Double"           -> put t n (u :: Double               )
+    "Rational"         -> put t n (u :: Rational             )
     -- lists
     "[()]"             -> put t n (u :: [()]                 )
     "[Int]"            -> put t n (u :: [Int]                )
