@@ -27,8 +27,6 @@ other improvements
 later
 -----
 
-* implement stub `Test.LeanCheck.Function.*` modules;
-
 * somehow, improve the improve the enumeration of `Char`s:
 
    list = [ ['a'], ['b','c'], ['d','e','f'], ... ]
@@ -37,9 +35,3 @@ later
       ||| ...
      where
      ||| is something that interleaves tiers of different lists...
-
-* Document simplification functions on T.L.F.ShowFunction
-
-* Remove unused arguments when showing functions:
-  Instead of showing `\x y -> case (x,y) of (_,0) -> 0; _ -> 1`,
-  show               `\_ y -> case y of 0 -> 0; _ -> 1`.
