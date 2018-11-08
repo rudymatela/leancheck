@@ -139,9 +139,11 @@ listIntegral = [0,-1..] +| [1..]
 instance Listable Int where
   list = listIntegral
 
+-- | > list :: [Int] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 instance Listable Integer where
   list = listIntegral
 
+-- | > list :: [Char] = ['a', ' ', 'b', 'A', 'c', '\', 'n', 'd', ...]
 instance Listable Char where
   list = ['a'..'z']
       +| [' ','\n']
@@ -163,6 +165,13 @@ instance Listable Bool where
 instance Listable a => Listable (Maybe a) where
   tiers = cons0 Nothing \/ cons1 Just
 
+-- | > tiers :: [[Either Bool Bool]] =
+--   >   [[Left False, Right False, Left True, Right True]]
+--   > tiers :: [[Either Int Int]] = [ [Left 0, Right 0]
+--   >                               , [Left 1, Right 1]
+--   >                               , [Left (-1), Right (-1)]
+--   >                               , [Left 2, Right 2]
+--   >                               , ... ]
 instance (Listable a, Listable b) => Listable (Either a b) where
   tiers = reset (cons1 Left)
      \\// reset (cons1 Right)
@@ -176,6 +185,7 @@ instance (Listable a, Listable b) => Listable (Either a b) where
 instance (Listable a, Listable b) => Listable (a,b) where
   tiers = tiers >< tiers
 
+-- | > list :: [(Int,Int,Int)] = [ (0,0,0), (0,0,1), (0,1,0), ...]
 instance (Listable a, Listable b, Listable c) => Listable (a,b,c) where
   tiers = productWith (\x (y,z) -> (x,y,z)) tiers tiers
 
