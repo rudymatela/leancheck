@@ -69,6 +69,15 @@ module Test.LeanCheck.Utils.Types
   , Digit (..)
   , AlphaNum (..)
   , Letter (..)
+
+  -- * String types
+  , Spaces (..)
+  , Lowers (..)
+  , Uppers (..)
+  , Alphas (..)
+  , Digits (..)
+  , AlphaNums (..)
+  , Letters (..)
   )
 where
 -- TODO: Add Ix and Bits instances
@@ -651,3 +660,27 @@ instance Listable Alpha where list = map Alpha $ ['a'..'z'] +| ['A'..'Z']
 instance Listable Digit where list = map Digit ['0'..'9']
 instance Listable AlphaNum where list = map AlphaNum $ ['0'..'9'] +| ['a'..'z'] +| ['A'..'Z']
 instance Listable Letter   where list = map Letter $ ['a'..'z'] +| ['A'..'Z']
+
+data Spaces  =  Spaces {unSpaces :: String}
+data Lowers  =  Lowers {unLowers :: String}
+data Uppers  =  Uppers {unUppers :: String}
+data Alphas  =  Alphas {unAlphas :: String}
+data Digits  =  Digits {unDigits :: String}
+data AlphaNums  =  AlphaNums {unAlphaNums :: String}
+data Letters    =  Letters   {unLetters   :: String}
+
+instance Show Spaces where show = show . unSpaces
+instance Show Lowers where show = show . unLowers
+instance Show Uppers where show = show . unUppers
+instance Show Alphas where show = show . unAlphas
+instance Show Digits where show = show . unDigits
+instance Show AlphaNums where show = show . unAlphaNums
+instance Show Letters   where show = show . unLetters
+
+instance Listable Spaces where tiers = cons1 (Spaces . map unSpace)
+instance Listable Lowers where tiers = cons1 (Lowers . map unLower)
+instance Listable Uppers where tiers = cons1 (Uppers . map unUpper)
+instance Listable Alphas where tiers = cons1 (Alphas . map unAlpha)
+instance Listable Digits where tiers = cons1 (Digits . map unDigit)
+instance Listable AlphaNums where tiers = cons1 (AlphaNums . map unAlphaNum)
+instance Listable Letters   where tiers = cons1 (Letters   . map unLetter)
