@@ -22,16 +22,3 @@ other improvements
 ------------------
 
 * implement `conditionStatsT` (see `classStatsT`)
-
-
-later
------
-
-* somehow, improve the improve the enumeration of `Char`s:
-
-   list = [ ['a'], ['b','c'], ['d','e','f'], ... ]
-      ||| [ [' '], ['\n'] ]
-      ||| [ ['0'], ['1'], ['2'], ...]
-      ||| ...
-     where
-     ||| is something that interleaves tiers of different lists...
