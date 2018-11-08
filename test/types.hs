@@ -7,6 +7,7 @@ import Test.LeanCheck.Utils.Types
 import Test.LeanCheck (list,fails)
 import Data.Word
 import Data.Int
+import Data.Char hiding (Space)
 
 main :: IO ()
 main =
@@ -114,6 +115,14 @@ tests =
 
   , holds 100 (\(Nat n) -> n >= 0)
   , holds 100 (\(Natural n) -> n >= 0)
+
+  , holds 100 $ \(Space c) -> isSpace c
+  , holds 100 $ \(Lower c) -> isLower c
+  , holds 100 $ \(Upper c) -> isUpper c
+  , holds 100 $ \(Alpha c) -> isAlpha c
+  , holds 100 $ \(Digit c) -> isDigit c
+  , holds 100 $ \(AlphaNum c) -> isAlphaNum c
+  , holds 100 $ \(Letter c) -> isLetter c
   ]
   where
   unXs (Xs xs) = xs

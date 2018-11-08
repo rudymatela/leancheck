@@ -60,6 +60,15 @@ module Test.LeanCheck.Utils.Types
   , Bag (..)
   , Set (..)
   , Map (..)
+
+  -- * Character types
+  , Space (..)
+  , Lower (..)
+  , Upper (..)
+  , Alpha (..)
+  , Digit (..)
+  , AlphaNum (..)
+  , Letter (..)
   )
 where
 -- TODO: Add Ix and Bits instances
@@ -618,3 +627,27 @@ newtype Xs a = Xs [a] deriving (Eq, Ord, Show, Read)
 instance (Integral a, Bounded a) => Listable (Xs a) where
   tiers = cons1 (Xs . map unX)
 -- ^ Lists with elements of the 'X' type.
+
+data Space  =  Space {unSpace :: Char}
+data Lower  =  Lower {unLower :: Char}
+data Upper  =  Upper {unUpper :: Char}
+data Alpha  =  Alpha {unAlpha :: Char}
+data Digit  =  Digit {unDigit :: Char}
+data AlphaNum  =  AlphaNum {unAlphaNum :: Char}
+data Letter    =  Letter   {unLetter   :: Char}
+
+instance Show Space where show = show . unSpace
+instance Show Lower where show = show . unLower
+instance Show Upper where show = show . unUpper
+instance Show Alpha where show = show . unAlpha
+instance Show Digit where show = show . unDigit
+instance Show AlphaNum where show = show . unAlphaNum
+instance Show Letter   where show = show . unLetter
+
+instance Listable Space where list = map Space [' ', '\t', '\n', '\r', '\f', '\v']
+instance Listable Lower where list = map Lower ['a'..'z']
+instance Listable Upper where list = map Upper ['A'..'Z']
+instance Listable Alpha where list = map Alpha $ ['a'..'z'] +| ['A'..'Z']
+instance Listable Digit where list = map Digit ['0'..'9']
+instance Listable AlphaNum where list = map AlphaNum $ ['0'..'9'] +| ['a'..'z'] +| ['A'..'Z']
+instance Listable Letter   where list = map Letter $ ['a'..'z'] +| ['A'..'Z']
