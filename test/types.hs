@@ -123,6 +123,14 @@ tests =
   , holds 100 $ \(Digit c) -> isDigit c
   , holds 100 $ \(AlphaNum c) -> isAlphaNum c
   , holds 100 $ \(Letter c) -> isLetter c
+
+  , holds 100 $ \(Spaces s) -> all isSpace s
+  , holds 100 $ \(Lowers s) -> all isLower s
+  , holds 100 $ \(Uppers s) -> all isUpper s
+  , holds 100 $ \(Alphas s) -> all isAlpha s
+  , holds 100 $ \(Digits s) -> all isDigit s
+  , holds 100 $ \(AlphaNums s) -> all isAlphaNum s
+  , holds 100 $ \(Letters s)   -> all isLetter s
   ]
   where
   unXs (Xs xs) = xs
