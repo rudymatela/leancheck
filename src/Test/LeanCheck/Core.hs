@@ -127,6 +127,8 @@ class Listable a where
 toTiers :: [a] -> [[a]]
 toTiers = map (:[])
 
+-- | > list :: [()]  =  [()]
+--   > tiers :: [[()]]  =  [[()]]
 instance Listable () where
   list = [()]
 
@@ -224,13 +226,26 @@ tiersFractional = mapT (\(x,y) -> fromInteger x / fromInteger y) . reset
 tiersFloating :: Fractional a => [[a]]
 tiersFloating = tiersFractional \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
 
--- Note that this instance ignores NaN's.
+-- | @NaN@ and @-0@ are not included in the list of 'Float's.
+--
+-- > list :: [Float] =
+-- >   [ 0.0
+-- >   , 1.0, -1.0, Infinity
+-- >   , 0.5, 2.0, -Infinity, -0.5, -2.0
+-- >   , 0.33333334, 3.0, -0.33333334, -3.0
+-- >   , 0.25, 0.6666667, 1.5, 4.0, -0.25, -0.6666667, -1.5, -4.0
+-- >   , ...
+-- >   ]
 instance Listable Float where
   tiers = tiersFloating
 
+-- | @NaN@ and @-0@ are not included in the list of 'Double's.
+--
+-- > list :: [Double]  =  [0.0, 1.0, -1.0, Infinity, 0.5, 2.0, ...]
 instance Listable Double where
   tiers = tiersFloating
 
+-- | > list :: [Ordering]  = [LT, EQ, GT]
 instance Listable Ordering where
   tiers = cons0 LT
        \/ cons0 EQ
