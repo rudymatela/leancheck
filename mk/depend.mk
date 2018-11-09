@@ -33,7 +33,9 @@ bench/tiers-default.o: \
   src/Test/LeanCheck/Function/Show.hs \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function/Show/EightLines.hs \
+  src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
   src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Eq.hs \
   src/Test/LeanCheck/Error.hs \
@@ -121,6 +123,17 @@ eg/test-bool.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   eg/test-bool.hs
+eg/test-float: \
+  eg/test-float.hs \
+  mk/toplibs
+eg/test-float.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  eg/test-float.hs
 eg/test-list: \
   eg/test-list.hs \
   mk/toplibs
@@ -282,6 +295,8 @@ src/Test/LeanCheck/Function/Show/FourCases.o: \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/ShowFunction: \
+  mk/toplibs
 src/Test/LeanCheck/Function/ShowFunction.o: \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \

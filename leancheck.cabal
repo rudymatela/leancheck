@@ -48,6 +48,7 @@ extra-source-files: .gitignore
                   , eg/higher-order.hs
                   , eg/overflow.hs
                   , eg/test-bool.hs
+                  , eg/test-float.hs
                   , eg/test-list.hs
                   , eg/test-sort.hs
                   , etc/hugs-backports/Data/Function.hs

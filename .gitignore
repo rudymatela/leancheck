@@ -41,6 +41,7 @@ bench/tiers-4cases
 bench/tiers-4cases.hs
 eg/test-sort
 eg/test-bool
+eg/test-float
 eg/test-list
 eg/higher-order
 eg/overflow

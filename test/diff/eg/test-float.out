@@ -1,0 +1,12 @@
++++ OK, passed 10000 tests.
++++ OK, passed 10000 tests.
++++ OK, passed 10000 tests.
+*** Failed! Falsifiable (after 1218 tests):
+1.5 2.625
++++ OK, passed 10000 tests.
++++ OK, passed 10000 tests.
++++ OK, passed 10000 tests.
++++ OK, passed 10000 tests.
++++ OK, passed 10000 tests.
+*** Failed! Falsifiable (after 1 tests):
+()
