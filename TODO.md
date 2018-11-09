@@ -22,6 +22,3 @@ other improvements
 ------------------
 
 * implement `conditionStatsT` (see `classStatsT`)
-
-* consider changing the `Float` and `Double` `Listable` instance to match
-  `Rational`.
