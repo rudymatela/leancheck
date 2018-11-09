@@ -211,12 +211,14 @@ instance (Listable a) => Listable [a] where
 -- | Tiers of 'Fractional' values.
 --   This can be used as the implementation of 'tiers' for 'Fractional' types.
 tiersFractional :: Fractional a => [[a]]
-tiersFractional = productWith (+) tiersFractionalParts
-                                  (mapT fromIntegral (tiers::[[Integer]]))
+tiersFractional = mapT (\(x,y) -> fromIntegral x / fromIntegral y)
+                $ (tiersIntegers >< tiersPositives)
+                  `suchThat` \(n,d) -> n `gcd` d == 1
   where
-  tiersFractionalParts :: Fractional a => [[a]]
-  tiersFractionalParts = [0] : [ [fromIntegral a / fromIntegral b]
-                             | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
+  tiersIntegers :: [[Int]]
+  tiersIntegers  = toTiers $ listIntegral
+  tiersPositives :: [[Int]]
+  tiersPositives = toTiers $ [1..]
 
 -- | Tiers of 'Floating' values.
 --   This can be used as the implementation of 'tiers' for 'Floating' types.
