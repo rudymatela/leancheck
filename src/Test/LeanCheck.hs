@@ -117,6 +117,7 @@ module Test.LeanCheck
   , listsOfLength
 
   -- ** Listing values
+  , tiersFloating
   , tiersFractional
   , listIntegral
   , (+|)

@@ -77,6 +77,7 @@ module Test.LeanCheck.Core
   , (+|)
   , listIntegral
   , tiersFractional
+  , tiersFloating
   )
 where
 
@@ -212,19 +213,27 @@ instance (Listable a) => Listable [a] where
 tiersFractional :: Fractional a => [[a]]
 tiersFractional = productWith (+) tiersFractionalParts
                                   (mapT fromIntegral (tiers::[[Integer]]))
-               \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
-  where tiersFractionalParts :: Fractional a => [[a]]
-        tiersFractionalParts = [0]
-                             : [ [fromIntegral a / fromIntegral b]
-                               | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
--- The position of Infinity in the above enumeration is arbitrary.
+  where
+  tiersFractionalParts :: Fractional a => [[a]]
+  tiersFractionalParts = [0] : [ [fromIntegral a / fromIntegral b]
+                             | b <- iterate (*2) 2, a <- [1::Integer,3..b] ]
+
+-- | Tiers of 'Floating' values.
+--   This can be used as the implementation of 'tiers' for 'Floating' types.
+--
+--   This function is equivalent to 'tiersFractional'
+--   with positive and negative infinities included: 1/0 and -1/0.
+--
+--   @NaN@ and @-0@ are excluded from this enumeration.
+tiersFloating :: Fractional a => [[a]]
+tiersFloating = tiersFractional \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
 
 -- Note that this instance ignores NaN's.
 instance Listable Float where
-  tiers = tiersFractional
+  tiers = tiersFloating
 
 instance Listable Double where
-  tiers = tiersFractional
+  tiers = tiersFloating
 
 instance Listable Ordering where
   tiers = cons0 LT
