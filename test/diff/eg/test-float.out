@@ -10,3 +10,6 @@
 +++ OK, passed 10000 tests.
 *** Failed! Falsifiable (after 1 tests):
 ()
++++ OK, passed 10000 tests.
+*** Failed! Falsifiable (after 3 tests):
+0.5
