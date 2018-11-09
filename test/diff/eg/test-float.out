@@ -1,19 +1,19 @@
-*** Failed! Falsifiable (after 41 tests):
+*** Failed! Falsifiable (after 74 tests):
 0.33333334 1.0
-*** Failed! Falsifiable (after 41 tests):
+*** Failed! Falsifiable (after 74 tests):
 0.33333334 1.0
-*** Failed! Falsifiable (after 479 tests):
+*** Failed! Falsifiable (after 1188 tests):
 0.2 0.2
-*** Failed! Falsifiable (after 256 tests):
+*** Failed! Falsifiable (after 584 tests):
 0.2 0.33333334
 +++ OK, passed 10000 tests.
 +++ OK, passed 10000 tests.
 +++ OK, passed 10000 tests.
 +++ OK, passed 10000 tests.
-*** Failed! Falsifiable (after 22 tests):
+*** Failed! Falsifiable (after 38 tests):
 0.14285715
 *** Failed! Falsifiable (after 1 tests):
 ()
 +++ OK, passed 10000 tests.
-*** Failed! Falsifiable (after 3 tests):
+*** Failed! Falsifiable (after 5 tests):
 0.5
