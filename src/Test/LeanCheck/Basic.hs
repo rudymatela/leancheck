@@ -144,10 +144,25 @@ uncurry12 :: (a->b->c->d->e->f->g->h->i->j->k->l->m)
           -> (a,b,c,d,e,f,g,h,i,j,k,l) -> m
 uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q) = f x y z w v u r s t o p q
 
+-- | > list :: [Rational] =
+--   >   [   0  % 1
+--   >   ,   1  % 1
+--   >   , (-1) % 1
+--   >   ,   1  % 2,   2  % 1
+--   >   , (-1) % 2, (-2) % 1
+--   >   ,   1  % 3,   3  % 1
+--   >   , (-1) % 3, (-3) % 1
+--   >   ,   1  % 4,   2  % 3,   3  % 2,   4  % 1
+--   >   , (-1) % 4, (-2) % 3, (-3) % 2, (-4) % 1
+--   >   ,   1  % 5,   5  % 1
+--   >   , (-1) % 5, (-5) % 1
+--   >   , ...
+--   >   ]
 instance (Integral a, Listable a) => Listable (Ratio a) where
   tiers = mapT (uncurry (%)) . reset
         $ tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
 
+-- | > list :: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
 instance Listable Word where
   list = [0..]
 
