@@ -134,8 +134,21 @@ instance Listable () where
 
 -- | Tiers of 'Integral' values.
 --   Can be used as a default implementation of 'list' for 'Integral' types.
-listIntegral :: (Enum a, Num a) => [a]
-listIntegral = [0,-1..] +| [1..]
+--
+-- For types with negative values, like 'Int',
+-- the list starts with 0 then intercalates between positives and negatives.
+--
+-- > listIntegral = [0, 1, -1, 2, -2, 3, -3, 4, -4, ...]
+--
+-- For types without negative values, like 'Word',
+-- the list starts with 0 followed by positives of increasing magnitude.
+--
+-- > listIntegral = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...]
+listIntegral :: (Ord a, Num a) => [a]
+listIntegral = 0 : positives +| negatives
+  where
+  positives = takeWhile (>0) $ iterate (+1) 1
+  negatives = takeWhile (<0) $ iterate (subtract 1) (-1)
 
 -- | > tiers :: [[Int]] = [[0], [1], [-1], [2], [-2], [3], [-3], ...]
 --   > list :: [Int] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]

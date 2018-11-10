@@ -27,10 +27,6 @@ other improvements
 
 * set internal type of `Natural` to be `Integer` instead of `Int`;
 
-* make `Natural` and `Nat` not generate negatives;
-
 * pass `--name` to Haddock depending on its version;
-
-* consider changing `listIntegral` to work for types without negatives;
 
 * implement `conditionStatsT` (see `classStatsT`)

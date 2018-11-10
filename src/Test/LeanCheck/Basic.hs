@@ -164,7 +164,7 @@ instance (Integral a, Listable a) => Listable (Ratio a) where
 
 -- | > list :: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
 instance Listable Word where
-  list = [0..]
+  list = listIntegral
 
 -- | Resets the weight of a constructor (or tiers)
 -- Typically used as an infix constructor when defining Listable instances:
