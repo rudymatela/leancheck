@@ -118,8 +118,10 @@ tests n =
 --, holds n $ \x y z -> none isInfinite [x,y,z] ==> okNum x y (z -: float)
 --, holds n $ \x y z -> none isInfinite [x,y,z] ==> okNum x y (z -: double)
   , holds n $ okNum -:> rational
-  , holds n $ okNum -:> nat
-  , holds n $ okNum -:> natural
+  , holds n $ okNumNonNegative -:> nat
+  , holds n $ okNumNonNegative -:> natural
+  , holds n $ (\x y -> x < y ==> x - y == 0) -:> nat
+  , holds n $ (\x y -> x < y ==> x - y == 0) -:> natural
 
   , holds n $ idempotent id   -:> int
   , holds n $ idempotent abs  -:> int
