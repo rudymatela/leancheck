@@ -22,6 +22,7 @@ before_install:
 - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
 - ghc --version
 - cabal --version
+- haddock --version
 # Download and unpack the stack executable
 # "Once Travis whitelists the stack.dev files," simply include stack in the
 # addons section. -- https://docs.haskellstack.org/en/stable/travis_ci/
@@ -68,6 +69,7 @@ matrix:
     - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
     - ghc --version
     - cabal --version
+    - haddock --version
     script:
     - make && make test
     - make haddock HADDOCKFLAGS=
@@ -80,6 +82,7 @@ matrix:
     - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
     - ghc --version
     - cabal --version
+    - haddock --version
     script:
     - make && make test
     - make haddock HADDOCKFLAGS=
@@ -92,6 +95,7 @@ matrix:
     - export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
     - ghc --version
     - cabal --version
+    - haddock --version
     script:
     - make && make test
     - make haddock HADDOCKFLAGS=
