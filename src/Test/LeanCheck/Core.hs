@@ -144,10 +144,14 @@ instance Listable () where
 -- the list starts with 0 followed by positives of increasing magnitude.
 --
 -- > listIntegral = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...]
+--
+-- This function will not work for types that throw errors when the result of
+-- an arithmetic operation is negative such as 'GHC.Natural'.  For these, use
+-- @[0..]@ as the 'list' implementation.
 listIntegral :: (Ord a, Num a) => [a]
 listIntegral = 0 : positives +| negatives
   where
-  positives = takeWhile (>0) $ iterate (+1) 1
+  positives = takeWhile (>0) $ iterate (+1) 1  -- stop generating on overflow
   negatives = takeWhile (<0) $ iterate (subtract 1) (-1)
 
 -- | > tiers :: [[Int]] = [[0], [1], [-1], [2], [-2], [3], [-3], ...]
