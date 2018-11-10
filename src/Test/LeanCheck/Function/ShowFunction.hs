@@ -164,7 +164,6 @@ bindings = concat . bindtiers
 -- Define instances for 'show'able algebraic datatypes as:
 --
 -- > instance ShowFunction Ty where bindtiers = bindtiersShow
-
 bindtiersShow :: Show a => a -> [[Binding]]
 bindtiersShow x = [[([],errorToNothing $ show x)]]
 
