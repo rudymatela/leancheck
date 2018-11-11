@@ -123,6 +123,9 @@ class Listable a where
 -- | Takes a list of values @xs@ and transform it into tiers on which each
 --   tier is occupied by a single element from @xs@.
 --
+-- > > toTiers [x, y, z, ...]
+-- > [ [x], [y], [z], ...]
+--
 -- To convert back to a list, just 'concat'.
 toTiers :: [a] -> [[a]]
 toTiers = map (:[])
@@ -138,12 +141,12 @@ instance Listable () where
 -- For types with negative values, like 'Int',
 -- the list starts with 0 then intercalates between positives and negatives.
 --
--- > listIntegral = [0, 1, -1, 2, -2, 3, -3, 4, -4, ...]
+-- > listIntegral  =  [0, 1, -1, 2, -2, 3, -3, 4, -4, ...]
 --
 -- For types without negative values, like 'Word',
 -- the list starts with 0 followed by positives of increasing magnitude.
 --
--- > listIntegral = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...]
+-- > listIntegral  =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...]
 --
 -- This function will not work for types that throw errors when the result of
 -- an arithmetic operation is negative such as 'GHC.Natural'.  For these, use
@@ -229,6 +232,23 @@ instance (Listable a) => Listable [a] where
 
 -- | Tiers of 'Fractional' values.
 --   This can be used as the implementation of 'tiers' for 'Fractional' types.
+--
+-- > tiersFractional :: [[Rational]]  =
+-- >   [ [  0  % 1]
+-- >   , [  1  % 1]
+-- >   , [(-1) % 1]
+-- >   , [  1  % 2,   2  % 1]
+-- >   , [(-1) % 2, (-2) % 1]
+-- >   , [  1  % 3,   3  % 1]
+-- >   , [(-1) % 3, (-3) % 1]
+-- >   , [  1  % 4,   2  % 3,   3  % 2,   4  % 1]
+-- >   , [(-1) % 4, (-2) % 3, (-3) % 2, (-4) % 1]
+-- >   , [  1  % 5,   5  % 1]
+-- >   , [(-1) % 5, (-5) % 1]
+-- >   , [  1  % 6,   2 % 5,    3  % 4,   4  % 3,   5  % 2,   6  % 1]
+-- >   , [(-1) % 6, (-2) % 5, (-3) % 4, (-4) % 3, (-5) % 2, (-6) % 1]
+-- >   , ...
+-- >   ]
 tiersFractional :: Fractional a => [[a]]
 tiersFractional = mapT (\(x,y) -> fromInteger x / fromInteger y) . reset
                 $ tiers `suchThat` \(n,d) -> d > 0 && n `gcd` d == 1
@@ -238,6 +258,23 @@ tiersFractional = mapT (\(x,y) -> fromInteger x / fromInteger y) . reset
 --
 --   This function is equivalent to 'tiersFractional'
 --   with positive and negative infinities included: 1/0 and -1/0.
+--
+-- > tiersFloating :: [[Float]] =
+-- >   [ [0.0]
+-- >   , [1.0]
+-- >   , [-1.0, Infinity]
+-- >   , [ 0.5,  2.0, -Infinity]
+-- >   , [-0.5, -2.0]
+-- >   , [ 0.33333334,  3.0]
+-- >   , [-0.33333334, -3.0]
+-- >   , [ 0.25,  0.6666667,  1.5,  4.0]
+-- >   , [-0.25, -0.6666667, -1.5, -4.0]
+-- >   , [ 0.2,  5.0]
+-- >   , [-0.2, -5.0]
+-- >   , [ 0.16666667,  0.4,  0.75,  1.3333334,  2.5,  6.0]
+-- >   , [-0.16666667, -0.4, -0.75, -1.3333334, -2.5, -6.0]
+-- >   , ...
+-- >   ]
 --
 --   @NaN@ and @-0@ are excluded from this enumeration.
 tiersFloating :: Fractional a => [[a]]
@@ -269,6 +306,9 @@ instance Listable Ordering where
        \/ cons0 GT
 
 -- | 'map' over tiers
+--
+-- > mapT f [ [x], [y,z], [w,u,v], ... ]  =
+-- >   [ [f x], [f y, f z], [f w, f u, f v], ...]
 mapT :: (a -> b) -> [[a]] -> [[b]]
 mapT = map . map
 
@@ -355,7 +395,7 @@ suchThat = flip filterT
 -- | Lazily interleaves two lists, switching between elements of the two.
 --   Union/sum of the elements in the lists.
 --
--- > [x,y,z] +| [a,b,c] == [x,a,y,b,z,c]
+-- > [x,y,z,...] +| [a,b,c,...]  =  [x,a,y,b,z,c,...]
 (+|) :: [a] -> [a] -> [a]
 []     +| ys = ys
 (x:xs) +| ys = x:(ys +| xs)
@@ -382,23 +422,23 @@ infixr 7 \\//
 
 -- | Take a tiered product of lists of tiers.
 --
--- > [t0,t1,t2,...] >< [u0,u1,u2,...] =
--- > [ t0**u0
--- > , t0**u1 ++ t1**u0
--- > , t0**u2 ++ t1**u1 ++ t2**u0
--- > , ...       ...       ...       ...
--- > ]
--- > where xs ** ys = [(x,y) | x <- xs, y <- ys]
+-- > [t0,t1,t2,...] >< [u0,u1,u2,...]  =
+-- >   [ t0**u0
+-- >   , t0**u1 ++ t1**u0
+-- >   , t0**u2 ++ t1**u1 ++ t2**u0
+-- >   , ...       ...       ...       ...
+-- >   ]
+-- >   where xs ** ys = [(x,y) | x <- xs, y <- ys]
 --
 -- Example:
 --
--- > [[0],[1],[2],...] >< [[0],[1],[2],...]
--- > == [  [(0,0)]
--- >    ,  [(1,0),(0,1)]
--- >    ,  [(2,0),(1,1),(0,2)]
--- >    ,  [(3,0),(2,1),(1,2),(0,3)]
--- >    ...
--- >    ]
+-- > [[0],[1],[2],...] >< [[0],[1],[2],...]  =
+-- >   [ [(0,0)]
+-- >   , [(1,0),(0,1)]
+-- >   , [(2,0),(1,1),(0,2)]
+-- >   , [(3,0),(2,1),(1,2),(0,3)]
+-- >   , ...
+-- >   ]
 (><) :: [[a]] -> [[b]] -> [[(a,b)]]
 (><) = productWith (,)
 infixr 8 ><
@@ -406,7 +446,7 @@ infixr 8 ><
 -- | Take a tiered product of lists of tiers.
 --   'productWith' can be defined by '><', as:
 --
--- > productWith f xss yss = map (uncurry f) $ xss >< yss
+-- > productWith f xss yss  =  map (uncurry f) $ xss >< yss
 productWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 productWith _ _ [] = []
 productWith _ [] _ = []
@@ -415,12 +455,16 @@ productWith f (xs:xss) yss = map (xs **) yss
   where xs ** ys = [x `f` y | x <- xs, y <- ys]
 
 -- | 'Testable' values are functions
---   of 'Listable' arguments that return boolean values,
---   e.g.:
+--   of 'Listable' arguments that return boolean values.
 --
 -- * @ Bool @
 -- * @ Listable a => a -> Bool @
--- * @ Listable a => a -> a -> Bool @
+-- * @ (Listable a, Listable b) => a -> b -> Bool @
+-- * @ (Listable a, Listable b, Listable c) => a -> b -> c -> Bool @
+-- * @ (Listable a, Listable b, Listable c, ...) => a -> b -> c -> ... -> Bool @
+--
+-- For example:
+--
 -- * @ Int -> Bool @
 -- * @ String -> [Int] -> Bool @
 class Testable a where
