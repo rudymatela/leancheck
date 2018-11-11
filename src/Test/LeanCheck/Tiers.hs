@@ -286,6 +286,7 @@ normalizeT (xs:xss) = xs:normalizeT xss
 catMaybesT :: [[Maybe a]] -> [[a]]
 catMaybesT = map catMaybes
 
+-- | Like 'mapMaybe' but for tiers.
 mapMaybeT :: (a -> Maybe b) -> [[a]] -> [[b]]
 mapMaybeT f = catMaybesT . mapT f
 
