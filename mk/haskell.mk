@@ -44,6 +44,12 @@ LIB_HSS ?= $(shell $(LIST_LIB_HSS))
 ALL_HSS ?= $(shell $(LIST_ALL_HSS))
 
 PKGNAME = $(shell cat *.cabal | grep "^name:"    | sed -e "s/name: *//")
+HADDOCK_VERSION = $(shell haddock --version | grep version | sed -e 's/.*version //;s/,.*//')
+HADDOCK_MAJOR = $(shell echo $(HADDOCK_VERSION) | sed -e 's/\..*//')
+HADDOCK_MINOR = $(shell echo $(HADDOCK_VERSION) | sed -e 's/[0-9]*\.\([0-9]*\).[0-9]*/\1/')
+HADDOCK_PKG_NAME = $(shell [ $(HADDOCK_MAJOR) -gt 2 ] \
+                        || [ $(HADDOCK_MAJOR) -eq 2 -a $(HADDOCK_MINOR) -ge 20 ] \
+                        && echo "--package-name=$(PKGNAME)")
 
 
 # Implicit rules
@@ -94,7 +100,7 @@ upload-haddock:
 
 doc/index.html: $(LIB_HSS)
 	./mk/haddock-i base template-haskell | xargs \
-	haddock --html -odoc $(LIB_HSS) $(HADDOCKFLAGS) --title=$(PKGNAME)
+	haddock --html -odoc $(LIB_HSS) $(HADDOCKFLAGS) --title=$(PKGNAME) $(HADDOCK_PKG_NAME)
 
 # lists all Haskell source files
 list-all-hss:
