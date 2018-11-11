@@ -367,6 +367,9 @@ cons5 f = delay $ mapT (uncurry5 f) tiers
 
 -- | Delays the enumeration of 'tiers'.
 -- Conceptually this function adds to the weight of a constructor.
+--
+-- > delay [ [x], [y], [z], ... ]  =  [ [], [x], [y], [z], ... ]
+--
 -- Typically used when defining 'Listable' instances:
 --
 -- > delay (cons<N> <Constr>)
@@ -376,6 +379,9 @@ delay = ([]:)
 -- | Resets any delays in a list-of 'tiers'.
 -- Conceptually this function makes a constructor "weightless",
 -- assuring the first tier is non-empty.
+--
+-- > reset [ [], [], ..., [x], [y], [z], ... ]  =  [ [x], [y], [z], ... ]
+--
 -- Typically used when defining Listable instances:
 --
 -- > reset (cons<N> <Constr>)

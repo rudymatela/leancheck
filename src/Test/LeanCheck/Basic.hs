@@ -169,7 +169,7 @@ instance Listable Word where
 -- | Resets the weight of a constructor (or tiers)
 -- Typically used as an infix constructor when defining Listable instances:
 --
--- > cons<N> `ofWeight` <W>
+-- > cons<N> <Cons> `ofWeight` <W>
 --
 -- Be careful: do not apply @`ofWeight` 0@ to recursive data structure
 -- constructors.  In general this will make the list of size 0 infinite,
