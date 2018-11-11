@@ -27,6 +27,4 @@ other improvements
 
 * set internal type of `Natural` to be `Integer` instead of `Int`;
 
-* pass `--name` to Haddock depending on its version;
-
 * implement `conditionStatsT` (see `classStatsT`)
