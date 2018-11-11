@@ -155,8 +155,7 @@ newtype Word4 = Word4 { unWord4 :: Int } deriving (Eq, Ord)
 --
 -- Its 'Enum', 'Listable' and 'Num' instances only produce non-negative values.
 -- When @x < y@ then @x - y = 0@.
-newtype Natural = Natural { unNatural :: Int } deriving (Eq, Ord)
--- TODO: internal value should be an Integer
+newtype Natural = Natural { unNatural :: Integer } deriving (Eq, Ord)
 
 -- | Natural numbers (including 0): 0, 1, 2, 3, 4, 5, 6, 7, ...
 --
@@ -204,7 +203,7 @@ nat5 :: Int -> Nat5;  nat5 = Nat5 . (`mod` 5)
 nat6 :: Int -> Nat6;  nat6 = Nat6 . (`mod` 6)
 nat7 :: Int -> Nat7;  nat7 = Nat7 . (`mod` 7)
 nat  :: Int -> Nat;   nat  = Nat  . (\x -> if x < 0 then 0 else x)
-natural :: Int -> Natural;  natural = Natural . (\x -> if x < 0 then 0 else x)
+natural :: Integer -> Natural;  natural = Natural . (\x -> if x < 0 then 0 else x)
 
 oInt1  ::(Int->Int->Int)->(Int1->Int1->Int1)   ; oInt1  = oNewtype int1  unInt1
 oInt2  ::(Int->Int->Int)->(Int2->Int2->Int2)   ; oInt2  = oNewtype int2  unInt2
@@ -222,7 +221,7 @@ oNat4  ::(Int->Int->Int)->(Nat4->Nat4->Nat4)   ; oNat4  = oNewtype nat4  unNat4
 oNat5  ::(Int->Int->Int)->(Nat5->Nat5->Nat5)   ; oNat5  = oNewtype nat5  unNat5
 oNat6  ::(Int->Int->Int)->(Nat6->Nat6->Nat6)   ; oNat6  = oNewtype nat6  unNat6
 oNat7  ::(Int->Int->Int)->(Nat7->Nat7->Nat7)   ; oNat7  = oNewtype nat7  unNat7
-oNatural :: (Int->Int->Int) -> (Natural->Natural->Natural)
+oNatural :: (Integer->Integer->Integer) -> (Natural->Natural->Natural)
 oNatural = oNewtype natural unNatural
 
 fInt1  :: (Int->Int) -> (Int1->Int1)   ; fInt1  = fNewtype int1  unInt1
@@ -241,7 +240,7 @@ fNat4  :: (Int->Int) -> (Nat4->Nat4)   ; fNat4  = fNewtype nat4  unNat4
 fNat5  :: (Int->Int) -> (Nat5->Nat5)   ; fNat5  = fNewtype nat5  unNat5
 fNat6  :: (Int->Int) -> (Nat6->Nat6)   ; fNat6  = fNewtype nat6  unNat6
 fNat7  :: (Int->Int) -> (Nat7->Nat7)   ; fNat7  = fNewtype nat7  unNat7
-fNatural :: (Int->Int) -> (Natural->Natural)
+fNatural :: (Integer->Integer) -> (Natural->Natural)
 fNatural = fNewtype Natural unNatural
 
 instance Show Int1 where show = show . unInt1
@@ -486,8 +485,8 @@ instance Enum Nat7 where toEnum   = nat7;   enumFrom     = boundedEnumFrom
                          fromEnum = unNat7; enumFromThen = boundedEnumFromThen
 
 instance Enum Natural where
-  toEnum   = Natural
-  fromEnum = unNatural;
+  toEnum   = Natural . fromIntegral
+  fromEnum = fromInteger . unNatural;
   enumFrom     (Natural x)             = map Natural [x..]
   enumFromThen (Natural x) (Natural s) = map Natural [x,s..]
 

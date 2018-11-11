@@ -25,6 +25,4 @@ documentation
 other improvements
 ------------------
 
-* set internal type of `Natural` to be `Integer` instead of `Int`;
-
 * implement `conditionStatsT` (see `classStatsT`)
