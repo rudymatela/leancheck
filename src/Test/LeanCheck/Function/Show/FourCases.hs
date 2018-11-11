@@ -50,4 +50,4 @@ import Test.LeanCheck.Function.ShowFunction
 -- > > print (+)
 -- > \x y -> case (x,y) of (0,0) -> 0; (0,1) -> 1; (1,0) -> 1; (0,-1) -> -1; ...
 instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
-  showsPrec _ = (++) . showFunctionLine 4
+  showsPrec d = showParen (d>10) . (++) . showFunctionLine 4
