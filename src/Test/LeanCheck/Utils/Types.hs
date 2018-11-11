@@ -269,7 +269,7 @@ instance Read Word1 where readsPrec = readsPrecNewtype word1
 instance Read Word2 where readsPrec = readsPrecNewtype word2
 instance Read Word3 where readsPrec = readsPrecNewtype word3
 instance Read Word4 where readsPrec = readsPrecNewtype word4
-instance Read Nat where readsPrec = readsPrecNewtype Nat
+instance Read Nat where readsPrec = readsPrecNewtype nat
 instance Read Nat1 where readsPrec = readsPrecNewtype nat1
 instance Read Nat2 where readsPrec = readsPrecNewtype nat2
 instance Read Nat3 where readsPrec = readsPrecNewtype nat3
@@ -277,7 +277,7 @@ instance Read Nat4 where readsPrec = readsPrecNewtype nat4
 instance Read Nat5 where readsPrec = readsPrecNewtype nat5
 instance Read Nat6 where readsPrec = readsPrecNewtype nat6
 instance Read Nat7 where readsPrec = readsPrecNewtype nat7
-instance Read Natural where readsPrec = readsPrecNewtype Natural
+instance Read Natural where readsPrec = readsPrecNewtype natural
 
 
 instance Num Int1 where (+) = oInt1 (+);  abs    = fInt1 abs
@@ -314,7 +314,7 @@ instance Num Word4 where (+) = oWord4 (+);  abs    = fWord4 abs
 
 instance Num Nat where (+) = oNat (+);  abs    = fNat abs
                        (-) = oNat (-);  signum = fNat signum
-                       (*) = oNat (*);  fromInteger = Nat . fromInteger
+                       (*) = oNat (*);  fromInteger = nat . fromInteger
 
 instance Num Nat1 where (+) = oNat1 (+);  abs    = fNat1 abs
                         (-) = oNat1 (-);  signum = fNat1 signum
@@ -347,7 +347,7 @@ instance Num Nat7 where (+) = oNat7 (+);  abs    = fNat7 abs
 instance Num Natural where
   (+) = oNatural (+);  abs    = fNatural abs
   (-) = oNatural (-);  signum = fNatural signum
-  (*) = oNatural (*);  fromInteger = Natural . fromInteger
+  (*) = oNatural (*);  fromInteger = natural . fromInteger
 
 
 instance Real Int1 where toRational (Int1 x) = fromIntegral x % 1
@@ -416,7 +416,7 @@ instance Integral Nat6 where quotRem = otNewtype nat6 unNat6 quotRem
 instance Integral Nat7 where quotRem = otNewtype nat7 unNat7 quotRem
                              toInteger = toInteger . unNat7
 
-instance Integral Natural where quotRem = otNewtype Natural unNatural quotRem
+instance Integral Natural where quotRem = otNewtype natural unNatural quotRem
                                 toInteger = toInteger . unNatural
 
 instance Bounded Int1 where maxBound = Int1 0; minBound = Int1 (-1)
@@ -460,7 +460,7 @@ instance Enum Word3 where toEnum   = word3;   enumFrom     = boundedEnumFrom
 instance Enum Word4 where toEnum   = word4;   enumFrom     = boundedEnumFrom
                           fromEnum = unWord4; enumFromThen = boundedEnumFromThen
 
-instance Enum Nat where toEnum   = Nat;   enumFrom     = boundedEnumFrom
+instance Enum Nat where toEnum   = nat;   enumFrom     = boundedEnumFrom
                         fromEnum = unNat; enumFromThen = boundedEnumFromThen
 
 instance Enum Nat1 where toEnum   = nat1;   enumFrom     = boundedEnumFrom
@@ -485,7 +485,7 @@ instance Enum Nat7 where toEnum   = nat7;   enumFrom     = boundedEnumFrom
                          fromEnum = unNat7; enumFromThen = boundedEnumFromThen
 
 instance Enum Natural where
-  toEnum   = Natural . fromIntegral
+  toEnum   = natural . fromIntegral
   fromEnum = fromInteger . unNatural;
   enumFrom     (Natural x)             = map Natural [x..]
   enumFromThen (Natural x) (Natural s) = map Natural [x,s..]
