@@ -444,6 +444,9 @@ results :: Testable a => a -> [([String],Bool)]
 results = concat . resultiers
 
 -- | Lists all counter-examples for a number of tests to a property,
+--
+-- > > counterExamples 12 $ \xs -> xs == nub (xs :: [Int])
+-- > [["[0,0]"],["[0,0,0]"],["[0,0,0,0]"],["[0,0,1]"],["[0,1,0]"]]
 counterExamples :: Testable a => Int -> a -> [[String]]
 counterExamples n p = [as | (as,False) <- take n (results p)]
 
