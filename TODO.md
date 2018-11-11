@@ -17,8 +17,6 @@ documentation
 
 * on data-invariant.md, write missing section;
 
-* add examples on `Test.LeanCheck.Function`'s Haddock;
-
 * add examples to all functions exported by `Test.LeanCheck`.
 
 
