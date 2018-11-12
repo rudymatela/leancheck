@@ -166,15 +166,7 @@ instance (Integral a, Listable a) => Listable (Ratio a) where
 instance Listable Word where
   list = listIntegral
 
--- | Resets the weight of a constructor (or tiers)
--- Typically used as an infix constructor when defining Listable instances:
---
--- > instance Listable Ty where
--- >   tiers  =  ...
--- >          \/ cons<N> <Cons>  `ofWeight`  <W>
--- >          \/ ...
---
--- Examples:
+-- | Resets the weight of a constructor or tiers.
 --
 -- > > [ [], [], ..., xs, ys, zs, ... ] `ofWeight` 1
 -- > [ [], xs, ys, zs, ... ]
@@ -185,17 +177,40 @@ instance Listable Word where
 -- > > [ [], xs, ys, zs, ... ] `ofWeight` 3
 -- > [ [], [], [], xs, ys, zs, ... ]
 --
--- /Warning:/ do not apply @ \``ofWeight`\` 0 @ to recursive data structure
+-- Typically used as an infix operator when defining 'Listable' instances:
+--
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ cons<N> <Cons>  `ofWeight`  <W>
+-- >          \/ ...
+--
+-- /Warning:/ do not apply @ \`ofWeight\` 0 @ to recursive data structure
 -- constructors.  In general this will make the list of size 0 infinite,
 -- breaking the tier invariant (each tier must be finite).
 --
--- 'ofWeight' is equivalent to 'reset' followed
--- by multiple applications of 'delay'.
+-- @ \`ofWeight\` /n/ @ is equivalent to 'reset' followed
+-- by @/n/@ applications of 'delay'.
 ofWeight :: [[a]] -> Int -> [[a]]
 ofWeight xss w = dropWhile null xss `addWeight` w
 
--- | Adds to the weight of tiers of a constructor
+-- | Adds to the weight of a constructor or tiers.
 --
--- 'addWeight' is closely related to 'delay'.
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ cons<N> <Cons>  `addWeight`  <W>
+-- >          \/ ...
+--
+-- Typically used as an infix operator when defining 'Listable' instances:
+--
+-- > > [ xs, ys, zs, ... ] `addWeight` 1
+-- > [ [], xs, ys, zs, ... ]
+--
+-- > > [ xs, ys, zs, ... ] `addWeight` 2
+-- > [ [], [], xs, ys, zs, ... ]
+--
+-- > > [ [], xs, ys, zs, ... ] `addWeight` 3
+-- > [ [], [], [], [], xs, ys, zs, ... ]
+--
+-- @ \`addWeight\` /n/ @ is equivalent to @/n/@ applications of 'delay'.
 addWeight :: [[a]] -> Int -> [[a]]
 addWeight xss w = replicate w [] ++ xss

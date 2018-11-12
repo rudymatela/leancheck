@@ -307,8 +307,9 @@ instance Listable Ordering where
 
 -- | 'map' over tiers
 --
--- > mapT f [ [x], [y,z], [w,u,v], ... ]  =
--- >   [ [f x], [f y, f z], [f w, f u, f v], ...]
+-- > mapT f [[x], [y,z], [w,...], ...]  =  [[f x], [f y, f z], [f w, ...], ...]
+--
+-- > mapT f [xs, ys, zs, ...]  =  [map f xs, map f ys, map f zs]
 mapT :: (a -> b) -> [[a]] -> [[b]]
 mapT = map . map
 
@@ -368,11 +369,16 @@ cons5 f = delay $ mapT (uncurry5 f) tiers
 -- | Delays the enumeration of 'tiers'.
 -- Conceptually this function adds to the weight of a constructor.
 --
--- > delay [ [x], [y], [z], ... ]  =  [ [], [x], [y], [z], ... ]
+-- > delay [xs, ys, zs, ... ]  =  [[], xs, ys, zs, ...]
+--
+-- > delay [[x,...], [y,...], ...]  =  [[], [x,...], [y,...], ...]
 --
 -- Typically used when defining 'Listable' instances:
 --
--- > delay (cons<N> <Constr>)
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ delay (cons<N> <Constructor>)
+-- >          \/ ...
 delay :: [[a]] -> [[a]]
 delay = ([]:)
 
@@ -380,11 +386,18 @@ delay = ([]:)
 -- Conceptually this function makes a constructor "weightless",
 -- assuring the first tier is non-empty.
 --
--- > reset [ [], [], ..., [x], [y], [z], ... ]  =  [ [x], [y], [z], ... ]
+-- > reset [[], [], ..., xs, ys, zs, ...]  =  [xs, ys, zs, ...]
 --
--- Typically used when defining Listable instances:
+-- > reset [[], xs, ys, zs, ...]  =  [xs, ys, zs, ...]
 --
--- > reset (cons<N> <Constr>)
+-- > reset [[], [], ..., [x], [y], [z], ...]  =  [[x], [y], [z], ...]
+--
+-- Typically used when defining 'Listable' instances:
+--
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ reset (cons<N> <Constructor>)
+-- >          \/ ...
 --
 -- Be careful: do not apply @reset@ to recursive data structure
 -- constructors.  In general this will make the list of size 0 infinite,
