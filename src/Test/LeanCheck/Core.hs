@@ -103,6 +103,28 @@ import Data.Maybe (listToMaybe)
 --
 -- where @N@ is the number of arguments of each constructor @A...Z@.
 --
+-- Here is a datatype with 4 constructors and its listable instance:
+--
+-- > data MyType  =  MyConsA
+-- >              |  MyConsB Int
+-- >              |  MyConsC Int Char
+-- >              |  MyConsD String
+-- >
+-- > instance Listable MyType where
+-- >   tiers =  cons0 MyConsA
+-- >         \/ cons1 MyConsB
+-- >         \/ cons2 MyConsC
+-- >         \/ cons1 MyConsD
+--
+-- The instance for Hutton's Razor is given by:
+--
+-- > data Expr  =  Val Int
+-- >            |  Add Expr Expr
+-- >
+-- > instance Listable Expr where
+-- >   tiers  =  cons1 Val
+-- >          \/ cons2 Add
+--
 -- Instances can be alternatively defined by 'list'.
 -- In this case, each sub-list in 'tiers' is a singleton list
 -- (each succeeding element of 'list' has +1 size).
@@ -517,8 +539,8 @@ counterExamples n p = [as | (as,False) <- take n (results p)]
 --   returns 'Just' the first counter-example
 --   or 'Nothing' if there is none.
 --
--- > counterExample 100 $ \xs -> [] `union` xs == (xs::[Int])
--- > -- > Just ["[0,0]"]
+-- > > counterExample 100 $ \xs -> [] `union` xs == (xs::[Int])
+-- > Just ["[0,0]"]
 counterExample :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
 
