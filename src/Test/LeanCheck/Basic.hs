@@ -169,13 +169,28 @@ instance Listable Word where
 -- | Resets the weight of a constructor (or tiers)
 -- Typically used as an infix constructor when defining Listable instances:
 --
--- > cons<N> <Cons> `ofWeight` <W>
+-- > instance Listable Ty where
+-- >   tiers  =  ...
+-- >          \/ cons<N> <Cons>  `ofWeight`  <W>
+-- >          \/ ...
 --
--- Be careful: do not apply @`ofWeight` 0@ to recursive data structure
+-- Examples:
+--
+-- > > [ [], [], ..., xs, ys, zs, ... ] `ofWeight` 1
+-- > [ [], xs, ys, zs, ... ]
+--
+-- > > [ xs, ys, zs, ... ] `ofWeight` 2
+-- > [ [], [], xs, ys, zs, ... ]
+--
+-- > > [ [], xs, ys, zs, ... ] `ofWeight` 3
+-- > [ [], [], [], xs, ys, zs, ... ]
+--
+-- /Warning:/ do not apply @ \``ofWeight`\` 0 @ to recursive data structure
 -- constructors.  In general this will make the list of size 0 infinite,
 -- breaking the tier invariant (each tier must be finite).
 --
--- 'ofWeight' is closely related to 'reset'.
+-- 'ofWeight' is equivalent to 'reset' followed
+-- by multiple applications of 'delay'.
 ofWeight :: [[a]] -> Int -> [[a]]
 ofWeight xss w = dropWhile null xss `addWeight` w
 
