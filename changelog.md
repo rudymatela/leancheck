@@ -1,6 +1,21 @@
 Changelog for LeanCheck
 =======================
 
+upcoming
+--------
+
+* export `tiersFractional` from `Core` and main module;
+* improve `Listable` instance for `Float`s and `Double`s;
+* improve `Show` instance for functions;
+* improve Haddock documentation;
+* remove experimental function enumeration modules,
+  in favour of the working `ListsOfPairs` enumeration;
+* add special `String` and `Char` types to `Utils.Types`;
+* fix bug in the `Natural` type of the `Utils.Types` modules;
+* force non-negativity in `Natural` and `Nat` types from `Utils.Types`;
+* rename some exported symbols in the `ShowFunction` module;
+* improve tests of LeanCheck itself.
+
 
 v0.7.7
 ------
