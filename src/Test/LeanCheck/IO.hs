@@ -44,12 +44,23 @@ check p = checkResult p >> return ()
 
 -- | Check a property for a given number of tests
 --   printing results on 'stdout'
+--
+-- > > checkFor 1000 $ \xs -> sort (sort xs) == sort (xs::[Int])
+-- > +++ OK, passed 1000 tests.
 checkFor :: Testable a => Int -> a -> IO ()
 checkFor n p = checkResultFor n p >> return ()
 
 -- | Check a property
 --   printing results on 'stdout' and
 --   returning 'True' on success.
+--
+-- > > p <- checkResult $ \xs -> sort (sort xs) == sort (xs::[Int])
+-- > +++ OK, passed 200 tests.
+-- > > q <- checkResult $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
+-- > *** Failed! Falsifiable (after 4 tests):
+-- > [] [0,0]
+-- > > p && q
+-- > False
 --
 -- There is no option to silence this function:
 -- for silence, you should use 'Test.LeanCheck.holds'.
@@ -59,6 +70,10 @@ checkResult p = checkResultFor 200 p
 -- | Check a property for a given number of tests
 --   printing results on 'stdout' and
 --   returning 'True' on success.
+--
+-- > > checkResultFor 1000 $ \xs -> sort (sort xs) == sort (xs::[Int])
+-- > +++ OK, passed 1000 tests.
+-- > True
 --
 -- There is no option to silence this function:
 -- for silence, you should use 'Test.LeanCheck.holds'.

@@ -544,13 +544,19 @@ counterExamples n p = [as | (as,False) <- take n (results p)]
 counterExample :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
 
--- | Lists all witnesses up to a number of tests to a property,
+-- | Lists all witnesses up to a number of tests to a property.
+--
+-- > > witnesses 1000 (\x -> x > 1 && x < 77 && 77 `rem` x == 0)
+-- > [["7"],["11"]]
 witnesses :: Testable a => Int -> a -> [[String]]
 witnesses n p = [as | (as,True) <- take n (results p)]
 
 -- | Up to a number of tests to a property,
 --   returns 'Just' the first witness
 --   or 'Nothing' if there is none.
+--
+-- > > witness 1000 (\x -> x > 1 && x < 77 && 77 `rem` x == 0)
+-- > Just ["7"]
 witness :: Testable a => Int -> a -> Maybe [String]
 witness n = listToMaybe . witnesses n
 
