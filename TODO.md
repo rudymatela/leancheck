@@ -17,7 +17,6 @@ documentation
 
 * on data-invariant.md, write missing section;
 
-* add examples to all functions exported by `Test.LeanCheck`.
 
 
 other improvements

@@ -215,21 +215,21 @@ unorderedDistinctPairsWith f = concatT . setChoicesWith (\e -> mapT (f e))
 -- | Takes as argument tiers of element values;
 --   returns tiers of lists of elements.
 --
--- > listsOf [[]] == [[[]]]
+-- > listsOf [[]]  =  [[[]]]
 --
--- > listsOf [[x]] == [ [[]]
--- >                  , [[x]]
--- >                  , [[x,x]]
--- >                  , [[x,x,x]]
--- >                  , ...
--- >                  ]
+-- > listsOf [[x]]  =  [ [[]]
+-- >                   , [[x]]
+-- >                   , [[x,x]]
+-- >                   , [[x,x,x]]
+-- >                   , ...
+-- >                   ]
 --
--- > listsOf [[x],[y]] == [ [[]]
--- >                      , [[x]]
--- >                      , [[x,x],[y]]
--- >                      , [[x,x,x],[x,y],[y,x]]
--- >                      , ...
--- >                      ]
+-- > listsOf [[x],[y]]  =  [ [[]]
+-- >                       , [[x]]
+-- >                       , [[x,x],[y]]
+-- >                       , [[x,x,x],[x,y],[y,x]]
+-- >                       , ...
+-- >                       ]
 listsOf :: [[a]] -> [[[a]]]
 listsOf xss = cons0 []
            \/ delay (productWith (:) xss (listsOf xss))
@@ -240,9 +240,9 @@ listsOf xss = cons0 []
 -- takes as argument a list of lists of tiers of elements;
 -- returns lists combining elements of each list of tiers.
 --
--- > products [xss] = mapT (:[]) xss
--- > products [xss,yss] = mapT (\(x,y) -> [x,y]) (xss >< yss)
--- > products [xss,yss,zss] = product3With (\x y z -> [x,y,z]) xss yss zss
+-- > products [xss]  =  mapT (:[]) xss
+-- > products [xss,yss]  =  mapT (\(x,y) -> [x,y]) (xss >< yss)
+-- > products [xss,yss,zss]  =  product3With (\x y z -> [x,y,z]) xss yss zss
 products :: [ [[a]] ] -> [[ [a] ]]
 products = foldr (productWith (:)) [[[]]]
 

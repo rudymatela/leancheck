@@ -336,6 +336,10 @@ mapT :: (a -> b) -> [[a]] -> [[b]]
 mapT = map . map
 
 -- | 'filter' tiers
+--
+-- > filterT p [xs, yz, zs, ...]  =  [filter p xs, filter p ys, filter p zs]
+--
+-- > filterT odd tiers  =  [[], [1], [-1], [], [], [3], [-3], [], [], [5], ...]
 filterT :: (a -> Bool) -> [[a]] -> [[a]]
 filterT f = map (filter f)
 
@@ -427,9 +431,24 @@ delay = ([]:)
 reset :: [[a]] -> [[a]]
 reset = dropWhile null
 
--- | Tiers of values that follow a property
+-- | Tiers of values that follow a property.
 --
--- > cons<N> `suchThat` condition
+-- Typically used in the definition of 'Listable' tiers:
+--
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ cons<N> `suchThat` <condition>
+-- >          \/ ...
+--
+-- Examples:
+--
+-- > > tiers `suchThat` odd
+-- > [[], [1], [-1], [], [], [3], [-3], [], [], [5], ...]
+--
+-- > > tiers `suchThat` even
+-- > [[0], [], [], [2], [-2], [], [], [4], [-4], [], ...]
+--
+-- This function is just a 'flip'ped version of `filterT`.
 suchThat :: [[a]] -> (a->Bool) -> [[a]]
 suchThat = flip filterT
 
@@ -444,7 +463,7 @@ infixr 5 +|
 
 -- | Append tiers --- sum of two tiers enumerations.
 --
--- > [xs,ys,zs,...] \/ [as,bs,cs,...] = [xs++as,ys++bs,zs++cs,...]
+-- > [xs,ys,zs,...] \/ [as,bs,cs,...]  =  [xs++as, ys++bs, zs++cs, ...]
 (\/) :: [[a]] -> [[a]] -> [[a]]
 xss \/ []  = xss
 []  \/ yss = yss
@@ -454,7 +473,7 @@ infixr 7 \/
 -- | Interleave tiers --- sum of two tiers enumerations.
 --   When in doubt, use '\/' instead.
 --
--- > [xs,ys,zs,...] \/ [as,bs,cs,...] = [xs+|as,ys+|bs,zs+|cs,...]
+-- > [xs,ys,zs,...] \/ [as,bs,cs,...]  =  [xs+|as, ys+|bs, zs+|cs, ...]
 (\\//) :: [[a]] -> [[a]] -> [[a]]
 xss \\// []  = xss
 []  \\// yss = yss
@@ -525,6 +544,27 @@ instance (Testable b, Show a, Listable a) => Testable (a->b) where
 -- argument values for the property.  Each boolean paired with such a list
 -- indicates whether the property holds for this choice.  The outer list is
 -- potentially infinite and lazily evaluated.
+--
+-- > > results (<)
+-- > [ (["0","0"],    False)
+-- > , (["0","1"],    True)
+-- > , (["1","0"],    False)
+-- > , (["0","(-1)"], False)
+-- > , (["1","1"],    False)
+-- > , (["(-1)","0"], True)
+-- > , (["0","2"],    True)
+-- > , (["1","(-1)"], False)
+-- > , ...
+-- > ]
+--
+-- > > take 10 $ results (\xs -> xs == nub (xs :: [Int]))
+-- > [ (["[]"],      True)
+-- > , (["[0]"],     True)
+-- > , (["[0,0]"],   False)
+-- > , (["[1]"],     True)
+-- > , (["[0,0,0]"], False)
+-- > , ...
+-- > ]
 results :: Testable a => a -> [([String],Bool)]
 results = concat . resultiers
 
@@ -591,6 +631,12 @@ uncurry5 f (x,y,z,w,v) = f x y z w v
 -- | Boolean implication operator.  Useful for defining conditional properties:
 --
 -- > prop_something x y = condition x y ==> something x y
+--
+-- Examples:
+--
+-- > > prop_addMonotonic x y  =  y > 0 ==> x + y > x
+-- > > check prop_addMonotonic
+-- > +++ OK, passed 200 tests.
 (==>) :: Bool -> Bool -> Bool
 False ==> _ = True
 True  ==> p = p
