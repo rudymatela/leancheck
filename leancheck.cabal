@@ -41,6 +41,7 @@ extra-doc-files: README.md
                , changelog.md
                , doc/data-invariant.md
                , doc/tutorial.md
+               , doc/leancheck.svg
 extra-source-files: .gitignore
                   , .travis.yml
                   , Makefile
