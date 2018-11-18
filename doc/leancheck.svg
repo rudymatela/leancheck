@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="75mm"
+   height="60mm"
+   viewBox="0 0 75 60.000001"
+   version="1.1"
+   id="svg857"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="leancheck.svg">
+  <title
+     id="title834">LeanCheck</title>
+  <defs
+     id="defs851" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2"
+     inkscape:cx="152.91219"
+     inkscape:cy="161.03297"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1150"
+     inkscape:window-height="1063"
+     inkscape:window-x="1366"
+     inkscape:window-y="15"
+     inkscape:window-maximized="0"
+     units="mm" />
+  <metadata
+     id="metadata854">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>LeanCheck</dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+        <dc:date>2018-11-18</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Rudy Matela</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>LeanCheck</rdf:li>
+            <rdf:li>logo</rdf:li>
+            <rdf:li>testing</rdf:li>
+            <rdf:li>test</rdf:li>
+            <rdf:li>property-based testing</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:description>LeanCheck's logo.  A check or tick is seen in green intersected with a lambda sign.  Part of the lambda and the tick also form an X.
+
+The proportions are based on the beautiful proportions of the Thompson-Wheeler Haskell logo (2009).</dc:description>
+        <dc:source>https://github.com/rudymatela/leancheck</dc:source>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title />
+          </cc:Agent>
+        </dc:publisher>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(297.11803,-172.26764)">
+    <path
+       style="clip-rule:nonzero;fill:#7fb399;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.17638952"
+       d="m -237.11837,172.26764 -32.49995,48.74992 -12.49979,-18.74983 h -14.99992 l 19.99989,29.99983 h 14.99992 l 39.99976,-59.99992 z"
+       id="path9-3"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path9"
+       d="m -277.11824,232.26764 20.00013,-29.99985 -20.00013,-29.99984 h 14.99992 l 39.99957,59.99969 h -14.99992 l -12.49948,-18.74956 -12.50017,18.74956 z m 0,0"
+       style="clip-rule:nonzero;fill:#808080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.17638862" />
+    <path
+       style="clip-rule:nonzero;fill:#4c8066;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.17638862"
+       d="m -249.61858,191.01803 -27.49932,41.24961 h 14.99958 l 19.99979,-29.99967 z"
+       id="path9-3-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+  </g>
+</svg>
