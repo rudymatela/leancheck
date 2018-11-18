@@ -1,8 +1,8 @@
 Changelog for LeanCheck
 =======================
 
-upcoming
---------
+v0.8.0
+------
 
 * export `tiersFractional` from `Core` and main module;
 * improve `Listable` instance for `Float`s and `Double`s;
