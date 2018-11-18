@@ -3,18 +3,18 @@ import Test.LeanCheck.Function
 
 type A = Int
 
-prop_foldlFoldr :: (A -> A -> A) -> A -> [A] -> Bool
-prop_foldlFoldr f z xs  =  foldr f z xs == foldl f z xs
+prop_foldlr :: (A -> A -> A) -> A -> [A] -> Bool
+prop_foldlr f z xs  =  foldr f z xs == foldl f z xs
 
-prop_foldl1Foldr1Reverse :: (A -> A -> A) -> [A] -> Bool
-prop_foldl1Foldr1Reverse f xs  =
-  not (null xs) ==> foldl1 f xs ==  foldr1 f (reverse xs)
+-- correct version of the property above
+prop_foldlr' :: (A -> A -> A) -> A -> [A] -> Bool
+prop_foldlr' f z xs  =  foldl (flip f) z (reverse xs) == foldr f z xs
 
 prop_mapFilter :: (A -> A) -> (A -> Bool) -> [A] -> Bool
 prop_mapFilter f p xs  =  filter p (map f xs) == map f (filter p xs)
 
 main :: IO ()
 main = do
-  check prop_foldlFoldr
-  check prop_foldl1Foldr1Reverse
+  check prop_foldlr
+  check prop_foldlr'
   check prop_mapFilter
