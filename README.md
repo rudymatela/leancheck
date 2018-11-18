@@ -6,6 +6,8 @@ LeanCheck
 [![LeanCheck on Stackage LTS][stackage-lts-badge]][leancheck-on-stackage-lts]
 [![LeanCheck on Stackage Nightly][stackage-nightly-badge]][leancheck-on-stackage-nightly]
 
+![LeanCheck logo][leancheck-logo]
+
 LeanCheck is a simple enumerative [property-based testing] library.  Properties
 are defined as Haskell functions returning a boolean value which should be
 `True` for all possible choices of argument values.    LeanCheck applies
@@ -198,6 +200,8 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 [LeanCheck provider for Tasty]:          https://hackage.haskell.org/package/tasty-leancheck
 [LeanCheck provider for test-framework]: https://hackage.haskell.org/package/test-framework-leancheck
 [LeanCheck provider for Hspec]:          https://hackage.haskell.org/package/hspec-leancheck
+
+[leancheck-logo]: https://github.com/rudymatela/leancheck/raw/master/doc/leancheck.svg?sanitize=true
 
 [build-status]: https://travis-ci.org/rudymatela/leancheck.svg?branch=master
 [build-log]:    https://travis-ci.org/rudymatela/leancheck
