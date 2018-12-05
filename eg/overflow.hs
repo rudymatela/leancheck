@@ -32,20 +32,10 @@ post t  =  (sum . concat) (toList t) < 5 * 256
 prop :: T -> Bool
 prop t  =  pre t ==> post t
 
-instance Listable Int16 where
-  list = map unX list
-
-instance Listable T where
-  tiers = cons5 T
-
-{-
--- In case we start providing a default Listable instance for Int16 with a
--- regular enuemration.  We can use the following Listable T instance.
 instance Listable T where
   tiers = cons5 makeT
     where
     makeT (Xs i) (Xs j) (Xs k) (Xs l) (Xs m) = T i j k l m
--}
 
 main :: IO ()
 main = do

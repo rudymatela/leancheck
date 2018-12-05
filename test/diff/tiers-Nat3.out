@@ -1,0 +1,13 @@
+map length (tiers :: [[ Nat3 ]])  =  [1,1,1]
+
+length (list :: [ Nat3 ])  =  3
+
+allUnique (list :: [ Nat3 ])  =  True
+
+ratioRepetitions (list :: [ Nat3 ])  =  0 % 1
+
+tiers :: [Nat3]  =
+  [ [0]
+  , [1]
+  , [2]
+  ]

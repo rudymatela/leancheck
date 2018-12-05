@@ -1,0 +1,12 @@
+map length (tiers :: [[ Nat2 ]])  =  [1,1]
+
+length (list :: [ Nat2 ])  =  2
+
+allUnique (list :: [ Nat2 ])  =  True
+
+ratioRepetitions (list :: [ Nat2 ])  =  0 % 1
+
+tiers :: [Nat2]  =
+  [ [0]
+  , [1]
+  ]

@@ -1,0 +1,14 @@
+map length (tiers :: [[ Int2 ]])  =  [1,1,1,1]
+
+length (list :: [ Int2 ])  =  4
+
+allUnique (list :: [ Int2 ])  =  True
+
+ratioRepetitions (list :: [ Int2 ])  =  0 % 1
+
+tiers :: [Int2]  =
+  [ [0]
+  , [1]
+  , [-1]
+  , [-2]
+  ]

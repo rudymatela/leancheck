@@ -1,0 +1,14 @@
+map length (tiers :: [[ Word2 ]])  =  [1,1,1,1]
+
+length (list :: [ Word2 ])  =  4
+
+allUnique (list :: [ Word2 ])  =  True
+
+ratioRepetitions (list :: [ Word2 ])  =  0 % 1
+
+tiers :: [Word2]  =
+  [ [0]
+  , [1]
+  , [2]
+  , [3]
+  ]

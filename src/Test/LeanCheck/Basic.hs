@@ -12,6 +12,8 @@
 --   * support for 'Listable' 6-tuples up to 12-tuples;
 --   * 'tiers' constructors (@consN@) with arities from 6 up to 12;
 --   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational');
+--   * 'Listable' 'Int8/16/32/64' instances;
+--   * 'Listable' 'Word8/16/32/64' instances;
 --   * a 'Listable' 'Word' instance;
 --   * the operators 'addWeight' and 'ofWeight'.
 --
@@ -36,11 +38,10 @@ module Test.LeanCheck.Basic
   )
 where
 
--- TODO: Listable Int8/16/32/64, Word8/16/32/64, Natural
-
 import Test.LeanCheck.Core
-import Data.Word (Word)
 import Data.Ratio
+import Data.Int (Int8, Int16, Int32, Int64)
+import Data.Word (Word, Word8, Word16, Word32, Word64)
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
@@ -162,8 +163,40 @@ instance (Integral a, Listable a) => Listable (Ratio a) where
   tiers = mapT (uncurry (%)) . reset
         $ tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
 
--- | > list :: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
+-- | > list :: [Word] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
 instance Listable Word where
+  list = listIntegral
+
+-- | > list :: [Word8] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 255]
+instance Listable Word8 where
+  list = listIntegral
+
+-- | > list :: [Word16] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 65535]
+instance Listable Word16 where
+  list = listIntegral
+
+-- | > list :: [Word32] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
+instance Listable Word32 where
+  list = listIntegral
+
+-- | > list :: [Word64] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
+instance Listable Word64 where
+  list = listIntegral
+
+-- | > list :: [Int8] = [0, 1, -1, 2, -2, 3, -3, ..., 127, -127, -128]
+instance Listable Int8 where
+  list = listIntegral
+
+-- | > list :: [Int16] = [0, 1, -1, 2, -2, ..., 32767, -32767, -32768]
+instance Listable Int16 where
+  list = listIntegral
+
+-- | > list :: [Int32] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
+instance Listable Int32 where
+  list = listIntegral
+
+-- | > list :: [Int64] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
+instance Listable Int64 where
   list = listIntegral
 
 -- | Resets the weight of a constructor or tiers.

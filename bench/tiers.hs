@@ -10,6 +10,8 @@ import Test.LeanCheck.Tiers (showTiers, finite)
 import System.Environment
 import Data.List (intercalate, nub)
 import Data.Ratio ((%))
+import Data.Int
+import Data.Word
 
 dropEmptyTiersTail :: [[a]] -> [[a]]
 dropEmptyTiersTail ([]:[]:[]: []:[]:[]: _) = []
@@ -86,6 +88,24 @@ main = do
     "Float"            -> put t n (u :: Float                )
     "Double"           -> put t n (u :: Double               )
     "Rational"         -> put t n (u :: Rational             )
+    -- fixed width integer types
+    "Nat2"             -> put t n (u :: Nat2                 )
+    "Nat3"             -> put t n (u :: Nat3                 )
+    "Nat4"             -> put t n (u :: Nat4                 )
+    "Word2"            -> put t n (u :: Word2                )
+    "Word3"            -> put t n (u :: Word3                )
+    "Word4"            -> put t n (u :: Word4                )
+    "Word8"            -> put t n (u :: Word8                )
+    "Word16"           -> put t n (u :: Word16               )
+    "Word32"           -> put t n (u :: Word32               )
+    "Word64"           -> put t n (u :: Word64               )
+    "Int2"             -> put t n (u :: Int2                 )
+    "Int3"             -> put t n (u :: Int3                 )
+    "Int4"             -> put t n (u :: Int4                 )
+    "Int8"             -> put t n (u :: Int8                 )
+    "Int16"            -> put t n (u :: Int16                )
+    "Int32"            -> put t n (u :: Int32                )
+    "Int64"            -> put t n (u :: Int64                )
     -- lists
     "[()]"             -> put t n (u :: [()]                 )
     "[Int]"            -> put t n (u :: [Int]                )

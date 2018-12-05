@@ -1,0 +1,26 @@
+map length (tiers :: [[ Word4 ]])  =  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+length (list :: [ Word4 ])  =  Infinity
+
+allUnique (list :: [ Word4 ])  =  True
+
+ratioRepetitions (list :: [ Word4 ])  =  0 % 1
+
+tiers :: [Word4]  =
+  [ [0]
+  , [1]
+  , [2]
+  , [3]
+  , [4]
+  , [5]
+  , [6]
+  , [7]
+  , [8]
+  , [9]
+  , [10]
+  , [11]
+  , [12]
+  , [13]
+  , [14]
+  , [15]
+  ]

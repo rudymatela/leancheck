@@ -140,6 +140,18 @@ diff-test-tiers: bench/tiers
 	./bench/tiers "Float"            | diff -rud test/diff/tiers-Float.out       -
 	./bench/tiers "Double"           | diff -rud test/diff/tiers-Double.out      -
 	./bench/tiers "Rational"         | diff -rud test/diff/tiers-Rational.out    -
+	# fixed width integer types
+	./bench/tiers "Nat2"             | diff -rud test/diff/tiers-Nat2.out        -
+	./bench/tiers "Nat3"             | diff -rud test/diff/tiers-Nat3.out        -
+	./bench/tiers "Nat4"             | diff -rud test/diff/tiers-Nat4.out        -
+	./bench/tiers "Word2"            | diff -rud test/diff/tiers-Word2.out       -
+	./bench/tiers "Word3"            | diff -rud test/diff/tiers-Word3.out       -
+	./bench/tiers "Word4"         64 | diff -rud test/diff/tiers-Word4.out       -
+	./bench/tiers "Word8"        256 | diff -rud test/diff/tiers-Word8.out       -
+	./bench/tiers "Int2"             | diff -rud test/diff/tiers-Int2.out        -
+	./bench/tiers "Int3"             | diff -rud test/diff/tiers-Int3.out        -
+	./bench/tiers "Int4"          64 | diff -rud test/diff/tiers-Int4.out        -
+	./bench/tiers "Int8"         256 | diff -rud test/diff/tiers-Int8.out        -
 	# list s
 	./bench/tiers "[()]"             | diff -rud test/diff/tiers-Us.out          -
 	./bench/tiers "[Int]"          6 | diff -rud test/diff/tiers-Ints.out        -
@@ -194,6 +206,18 @@ update-diff-test-tiers: bench/tiers
 	./bench/tiers "Float"            > test/diff/tiers-Float.out
 	./bench/tiers "Double"           > test/diff/tiers-Double.out
 	./bench/tiers "Rational"         > test/diff/tiers-Rational.out
+	# fixed width integer types
+	./bench/tiers "Nat2"             > test/diff/tiers-Nat2.out
+	./bench/tiers "Nat3"             > test/diff/tiers-Nat3.out
+	./bench/tiers "Nat4"             > test/diff/tiers-Nat4.out
+	./bench/tiers "Word2"            > test/diff/tiers-Word2.out
+	./bench/tiers "Word3"            > test/diff/tiers-Word3.out
+	./bench/tiers "Word4"         64 > test/diff/tiers-Word4.out
+	./bench/tiers "Word8"        256 > test/diff/tiers-Word8.out
+	./bench/tiers "Int2"             > test/diff/tiers-Int2.out
+	./bench/tiers "Int3"             > test/diff/tiers-Int3.out
+	./bench/tiers "Int4"          64 > test/diff/tiers-Int4.out
+	./bench/tiers "Int8"         256 > test/diff/tiers-Int8.out
 	# lists
 	./bench/tiers "[()]"             > test/diff/tiers-Us.out
 	./bench/tiers "[Int]"          6 > test/diff/tiers-Ints.out

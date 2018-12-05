@@ -1,0 +1,18 @@
+map length (tiers :: [[ Word3 ]])  =  [1,1,1,1,1,1,1,1]
+
+length (list :: [ Word3 ])  =  8
+
+allUnique (list :: [ Word3 ])  =  True
+
+ratioRepetitions (list :: [ Word3 ])  =  0 % 1
+
+tiers :: [Word3]  =
+  [ [0]
+  , [1]
+  , [2]
+  , [3]
+  , [4]
+  , [5]
+  , [6]
+  , [7]
+  ]

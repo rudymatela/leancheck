@@ -9,7 +9,8 @@ import Test.LeanCheck
 import Test.LeanCheck.Utils
 
 import Data.Ratio
-import Data.Word (Word)
+import Data.Int (Int, Int8, Int16, Int32, Int64)
+import Data.Word (Word, Word8, Word16, Word32, Word64)
 
 main :: IO ()
 main =
@@ -77,6 +78,18 @@ tests =
   , holds 100 $  (\/)  ==== zipWith' (++) [] [] -:> [[bool]]
   , holds 100 $ (\\//) ==== zipWith' (+|) [] [] -:> [[uint2]]
   , holds 100 $ (\\//) ==== zipWith' (+|) [] [] -:> [[bool]]
+
+  , holds 100 $ \x -> x == (x :: Word)
+  , holds 100 $ \x -> x == (x :: Word8)
+  , holds 100 $ \x -> x == (x :: Word16)
+  , holds 100 $ \x -> x == (x :: Word32)
+  , holds 100 $ \x -> x == (x :: Word64)
+
+  , holds 100 $ \x -> x == (x :: Int)
+  , holds 100 $ \x -> x == (x :: Int8)
+  , holds 100 $ \x -> x == (x :: Int16)
+  , holds 100 $ \x -> x == (x :: Int32)
+  , holds 100 $ \x -> x == (x :: Int64)
   ]
 
 allUnique :: Ord a => [a] -> Bool

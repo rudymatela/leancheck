@@ -1,0 +1,18 @@
+map length (tiers :: [[ Int3 ]])  =  [1,1,1,1,1,1,1,1]
+
+length (list :: [ Int3 ])  =  8
+
+allUnique (list :: [ Int3 ])  =  True
+
+ratioRepetitions (list :: [ Int3 ])  =  0 % 1
+
+tiers :: [Int3]  =
+  [ [0]
+  , [1]
+  , [-1]
+  , [2]
+  , [-2]
+  , [3]
+  , [-3]
+  , [-4]
+  ]
