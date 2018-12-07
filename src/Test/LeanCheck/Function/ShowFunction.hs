@@ -61,6 +61,9 @@ import Test.LeanCheck.Stats (classifyOn)
 import Data.List (intercalate, sortBy)
 import Data.Maybe
 import Data.Function (on)
+import Data.Word
+import Data.Int
+import Data.Ratio
 
 -- | A functional binding in a showable format.
 --   Argument values are represented as a list of strings.
@@ -170,6 +173,7 @@ bindtiersShow x = [[([],errorToNothing $ show x)]]
 instance ShowFunction ()       where bindtiers = bindtiersShow
 instance ShowFunction Bool     where bindtiers = bindtiersShow
 instance ShowFunction Int      where bindtiers = bindtiersShow
+instance ShowFunction Word     where bindtiers = bindtiersShow
 instance ShowFunction Integer  where bindtiers = bindtiersShow
 instance ShowFunction Char     where bindtiers = bindtiersShow
 instance ShowFunction Float    where bindtiers = bindtiersShow
@@ -312,6 +316,35 @@ instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g)
       => ShowFunction (a,b,c,d,e,f,g) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g, Show h)
       => ShowFunction (a,b,c,d,e,f,g,h) where bindtiers = bindtiersShow
+instance ( Show a, Show b, Show c, Show d
+         , Show e, Show f, Show g, Show h
+         , Show i )
+      => ShowFunction (a,b,c,d,e,f,g,h,i) where bindtiers = bindtiersShow
+instance ( Show a, Show b, Show c, Show d
+         , Show e, Show f, Show g, Show h
+         , Show i, Show j )
+      => ShowFunction (a,b,c,d,e,f,g,h,i,j) where bindtiers = bindtiersShow
+instance ( Show a, Show b, Show c, Show d
+         , Show e, Show f, Show g, Show h
+         , Show i, Show j, Show k )
+      => ShowFunction (a,b,c,d,e,f,g,h,i,j,k) where bindtiers = bindtiersShow
+instance ( Show a, Show b, Show c, Show d
+         , Show e, Show f, Show g, Show h
+         , Show i, Show j, Show k, Show l )
+      => ShowFunction (a,b,c,d,e,f,g,h,i,j,k,l) where bindtiers = bindtiersShow
+
+-- Data.Ratio
+instance Show a => ShowFunction (Ratio a) where bindtiers = bindtiersShow
+
+-- instance for types from Data.Int and Data.Word
+instance ShowFunction Int8  where bindtiers = bindtiersShow
+instance ShowFunction Int16 where bindtiers = bindtiersShow
+instance ShowFunction Int32 where bindtiers = bindtiersShow
+instance ShowFunction Int64 where bindtiers = bindtiersShow
+instance ShowFunction Word8  where bindtiers = bindtiersShow
+instance ShowFunction Word16 where bindtiers = bindtiersShow
+instance ShowFunction Word32 where bindtiers = bindtiersShow
+instance ShowFunction Word64 where bindtiers = bindtiersShow
 
 -- instance for types from Test.LeanCheck.Utils.Types
 instance ShowFunction Nat   where bindtiers = bindtiersShow
@@ -330,6 +363,19 @@ instance ShowFunction Word1 where bindtiers = bindtiersShow
 instance ShowFunction Word2 where bindtiers = bindtiersShow
 instance ShowFunction Word3 where bindtiers = bindtiersShow
 instance ShowFunction Word4 where bindtiers = bindtiersShow
+instance ShowFunction Letters   where bindtiers = bindtiersShow
+instance ShowFunction AlphaNums where bindtiers = bindtiersShow
+instance ShowFunction Digit     where bindtiers = bindtiersShow
+instance ShowFunction Alpha     where bindtiers = bindtiersShow
+instance ShowFunction Upper     where bindtiers = bindtiersShow
+instance ShowFunction Lower     where bindtiers = bindtiersShow
+instance ShowFunction Space     where bindtiers = bindtiersShow
+instance Show a => ShowFunction (X a) where bindtiers = bindtiersShow
+instance Show a => ShowFunction (Xs a) where bindtiers = bindtiersShow
+instance Show a => ShowFunction (Set a) where bindtiers = bindtiersShow
+instance Show a => ShowFunction (Bag a) where bindtiers = bindtiersShow
+instance Show a => ShowFunction (NoDup a) where bindtiers = bindtiersShow
+instance (Show a, Show b) => ShowFunction (Map a b) where bindtiers = bindtiersShow
 
 -- | Hard coded function names and bindings
 --   Search this list for a short name for your function.
