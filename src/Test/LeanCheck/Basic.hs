@@ -40,6 +40,7 @@ where
 
 import Test.LeanCheck.Core
 import Data.Ratio
+import Data.Complex
 import Data.Int (Int8, Int16, Int32, Int64)
 import Data.Word (Word, Word8, Word16, Word32, Word64)
 
@@ -162,6 +163,9 @@ uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q) = f x y z w v u r s t o p q
 instance (Integral a, Listable a) => Listable (Ratio a) where
   tiers = mapT (uncurry (%)) . reset
         $ tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
+
+instance (RealFloat a, Listable a) => Listable (Complex a) where
+  tiers = cons2 (:+)
 
 -- | > list :: [Word] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
 instance Listable Word where

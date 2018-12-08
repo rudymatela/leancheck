@@ -9,6 +9,7 @@ import Test.LeanCheck
 import Test.LeanCheck.Utils
 
 import Data.Ratio
+import Data.Complex
 import Data.Int (Int, Int8, Int16, Int32, Int64)
 import Data.Word (Word, Word8, Word16, Word32, Word64)
 
@@ -90,6 +91,8 @@ tests =
   , holds 100 $ \x -> x == (x :: Int16)
   , holds 100 $ \x -> x == (x :: Int32)
   , holds 100 $ \x -> x == (x :: Int64)
+
+  , holds 100 $ \x -> x == (x :: Complex Double)
   ]
 
 allUnique :: Ord a => [a] -> Bool

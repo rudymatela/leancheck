@@ -12,6 +12,7 @@ import Data.List (intercalate, nub)
 import Data.Ratio ((%))
 import Data.Int
 import Data.Word
+import Data.Complex
 
 dropEmptyTiersTail :: [[a]] -> [[a]]
 dropEmptyTiersTail ([]:[]:[]: []:[]:[]: _) = []
@@ -106,6 +107,8 @@ main = do
     "Int16"            -> put t n (u :: Int16                )
     "Int32"            -> put t n (u :: Int32                )
     "Int64"            -> put t n (u :: Int64                )
+    -- complex numbers
+    "Complex Double"   -> put t n (u :: Complex Double       )
     -- lists
     "[()]"             -> put t n (u :: [()]                 )
     "[Int]"            -> put t n (u :: [Int]                )
