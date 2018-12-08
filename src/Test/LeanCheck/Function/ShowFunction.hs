@@ -64,6 +64,7 @@ import Data.Function (on)
 import Data.Word
 import Data.Int
 import Data.Ratio
+import Data.Complex
 
 -- | A functional binding in a showable format.
 --   Argument values are represented as a list of strings.
@@ -335,6 +336,9 @@ instance ( Show a, Show b, Show c, Show d
 
 -- Data.Ratio
 instance (Integral a, Show a) => ShowFunction (Ratio a) where bindtiers = bindtiersShow
+
+-- Data.Complex
+instance (RealFloat a, Show a) => ShowFunction (Complex a) where bindtiers = bindtiersShow
 
 -- instance for types from Data.Int and Data.Word
 instance ShowFunction Int8  where bindtiers = bindtiersShow
