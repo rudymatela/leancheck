@@ -40,6 +40,14 @@
 --
 -- Warning: this is only intended to be used in testing modules.  Avoid
 -- importing this on modules that are used as libraries.
+--
+-- The 'Listable' and 'Show' function instance are defined in, respectively:
+--
+-- * "Test.LeanCheck.Function.Listable";
+-- * "Test.LeanCheck.Function.Show".
+--
+-- The 'Show' instance will work for all functions whose return types are
+-- instances of ShowFunction from "Test.LeanCheck.Function.ShowFunction".
 module Test.LeanCheck.Function () where
 import Test.LeanCheck.Core (Listable) -- for Haddock
 import Test.LeanCheck.Function.Listable ()
