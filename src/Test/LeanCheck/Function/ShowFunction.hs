@@ -334,7 +334,7 @@ instance ( Show a, Show b, Show c, Show d
       => ShowFunction (a,b,c,d,e,f,g,h,i,j,k,l) where bindtiers = bindtiersShow
 
 -- Data.Ratio
-instance Show a => ShowFunction (Ratio a) where bindtiers = bindtiersShow
+instance (Integral a, Show a) => ShowFunction (Ratio a) where bindtiers = bindtiersShow
 
 -- instance for types from Data.Int and Data.Word
 instance ShowFunction Int8  where bindtiers = bindtiersShow
