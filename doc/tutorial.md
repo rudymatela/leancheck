@@ -143,6 +143,11 @@ After fixing that bug, `prop_length` will pass:
     > check (prop_length :: [Int] -> Bool)
     +++ OK, passed 200 tests.
 
+_A little challenge:_
+After `sort`ing a list, the number of occurrences of any element does not
+change.  Can you define a `prop_count :: Eq a => a -> [a] -> Bool` property
+that checks this?  Hint: start by defining an auxiliary function
+`count :: a -> [a] -> Int`.
 
 Example 2: testing conditional properties
 -----------------------------------------
