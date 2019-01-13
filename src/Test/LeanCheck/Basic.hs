@@ -11,15 +11,19 @@
 --
 --   * support for 'Listable' 6-tuples up to 12-tuples;
 --   * 'tiers' constructors (@consN@) with arities from 6 up to 12;
+--   * a 'Listable' 'Word' instance;
 --   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational');
 --   * a 'Listable' 'Complex' instance;
 --   * 'Listable' 'Int8/16/32/64' instances;
 --   * 'Listable' 'Word8/16/32/64' instances;
---   * a 'Listable' 'Word' instance;
 --   * 'Listable' instances for "Foreign.C" types;
 --   * a 'Listable' 'ExitCode' instance;
 --   * a 'Listable' 'GeneralCategory' instance;
+--   * 'Listable' 'Buffer/IO/SeekMode' instances;
 --   * the operators 'addWeight' and 'ofWeight'.
+--
+-- The above includes all types defined in the Haskell 2010 Report
+-- with the exception of Array, IO, Handle, HandlePosn, IOErrorType.
 --
 -- "Test.LeanCheck" already exports everything from this module.
 -- You are probably better off importing it.
@@ -48,6 +52,7 @@ import Data.Complex
 import Data.Int (Int8, Int16, Int32, Int64)
 import Data.Word (Word, Word8, Word16, Word32, Word64)
 import Data.Char (GeneralCategory)
+import System.IO (IOMode (..), BufferMode (..), SeekMode (..))
 import Foreign.C
 import System.Exit
 
@@ -244,6 +249,22 @@ instance Listable CDouble    where tiers = tiersFloating
 instance Listable ExitCode where list = ExitSuccess : map ExitFailure [1..255]
 
 instance Listable GeneralCategory where list = [minBound..maxBound]
+
+instance Listable IOMode where
+  tiers  =  cons0 ReadMode
+         \/ cons0 WriteMode
+         \/ cons0 AppendMode
+         \/ cons0 ReadWriteMode
+
+instance Listable BufferMode where
+  tiers  =  cons0 NoBuffering
+         \/ cons0 LineBuffering
+         \/ cons1 BlockBuffering
+
+instance Listable SeekMode where
+  tiers  =  cons0 AbsoluteSeek
+         \/ cons0 RelativeSeek
+         \/ cons0 SeekFromEnd
 
 -- | Resets the weight of a constructor or tiers.
 --
