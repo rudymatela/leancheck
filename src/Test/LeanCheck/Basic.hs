@@ -12,10 +12,13 @@
 --   * support for 'Listable' 6-tuples up to 12-tuples;
 --   * 'tiers' constructors (@consN@) with arities from 6 up to 12;
 --   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational');
+--   * a 'Listable' 'Complex' instance;
 --   * 'Listable' 'Int8/16/32/64' instances;
 --   * 'Listable' 'Word8/16/32/64' instances;
 --   * a 'Listable' 'Word' instance;
 --   * 'Listable' instances for "Foreign.C" types;
+--   * a 'Listable' 'ExitCode' instance;
+--   * a 'Listable' 'GeneralCategory' instance;
 --   * the operators 'addWeight' and 'ofWeight'.
 --
 -- "Test.LeanCheck" already exports everything from this module.
@@ -44,7 +47,9 @@ import Data.Ratio
 import Data.Complex
 import Data.Int (Int8, Int16, Int32, Int64)
 import Data.Word (Word, Word8, Word16, Word32, Word64)
+import Data.Char (GeneralCategory)
 import Foreign.C
+import System.Exit
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
@@ -231,6 +236,14 @@ instance Listable CUSeconds  where list = listIntegral
 instance Listable CSUSeconds where list = listIntegral
 instance Listable CFloat     where tiers = tiersFloating
 instance Listable CDouble    where tiers = tiersFloating
+
+-- | Only includes valid POSIX exit codes
+--
+-- > > list :: [ExitCode]
+-- > [ExitSuccess, ExitFailure 1, ExitFailure 2, ..., ExitFailure 255]
+instance Listable ExitCode where list = ExitSuccess : map ExitFailure [1..255]
+
+instance Listable GeneralCategory where list = [minBound..maxBound]
 
 -- | Resets the weight of a constructor or tiers.
 --
