@@ -15,6 +15,7 @@
 --   * 'Listable' 'Int8/16/32/64' instances;
 --   * 'Listable' 'Word8/16/32/64' instances;
 --   * a 'Listable' 'Word' instance;
+--   * 'Listable' instances for "Foreign.C" types;
 --   * the operators 'addWeight' and 'ofWeight'.
 --
 -- "Test.LeanCheck" already exports everything from this module.
@@ -43,6 +44,7 @@ import Data.Ratio
 import Data.Complex
 import Data.Int (Int8, Int16, Int32, Int64)
 import Data.Word (Word, Word8, Word16, Word32, Word64)
+import Foreign.C
 
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
@@ -202,6 +204,33 @@ instance Listable Int32 where
 -- | > list :: [Int64] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 instance Listable Int64 where
   list = listIntegral
+
+instance Listable CChar      where list = listIntegral
+instance Listable CSChar     where list = listIntegral
+instance Listable CUChar     where list = listIntegral
+instance Listable CShort     where list = listIntegral
+instance Listable CUShort    where list = listIntegral
+instance Listable CInt       where list = listIntegral
+instance Listable CUInt      where list = listIntegral
+instance Listable CLong      where list = listIntegral
+instance Listable CULong     where list = listIntegral
+instance Listable CPtrdiff   where list = listIntegral
+instance Listable CSize      where list = listIntegral
+instance Listable CWchar     where list = listIntegral
+instance Listable CSigAtomic where list = listIntegral
+instance Listable CLLong     where list = listIntegral
+instance Listable CULLong    where list = listIntegral
+instance Listable CBool      where list = listIntegral
+instance Listable CIntPtr    where list = listIntegral
+instance Listable CUIntPtr   where list = listIntegral
+instance Listable CIntMax    where list = listIntegral
+instance Listable CUIntMax   where list = listIntegral
+instance Listable CClock     where list = listIntegral
+instance Listable CTime      where list = listIntegral
+instance Listable CUSeconds  where list = listIntegral
+instance Listable CSUSeconds where list = listIntegral
+instance Listable CFloat     where tiers = tiersFloating
+instance Listable CDouble    where tiers = tiersFloating
 
 -- | Resets the weight of a constructor or tiers.
 --
