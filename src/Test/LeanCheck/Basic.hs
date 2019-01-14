@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 -- |
 -- Module      : Test.LeanCheck.Basic
 -- Copyright   : (c) 2015-2018 Rudy Matela
@@ -230,17 +231,21 @@ instance Listable CWchar     where list = listIntegral
 instance Listable CSigAtomic where list = listIntegral
 instance Listable CLLong     where list = listIntegral
 instance Listable CULLong    where list = listIntegral
-instance Listable CBool      where list = listIntegral
 instance Listable CIntPtr    where list = listIntegral
 instance Listable CUIntPtr   where list = listIntegral
 instance Listable CIntMax    where list = listIntegral
 instance Listable CUIntMax   where list = listIntegral
 instance Listable CClock     where list = listIntegral
 instance Listable CTime      where list = listIntegral
-instance Listable CUSeconds  where list = listIntegral
-instance Listable CSUSeconds where list = listIntegral
 instance Listable CFloat     where tiers = tiersFloating
 instance Listable CDouble    where tiers = tiersFloating
+#if __GLASGOW_HASKELL__ >= 802
+instance Listable CBool      where list = listIntegral
+#endif
+#if __GLASGOW_HASKELL__
+instance Listable CUSeconds  where list = listIntegral
+instance Listable CSUSeconds where list = listIntegral
+#endif
 
 -- | Only includes valid POSIX exit codes
 --
