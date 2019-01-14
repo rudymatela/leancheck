@@ -56,16 +56,18 @@ import qualified Test.LeanCheck as C
 import Control.Monad (liftM)
 import System.IO.Unsafe (unsafePerformIO)
 import Data.Maybe (listToMaybe, fromMaybe)
-import Control.Exception ( Exception
+import Control.Exception ( evaluate
+                         , catch
+#if __GLASGOW_HASKELL__
+                         , Exception
                          , SomeException
                          , ArithException
                          , ArrayException
                          , ErrorCall
                          , PatternMatchFail
-                         , catch
                          , catches
                          , Handler (Handler)
-                         , evaluate
+#endif
                          )
 
 -- | Takes a value and a function.  Ignores the value.  Binds the argument of
@@ -81,6 +83,7 @@ bindArgumentType _ f = f
 --   * PatternMatchFail
 errorToNothing :: a -> Maybe a
 errorToNothing x = unsafePerformIO $
+#if __GLASGOW_HASKELL__
   (Just `liftM` evaluate x) `catches` map ($ return Nothing)
                                       [ hf (undefined :: ArithException)
                                       , hf (undefined :: ArrayException)
@@ -89,12 +92,19 @@ errorToNothing x = unsafePerformIO $
                                       ]
   where hf :: Exception e => e -> IO a -> Handler a -- handlerFor
         hf e h = Handler $ bindArgumentType e (\_ -> h)
+#else
+  (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
+#endif
 
 -- | Transforms a value into 'Just' that value or 'Nothing' on error.
 anyErrorToNothing :: a -> Maybe a
 anyErrorToNothing x = unsafePerformIO $
+#if __GLASGOW_HASKELL__
   (Just `liftM` evaluate x) `catch` \e -> do let _ = e :: SomeException
                                              return Nothing
+#else
+  (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
+#endif
 
 errorToFalse :: Bool -> Bool
 errorToFalse = fromError False

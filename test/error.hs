@@ -35,7 +35,7 @@ tests n =
 
   , exists          n someOthers
   , witness         n someOthers == Just ["2","2"]
-  , witnesses (100*n) someOthers == (map.map) show [[2,2],[2,4],[3,3]
+  , witnesses  (20*n) someOthers == (map.map) show [[2,2],[2,4],[3,3]
                                                    ,[2,8],[3,9],[3,27]]
   ]
 

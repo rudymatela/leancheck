@@ -73,13 +73,13 @@ ghci: mk/All.ghci
 hugs: src/Test/LeanCheck.hugs
 
 hugs-test: \
+  test/main.runhugs \
   test/fun.runhugs \
   test/io.runhugs \
   test/operators.runhugs \
   test/stats.runhugs \
   test/tiers.runhugs \
-  test/main.runhugs
-# test/error.runhugs    # TODO: make this pass
+  test/error.runhugs
 # test/funshow.runhugs  # TODO: make this pass
 # test/types.runhugs    # TODO: make this pass
 
