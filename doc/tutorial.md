@@ -203,6 +203,13 @@ Now:
 
 LeanCheck also provides the function [`deriveListable`] to automatically derive
 [`Listable`] instances for types that do not follow a data invariant (precondition).
+The above [`Listable`] instance could be replaced by simply:
+
+	{-# LANGUAGE TemplateHaskell #-}
+	...
+	...
+
+	deriveListable ''Stack
 
 
 
