@@ -220,8 +220,8 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 [build-log]:    https://travis-ci.org/rudymatela/leancheck
 [hackage-version]: https://img.shields.io/hackage/v/leancheck.svg
 [leancheck-on-hackage]: https://hackage.haskell.org/package/leancheck
-[stackage-lts-badge]:            http://stackage.org/package/leancheck/badge/lts
-[stackage-nightly-badge]:        http://stackage.org/package/leancheck/badge/nightly
-[leancheck-on-stackage]:         http://stackage.org/package/leancheck
-[leancheck-on-stackage-lts]:     http://stackage.org/lts/package/leancheck
-[leancheck-on-stackage-nightly]: http://stackage.org/nightly/package/leancheck
+[stackage-lts-badge]:            https://stackage.org/package/leancheck/badge/lts
+[stackage-nightly-badge]:        https://stackage.org/package/leancheck/badge/nightly
+[leancheck-on-stackage]:         https://stackage.org/package/leancheck
+[leancheck-on-stackage-lts]:     https://stackage.org/lts/package/leancheck
+[leancheck-on-stackage-nightly]: https://stackage.org/nightly/package/leancheck
