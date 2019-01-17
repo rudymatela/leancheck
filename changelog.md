@@ -1,8 +1,8 @@
 Changelog for LeanCheck
 =======================
 
-upcoming
---------
+v0.9.0
+------
 
 * logo for LeanCheck;
 * `Listable` instances to most types in the Haskell 2010 Language Report:
