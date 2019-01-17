@@ -144,6 +144,15 @@ The `list` function can be used to debug your custom instances.
 check source comments or haddock documentation for details.
 
 
+Standard Listable Instances
+---------------------------
+
+LeanCheck comes out-of-the-box with [Listable] instances for all types in the
+[Haskell 2010 Language Report] with [the intentional exception of a few types].
+The [leancheck-instances] package aims to support all types in the
+[Haskell Platform].
+
+
 Providers for Tasty, test-framework and Hspec
 ---------------------------------------------
 
@@ -200,6 +209,10 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 [LeanCheck provider for Tasty]:          https://hackage.haskell.org/package/tasty-leancheck
 [LeanCheck provider for test-framework]: https://hackage.haskell.org/package/test-framework-leancheck
 [LeanCheck provider for Hspec]:          https://hackage.haskell.org/package/hspec-leancheck
+[leancheck-instances]:                   https://hackage.haskell.org/package/hspec-leancheck
+[a few intentional exceptions]:          https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck-Basic.html
+[Haskell 2010 Report]:                   https://www.haskell.org/onlinereport/haskell2010/
+[Haskell Platform]:                      https://www.haskell.org/platform/
 
 [leancheck-logo]: https://github.com/rudymatela/leancheck/raw/master/doc/leancheck.svg?sanitize=true
 
