@@ -149,8 +149,7 @@ Standard Listable Instances
 
 LeanCheck comes out-of-the-box with [`Listable`] instances for all types in the
 [Haskell 2010 Language Report] with [the intentional exception of a few types].
-The [leancheck-instances] package aims to support all types in the
-[Haskell Platform].
+The [leancheck-instances] package aims to support types in the [Haskell Platform].
 
 
 Providers for Tasty, test-framework and Hspec
