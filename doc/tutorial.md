@@ -215,7 +215,7 @@ Property-based testing has a few advantages over unit-testing:
   after making a small change to a program, we might [`checkFor`] `50` tests;
   before making a major release, we may [`checkFor`] `1000` tests.
   A continuous integration system can be configured to run more test than what
-  is usual on developers machines.
+  is usual on the development environment.
   
 * (+) documentation:
   properties serve as a clear documentation of behaviour;
