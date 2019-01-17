@@ -30,6 +30,7 @@
 -- and
 -- "Test.LeanCheck.Function.Show"
 -- exports an instance like the one above.
+{-# LANGUAGE CPP #-}
 module Test.LeanCheck.Function.ShowFunction
   (
   -- * Showing functions
@@ -65,6 +66,10 @@ import Data.Word
 import Data.Int
 import Data.Ratio
 import Data.Complex
+import Data.Char (GeneralCategory)
+import System.Exit (ExitCode)
+import System.IO (IOMode, BufferMode, SeekMode)
+import Foreign.C
 
 -- | A functional binding in a showable format.
 --   Argument values are represented as a list of strings.
@@ -367,19 +372,70 @@ instance ShowFunction Word1 where bindtiers = bindtiersShow
 instance ShowFunction Word2 where bindtiers = bindtiersShow
 instance ShowFunction Word3 where bindtiers = bindtiersShow
 instance ShowFunction Word4 where bindtiers = bindtiersShow
-instance ShowFunction Letters   where bindtiers = bindtiersShow
-instance ShowFunction AlphaNums where bindtiers = bindtiersShow
+
+instance ShowFunction Natural where bindtiers = bindtiersShow
+
+instance ShowFunction Letter    where bindtiers = bindtiersShow
+instance ShowFunction AlphaNum  where bindtiers = bindtiersShow
 instance ShowFunction Digit     where bindtiers = bindtiersShow
 instance ShowFunction Alpha     where bindtiers = bindtiersShow
 instance ShowFunction Upper     where bindtiers = bindtiersShow
 instance ShowFunction Lower     where bindtiers = bindtiersShow
 instance ShowFunction Space     where bindtiers = bindtiersShow
+
+instance ShowFunction Spaces    where bindtiers = bindtiersShow
+instance ShowFunction Lowers    where bindtiers = bindtiersShow
+instance ShowFunction Uppers    where bindtiers = bindtiersShow
+instance ShowFunction Alphas    where bindtiers = bindtiersShow
+instance ShowFunction Digits    where bindtiers = bindtiersShow
+instance ShowFunction AlphaNums where bindtiers = bindtiersShow
+instance ShowFunction Letters   where bindtiers = bindtiersShow
+
 instance Show a => ShowFunction (X a) where bindtiers = bindtiersShow
 instance Show a => ShowFunction (Xs a) where bindtiers = bindtiersShow
 instance Show a => ShowFunction (Set a) where bindtiers = bindtiersShow
 instance Show a => ShowFunction (Bag a) where bindtiers = bindtiersShow
 instance Show a => ShowFunction (NoDup a) where bindtiers = bindtiersShow
 instance (Show a, Show b) => ShowFunction (Map a b) where bindtiers = bindtiersShow
+
+-- misc instances
+instance ShowFunction ExitCode   where bindtiers = bindtiersShow
+instance ShowFunction SeekMode   where bindtiers = bindtiersShow
+instance ShowFunction IOMode     where bindtiers = bindtiersShow
+instance ShowFunction BufferMode where bindtiers = bindtiersShow
+instance ShowFunction GeneralCategory where bindtiers = bindtiersShow
+
+-- instances for Foreign.C types
+instance ShowFunction CChar      where bindtiers = bindtiersShow
+instance ShowFunction CSChar     where bindtiers = bindtiersShow
+instance ShowFunction CUChar     where bindtiers = bindtiersShow
+instance ShowFunction CShort     where bindtiers = bindtiersShow
+instance ShowFunction CUShort    where bindtiers = bindtiersShow
+instance ShowFunction CInt       where bindtiers = bindtiersShow
+instance ShowFunction CUInt      where bindtiers = bindtiersShow
+instance ShowFunction CLong      where bindtiers = bindtiersShow
+instance ShowFunction CULong     where bindtiers = bindtiersShow
+instance ShowFunction CPtrdiff   where bindtiers = bindtiersShow
+instance ShowFunction CSize      where bindtiers = bindtiersShow
+instance ShowFunction CWchar     where bindtiers = bindtiersShow
+instance ShowFunction CSigAtomic where bindtiers = bindtiersShow
+instance ShowFunction CLLong     where bindtiers = bindtiersShow
+instance ShowFunction CULLong    where bindtiers = bindtiersShow
+instance ShowFunction CIntPtr    where bindtiers = bindtiersShow
+instance ShowFunction CUIntPtr   where bindtiers = bindtiersShow
+instance ShowFunction CIntMax    where bindtiers = bindtiersShow
+instance ShowFunction CUIntMax   where bindtiers = bindtiersShow
+instance ShowFunction CClock     where bindtiers = bindtiersShow
+instance ShowFunction CTime      where bindtiers = bindtiersShow
+instance ShowFunction CFloat     where bindtiers = bindtiersShow
+instance ShowFunction CDouble    where bindtiers = bindtiersShow
+#if __GLASGOW_HASKELL__ >= 802
+instance ShowFunction CBool      where bindtiers = bindtiersShow
+#endif
+#if __GLASGOW_HASKELL__
+instance ShowFunction CUSeconds  where bindtiers = bindtiersShow
+instance ShowFunction CSUSeconds where bindtiers = bindtiersShow
+#endif
 
 -- | Hard coded function names and bindings
 --   Search this list for a short name for your function.
