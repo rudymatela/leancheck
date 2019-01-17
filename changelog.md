@@ -1,6 +1,18 @@
 Changelog for LeanCheck
 =======================
 
+upcoming
+--------
+
+* logo for LeanCheck;
+* `Listable` instances to most types in the Haskell 2010 Language Report:
+	- `Word<n>`;
+	- `Int<n>`;
+	- `Complex`;
+	- etc...;
+* minor improvements in documentation and README.
+
+
 v0.8.0
 ------
 
