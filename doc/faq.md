@@ -54,7 +54,7 @@ To get a (infinite) list of all integers, you simply do:
 What are the differences between enumerative and random testing?
 ----------------------------------------------------------------
 
-__Counterexample size__ When using enumerative testing, reported
+__Counterexample size.__ When using enumerative testing, reported
 counterexamples are guaranteed to be the smallest or simplest as possible.
 Most of the times, the smaller the counterexample, the easier it is to find the
 cause of the fault.  When doing random testing, you may sometimes get a bigger
@@ -78,7 +78,7 @@ Depending on your datatype, shrinking can be effective.
 	[]
 	[2,2]
 
-__Existential properties__ Enumerative testing tools allow for the definition
+__Existential properties.__ Enumerative testing tools allow for the definition
 of existential properties:
 
 	prop_lessThanExists :: Natural -> Natural -> Bool
@@ -87,7 +87,7 @@ of existential properties:
 Random testing does not allow it without the use of sometimes-not-so-obvious
 process of [Skolemization].
 
-__Ease of use__ In my humble opinion, writing generators for enumerative
+__Ease of use.__ In my humble opinion, writing generators for enumerative
 testing tools is easier than on random testing tools.  Nevertheless, the
 availability of automatic derivation makes this a minor issue.
 
