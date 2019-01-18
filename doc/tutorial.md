@@ -246,6 +246,7 @@ Other property-based testing tools for Haskell
 ----------------------------------------------
 
 * [QuickCheck]      : randomized
+* [Hedgehog]        : randomized
 * [SmallCheck]      : enumerative, depth-bounded
 * [Lazy SmallCheck] : enumerative, depth-bounded, lazy, demand-driven
 * [Feat]            : enumerative, size-bounded
@@ -267,6 +268,7 @@ Further reading
 [`deriveListable`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:deriveListable
 
 [QuickCheck]:      https://hackage.haskell.org/package/QuickCheck
+[Hedgehog]:        https://hackage.haskell.org/package/hedgehog
 [SmallCheck]:      https://hackage.haskell.org/package/smallcheck
 [Lazy SmallCheck]: https://hackage.haskell.org/package/lazysmallcheck
 [Feat]:            https://hackage.haskell.org/package/testing-feat
