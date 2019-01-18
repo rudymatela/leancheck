@@ -43,8 +43,8 @@
 --
 -- The 'Listable' and 'Show' function instance are defined in, respectively:
 --
--- * "Test.LeanCheck.Function.Listable";
--- * "Test.LeanCheck.Function.Show".
+-- * "Test.LeanCheck.Function.Listable"
+-- * "Test.LeanCheck.Function.Show"
 --
 -- The 'Show' instance will work for all functions whose return types are
 -- instances of ShowFunction from "Test.LeanCheck.Function.ShowFunction".
