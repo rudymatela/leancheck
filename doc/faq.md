@@ -50,7 +50,7 @@ To get a (infinite) list of all integers, you simply do:
 	> list :: [Int]
 	[0, 1, 2, 3, 4, 5, 6, 7, ...]
 
-__Memory consumption__ LeanCheck is more memory intensive when compared to
+__Memory consumption.__  LeanCheck is more memory intensive when compared to
 QuickCheck.  With LeanCheck you may run out of memory when you're running tens
 of millions of tests depending on your datatype.
 
@@ -92,7 +92,7 @@ of existential properties:
 Random testing does not allow it without the use of sometimes-not-so-obvious
 process of [Skolemization].
 
-__Coverage__ Random testing always hits different test cases, so in the long
+__Coverage.__ Random testing always hits different test cases, so in the long
 term you may get more test coverage.  With enumerative testing you only get
 more coverage when you configure more tests.
 
