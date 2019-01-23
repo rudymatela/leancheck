@@ -209,7 +209,7 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 [LeanCheck provider for Tasty]:          https://hackage.haskell.org/package/tasty-leancheck
 [LeanCheck provider for test-framework]: https://hackage.haskell.org/package/test-framework-leancheck
 [LeanCheck provider for Hspec]:          https://hackage.haskell.org/package/hspec-leancheck
-[leancheck-instances]:                   https://hackage.haskell.org/package/hspec-leancheck
+[leancheck-instances]:                   https://hackage.haskell.org/package/leancheck-instances
 [the intentional exception of a few types]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck-Basic.html
 [Haskell 2010 Language Report]:          https://www.haskell.org/onlinereport/haskell2010/
 [Haskell Platform]:                      https://www.haskell.org/platform/
