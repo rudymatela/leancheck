@@ -6,7 +6,7 @@ import Test.LeanCheck
 import Test.LeanCheck.Derive
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
-import Test.LeanCheck.Utils.Operators
+import Test.LeanCheck.Utils
 
 data D0       = D0                    deriving Show
 data D1 a     = D1 a                  deriving Show
@@ -23,6 +23,17 @@ deriveListable ''D3
 deriveListable ''C1
 deriveListable ''C2
 deriveListable ''I
+
+-- recursive datatypes
+data Peano = Zero | Succ Peano deriving Show
+data List a = a :- List a | Nil deriving Show
+data Bush a = Bush a :-: Bush a | Leaf a deriving (Show, Eq)
+data Tree a = Node (Tree a) a (Tree a) | Null deriving (Show, Eq)
+
+deriveListable ''Peano
+deriveListable ''List
+deriveListable ''Bush
+deriveListable ''Tree
 
 -- Nested datatype cascade
 data Nested = Nested N0 (N1 Int) (N2 Int Int)
@@ -86,6 +97,33 @@ tests n =
   , map unD2 list == (list :: [(Bool,Bool)])
   , map unD3 list == (list :: [(Bool,Bool,Bool)])
 
+  , map peanoToNat list =| n |= list
+  , map listToList list =| n |= (list :: [[Bool]])
+  , map listToList list =| n |= (list :: [[Int]])
+
+  , mapT peanoToNat tiers =| 6 |= tiers
+  , mapT listToList tiers =| 6 |= (tiers :: [[ [Bool] ]])
+  , mapT listToList tiers =| 6 |= (tiers :: [[ [Int] ]])
+
+  , take 6 (list :: [Bush Bool])
+    == [ Leaf False
+       , Leaf True
+       , Leaf False :-: Leaf False
+       , Leaf False :-: Leaf True
+       , Leaf True :-: Leaf False
+       , Leaf True :-: Leaf True
+       ]
+
+  , take 6 (list :: [Tree Bool])
+    == [ Null
+       , Node Null False Null
+       , Node Null True Null
+       , Node Null False (Node Null False Null)
+       , Node Null False (Node Null True Null)
+       , Node Null True (Node Null False Null)
+       ]
+
+
   , (tiers :: [[ Bool       ]]) =| 6 |= $(deriveTiers ''Bool)
   , (tiers :: [[ [Int]      ]]) =| 6 |= $(deriveTiers ''[])
   , (tiers :: [[ [Bool]     ]]) =| 6 |= $(deriveTiers ''[])
@@ -104,3 +142,11 @@ tests n =
   unD1 (D1 x)     = (x)
   unD2 (D2 x y)   = (x,y)
   unD3 (D3 x y z) = (x,y,z)
+
+peanoToNat :: Peano -> Nat
+peanoToNat Zero = 0
+peanoToNat (Succ n) = 1 + peanoToNat n
+
+listToList :: List a -> [a]
+listToList Nil = []
+listToList (x :- xs) = x : listToList xs

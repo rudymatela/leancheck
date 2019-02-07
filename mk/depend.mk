@@ -382,8 +382,11 @@ test/derive.o: \
   test/Test.hs \
   test/derive.hs \
   src/Test/LeanCheck/Utils/Types.hs \
+  src/Test/LeanCheck/Utils/TypeBinding.hs \
+  src/Test/LeanCheck/Utils.hs \
   src/Test/LeanCheck/Utils/Operators.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Derive.hs \
