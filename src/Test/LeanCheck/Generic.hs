@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts, TypeOperators #-}
+{-# LANGUAGE FlexibleContexts, FlexibleInstances, TypeOperators #-}
 -- |
 -- Module      : Test.LeanCheck.Generic
 -- Copyright   : (c) 2018 Rudy Matela
@@ -61,5 +61,11 @@ instance (Listable' a, Listable' b) => Listable' (a :+: b) where
 instance (Listable' a, Listable' b) => Listable' (a :*: b) where
   tiers' = productWith (:*:) tiers' tiers'
 
-instance Listable' f => Listable' (M1 i c f) where
+instance Listable' f => Listable' (S1 c f) where
+  tiers' = mapT M1 tiers'
+
+instance Listable' f => Listable' (C1 c f) where
+  tiers' = delay $ mapT M1 tiers'
+
+instance Listable' f => Listable' (D1 c f) where
   tiers' = mapT M1 tiers'
