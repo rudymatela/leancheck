@@ -1,6 +1,14 @@
 Changelog for LeanCheck
 =======================
 
+upcoming
+--------
+
+* fix bug in `genericTiers` where using it bound to a recursive datatype could
+  cause an infinite loop;
+* minor improvements in documentation and tests.
+
+
 v0.9.0
 ------
 
