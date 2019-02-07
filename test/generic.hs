@@ -6,7 +6,7 @@ import Test.LeanCheck
 import Test.LeanCheck.Generic
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
-import Test.LeanCheck.Utils.Operators
+import Test.LeanCheck.Utils
 import GHC.Generics (Generic)
 
 data D0       = D0                    deriving (Eq, Show, Generic)
@@ -35,6 +35,18 @@ instance (Listable a, Listable b)
 instance (Listable a, Listable b)
       => Listable (I a b)              where tiers = genericTiers
 
+-- recursive datatypes
+data Peano = Zero | Succ Peano deriving (Show, Generic)
+data List a = a :- List a | Nil deriving (Show, Generic)
+data Bush a = Bush a :-: Bush a | Leaf a deriving (Show, Eq, Generic)
+data Tree a = Node (Tree a) a (Tree a) | Null deriving (Show, Eq, Generic)
+
+instance Listable Peano where tiers = genericTiers
+instance Listable a => Listable (List a) where tiers = genericTiers
+instance Listable a => Listable (Bush a) where tiers = genericTiers
+instance Listable a => Listable (Tree a) where tiers = genericTiers
+
+
 main :: IO ()
 main =
   case elemIndices False (tests 100) of
@@ -57,9 +69,56 @@ tests n =
   , map unD1 list == (list :: [Bool])
   , map unD2 list == (list :: [(Bool,Bool)])
   , map unD3 list == (list :: [(Bool,Bool,Bool)])
+
+  , map peanoToNat list =| n |= list
+  , map listToList list =| n |= (list :: [[Bool]])
+  , map listToList list =| n |= (list :: [[Int]])
+
+  , mapT peanoToNat tiers =| 6 |= tiers
+  , mapT listToList tiers =| 6 |= (tiers :: [[ [Bool] ]])
+  , mapT listToList tiers =| 6 |= (tiers :: [[ [Int] ]])
+
+  , take 6 (list :: [Bush Bool])
+    == [ Leaf False
+       , Leaf True
+       , Leaf False :-: Leaf False
+       , Leaf False :-: Leaf True
+       , Leaf True :-: Leaf False
+       , Leaf True :-: Leaf True
+       ]
+
+  , take 6 (list :: [Tree Bool])
+    == [ Null
+       , Node Null False Null
+       , Node Null True Null
+       , Node Null False (Node Null False Null)
+       , Node Null False (Node Null True Null)
+       , Node Null True (Node Null False Null)
+       ]
+
+  , (tiers :: [[ Bool       ]]) =| 6 |= genericTiers
+  , (tiers :: [[ [Int]      ]]) =| 6 |= genericTiers
+  , (tiers :: [[ [Bool]     ]]) =| 6 |= genericTiers
+  , (tiers :: [[ Maybe Int  ]]) =| 6 |= genericTiers
+  , (tiers :: [[ Maybe Bool ]]) =| 6 |= genericTiers
+  , ([]:tiers :: [[Either Bool Int]]) =$ map sort . take 6 $= genericTiers
+
+  , (list :: [ Bool       ]) =| n |= genericList
+  , (list :: [ [Int]      ]) =| n |= genericList
+  , (list :: [ [Bool]     ]) =| n |= genericList
+  , (list :: [ Maybe Int  ]) =| n |= genericList
+  , (list :: [ Maybe Bool ]) =| n |= genericList
   ]
   where
   unD0 (D0)       = ()
   unD1 (D1 x)     = (x)
   unD2 (D2 x y)   = (x,y)
   unD3 (D3 x y z) = (x,y,z)
+
+peanoToNat :: Peano -> Nat
+peanoToNat Zero = 0
+peanoToNat (Succ n) = 1 + peanoToNat n
+
+listToList :: List a -> [a]
+listToList Nil = []
+listToList (x :- xs) = x : listToList xs
