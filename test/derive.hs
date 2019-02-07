@@ -123,7 +123,6 @@ tests n =
        , Node Null True (Node Null False Null)
        ]
 
-
   , (tiers :: [[ Bool       ]]) =| 6 |= $(deriveTiers ''Bool)
   , (tiers :: [[ [Int]      ]]) =| 6 |= $(deriveTiers ''[])
   , (tiers :: [[ [Bool]     ]]) =| 6 |= $(deriveTiers ''[])

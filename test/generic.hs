@@ -1,9 +1,10 @@
 -- Copyright (c) 2015-2018 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
-{-# LANGUAGE DeriveGeneric, StandaloneDeriving #-}
+{-# LANGUAGE DeriveGeneric, StandaloneDeriving, TemplateHaskell #-}
 import Test
 import Test.LeanCheck
 import Test.LeanCheck.Generic
+import Test.LeanCheck.Derive (deriveTiers)
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 import Test.LeanCheck.Utils
@@ -108,6 +109,14 @@ tests n =
   , (list :: [ [Bool]     ]) =| n |= genericList
   , (list :: [ Maybe Int  ]) =| n |= genericList
   , (list :: [ Maybe Bool ]) =| n |= genericList
+
+  -- test consistency with deriveTiers
+  , (genericTiers :: [[ Bool ]])             =| 6 |=  $(deriveTiers ''Bool)
+  , (genericTiers :: [[ [Int]      ]])       =| 6 |=  $(deriveTiers ''[])
+  , (genericTiers :: [[ [Bool]     ]])       =| 6 |=  $(deriveTiers ''[])
+  , (genericTiers :: [[ Maybe Int  ]])       =| 6 |=  $(deriveTiers ''Maybe)
+  , (genericTiers :: [[ Maybe Bool ]])       =| 6 |=  $(deriveTiers ''Maybe)
+  , (genericTiers :: [[ Either Bool Int ]])  =| 6 |=  $(deriveTiers ''Either)
   ]
   where
   unD0 (D0)       = ()
