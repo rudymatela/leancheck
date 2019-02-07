@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts, FlexibleInstances, TypeOperators #-}
+{-# LANGUAGE FlexibleContexts, FlexibleInstances, TypeOperators, OverlappingInstances #-}
 -- |
 -- Module      : Test.LeanCheck.Generic
 -- Copyright   : (c) 2018 Rudy Matela
@@ -64,6 +64,11 @@ instance (Listable' a, Listable' b) => Listable' (a :*: b) where
 instance Listable' f => Listable' (S1 c f) where
   tiers' = mapT M1 tiers'
 
+-- don't delay when there is a constructor with 0 arguments
+instance Listable' (C1 c U1) where
+  tiers' = mapT M1 tiers'
+
+-- delay when there is a constructor with 1 or more arguments
 instance Listable' f => Listable' (C1 c f) where
   tiers' = delay $ mapT M1 tiers'
 
