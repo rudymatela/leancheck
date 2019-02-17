@@ -5,7 +5,7 @@ import Test
 import System.Exit (exitFailure)
 import Data.List (elemIndices)
 
-import Test.LeanCheck
+-- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Utils
 
 import Data.Ratio

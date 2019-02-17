@@ -1,5 +1,6 @@
 -- Copyright (c) 2015-2018 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 import Test ()
 
 import System.Exit (exitFailure)
@@ -7,7 +8,6 @@ import Data.List (elemIndices,sort)
 
 import Test.LeanCheck.Error
 import Test.LeanCheck.Utils.Types (Nat)
-import Data.List (sort)
 
 main :: IO ()
 main =

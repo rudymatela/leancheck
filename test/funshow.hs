@@ -1,11 +1,10 @@
 -- Copyright (c) 2015-2018 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
-import Test
-
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 import Test.LeanCheck.Function.ShowFunction
-import Test.LeanCheck.Function.Show
+import Test.LeanCheck.Function.Show ()
 import Test.LeanCheck.Utils.TypeBinding
 
 main :: IO ()
@@ -15,7 +14,7 @@ main =
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
 
-
+tests :: [Bool]
 tests =
   [ True
 
@@ -57,6 +56,10 @@ tests =
 
 
   -- fully defined, finite --
+  , show not
+    == "\\x -> case x of\n"
+    ++ "      False -> True\n"
+    ++ "      True -> False\n"
   , showFunction 1 not
     == "\\x -> case x of\n"
     ++ "      False -> True\n"

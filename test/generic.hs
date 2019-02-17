@@ -2,7 +2,7 @@
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 {-# LANGUAGE DeriveGeneric, StandaloneDeriving, TemplateHaskell #-}
 import Test
-import Test.LeanCheck
+-- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Generic
 import Test.LeanCheck.Derive (deriveTiers)
 import System.Exit (exitFailure)

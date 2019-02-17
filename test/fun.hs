@@ -3,11 +3,10 @@
 import Test
 
 import System.Exit (exitFailure)
-import Data.List (elemIndices, sort, nub, delete)
+import Data.List (elemIndices)
 
-import Test.LeanCheck
-import Test.LeanCheck.Function.ListsOfPairs
-import Test.LeanCheck.Utils
+-- import Test.LeanCheck -- already exported by Test
+-- import Test.LeanCheck.Utils
 
 
 main :: IO ()
@@ -17,13 +16,9 @@ main =
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
 
+tests :: [Bool]
 tests =
   [ True
   -- TODO: add some tests here
+  , holds 100 $ \() -> True
   ]
-
-allUnique :: Ord a => [a] -> Bool
-allUnique [] = True
-allUnique (x:xs) = x `notElem` xs
-                && allUnique (filter (< x) xs)
-                && allUnique (filter (> x) xs)

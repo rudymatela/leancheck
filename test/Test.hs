@@ -27,6 +27,8 @@ module Test
   , strictlyOrdered
   , strictlyOrderedBy
   , strictlyOrderedOn
+  , tOrderedBy
+  , tStrictlyOrderedBy
   )
 where
 

@@ -2,7 +2,7 @@
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 {-# LANGUAGE TemplateHaskell, CPP #-}
 import Test
-import Test.LeanCheck
+-- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Derive
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)

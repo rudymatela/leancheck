@@ -4,7 +4,7 @@ import Test
 
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
-import Test.LeanCheck
+-- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Utils
 
 import Data.List (isPrefixOf)
@@ -139,5 +139,5 @@ tests n =
   , fails n $ neverIdentity negate -:> int
   ]
 
-none :: (a -> Bool) -> [a] -> Bool
-none p = not . or . map p
+--none :: (a -> Bool) -> [a] -> Bool
+--none p = not . or . map p
