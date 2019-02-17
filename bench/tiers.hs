@@ -4,8 +4,8 @@
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
 import Test.LeanCheck.Utils.Types
-import Test.LeanCheck.Function
-import Test.LeanCheck.Function.Eq
+import Test.LeanCheck.Function ()
+import Test.LeanCheck.Function.Eq ()
 import Test.LeanCheck.Tiers (showTiers, finite)
 import System.Environment
 import Data.List (intercalate, nub)

@@ -275,13 +275,13 @@ prepare-depend: bench/tiers-default.hs \
 prepare-depend-and-depend: prepare-depend
 	make depend
 
-TLF = "import\ Test.LeanCheck.Function"
+TLF = import Test.LeanCheck.Function
 
 bench/tiers-default.hs: bench/tiers.hs
 	cp $< $@
 
 bench/tiers-4cases.hs: bench/tiers.hs
-	sed -e "s/$(TLF)$$/$(TLF).Listable\n$(TLF).Show.FourCases/" $< > $@
+	sed -e "s/$(TLF) .*$$/$(TLF).Listable ()\n$(TLF).Show.FourCases ()/" $< > $@
 
 bench/tiers-default: bench/tiers-default.hs src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs
 
