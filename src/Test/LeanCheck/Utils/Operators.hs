@@ -14,7 +14,7 @@ module Test.LeanCheck.Utils.Operators
 
   -- * Combining properties
     (===), (====)
-  , (&&&), (&&&&)
+  , (&&&), (&&&&), (&&&&&)
   , (|||), (||||)
 
   -- * Properties of unary functions
@@ -209,7 +209,6 @@ comparison compare = \x y z -> equivalence (===) x y z
                             && symmetric2  (<) (>) x y
   where
   x === y = x `compare` y == EQ
-  x =/= y = x `compare` y /= EQ
   x  <  y = x `compare` y == LT
   x  >  y = x `compare` y == GT
 

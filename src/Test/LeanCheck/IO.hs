@@ -22,8 +22,6 @@ import Prelude hiding (catch)
 #endif
 
 import Test.LeanCheck.Core
-import Data.Maybe (listToMaybe)
-import Data.List (find)
 #ifdef __GLASGOW_HASKELL__
 import Control.Exception (SomeException, catch, evaluate)
 #else

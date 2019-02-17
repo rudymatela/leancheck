@@ -22,4 +22,4 @@
 -- importing this on modules that are used as libraries.
 module Test.LeanCheck.Function.Listable () where
 
-import Test.LeanCheck.Function.Listable.ListsOfPairs
+import Test.LeanCheck.Function.Listable.ListsOfPairs ()

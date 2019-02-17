@@ -48,6 +48,7 @@
 --
 -- The 'Show' instance will work for all functions whose return types are
 -- instances of ShowFunction from "Test.LeanCheck.Function.ShowFunction".
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}
 module Test.LeanCheck.Function () where
 import Test.LeanCheck.Core (Listable) -- for Haddock
 import Test.LeanCheck.Function.Listable ()

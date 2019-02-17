@@ -29,7 +29,7 @@ where
 
 import Language.Haskell.TH
 import Test.LeanCheck.Basic
-import Control.Monad (unless, liftM, liftM2, filterM)
+import Control.Monad (unless, liftM, filterM)
 import Data.List (delete)
 
 #if __GLASGOW_HASKELL__ < 706
@@ -305,6 +305,7 @@ typeConstructors t = do
   simplify (NormalC n ts)  = (n,map snd ts)
   simplify (RecC    n ts)  = (n,map trd ts)
   simplify (InfixC  t1 n t2) = (n,[snd t1,snd t2])
+  simplify _ = error "Test.LeanCheck.Derive.typeConstructors: unhandled case (see source)"
   trd (x,y,z) = z
 
 isTypeSynonym :: Name -> Q Bool

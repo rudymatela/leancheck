@@ -19,7 +19,6 @@ where
 
 import Test.LeanCheck
 import Test.LeanCheck.Tiers
-import Data.Maybe (fromMaybe)
 
 -- | Given tiers of argument and result values,
 --   return tiers of functional values.
