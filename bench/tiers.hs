@@ -75,9 +75,9 @@ main :: IO ()
 main = do
   as <- getArgs
   let (t,n) = case as of
-                []    -> ("Int", 12)
-                [t]   -> (t,     12)
-                [t,n] -> (t, read n)
+              []      -> ("Int", 12)
+              [t]     -> (t,     12)
+              (t:n:_) -> (t, read n)
   case t of
     -- simple types
     "()"               -> put t n (u :: ()                   )
