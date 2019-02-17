@@ -199,10 +199,6 @@ instance (Show a, Listable a, ShowFunction b) => ShowFunction (a->b) where
 paren :: String -> String
 paren s = "(" ++ s ++ ")"
 
-varnamesFor :: ShowFunction a => a -> [String]
-varnamesFor = zipWith const varnames . fst . head . bindings
-  where varnames = ["x","y","z","w"] ++ map (++"'") varnames
-
 showTuple :: [String] -> String
 showTuple [x]  =  x
 showTuple xs | all (== "_") xs  =  "_"
@@ -436,51 +432,6 @@ instance ShowFunction CBool      where bindtiers = bindtiersShow
 instance ShowFunction CUSeconds  where bindtiers = bindtiersShow
 instance ShowFunction CSUSeconds where bindtiers = bindtiersShow
 #endif
-
--- | Hard coded function names and bindings
---   Search this list for a short name for your function.
-functionNames :: [(String, [Binding])]
-functionNames =
-  [ "id"    `for` (id          :: () -> ())
-  , "const" `for` (const       :: () -> () -> ())
-
-  -- booleans
-  , "id"    `for` (id          :: Bool -> Bool)
-  , "not"   `for` (not         :: Bool -> Bool)
-  , "const" `for` (const :: Bool -> Bool -> Bool)
-
-  , "(&&)"  `for` (&&)
-  , "(||)"  `for` (||)
-
-  -- numeric types
-  , "id"      `for` (id      :: Int -> Int)
-  , "const"   `for` (const   :: Int -> Int -> Int)
-
-  -- Num typeclass
-  , "(+)"     `for` ((+)     :: Int -> Int -> Int)
-  , "(-)"     `for` ((-)     :: Int -> Int -> Int)
-  , "(*)"     `for` ((*)     :: Int -> Int -> Int)
-  , "negate"  `for` (negate  :: Int -> Int)
-  , "abs"     `for` (abs     :: Int -> Int)
-  , "signum"  `for` (signum  :: Int -> Int)
-
-  -- integer properties
-  , "odd"     `for` (odd     :: Int -> Bool)
-  , "even"    `for` (even    :: Int -> Bool)
-  ]
-  where
-  n `for` f = (n, bindings f)
-
--- | Tries to name a function heuristically
-name :: ShowFunction a => Int -> a -> Maybe String
-name n f = listToMaybe [ nm | (nm, bs) <- functionNames
-                            , take n bs == take n (bindings f)]
-
-canName :: ShowFunction a => Int -> a -> Bool
-canName n = isJust . name n
-
-showName :: ShowFunction a => Int -> a -> String
-showName n = fromMaybe "unknown" . name n
 
 -- | Returns a set of variables and a set of bindings
 --   describing how a function works.
