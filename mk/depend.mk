@@ -415,19 +415,13 @@ test/fun.o: \
   test/Test.hs \
   test/fun.hs \
   src/Test/LeanCheck/Utils/Types.hs \
-  src/Test/LeanCheck/Utils/TypeBinding.hs \
-  src/Test/LeanCheck/Utils.hs \
-  src/Test/LeanCheck/Utils/Operators.hs \
   src/Test/LeanCheck/Tiers.hs \
-  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
-  src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
 test/funshow.o: \
-  test/Test.hs \
   test/funshow.hs \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Utils/TypeBinding.hs \
@@ -443,7 +437,6 @@ test/funshow.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
 test/funshow: \
-  test/Test.hs \
   test/funshow.hs \
   mk/toplibs
 test/fun: \
