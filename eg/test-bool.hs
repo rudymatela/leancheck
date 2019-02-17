@@ -3,7 +3,7 @@
 -- Copyright (c) 2017-2018 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
-import Test.LeanCheck.Function
+import Test.LeanCheck.Function ()
 import Test.LeanCheck.Utils
 
 main :: IO ()

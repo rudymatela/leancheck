@@ -1,5 +1,5 @@
 import Test.LeanCheck
-import Test.LeanCheck.Function
+import Test.LeanCheck.Function ()
 
 type A = Int
 
