@@ -1,9 +1,6 @@
 -- Copyright (c) 2015-2018 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
-{-# LANGUAGE CPP #-}
-#if __GLASGOW_HASKELL__ >= 800
-{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
-#endif
+{-# OPTIONS_GHC -fno-warn-incomplete-patterns #-}
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 import Test.LeanCheck.Function.ShowFunction
