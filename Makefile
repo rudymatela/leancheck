@@ -97,10 +97,10 @@ test-via-stack:
 	stack test
 
 legacy-test: # needs ghc-8.2 .. ghc-7.8 installed as such
-	make clean  &&  make test GHC=ghc-8.2  GHCFLAGS="-Werror -dynamic"
-	make clean  &&  make test GHC=ghc-8.0  GHCFLAGS="-Werror -dynamic"
-	make clean  &&  make test GHC=ghc-7.10 GHCFLAGS="-Werror -dynamic"
-	make clean  &&  make test GHC=ghc-7.8  GHCFLAGS="-Werror -dynamic"
+	make clean  &&  make test GHC=ghc-8.2
+	make clean  &&  make test GHC=ghc-8.0
+	make clean  &&  make test GHC=ghc-7.10
+	make clean  &&  make test GHC=ghc-7.8
 	make clean  &&  make test
 
 legacy-test-via-cabal: # needs similarly named cabal wrappers
