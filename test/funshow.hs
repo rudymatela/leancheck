@@ -1,7 +1,7 @@
 -- Copyright (c) 2015-2018 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 {-# LANGUAGE CPP #-}
-#if __GLASGOW_HASKELL__ > 800
+#if __GLASGOW_HASKELL__ >= 800
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 #endif
 import System.Exit (exitFailure)
