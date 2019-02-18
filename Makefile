@@ -97,11 +97,11 @@ test-via-stack:
 	stack test
 
 legacy-test: # needs ghc-8.2 .. ghc-7.8 installed as such
-	make clean  &&  make test GHC=ghc-8.2
-	make clean  &&  make test GHC=ghc-8.0
-	make clean  &&  make test GHC=ghc-7.10
-	make clean  &&  make test GHC=ghc-7.8
-	make clean  &&  make test
+	make clean  &&  make test GHC=ghc-8.2 -j
+	make clean  &&  make test GHC=ghc-8.0 -j
+	make clean  &&  make test GHC=ghc-7.10 -j
+	make clean  &&  make test GHC=ghc-7.8 -j
+	make clean  &&  make test -j
 
 legacy-test-via-cabal: # needs similarly named cabal wrappers
 	cabal clean  &&  cabal-ghc-8.2  configure  &&  cabal-ghc-8.2  test
