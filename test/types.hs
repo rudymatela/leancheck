@@ -4,7 +4,6 @@ import Test
 import System.Exit (exitFailure)
 import Data.List (elemIndices,delete,isPrefixOf)
 import Test.LeanCheck.Utils.Types
-import Test.LeanCheck (list,fails)
 import Data.Word
 import Data.Int
 import Data.Char hiding (Space)

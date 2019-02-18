@@ -63,7 +63,6 @@ where
 -- TODO: review terminology in this module.  Some names aren't quite right!
 
 import Test.LeanCheck ((==>))
-import Data.List (elem)
 
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
 combine op f g = \x -> f x `op` g x
