@@ -10,8 +10,8 @@ import Test.LeanCheck.Utils
 
 import Data.Ratio
 import Data.Complex
-import Data.Int (Int, Int8, Int16, Int32, Int64)
-import Data.Word (Word, Word8, Word16, Word32, Word64)
+import Data.Int
+import Data.Word
 
 main :: IO ()
 main =

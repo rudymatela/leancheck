@@ -50,8 +50,8 @@ where
 import Test.LeanCheck.Core
 import Data.Ratio
 import Data.Complex
-import Data.Int (Int8, Int16, Int32, Int64)
-import Data.Word (Word, Word8, Word16, Word32, Word64)
+import Data.Int
+import Data.Word
 import Data.Char (GeneralCategory)
 import System.IO (IOMode (..), BufferMode (..), SeekMode (..))
 import Foreign.C
