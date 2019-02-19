@@ -97,7 +97,7 @@ matrix:
     - cabal --version
     - haddock --version
     script:
-    - make && make test
+    - make GHCFLAGS= && make test GHCFLAGS=
     - make haddock HADDOCKFLAGS=
     - make test-sdist
     - cabal test
