@@ -14,6 +14,6 @@
 [1]
 
 *** Failed! Falsifiable (after 1 tests):
-\_ -> 0 \_ -> 0
+(\_ -> 0) (\_ -> 0)
 *** Failed! Falsifiable (after 1 tests):
-\_ -> 0 (0,0)
+(\_ -> 0) (0,0)

@@ -69,4 +69,6 @@ import Test.LeanCheck.Function.ShowFunction
 -- >         (1,-1) -> 0
 -- >         ...
 instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
-  showsPrec _ = (++) . showFunction 8
+  showsPrec d f = showParen (d > 0 && '\n' `notElem` s) (s ++)
+    where
+    s = showFunction 8 f
