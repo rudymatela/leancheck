@@ -45,11 +45,11 @@ eg/test-float
 eg/test-list
 eg/higher-order
 eg/overflow
-doc/*.html
-doc/*.css
-doc/*.js
-doc/*.png
-doc/*.gif
-doc/*.json
+doc/**/*.html
+doc/**/*.css
+doc/**/*.js
+doc/**/*.png
+doc/**/*.gif
+doc/**/*.json
 mk/toplibs
 README.html

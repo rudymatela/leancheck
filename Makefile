@@ -1,6 +1,6 @@
 # Makefile for LeanCheck
 #
-# Copyright:   (c) 2015-2018 Rudy Matela
+# Copyright:   (c) 2015-2019 Rudy Matela
 # License:     3-Clause BSD  (see the file LICENSE)
 # Maintainer:  Rudy Matela <rudy@matela.com.br>
 TESTS = test/main      \
@@ -31,6 +31,8 @@ GHCFLAGS = -O2 $(shell grep -q "Arch Linux" /etc/lsb-release && echo -dynamic) \
 HADDOCKFLAGS = --no-print-missing-docs
 HUGSIMPORTDIRS = .:./src:./test:./etc/hugs-backports:/usr/lib/hugs/packages/*
 HUGSFLAGS = -98 -h32M
+
+LIB_DEPS = base template-haskell
 
 all: mk/toplibs
 
