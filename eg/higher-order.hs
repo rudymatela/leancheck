@@ -1,3 +1,7 @@
+-- higher-order.hs -- example: testing higher-order properties using LeanCheck
+--
+-- Copyright (c) 2017-2019 Rudy Matela.
+-- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
 import Test.LeanCheck.Function ()
 
@@ -24,5 +28,5 @@ main = do
   check prop_foldlr
   check prop_foldlr'
   check prop_mapFilter
-  check prop_false  -- TODO: paren output
-  check prop_false' -- TODO: paren output
+  check prop_false
+  check prop_false'
