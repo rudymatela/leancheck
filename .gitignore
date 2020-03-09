@@ -27,6 +27,7 @@ test/operators
 test/tiers
 test/types
 test/stats
+bench/pick
 bench/memory-usage
 bench/tiers
 bench/tiers-colistable
