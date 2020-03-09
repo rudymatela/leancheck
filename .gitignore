@@ -3,6 +3,7 @@ cabal.sandbox.config
 .stack-work
 idx/
 dist/
+dist-newstyle
 log/
 *.swp
 *.swo
