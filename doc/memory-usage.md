@@ -158,8 +158,11 @@ Int
 ```
 
 
-Note
-----
+Generating measurements from this report
+----------------------------------------
+
+Values in the report above are approximate.  If you need more precise values,
+you will need to generate them yourself.
 
 To generate data from this report yourself, just:
 
