@@ -40,14 +40,17 @@ extra-doc-files: README.md
                , TODO.md
                , changelog.md
                , doc/data-invariant.md
+               , doc/memory-usage.md
                , doc/faq.md
                , doc/tutorial.md
                , doc/leancheck.svg
 extra-source-files: .gitignore
                   , .travis.yml
                   , Makefile
-                  , bench/tiers.hs
                   , bench/memory-usage.hs
+                  , bench/pick
+                  , bench/tiers.hs
+                  , bench/time-and-memory
                   , eg/higher-order.hs
                   , eg/overflow.hs
                   , eg/test-bool.hs

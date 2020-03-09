@@ -1,0 +1,41 @@
+#!/bin/bash
+
+
+dir="`dirname $0`"
+pick="$dir/pick"
+
+timem() {
+	nice /usr/bin/time -f "%e %M" "$@" > /dev/null
+}
+
+pick() {
+	echo -n "$1 $2 ";
+	timem $pick $1 $2
+}
+
+timem-for() {
+	pick $1 1         ; [ "$2" = 1        ] && return
+	pick $1 10        ; [ "$2" = 10       ] && return
+	pick $1 100       ; [ "$2" = 100      ] && return
+	pick $1 1000      ; [ "$2" = 1000     ] && return
+	pick $1 10000     ; [ "$2" = 10000    ] && return
+	pick $1 100000    ; [ "$2" = 100000   ] && return
+	pick $1 1000000   ; [ "$2" = 1000000  ] && return
+	pick $1 10000000  ; [ "$2" = 10000000 ] && return
+}
+
+timem-for "Bool"  1
+timem-for "Int"
+timem-for "Char"  10
+
+timem-for "(Int,Int)"
+timem-for "(Int,Int,Int)"
+
+timem-for "[()]"      10000 # ~ 25s
+timem-for "[Bool]"          # ~  4s
+timem-for "[Int]"           # ~  6s
+
+timem-for "[[Bool]]"        # ~  4s
+timem-for "[[Int]]"         # ~  4s
+
+timem-for "[(Int,Int)]"     # ~  4s
