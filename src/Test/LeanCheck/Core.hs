@@ -603,6 +603,11 @@ witness n = listToMaybe . witnesses n
 -- | Does a property __hold__ up to a number of test values?
 --
 -- > holds 1000 $ \xs -> length (sort xs) == length xs
+--
+-- The suggested number of test values are 500, 1 000 or 10 000.
+-- With more than that you may or may not run out of memory
+-- depending on the types being tested.
+-- This also applies to 'fails', 'exists', etc.
 holds :: Testable a => Int -> a -> Bool
 holds n = and . take n . map snd . results
 

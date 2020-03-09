@@ -51,6 +51,10 @@ See (ghci):
 	> holds 100 $ \xs -> [] `union` xs == (xs::[Int])
 	False
 
+As a rule-of-thumb, you should run holds for 500, 1 000, or 10 000 tests.
+With more than that you may run out-of-memory depending on the types being
+tested.
+
 
 Finding counter examples
 ------------------------
@@ -165,6 +169,18 @@ The following providers allow including LeanCheck properties into
   -- `$ cabal install test-framework-leancheck` ;
 * [LeanCheck provider for Hspec]
   -- `$ cabal install hspec-leancheck` .
+
+
+Memory usage
+------------
+
+Due to the way it is implemented (using lists of lists), LeanCheck can be quite
+memory intensive if we set the maximum number of tests of a property to
+millions of values (YMMV).
+
+For the default maximum number of tests (500) you should be safe on most cases.
+If you use 1 000 or 10 000 as the maximum number of tests for a property you're
+also generally safe.  More than that, it is in a hit or miss basis.
 
 
 Further reading

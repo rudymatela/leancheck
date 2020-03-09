@@ -29,6 +29,10 @@
 --
 -- > counterExample 1000 property
 --
+-- The suggested values for the number of tests to use with LeanCheck are
+-- 500, 1 000 or 10 000.  LeanCheck is memory intensive and you should take
+-- care if you go beyond that.
+--
 --
 -- Arguments of properties should be instances of the 'Listable' typeclass.
 -- 'Listable' instances are provided for the most common Haskell types.
