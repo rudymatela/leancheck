@@ -13,9 +13,6 @@ Here are tables with LeanCheck's memory consumption for a few standard Haskell
 types.
 
 
-TODO: finish formatting me
-
-
 Bool
 ----
 
