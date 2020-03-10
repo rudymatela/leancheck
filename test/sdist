@@ -11,15 +11,15 @@ pkgbase=$pkgname-$pkgver
 set -xe
 cabal sdist &&
 pkg=`find dist* -name $pkgbase.tar.gz`
-tar -tf $pkg | sort --ignore-case          > ls-cabal-i  &&
-tar -tf $pkg | sort --ignore-case --unique > ls-cabal-iu &&
-diff -rud ls-cabal-i ls-cabal-iu &&
-rm -f ls-cabal-i ls-cabal-iu &&
+tmp=`mktemp -d /tmp/test-sdist-XXXXXXXXXX`
+tar -tf $pkg | sort --ignore-case          > $tmp/ls-cabal-i  &&
+tar -tf $pkg | sort --ignore-case --unique > $tmp/ls-cabal-iu &&
+diff -rud $tmp/ls-cabal-i $tmp/ls-cabal-iu &&
 if [ -d .git ]
 then
 	# on git repo, test if files are the same
-	git ls-files                                         | sort > ls-git   &&
-	tar -tf $pkg | grep -v "/$" | sed -e "s,$pkgbase/,," | sort > ls-cabal &&
-	diff -rud ls-git ls-cabal &&
-	rm -f ls-git ls-cabal
+	git ls-files                                         | sort > $tmp/ls-git   &&
+	tar -tf $pkg | grep -v "/$" | sed -e "s,$pkgbase/,," | sort > $tmp/ls-cabal &&
+	diff -rud $tmp/ls-git $tmp/ls-cabal
 fi
+rm -r $tmp
