@@ -23,6 +23,9 @@ Throughout this README lines that begin with the [symbol `>`] indicate a line
 entered into an interactive interpreter (`ghci`).  The result of evaluating the
 expression is then printed on the following line.
 
+LeanCheck implementation is easy to understand.
+[LeanCheck's core] is under 190 lines of code.
+
 
 Installing
 ----------
@@ -185,6 +188,18 @@ also generally safe.  More than that, it is in a hit or miss basis.
 For more details, see [LeanCheck memory usage].
 
 
+Beginner friendliness
+---------------------
+
+LeanCheck strives to be beginner/student friendly both in the interface and its
+implementation.  For instance, to understand [LeanCheck's core], one does not
+need to understand Monads as they aren't used at all there.
+
+In the name of keeping the implementation easy to understand,
+a compromise were made in terms of performance
+(cf. [LeanCheck memory usage]).
+
+
 Further reading
 ---------------
 
@@ -212,6 +227,7 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 [`tiers`]:          https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:tiers
 [`list`]:           https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:list
 [`deriveListable`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:deriveListable
+[LeanCheck's core]: https://github.com/rudymatela/leancheck/blob/master/src/Test/LeanCheck/Core.hs
 
 [property-based testing]: https://github.com/rudymatela/leancheck/blob/master/doc/tutorial.md
 [Feat]: https://hackage.haskell.org/package/testing-feat
