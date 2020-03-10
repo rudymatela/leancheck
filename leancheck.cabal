@@ -48,7 +48,7 @@ extra-source-files: .gitignore
                   , .travis.yml
                   , Makefile
                   , bench/memory-usage.hs
-                  , bench/pick
+                  , bench/pick.hs
                   , bench/tiers.hs
                   , bench/time-and-memory
                   , eg/higher-order.hs
