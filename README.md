@@ -182,6 +182,8 @@ For the default maximum number of tests (500) you should be safe on most cases.
 If you use 1 000 or 10 000 as the maximum number of tests for a property you're
 also generally safe.  More than that, it is in a hit or miss basis.
 
+For more details, see [LeanCheck memory usage].
+
 
 Further reading
 ---------------
@@ -198,6 +200,7 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 
 [LeanCheck's Haddock documentation]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html
 [tutorial on property-based testing with LeanCheck]: https://github.com/rudymatela/leancheck/blob/master/doc/tutorial.md
+[LeanCheck memory usage]: https://github.com/rudymatela/leancheck/blob/master/doc/memory-usage.md
 
 [`Listable`]:       https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
 [`holds`]:          https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:holds
