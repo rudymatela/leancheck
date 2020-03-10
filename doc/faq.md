@@ -133,6 +133,23 @@ As you nest, the difference increases:
 	> take 10 $ map fst ( values :: [(Integer, [[(Int,Int,Int)]]  )] )
 	[0,1,8,88,968,10632,116752,1282048,14078080,154590400]
 
+__Performance.__  Feat is better in terms of runtime and memory when
+enumerating "late" values.  With Feat, you can enumerate the billionth (1 000
+000 000 th) value in an enumeration instantly in under 255kb:
+
+	$ cabal install testing-feat
+	...
+	$ ghci
+	> import Test.Feat
+	> :set +s
+	> index 1000000000 :: [Bool]
+	[True,True,False,True,True,True,False,False,True,True,False,True,False,True,True,False,False,True,False,True,False,False,False,False,False,False,False,False,True]
+	(0.02 secs, 255,288 bytes)
+
+You'll probably run out of memory when doing that with LeanCheck.  LeanCheck
+works best when we stick to thousands of values.  With more than that
+your-mileage-may-vary.
+
 __Interface.__  The API of these tools differ in several ways.  Two examples:
 
 * LeanCheck supports ([`Testable`]) properties with multiple arguments
