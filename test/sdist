@@ -7,27 +7,19 @@
 export LC_ALL=C  # consistent sort
 pkgver=` cat *.cabal | grep "^version:" | sed -e "s/version: *//"`
 pkgname=`cat *.cabal | grep "^name:"    | sed -e "s/name: *//"`
-pkg=$pkgname-$pkgver
-set -x
+pkgbase=$pkgname-$pkgver
+set -xe
 cabal sdist &&
-cd dist &&
-tar -tf $pkg.tar.gz | sort --ignore-case          > ls-cabal-i  &&
-tar -tf $pkg.tar.gz | sort --ignore-case --unique > ls-cabal-iu &&
+pkg=`find dist* -name $pkgbase.tar.gz`
+tar -tf $pkg | sort --ignore-case          > ls-cabal-i  &&
+tar -tf $pkg | sort --ignore-case --unique > ls-cabal-iu &&
 diff -rud ls-cabal-i ls-cabal-iu &&
-rm -f ls-cabal ls-cabal-ignore-case &&
-if [ -d ../.git ]
+rm -f ls-cabal-i ls-cabal-iu &&
+if [ -d .git ]
 then
 	# on git repo, test if files are the same
-	git -C .. ls-files                                      | sort > ls-git   &&
-	tar -tf $pkg.tar.gz | grep -v "/$" | sed -e "s,$pkg/,," | sort > ls-cabal &&
+	git ls-files                                         | sort > ls-git   &&
+	tar -tf $pkg | grep -v "/$" | sed -e "s,$pkgbase/,," | sort > ls-cabal &&
 	diff -rud ls-git ls-cabal &&
 	rm -f ls-git ls-cabal
-else
-	# outside of git repo, test build
-	rm -rf $pkg/ &&
-	tar -xzf $pkg.tar.gz &&
-	cd $pkg/ &&
-	cabal configure --enable-tests --enable-benchmarks &&
-	cabal build &&
-	cabal test
 fi
