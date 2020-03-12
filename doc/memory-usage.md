@@ -164,7 +164,7 @@ you will need to generate them yourself.
 To generate data from this report yourself, just:
 
 ```
-$ make bench/pick
-$ ./bench/memory-usage
+$ make bench/pick bench/memory-usage
+$ ./bench/time-and-memory
 ...
 ```
