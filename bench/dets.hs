@@ -174,3 +174,11 @@ main = do
   checkFor  2000000  prop3  -- bug not found, more tests and we go out of memory...
   checkFor  2000000  prop4  -- bug not found, more tests and we go out of memory...
   checkFor  2000000  prop5  -- bug not found, more tests and we go out of memory...
+
+-- If I recall correcly, John Hughes mentioned that each test took 3 seconds to
+-- run.  That means LeanCheck would find the first bug after 3 days, and the
+-- second bug after 2 months.
+--
+-- This could be removed by cheating a bit and removing some of the uneeded
+-- operations in our Program datatype.  But even in doing so, LeanCheck cannot
+-- find bugs 3, 4 and 5.
