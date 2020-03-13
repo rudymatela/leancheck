@@ -177,8 +177,32 @@ main = do
 
 -- If I recall correcly, John Hughes mentioned that each test took 3 seconds to
 -- run.  That means LeanCheck would find the first bug after 3 days, and the
--- second bug after 2 months.
+-- second bug after 2 months.  This could be improved if we cheat by removing
+-- some of the uneeded operations in our Program datatype.
 --
--- This could be removed by cheating a bit and removing some of the uneeded
--- operations in our Program datatype.  But even in doing so, LeanCheck cannot
--- find bugs 3, 4 and 5.
+-- 1. Supposing we drop the "All" and "DeleteAllObjects" operation:
+--
+--    * bug 1 is found after    18 580 tests
+--    * bug 3 is found after   300 104 tests
+--    * bug 3 is found after 1 204 421 tests
+--    * bugs 4 and 5 are not found
+--
+-- 2. Supposing we just allow a single database name "A"
+--
+--    * bug 1 is found after    10 651 tests
+--    * bug 3 is found after   144 852 tests
+--    * bug 3 is found after   534 550 tests
+--    * bugs 4 and 5 are not found
+--
+-- Other improvements are possible:
+--
+-- * generating a set of parallel programs instead of a list as the order does
+--   not matter (we would have to change the Program comparison function
+--   accordingly)
+--
+-- * only generating valid programs (we only operate on A after open'ing it)
+--
+-- * generating a set of operations, then from that generate a set of programs
+--   with these operations
+--
+-- But I conjecture bugs 4 and 5 will be simply out of reach anyway.
