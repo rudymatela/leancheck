@@ -37,6 +37,9 @@
 -- paper.  It is able to find 2 of these 5.  We run out of memory before being
 -- able to reach the other 3.
 --
+-- By cheating a bit, we can increase bugs found to 3,
+-- but 2 are then still out of reach.
+--
 --
 -- Dets library online manual: http://erlang.org/doc/man/dets.html
 import Test.LeanCheck
