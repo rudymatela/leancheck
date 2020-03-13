@@ -22,6 +22,8 @@ EGS = \
 	eg/test-list \
 	eg/test-sort
 BENCHS = \
+	bench/dets \
+	bench/pick \
 	bench/memory-usage \
 	bench/tiers-default \
 	bench/tiers-4cases \

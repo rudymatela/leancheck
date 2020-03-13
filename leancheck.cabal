@@ -47,6 +47,7 @@ extra-doc-files: README.md
 extra-source-files: .gitignore
                   , .travis.yml
                   , Makefile
+                  , bench/dets.hs
                   , bench/memory-usage.hs
                   , bench/pick.hs
                   , bench/tiers.hs

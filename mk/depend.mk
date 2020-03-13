@@ -1,3 +1,14 @@
+bench/dets: \
+  bench/dets.hs \
+  mk/toplibs
+bench/dets.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs \
+  bench/dets.hs
 bench/memory-usage: \
   bench/memory-usage.hs \
   mk/toplibs
