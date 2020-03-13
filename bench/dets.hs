@@ -1,4 +1,4 @@
--- dets.hs -- dummy bugs from the Erlang's dets library
+-- dets.hs -- bugs from the Erlang's dets library
 --
 -- Copyright (c) 2017-2020 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
