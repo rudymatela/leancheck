@@ -62,6 +62,8 @@ where
 
 -- TODO: review terminology in this module.  Some names aren't quite right!
 
+-- TODO: rename commutative to isCommutative and etc...
+
 import Test.LeanCheck ((==>))
 
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
