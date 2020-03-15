@@ -124,9 +124,8 @@ distributive o o' = \x y z -> x `o` (y `o'` z) == (x `o` y) `o'` (x `o` z)
 --
 -- > fails n $ (<)  `symmetric2` (>=) -:> int
 -- > fails n $ (<=) `symmetric2` (>)  -:> int
-symmetric2 :: Eq b => (a -> a -> b) -> (a -> a -> b) -> a -> a -> Bool
+symmetric2 :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
 symmetric2 (+-) (-+) = \x y -> x +- y == y -+ x
--- TODO: generalize type of symmetric2!  a -> b -> c, b -> a -> c
 
 -- | Is a given relation transitive?
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
