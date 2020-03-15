@@ -67,7 +67,7 @@ where
 import Test.LeanCheck ((==>))
 
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
-combine op f g = \x -> f x `op` g x
+combine (?) f g  =  \x -> f x ? g x
 
 -- Uneeded, just food for thought:
 -- > combine2 :: (c -> d -> e) -> (a -> b -> c) -> (a -> b -> d) -> (a -> b -> e)
@@ -76,31 +76,31 @@ combine op f g = \x -> f x `op` g x
 -- > combine2 = combine . combine
 
 (===) :: Eq b => (a -> b) -> (a -> b) -> a -> Bool
-(===) = combine (==)
+(===)  =  combine (==)
 infix 4 ===
 
 (====) :: Eq c => (a -> b -> c) -> (a -> b -> c) -> a -> b -> Bool
-(====) = combine (===)
+(====)  =  combine (===)
 infix 4 ====
 
 (&&&) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
-(&&&) = combine (&&)
+(&&&)  =  combine (&&)
 infixr 3 &&&
 
 (&&&&) :: (a -> b -> Bool) -> (a -> b -> Bool) -> a -> b -> Bool
-(&&&&) = combine (&&&)
+(&&&&)  =  combine (&&&)
 infixr 3 &&&&
 
 (&&&&&) :: (a -> b -> c -> Bool) -> (a -> b -> c -> Bool) -> a -> b -> c -> Bool
-(&&&&&) = combine (&&&&)
+(&&&&&)  =  combine (&&&&)
 infixr 3 &&&&&
 
 (|||) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
-(|||) = combine (||)
+(|||)  =  combine (||)
 infixr 2 |||
 
 (||||) :: (a -> b -> Bool) -> (a -> b -> Bool) -> a -> b -> Bool
-(||||) = combine (|||)
+(||||)  =  combine (|||)
 infixr 2 ||||
 
 -- | Is a given operator commutative?  @x + y = y + x@
@@ -109,15 +109,15 @@ infixr 2 ||||
 --
 -- > fails n $ commutative union  -- union [] [0,0] = [0]
 commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
-commutative o = \x y -> x `o` y == y `o` x
+commutative (?)  =  \x y -> x ? y == y ? x
 
 -- | Is a given operator associative?  @x + (y + z) = (x + y) + z@
 associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
-associative o = \x y z -> x `o` (y `o` z) == (x `o` y) `o` z
+associative (?)  =  \x y z -> x ? (y ? z) == (x ? y) ? z
 
 -- | Does the first operator, distributes over the second?
 distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
-distributive o o' = \x y z -> x `o` (y `o'` z) == (x `o` y) `o'` (x `o` z)
+distributive (?) (#)  =  \x y z -> x ? (y # z) == (x ? y) # (x ? z)
 
 -- | Are two operators flipped versions of each other?
 --
@@ -127,19 +127,19 @@ distributive o o' = \x y z -> x `o` (y `o'` z) == (x `o` y) `o'` (x `o` z)
 -- > fails n $ (<)  `symmetric2` (>=) -:> int
 -- > fails n $ (<=) `symmetric2` (>)  -:> int
 symmetric2 :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
-symmetric2 (+-) (-+) = \x y -> x +- y == y -+ x
+symmetric2 (+-) (-+)  =  \x y -> x +- y == y -+ x
 
 -- | Is a given relation transitive?
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
-transitive o = \x y z -> x `o` y && y `o` z ==> x `o` z
+transitive (?)  =  \x y z -> x ? y && y ? z ==> x ? z
 
 -- | An element is always related to itself.
 reflexive :: (a -> a -> Bool) -> a -> Bool
-reflexive o = \x -> x `o` x
+reflexive (?)  =  \x -> x ? x
 
 -- | An element is __never__ related to itself.
 irreflexive :: (a -> a -> Bool) -> a -> Bool
-irreflexive o = \x -> not $ x `o` x
+irreflexive (?)  =  \x -> not $ x ? x
 
 -- | Is a given relation symmetric?
 -- This is a type-restricted version of 'commutative'.
@@ -149,12 +149,12 @@ symmetric = commutative
 -- | Is a given relation antisymmetric?
 -- Not to be confused with "not symmetric" and "assymetric".
 antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
-antisymmetric r = \x y -> x `r` y && y `r` x ==> x == y
+antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 
 -- | Is a given relation asymmetric?
 -- Not to be confused with "not symmetric" and "antissymetric".
 asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
-asymmetric r = \x y -> x `r` y ==> not (y `r` x)
+asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
 
 -- | Is the given binary relation an equivalence?
 --   Is the given relation reflexive, symmetric and transitive?
@@ -171,46 +171,46 @@ asymmetric r = \x y -> x `r` y ==> not (y `r` x)
 -- > *** Failed! Falsifiable (after 3 tests):
 -- > 0 1 0
 equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
-equivalence (==) = \x y z -> reflexive  (==) x
-                          && symmetric  (==) x y
-                          && transitive (==) x y z
+equivalence (==)  =  \x y z -> reflexive  (==) x
+                            && symmetric  (==) x y
+                            && transitive (==) x y z
 
 -- | Is the given binary relation a partial order?
 --   Is the given relation reflexive, antisymmetric and transitive?
 partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-partialOrder (<=) = \x y z -> reflexive     (<=) x
-                           && antisymmetric (<=) x y
-                           && transitive    (<=) x y z
+partialOrder (<=)  =  \x y z -> reflexive     (<=) x
+                             && antisymmetric (<=) x y
+                             && transitive    (<=) x y z
 
 -- | Is the given binary relation a strict partial order?
 --   Is the given relation irreflexive, asymmetric and transitive?
 strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
-strictPartialOrder (<) = \x y z -> irreflexive (<) x
-                                && asymmetric  (<) x y -- implied?
-                                && transitive  (<) x y z
+strictPartialOrder (<)  =  \x y z -> irreflexive (<) x
+                                  && asymmetric  (<) x y -- implied?
+                                  && transitive  (<) x y z
 
 -- | Is the given binary relation a total order?
 totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-totalOrder (<=) = \x y z -> (x <= y || y <= x)
-                         && antisymmetric (<=) x y
-                         && transitive    (<=) x y z
+totalOrder (<=)  =  \x y z -> (x <= y || y <= x)
+                           && antisymmetric (<=) x y
+                           && transitive    (<=) x y z
 
 -- | Is the given binary relation a strict total order?
 strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-strictTotalOrder (<) = \x y z -> (x /= y ==> x < y || y < x)
-                              && irreflexive (<) x
-                              && asymmetric  (<) x y -- implied?
-                              && transitive  (<) x y z
+strictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
+                                && irreflexive (<) x
+                                && asymmetric  (<) x y -- implied?
+                                && transitive  (<) x y z
 
 comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
-comparison compare = \x y z -> equivalence (===) x y z
-                            && irreflexive (<) x
-                            && transitive  (<) x y z
-                            && symmetric2  (<) (>) x y
+comparison compare  =  \x y z -> equivalence (===) x y z
+                              && irreflexive (<) x
+                              && transitive  (<) x y z
+                              && symmetric2  (<) (>) x y
   where
-  x === y = x `compare` y == EQ
-  x  <  y = x `compare` y == LT
-  x  >  y = x `compare` y == GT
+  x === y  =  x `compare` y == EQ
+  x  <  y  =  x `compare` y == LT
+  x  >  y  =  x `compare` y == GT
 
 
 -- | Is the given function idempotent? @f (f x) == x@
@@ -220,7 +220,7 @@ comparison compare = \x y z -> equivalence (===) x y z
 --
 -- > fails n $ idempotent negate
 idempotent :: Eq a => (a -> a) -> a -> Bool
-idempotent f = f . f === f
+idempotent f  =  f . f === f
 
 -- | Is the given function an identity? @f x == x@
 --
@@ -228,7 +228,7 @@ idempotent f = f . f === f
 -- > holds n $ identity (sort :: [()])
 -- > holds n $ identity (not . not)
 identity :: Eq a => (a -> a) -> a -> Bool
-identity f = f === id
+identity f  =  f === id
 
 -- | Is the given function never an identity? @f x /= x@
 --
@@ -238,20 +238,20 @@ identity f = f === id
 --
 -- Note: this is not the same as not being an identity.
 neverIdentity :: Eq a => (a -> a) -> a -> Bool
-neverIdentity = (not .) . identity
+neverIdentity  =  (not .) . identity
 
 okEq :: Eq a => a -> a -> a -> Bool
-okEq = equivalence (==)
+okEq  =  equivalence (==)
 
 okOrd :: Ord a => a -> a -> a -> Bool
-okOrd x y z = totalOrder (<=) x y z
-           && comparison compare x y z
-           && (x <= y) == ((x `compare` y) `elem` [LT,EQ])
+okOrd x y z  =  totalOrder (<=) x y z
+             && comparison compare x y z
+             && (x <= y) == ((x `compare` y) `elem` [LT,EQ])
 
 okEqOrd :: (Eq a, Ord a) => a -> a -> a -> Bool
-okEqOrd x y z = okEq  x y z
-             && okOrd x y z
-             && (x == y) == (x `compare` y == EQ) -- consistent instances
+okEqOrd x y z  =  okEq  x y z
+               && okOrd x y z
+               && (x == y) == (x `compare` y == EQ) -- consistent instances
 
 okNumNonNegative :: (Eq a, Num a) => a -> a -> a -> Bool
 okNumNonNegative x y z  =  commutative (+) x y
@@ -282,12 +282,12 @@ okNum x y z  =  okNumNonNegative x y z
 -- >         'a' =$  isLetter  $= 'b'          -- > True
 -- >         'a' =$  isLetter  $= '1'          -- > False
 (=$) :: Eq b => a -> (a -> b) -> a -> Bool
-(x =$ f) y = f x == f y
+(x =$ f) y  =  f x == f y
 infixl 4 =$
 
 -- | See '=$'
 ($=) :: (a -> Bool) -> a -> Bool
-($=) = ($)
+($=)  =  ($)
 infixl 4 $=
 
 -- | Check if two lists are equal for @n@ values.
@@ -298,10 +298,10 @@ infixl 4 $=
 -- > [1,2,3,4,5] =| 2 |= [1,2,4,8,16] -- > True
 -- > [1,2,3,4,5] =| 3 |= [1,2,4,8,16] -- > False
 (=|) :: Eq a => [a] -> Int -> [a] -> Bool
-xs =| n = xs =$ take n
+xs =| n  =  xs =$ take n
 infixl 4 =|
 
 -- | See '=|'
 (|=) :: (a -> Bool) -> a -> Bool
-(|=) = ($)
+(|=)  =  ($)
 infixl 4 |=
