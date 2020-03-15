@@ -26,6 +26,12 @@ main = do
   conditionStats 1000 [ ("ordered",ordered :: [Int] -> Bool)
                       , ("ordered . reverse", ordered . reverse) ]
 
+  conditionStatsT 6 [ ("odd", odd :: Int -> Bool)
+                    , ("even", even) ]
+
+  conditionStatsT 6 [ ("ordered",ordered :: [Int] -> Bool)
+                    , ("ordered . reverse", ordered . reverse) ]
+
   putStrLn "sum :: [Int] -> Bool"
   classStatsT 6 (sum     :: [Int] -> Int)
 

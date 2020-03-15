@@ -83,9 +83,12 @@ conditionStats n = putStrLn . table " " . map show1
                    , show (100 * c `div` len) ++ "%" ]
   count f = length . filter f
 
--- TODO: implement conditionStatsT
 conditionStatsT :: Listable a => Int -> [(String,a->Bool)] -> IO ()
-conditionStatsT = error "conditionsStatsT: not implemented yet, use conditionStats for now"
+conditionStatsT n = putStrLn . table " " . map show1 . (("total", const True):)
+  where
+  xss = take n tiers
+  show1 (s,f) = (s ++ ":") : map (show . count f) xss
+  count f = length . filter f
 
 classify :: Eq a => [a] -> [[a]]
 classify = classifyBy (==)
