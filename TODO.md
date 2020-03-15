@@ -9,6 +9,8 @@ misc
 
 * parameterize number of tests in test programs and add slow-test target
 
+* sweep "TODO:" across the source code
+
 
 documentation
 -------------
@@ -16,10 +18,3 @@ documentation
 * on tutorial.md, write about how to create test programs;
 
 * on data-invariant.md, write missing section;
-
-
-
-other improvements
-------------------
-
-* implement `conditionStatsT` (see `classStatsT`)
