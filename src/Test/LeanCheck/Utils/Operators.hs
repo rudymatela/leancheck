@@ -10,10 +10,10 @@
 -- Some operators for property-based testing.
 module Test.LeanCheck.Utils.Operators
   (
---  (==>) -- already provided by Test.LeanCheck
 
   -- * Combining properties
-    (===), (====)
+    (==>)
+  , (===), (====)
   , (&&&), (&&&&), (&&&&&)
   , (|||), (||||)
 
