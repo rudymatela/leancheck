@@ -23,6 +23,7 @@ module Test.LeanCheck.Utils.Operators
   , neverIdentity
 
   -- * Properties of operators (binary functions)
+  , isCommutative
   , commutative
   , associative
   , distributive
@@ -151,13 +152,21 @@ infixr 2 |||
 (||||)  =  combine (|||)
 infixr 2 ||||
 
+{-# DEPRECATED commutative "Use isCommutative." #-}
+commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
+commutative  =  isCommutative
+
 -- | Is a given operator commutative?  @x + y = y + x@
 --
--- > holds n $ commutative (+)
+-- >>> check $ isCommutative (+)
+-- +++ OK, passed 200 tests.
 --
--- > fails n $ commutative union  -- union [] [0,0] = [0]
-commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
-commutative (?)  =  \x y -> x ? y == y ? x
+-- >>> import Data.List
+-- >>> check $ isCommutative (union :: [Int]->[Int]->[Int])
+-- *** Failed! Falsifiable (after 4 tests):
+-- [] [0,0]
+isCommutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
+isCommutative (?)  =  \x y -> x ? y == y ? x
 
 -- | Is a given operator associative?  @x + (y + z) = (x + y) + z@
 associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
