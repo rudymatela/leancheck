@@ -75,30 +75,78 @@ combine (?) f g  =  \x -> f x ? g x
 -- > combine2 op f g = \x y -> f x y `op` g x y
 -- > combine2 = combine . combine
 
+-- | Allows building equality properties between functions.
+--
+-- > prop_id_idempotent  =  id === id . id
+--
+-- >>> check $ id === (+0)
+-- +++ OK, passed 200 tests.
+--
+-- >>> check $ id === id . id
+-- +++ OK, passed 1 tests (exhausted).
+--
+-- >>> check $ id === (+1)
+-- *** Failed! Falsifiable (after 1 tests):
+-- 0
 (===) :: Eq b => (a -> b) -> (a -> b) -> a -> Bool
 (===)  =  combine (==)
 infix 4 ===
 
+-- | Allows building equality properties between two-argument functions.
+--
+-- >>> holds 100 $ const ==== asTypeOf
+-- True
+--
+-- >>> holds 100 $ (+) ==== flip (+)
+-- True
+--
+-- >>> holds 100 $ (+) ==== (*)
+-- False
 (====) :: Eq c => (a -> b -> c) -> (a -> b -> c) -> a -> b -> Bool
 (====)  =  combine (===)
 infix 4 ====
 
+-- | And ('&&') operator over one-argument properties.
+--
+-- Allows building conjuntions between one-argument properties:
+--
+-- >>> holds 100 $ id === (+0) &&& id === (id . id)
+-- True
 (&&&) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 (&&&)  =  combine (&&)
 infixr 3 &&&
 
+-- | And ('&&') operator over two-argument properties.
+--
+-- Allows building conjuntions between two-argument properties:
+--
+-- >>> holds 100 $ (+) ==== flip (+) &&&& (+) ==== (*)
+-- False
 (&&&&) :: (a -> b -> Bool) -> (a -> b -> Bool) -> a -> b -> Bool
 (&&&&)  =  combine (&&&)
 infixr 3 &&&&
 
+-- | And operator over three-argument properties.
 (&&&&&) :: (a -> b -> c -> Bool) -> (a -> b -> c -> Bool) -> a -> b -> c -> Bool
 (&&&&&)  =  combine (&&&&)
 infixr 3 &&&&&
 
+-- | Or ('||') operator over one-argument properties.
+--
+-- Allows building disjunctions between one-argument properties:
+--
+-- >>> holds 100 $ id === (+0) ||| id === (id . id)
+-- True
 (|||) :: (a -> Bool) -> (a -> Bool) -> a -> Bool
 (|||)  =  combine (||)
 infixr 2 |||
 
+-- | Or ('||') operator over two-argument properties.
+--
+-- Allows building conjuntions between two-argument properties:
+--
+-- >>> holds 100 $ (+) ==== flip (+) |||| (+) ==== (*)
+-- True
 (||||) :: (a -> b -> Bool) -> (a -> b -> Bool) -> a -> b -> Bool
 (||||)  =  combine (|||)
 infixr 2 ||||
@@ -215,10 +263,15 @@ comparison compare  =  \x y z -> equivalence (===) x y z
 
 -- | Is the given function idempotent? @f (f x) == x@
 --
--- > holds n $ idempotent abs
--- > holds n $ idempotent sort
+-- >>> check $ idempotent abs
+-- +++ OK, passed 200 tests.
 --
--- > fails n $ idempotent negate
+-- >>> check $ idempotent sort
+-- +++ OK, passed 200 tests.
+--
+-- >>> check $ idempotent negate
+-- *** Failed! Falsifiable (after 2 tests):
+-- 1
 idempotent :: Eq a => (a -> a) -> a -> Bool
 idempotent f  =  f . f === f
 
