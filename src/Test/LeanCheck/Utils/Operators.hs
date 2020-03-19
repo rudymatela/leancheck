@@ -230,6 +230,7 @@ distributive  =  isDistributiveOver
 -- > fails n $ (<=) `symmetric2` (>)  -:> int
 symmetric2 :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
 symmetric2 (+-) (-+)  =  \x y -> x +- y == y -+ x
+-- TODO: possible names: isFlipped, isSymmetricTo
 
 -- | Is a given relation transitive?
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
