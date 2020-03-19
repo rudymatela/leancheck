@@ -34,6 +34,7 @@ module Test.LeanCheck.Utils.Operators
   , symmetric2
 
   -- * Properties of relations (binary functions returning truth values)
+  , isTransitive
   , transitive
   , reflexive
   , irreflexive
@@ -233,8 +234,19 @@ symmetric2 (+-) (-+)  =  \x y -> x +- y == y -+ x
 -- TODO: possible names: isFlipped, isSymmetricTo
 
 -- | Is a given relation transitive?
+--
+-- > > check $ isTransitive ((==) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ isTransitive ((/=) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 3 tests):
+-- > 0 1 0
+isTransitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
+isTransitive (?)  =  \x y z -> x ? y && y ? z ==> x ? z
+
+{-# DEPRECATED transitive "Use isTransitive." #-}
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
-transitive (?)  =  \x y z -> x ? y && y ? z ==> x ? z
+transitive  =  isTransitive
 
 -- | An element is always related to itself.
 reflexive :: (a -> a -> Bool) -> a -> Bool

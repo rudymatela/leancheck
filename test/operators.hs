@@ -67,14 +67,14 @@ tests n =
   , fails n $ (<)  `symmetric2` (>=) -:> int
   , fails n $ (<=) `symmetric2` (>)  -:> int
 
-  , holds n $ transitive (==) -:> bool
-  , holds n $ transitive (<)  -:> bool
-  , holds n $ transitive (<=) -:> bool
-  , fails n $ transitive (/=) -:> bool
-  , holds n $ transitive (==) -:> int
-  , holds n $ transitive (<)  -:> int
-  , holds n $ transitive (<=) -:> int
-  , fails n $ transitive (/=) -:> int
+  , holds n $ isTransitive (==) -:> bool
+  , holds n $ isTransitive (<)  -:> bool
+  , holds n $ isTransitive (<=) -:> bool
+  , fails n $ isTransitive (/=) -:> bool
+  , holds n $ isTransitive (==) -:> int
+  , holds n $ isTransitive (<)  -:> int
+  , holds n $ isTransitive (<=) -:> int
+  , fails n $ isTransitive (/=) -:> int
 
   , holds n $ asymmetric    (<)  -:> int
   , holds n $ antisymmetric (<=) -:> int
