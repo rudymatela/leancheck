@@ -235,6 +235,9 @@ symmetric2 (+-) (-+)  =  \x y -> x +- y == y -+ x
 
 -- | Is a given relation transitive?
 --
+-- A relation is transitive when
+-- if a is related to b then b is related to c.
+--
 -- > > check $ isTransitive ((==) :: Int->Int->Bool)
 -- > +++ OK, passed 200 tests.
 --
