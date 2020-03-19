@@ -156,10 +156,6 @@ infixr 2 |||
 (||||)  =  combine (|||)
 infixr 2 ||||
 
-{-# DEPRECATED commutative "Use isCommutative." #-}
-commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
-commutative  =  isCommutative
-
 -- | Is a given operator commutative?  @x + y = y + x@
 --
 -- > > check $ isCommutative (+)
@@ -171,6 +167,10 @@ commutative  =  isCommutative
 -- > [] [0,0]
 isCommutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
 isCommutative (?)  =  \x y -> x ? y == y ? x
+
+{-# DEPRECATED commutative "Use isCommutative." #-}
+commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
+commutative  =  isCommutative
 
 -- | Is a given operator associative?  @x + (y + z) = (x + y) + z@
 --
