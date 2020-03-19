@@ -40,6 +40,7 @@ module Test.LeanCheck.Utils.Operators
   , reflexive
   , isIrreflexive
   , irreflexive
+  , isSymmetric
   , symmetric
   , asymmetric
   , antisymmetric
@@ -292,9 +293,24 @@ irreflexive :: (a -> a -> Bool) -> a -> Bool
 irreflexive  =  isIrreflexive
 
 -- | Is a given relation symmetric?
+--
+-- A relation is commutative when
+-- if a is related to b, then b is related to a.
+--
+-- > > check $ isSymmetric (&&)
+-- > +++ OK, passed 4 tests (exhausted).
+--
+-- > > check $ isSymmetric (==>)
+-- > *** Failed! Falsifiable (after 2 tests):
+-- > False True
+--
 -- This is a type-restricted version of 'commutative'.
+isSymmetric :: (a -> a -> Bool) -> a -> a -> Bool
+isSymmetric  =  commutative
+
+{-# DEPRECATED symmetric "Use isSymmetric." #-}
 symmetric :: (a -> a -> Bool) -> a -> a -> Bool
-symmetric = commutative
+symmetric  =  isSymmetric
 
 -- | Is a given relation antisymmetric?
 -- Not to be confused with "not symmetric" and "assymetric".

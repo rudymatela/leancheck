@@ -55,9 +55,9 @@ tests n =
   , holds n $ (*) `isRightDistributiveOver` (+) -:> int
   , fails n $ (+) `isRightDistributiveOver` (*) -:> int
 
-  , holds n $ symmetric (==) -:> int
-  , holds n $ symmetric (/=) -:> int
-  , fails n $ symmetric (<=) -:> int
+  , holds n $ isSymmetric (==) -:> int
+  , holds n $ isSymmetric (/=) -:> int
+  , fails n $ isSymmetric (<=) -:> int
 
   , holds n $ isReflexive   (==) -:> int
   , holds n $ isIrreflexive (/=) -:> int
