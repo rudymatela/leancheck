@@ -25,6 +25,7 @@ module Test.LeanCheck.Utils.Operators
   -- * Properties of operators (binary functions)
   , isCommutative
   , commutative
+  , isAssociative
   , associative
   , distributive
   , symmetric2
@@ -169,8 +170,19 @@ isCommutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
 isCommutative (?)  =  \x y -> x ? y == y ? x
 
 -- | Is a given operator associative?  @x + (y + z) = (x + y) + z@
+--
+-- > > check $ isAssociative (+)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ isAssociative (-)
+-- > *** Failed! Falsifiable (after 2 tests):
+-- > 0 0 1
+isAssociative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
+isAssociative (?)  =  \x y z -> x ? (y ? z) == (x ? y) ? z
+
+{-# DEPRECATED associative "Use isAssociative." #-}
 associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
-associative (?)  =  \x y z -> x ? (y ? z) == (x ? y) ? z
+associative  =  isAssociative
 
 -- | Does the first operator, distributes over the second?
 distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
