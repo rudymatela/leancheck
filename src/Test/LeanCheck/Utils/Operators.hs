@@ -251,7 +251,10 @@ isTransitive (?)  =  \x y z -> x ? y && y ? z ==> x ? z
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
 transitive  =  isTransitive
 
--- | An element is always related to itself.
+-- | Is a given relation reflexive?
+--
+-- A relation is reflexive when
+-- an element is always related to itself.
 reflexive :: (a -> a -> Bool) -> a -> Bool
 reflexive (?)  =  \x -> x ? x
 
