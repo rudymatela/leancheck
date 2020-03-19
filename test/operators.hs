@@ -48,8 +48,8 @@ tests n =
   , fails n $ isAssociative (-)  -:> int
   , fails n $ isAssociative (==>)
 
-  , holds n $ isDistributive (*) (+) -:> int
-  , fails n $ isDistributive (+) (*) -:> int
+  , holds n $ (*) `isDistributiveOver` (+) -:> int
+  , fails n $ (+) `isDistributiveOver` (*) -:> int
 
   , holds n $ symmetric (==) -:> int
   , holds n $ symmetric (/=) -:> int
