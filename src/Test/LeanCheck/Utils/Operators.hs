@@ -294,7 +294,7 @@ irreflexive  =  isIrreflexive
 
 -- | Is a given relation symmetric?
 --
--- A relation is commutative when
+-- A relation is symmetric when
 -- if a is related to b, then b is related to a.
 --
 -- > > check $ isSymmetric (&&)
