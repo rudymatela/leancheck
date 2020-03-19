@@ -28,6 +28,8 @@ module Test.LeanCheck.Utils.Operators
   , isAssociative
   , associative
   , isDistributiveOver
+  , isLeftDistributiveOver
+  , isRightDistributiveOver
   , distributive
   , symmetric2
 
@@ -185,9 +187,33 @@ isAssociative (?)  =  \x y z -> x ? (y ? z) == (x ? y) ? z
 associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
 associative  =  isAssociative
 
--- | Does the first operator, distributes over the second?
+-- | Does the first operator, left-distributes over the second?
+--
+-- This is an alias to 'isLeftDistributiveOver'.
 isDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
-(?) `isDistributiveOver` (#)  =  \x y z -> x ? (y # z) == (x ? y) # (x ? z)
+isDistributiveOver  =  isLeftDistributiveOver
+
+-- | Does the first operator, left-distributes over the second?
+--   @x * (y + z) = (x * y) + (x * z)@
+--
+-- > > check $ (*) `isLeftDistributiveOver` (+)
+-- > +++ OK, passed 200 tests.
+-- > > check $ (+) `isLeftDistributiveOver` (*)
+-- > *** Failed! Falsifiable (after 8 tests):
+-- > 1 0 1
+isLeftDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
+(?) `isLeftDistributiveOver` (#)  =  \x y z -> x ? (y # z) == (x ? y) # (x ? z)
+
+-- | Does the first operator, right-distributes over the second?
+--   @(y + z) * x = (y * x) + (z * x)@
+--
+-- > > check $ (*) `isRightDistributiveOver` (+)
+-- > +++ OK, passed 200 tests.
+-- > > check $ (+) `isRightDistributiveOver` (*)
+-- > *** Failed! Falsifiable (after 8 tests):
+-- > 1 0 1
+isRightDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
+(?) `isRightDistributiveOver` (#)  =  \x y z -> (y # z) ? x == (y ? x) # (z ? x)
 
 {-# DEPRECATED distributive "Use isDistributiveOver." #-}
 distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool

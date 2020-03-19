@@ -50,6 +50,10 @@ tests n =
 
   , holds n $ (*) `isDistributiveOver` (+) -:> int
   , fails n $ (+) `isDistributiveOver` (*) -:> int
+  , holds n $ (*) `isLeftDistributiveOver` (+) -:> int
+  , fails n $ (+) `isLeftDistributiveOver` (*) -:> int
+  , holds n $ (*) `isRightDistributiveOver` (+) -:> int
+  , fails n $ (+) `isRightDistributiveOver` (*) -:> int
 
   , holds n $ symmetric (==) -:> int
   , holds n $ symmetric (/=) -:> int
