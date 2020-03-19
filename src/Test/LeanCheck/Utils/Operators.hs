@@ -36,6 +36,7 @@ module Test.LeanCheck.Utils.Operators
   -- * Properties of relations (binary functions returning truth values)
   , isTransitive
   , transitive
+  , isReflexive
   , reflexive
   , irreflexive
   , symmetric
@@ -255,8 +256,19 @@ transitive  =  isTransitive
 --
 -- A relation is reflexive when
 -- an element is always related to itself.
+--
+-- > > check $ isReflexive ((==) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ isReflexive ((/=) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0
+isReflexive :: (a -> a -> Bool) -> a -> Bool
+isReflexive (?)  =  \x -> x ? x
+
+{-# DEPRECATED reflexive "Use isReflexive." #-}
 reflexive :: (a -> a -> Bool) -> a -> Bool
-reflexive (?)  =  \x -> x ? x
+reflexive  =  isReflexive
 
 -- | An element is __never__ related to itself.
 irreflexive :: (a -> a -> Bool) -> a -> Bool

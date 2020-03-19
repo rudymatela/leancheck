@@ -59,7 +59,7 @@ tests n =
   , holds n $ symmetric (/=) -:> int
   , fails n $ symmetric (<=) -:> int
 
-  , holds n $   reflexive (==) -:> int
+  , holds n $ isReflexive (==) -:> int
   , holds n $ irreflexive (/=) -:> int
 
   , holds n $ (<)  `symmetric2` (>)  -:> int
