@@ -31,25 +31,25 @@ tests n =
   , holds n $ const False ||| const True  -:> int
   , fails n $ const False ||| const False -:> int
 
-  , holds n $ commutative (+)  -:> int
-  , holds n $ commutative (*)  -:> int
-  , holds n $ commutative (++) -:> [()]
-  , holds n $ commutative (&&)
-  , holds n $ commutative (||)
-  , fails n $ commutative (-)  -:> int
-  , fails n $ commutative (++) -:> [bool]
-  , fails n $ commutative (==>)
+  , holds n $ isCommutative (+)  -:> int
+  , holds n $ isCommutative (*)  -:> int
+  , holds n $ isCommutative (++) -:> [()]
+  , holds n $ isCommutative (&&)
+  , holds n $ isCommutative (||)
+  , fails n $ isCommutative (-)  -:> int
+  , fails n $ isCommutative (++) -:> [bool]
+  , fails n $ isCommutative (==>)
 
-  , holds n $ associative (+)  -:> int
-  , holds n $ associative (*)  -:> int
-  , holds n $ associative (++) -:> [int]
-  , holds n $ associative (&&)
-  , holds n $ associative (||)
-  , fails n $ associative (-)  -:> int
-  , fails n $ associative (==>)
+  , holds n $ isAssociative (+)  -:> int
+  , holds n $ isAssociative (*)  -:> int
+  , holds n $ isAssociative (++) -:> [int]
+  , holds n $ isAssociative (&&)
+  , holds n $ isAssociative (||)
+  , fails n $ isAssociative (-)  -:> int
+  , fails n $ isAssociative (==>)
 
-  , holds n $ distributive (*) (+) -:> int
-  , fails n $ distributive (+) (*) -:> int
+  , holds n $ isDistributive (*) (+) -:> int
+  , fails n $ isDistributive (+) (*) -:> int
 
   , holds n $ symmetric (==) -:> int
   , holds n $ symmetric (/=) -:> int

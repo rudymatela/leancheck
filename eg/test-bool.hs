@@ -9,11 +9,11 @@ import Test.LeanCheck.Utils
 main :: IO ()
 main = do
   putStrLn "not . not === id";  check $ identity (not . not)
-  putStrLn "(&&) commutes";     check $ commutative (&&)
-  putStrLn "(||) commutes";     check $ commutative (||)
+  putStrLn "(&&) commutes";     check $ isCommutative (&&)
+  putStrLn "(||) commutes";     check $ isCommutative (||)
 
   putStrLn "\nAll boolean operators are commutative (wrong)."
-  check $ \(&|) -> commutative ((&|) :: Bool -> Bool -> Bool)
+  check $ \(&|) -> isCommutative ((&|) :: Bool -> Bool -> Bool)
 
   putStrLn "\nAll boolean operators are associative (wrong)."
-  check $ \(&|) -> associative ((&|) :: Bool -> Bool -> Bool)
+  check $ \(&|) -> isAssociative ((&|) :: Bool -> Bool -> Bool)

@@ -27,6 +27,7 @@ module Test.LeanCheck.Utils.Operators
   , commutative
   , isAssociative
   , associative
+  , isDistributive
   , distributive
   , symmetric2
 
@@ -185,8 +186,12 @@ associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
 associative  =  isAssociative
 
 -- | Does the first operator, distributes over the second?
+isDistributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
+isDistributive (?) (#)  =  \x y z -> x ? (y # z) == (x ? y) # (x ? z)
+
+{-# DEPRECATED distributive "Use isDistributive." #-}
 distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
-distributive (?) (#)  =  \x y z -> x ? (y # z) == (x ? y) # (x ? z)
+distributive  =  isDistributive
 
 -- | Are two operators flipped versions of each other?
 --
