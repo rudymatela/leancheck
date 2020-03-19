@@ -198,6 +198,7 @@ isDistributiveOver  =  isLeftDistributiveOver
 --
 -- > > check $ (*) `isLeftDistributiveOver` (+)
 -- > +++ OK, passed 200 tests.
+--
 -- > > check $ (+) `isLeftDistributiveOver` (*)
 -- > *** Failed! Falsifiable (after 8 tests):
 -- > 1 0 1
@@ -209,6 +210,7 @@ isLeftDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a 
 --
 -- > > check $ (*) `isRightDistributiveOver` (+)
 -- > +++ OK, passed 200 tests.
+--
 -- > > check $ (+) `isRightDistributiveOver` (*)
 -- > *** Failed! Falsifiable (after 8 tests):
 -- > 1 0 1
