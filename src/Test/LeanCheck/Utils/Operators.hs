@@ -38,6 +38,7 @@ module Test.LeanCheck.Utils.Operators
   , transitive
   , isReflexive
   , reflexive
+  , isIrreflexive
   , irreflexive
   , symmetric
   , asymmetric
@@ -270,9 +271,25 @@ isReflexive (?)  =  \x -> x ? x
 reflexive :: (a -> a -> Bool) -> a -> Bool
 reflexive  =  isReflexive
 
--- | An element is __never__ related to itself.
+-- | Is a given relation irreflexive?
+--
+-- A given relation is irreflexive or anti-reflexive
+-- when an element is _never_ related to itself.
+--
+-- This is different than "not reflexive".
+--
+-- > > check $ isIrreflexive ((==) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0
+--
+-- > > check $ isIrreflexive ((/=) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+isIrreflexive :: (a -> a -> Bool) -> a -> Bool
+isIrreflexive (?)  =  \x -> not $ x ? x
+
+{-# DEPRECATED irreflexive "Use isIrreflexive." #-}
 irreflexive :: (a -> a -> Bool) -> a -> Bool
-irreflexive (?)  =  \x -> not $ x ? x
+irreflexive  =  isIrreflexive
 
 -- | Is a given relation symmetric?
 -- This is a type-restricted version of 'commutative'.

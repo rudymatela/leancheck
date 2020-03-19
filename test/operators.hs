@@ -59,8 +59,8 @@ tests n =
   , holds n $ symmetric (/=) -:> int
   , fails n $ symmetric (<=) -:> int
 
-  , holds n $ isReflexive (==) -:> int
-  , holds n $ irreflexive (/=) -:> int
+  , holds n $ isReflexive   (==) -:> int
+  , holds n $ isIrreflexive (/=) -:> int
 
   , holds n $ (<)  `symmetric2` (>)  -:> int
   , holds n $ (<=) `symmetric2` (>=) -:> int
