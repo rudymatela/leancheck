@@ -526,6 +526,19 @@ okNumNonNegative x y z  =  commutative (+) x y
                         && idempotent signum x
                         && abs x * signum x == x
 
+-- | Is this 'Num' instance valid?
+--
+-- This is useful for testing your custom 'Num' instances
+-- against required properties.
+--
+-- > > check (okNum :: Int -> Int -> Int -> Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- Double is /mostly/ valid, but not /entirely/ valid:
+--
+-- > > check (okNum :: Double -> Double -> Double -> Bool)
+-- > *** Failed! Falsifiable (after 6 tests):
+-- 0.0 0.0 Infinity
 okNum :: (Eq a, Num a) => a -> a -> a -> Bool
 okNum x y z  =  okNumNonNegative x y z
              && negate (negate x) == x
