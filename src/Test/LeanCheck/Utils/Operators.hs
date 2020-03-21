@@ -514,6 +514,10 @@ okEqOrd x y z  =  okEq  x y z
                && okOrd x y z
                && (x == y) == (x `compare` y == EQ) -- consistent instances
 
+-- | Like 'okNum' but restricted to positives.
+--
+-- > > check (okNumNonNegative :: Natural -> Natural -> Natural -> Bool)
+-- > +++ OK, passed 200 tests.
 okNumNonNegative :: (Eq a, Num a) => a -> a -> a -> Bool
 okNumNonNegative x y z  =  commutative (+) x y
                         && commutative (*) x y
