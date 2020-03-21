@@ -468,6 +468,7 @@ isNeverIdentity  =  (not .) . identity
 
 okEq :: Eq a => a -> a -> a -> Bool
 okEq  =  equivalence (==)
+-- TODO: okEq: test that (/=) /= (==)
 
 okOrd :: Ord a => a -> a -> a -> Bool
 okOrd x y z  =  totalOrder (<=) x y z
