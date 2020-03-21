@@ -484,11 +484,31 @@ okEq :: Eq a => a -> a -> a -> Bool
 okEq x y z  =  equivalence (==) x y z
             && (x /= y) == not (x == y)
 
+-- | Is this 'Ord' instance valid?
+--
+-- This is useful for testing your custom 'Ord' instances
+-- against required properties.
+--
+-- > > check $ (okOrd :: Int -> Int -> Int -> Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ (okOrd :: Bool -> Bool -> Bool -> Bool)
+-- > +++ OK, passed 8 tests (exhausted).
 okOrd :: Ord a => a -> a -> a -> Bool
 okOrd x y z  =  totalOrder (<=) x y z
              && comparison compare x y z
              && (x <= y) == ((x `compare` y) `elem` [LT,EQ])
 
+-- | Is this 'Eq' and 'Ord' instance valid and consistent?
+--
+-- This is useful for testing your custom 'Eq' and 'Ord' instances
+-- against required properties.
+--
+-- > > check $ (okEqOrd :: Int -> Int -> Int -> Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ (okEqOrd :: Bool -> Bool -> Bool -> Bool)
+-- > +++ OK, passed 8 tests (exhausted).
 okEqOrd :: (Eq a, Ord a) => a -> a -> a -> Bool
 okEqOrd x y z  =  okEq  x y z
                && okOrd x y z
