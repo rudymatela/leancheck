@@ -42,6 +42,7 @@ module Test.LeanCheck.Utils.Operators
   , irreflexive
   , isSymmetric
   , symmetric
+  , isAsymmetric
   , asymmetric
   , isAntisymmetric
   , antisymmetric
@@ -333,6 +334,17 @@ antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 -- | Is a given relation asymmetric?
 --
 -- Not to be confused with not 'symmetric' and 'antissymetric'.
+--
+-- > > check $ isAsymmetric ((<=) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0 0
+--
+-- > > check $ isAsymmetric ((<) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+isAsymmetric :: (a -> a -> Bool) -> a -> a -> Bool
+isAsymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
+
+{-# DEPRECATED asymmetric "Use isAsymmetric." #-}
 asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
 

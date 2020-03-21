@@ -76,12 +76,12 @@ tests n =
   , holds n $ isTransitive (<=) -:> int
   , fails n $ isTransitive (/=) -:> int
 
-  , holds n $ asymmetric    (<)  -:> int
+  , holds n $ isAsymmetric    (<)  -:> int
   , holds n $ isAntisymmetric (<=) -:> int
-  , fails n $ asymmetric    (<=) -:> int
-  , holds n $ asymmetric    (>)  -:> int
+  , fails n $ isAsymmetric    (<=) -:> int
+  , holds n $ isAsymmetric    (>)  -:> int
   , holds n $ isAntisymmetric (>=) -:> int
-  , fails n $ asymmetric    (>=) -:> int
+  , fails n $ isAsymmetric    (>=) -:> int
 
   , holds n $ equivalence (==) -:> int
   , holds n $ equivalence ((==) `on` fst) -:> (int,int)
