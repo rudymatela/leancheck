@@ -598,79 +598,99 @@ infixl 4 =|
 infixl 4 |=
 
 
+-- | Deprecated: use 'isCommutative'.
 {-# DEPRECATED commutative "Use isCommutative." #-}
 commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
 commutative  =  isCommutative
 
+-- | Deprecated: use 'isAssociative'.
 {-# DEPRECATED associative "Use isAssociative." #-}
 associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
 associative  =  isAssociative
+
+-- | Deprecated: use 'isDistributiveOver'.
 {-# DEPRECATED distributive "Use isDistributiveOver." #-}
 distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
 distributive  =  isDistributiveOver
 
+-- | Deprecated: use 'isFlipped'.
 {-# DEPRECATED symmetric2 "Use isFlipped." #-}
 symmetric2 :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
 symmetric2  =  isFlipped
 
+-- | Deprecated: use 'isTransitive'.
 {-# DEPRECATED transitive "Use isTransitive." #-}
 transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
 transitive  =  isTransitive
 
+-- | Deprecated: use 'isReflexive'.
 {-# DEPRECATED reflexive "Use isReflexive." #-}
 reflexive :: (a -> a -> Bool) -> a -> Bool
 reflexive  =  isReflexive
 
+-- | Deprecated: use 'isIrreflexive'.
 {-# DEPRECATED irreflexive "Use isIrreflexive." #-}
 irreflexive :: (a -> a -> Bool) -> a -> Bool
 irreflexive  =  isIrreflexive
 
+-- | Deprecated: use 'isSymmetric'.
 {-# DEPRECATED symmetric "Use isSymmetric." #-}
 symmetric :: (a -> a -> Bool) -> a -> a -> Bool
 symmetric  =  isSymmetric
 
+-- | Deprecated: use 'isAntisymmetric'.
 {-# DEPRECATED antisymmetric "Use isAntisymmetric." #-}
 antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
 antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 
+-- | Deprecated: use 'isAsymmetric'.
 {-# DEPRECATED asymmetric "Use isAsymmetric." #-}
 asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
 
+-- | Deprecated: use 'isEquivalence'.
 {-# DEPRECATED equivalence "Use isEquivalence." #-}
 equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
 equivalence  =  isEquivalence
 
+-- | Deprecated: use 'isPartialOrder'.
 {-# DEPRECATED partialOrder "Use isPartialOrder." #-}
 partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 partialOrder  =  isPartialOrder
 
+-- | Deprecated: use 'isStrictPartialOrder'.
 {-# DEPRECATED strictPartialOrder "Use isStrictPartialOrder." #-}
 strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
 strictPartialOrder  =  isStrictPartialOrder
 
+-- | Deprecated: use 'isTotalOrder'.
 {-# DEPRECATED totalOrder "Use isTotalOrder." #-}
 totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 totalOrder (<=)  =  \x y z -> (x <= y || y <= x)
                            && antisymmetric (<=) x y
                            && transitive    (<=) x y z
 
+-- | Deprecated: use 'isStrictTotalOrder'.
 {-# DEPRECATED strictTotalOrder "Use isStrictTotalOrder." #-}
 strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 strictTotalOrder  =  isStrictTotalOrder
 
+-- | Deprecated: use 'isComparison'.
 {-# DEPRECATED comparison "Use isComparison." #-}
 comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
 comparison  =  isComparison
 
+-- | Deprecated: use 'isIdempotent'.
 {-# DEPRECATED idempotent "Use isIdempotent." #-}
 idempotent :: Eq a => (a -> a) -> a -> Bool
 idempotent f  =  f . f === f
 
+-- | Deprecated: use 'isIdentity'.
 {-# DEPRECATED identity "Use isIdentity." #-}
 identity :: Eq a => (a -> a) -> a -> Bool
 identity f  =  f === id
 
+-- | Deprecated: use 'isNeverIdentity'.
 {-# DEPRECATED neverIdentity "Use isNeverIdentity." #-}
 neverIdentity :: Eq a => (a -> a) -> a -> Bool
 neverIdentity  =  isNeverIdentity
