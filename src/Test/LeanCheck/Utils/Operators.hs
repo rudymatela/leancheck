@@ -313,12 +313,14 @@ symmetric :: (a -> a -> Bool) -> a -> a -> Bool
 symmetric  =  isSymmetric
 
 -- | Is a given relation antisymmetric?
--- Not to be confused with "not symmetric" and "assymetric".
+--
+-- Not to be confused with not 'symmetric' or 'assymetric'.
 antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
 antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 
 -- | Is a given relation asymmetric?
--- Not to be confused with "not symmetric" and "antissymetric".
+--
+-- Not to be confused with not 'symmetric' and 'antissymetric'.
 asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
 
