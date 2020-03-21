@@ -271,7 +271,7 @@ isReflexive (?)  =  \x -> x ? x
 -- A given relation is irreflexive or anti-reflexive
 -- when an element is _never_ related to itself.
 --
--- This is different than "not reflexive".
+-- This is /not/ the negation of 'isReflexive'.
 --
 -- > > check $ isIrreflexive ((==) :: Int->Int->Bool)
 -- > *** Failed! Falsifiable (after 1 tests):
@@ -300,7 +300,8 @@ isSymmetric  =  commutative
 
 -- | Is a given relation antisymmetric?
 --
--- Not to be confused with not 'symmetric' or 'assymetric'.
+-- Not to be confused with 'isAsymmetric'.
+-- Not to be confused with the negation of 'isSymmetric'.
 --
 -- > > check $ isAntisymmetric ((<=) :: Int->Int->Bool)
 -- > +++ OK, passed 200 tests.
@@ -313,7 +314,7 @@ isAntisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 
 -- | Is a given relation asymmetric?
 --
--- Not to be confused with not 'symmetric' and 'antissymetric'.
+-- Not to be confused with not 'isSymmetric' and 'isAntisymmetric'.
 --
 -- > > check $ isAsymmetric ((<=) :: Int->Int->Bool)
 -- > *** Failed! Falsifiable (after 1 tests):
