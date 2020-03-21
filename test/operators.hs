@@ -88,13 +88,13 @@ tests n =
   , holds n $ isEquivalence ((==) `on` length) -:> [int]
 
   , holds n $       isTotalOrder (<=) -:> int
-  , holds n $ strictTotalOrder (<)  -:> int
+  , holds n $ isStrictTotalOrder (<)  -:> int
   , fails n $       isTotalOrder (<)  -:> int
-  , fails n $ strictTotalOrder (<=) -:> int
+  , fails n $ isStrictTotalOrder (<=) -:> int
   , holds n $       isTotalOrder (>=) -:> int
-  , holds n $ strictTotalOrder (>)  -:> int
+  , holds n $ isStrictTotalOrder (>)  -:> int
   , fails n $       isTotalOrder (>)  -:> int
-  , fails n $ strictTotalOrder (>=) -:> int
+  , fails n $ isStrictTotalOrder (>=) -:> int
 
   , holds n $ isPartialOrder isPrefixOf -:> [int]
   , fails n $   isTotalOrder isPrefixOf -:> [int]

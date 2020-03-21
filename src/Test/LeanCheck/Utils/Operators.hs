@@ -56,6 +56,7 @@ module Test.LeanCheck.Utils.Operators
   , strictPartialOrder
   , isTotalOrder
   , totalOrder
+  , isStrictTotalOrder
   , strictTotalOrder
   , comparison
 
@@ -440,11 +441,22 @@ totalOrder (<=)  =  \x y z -> (x <= y || y <= x)
                            && transitive    (<=) x y z
 
 -- | Is the given binary relation a strict total order?
+--
+-- > > check $ isStrictTotalOrder ((<=) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0 0 0
+--
+-- > > check $ isStrictTotalOrder ((<) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+isStrictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+isStrictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
+                                  && irreflexive (<) x
+                                  && asymmetric  (<) x y -- implied?
+                                  && transitive  (<) x y z
+
+{-# DEPRECATED strictTotalOrder "Use isStrictTotalOrder." #-}
 strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-strictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
-                                && irreflexive (<) x
-                                && asymmetric  (<) x y -- implied?
-                                && transitive  (<) x y z
+strictTotalOrder  =  isStrictTotalOrder
 
 comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
 comparison compare  =  \x y z -> isEquivalence (===) x y z
