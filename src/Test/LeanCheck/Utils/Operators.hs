@@ -50,6 +50,7 @@ module Test.LeanCheck.Utils.Operators
   -- ** Order relations
   , isEquivalence
   , equivalence
+  , isPartialOrder
   , partialOrder
   , strictPartialOrder
   , totalOrder
@@ -376,11 +377,24 @@ equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
 equivalence  =  isEquivalence
 
 -- | Is the given binary relation a partial order?
---   Is the given relation reflexive, antisymmetric and transitive?
+--
+-- In other words,
+-- is the given relation reflexive, antisymmetric and transitive?
+--
+-- > > check $ isPartialOrder ((<) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0 0 0
+--
+-- > > check $ isPartialOrder ((<=) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+isPartialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+isPartialOrder (<=)  =  \x y z -> reflexive     (<=) x
+                               && antisymmetric (<=) x y
+                               && transitive    (<=) x y z
+
+{-# DEPRECATED partialOrder "Use isPartialOrder." #-}
 partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-partialOrder (<=)  =  \x y z -> reflexive     (<=) x
-                             && antisymmetric (<=) x y
-                             && transitive    (<=) x y z
+partialOrder  =  isPartialOrder
 
 -- | Is the given binary relation a strict partial order?
 --   Is the given relation irreflexive, asymmetric and transitive?

@@ -96,7 +96,7 @@ tests n =
   , fails n $       totalOrder (>)  -:> int
   , fails n $ strictTotalOrder (>=) -:> int
 
-  , holds n $ partialOrder isPrefixOf -:> [int]
+  , holds n $ isPartialOrder isPrefixOf -:> [int]
   , fails n $   totalOrder isPrefixOf -:> [int]
 
   , holds n $ comparison compare -:> int
