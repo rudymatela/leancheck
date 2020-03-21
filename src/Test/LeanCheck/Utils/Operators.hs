@@ -52,6 +52,7 @@ module Test.LeanCheck.Utils.Operators
   , equivalence
   , isPartialOrder
   , partialOrder
+  , isStrictPartialOrder
   , strictPartialOrder
   , totalOrder
   , strictTotalOrder
@@ -400,11 +401,24 @@ partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 partialOrder  =  isPartialOrder
 
 -- | Is the given binary relation a strict partial order?
---   Is the given relation irreflexive, asymmetric and transitive?
+--
+-- In other words,
+-- is the given relation irreflexive, asymmetric and transitive?
+--
+-- > > check $ isStrictPartialOrder ((<) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ isStrictPartialOrder ((<=) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0 0 0
+isStrictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
+isStrictPartialOrder (<)  =  \x y z -> irreflexive (<) x
+                                    && asymmetric  (<) x y -- implied?
+                                    && transitive  (<) x y z
+
+{-# DEPRECATED strictPartialOrder "Use isStrictPartialOrder." #-}
 strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
-strictPartialOrder (<)  =  \x y z -> irreflexive (<) x
-                                  && asymmetric  (<) x y -- implied?
-                                  && transitive  (<) x y z
+strictPartialOrder  =  isStrictPartialOrder
 
 -- | Is the given binary relation a total order?
 totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
