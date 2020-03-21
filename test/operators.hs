@@ -127,20 +127,20 @@ tests n =
   , holds n $ (\x y -> x < y ==> x - y == 0) -:> nat
   , holds n $ (\x y -> x < y ==> x - y == 0) -:> natural
 
-  , holds n $ idempotent id   -:> int
-  , holds n $ idempotent abs  -:> int
-  , holds n $ idempotent sort -:> [bool]
-  , fails n $ idempotent not
+  , holds n $ isIdempotent id   -:> int
+  , holds n $ isIdempotent abs  -:> int
+  , holds n $ isIdempotent sort -:> [bool]
+  , fails n $ isIdempotent not
 
-  , holds n $ identity id   -:> int
-  , holds n $ identity (+0) -:> int
-  , holds n $ identity sort -:> [()]
-  , holds n $ identity (not . not)
-  , fails n $ identity not
+  , holds n $ isIdentity id   -:> int
+  , holds n $ isIdentity (+0) -:> int
+  , holds n $ isIdentity sort -:> [()]
+  , holds n $ isIdentity (not . not)
+  , fails n $ isIdentity not
 
-  , holds n $ neverIdentity not
-  , fails n $ neverIdentity abs    -:> int
-  , fails n $ neverIdentity negate -:> int
+  , holds n $ isNeverIdentity not
+  , fails n $ isNeverIdentity abs    -:> int
+  , fails n $ isNeverIdentity negate -:> int
   ]
 
 --none :: (a -> Bool) -> [a] -> Bool

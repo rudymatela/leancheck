@@ -18,8 +18,11 @@ module Test.LeanCheck.Utils.Operators
   , (|||), (||||)
 
   -- * Properties of unary functions
+  , isIdempotent
   , idempotent
+  , isIdentity
   , identity
+  , isNeverIdentity
   , neverIdentity
 
   -- * Properties of operators (binary functions)
@@ -481,35 +484,55 @@ comparison  =  isComparison
 
 -- | Is the given function idempotent? @f (f x) == x@
 --
--- > > check $ idempotent abs
+-- > > check $ isIdempotent abs
 -- > +++ OK, passed 200 tests.
 --
--- > > check $ idempotent sort
+-- > > check $ isIdempotent sort
 -- > +++ OK, passed 200 tests.
 --
--- > > check $ idempotent negate
+-- > > check $ isIdempotent negate
 -- > *** Failed! Falsifiable (after 2 tests):
 -- > 1
+isIdempotent :: Eq a => (a -> a) -> a -> Bool
+isIdempotent f  =  f . f === f
+
+{-# DEPRECATED idempotent "Use isIdempotent." #-}
 idempotent :: Eq a => (a -> a) -> a -> Bool
 idempotent f  =  f . f === f
 
 -- | Is the given function an identity? @f x == x@
 --
--- > holds n $ identity (+0)
--- > holds n $ identity (sort :: [()])
--- > holds n $ identity (not . not)
+-- > > check $ isIdentity (+0)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ isIdentity (sort :: [()]->[()])
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ isIdentity (not . not)
+-- > +++ OK, passed 2 tests (exhausted).
+isIdentity :: Eq a => (a -> a) -> a -> Bool
+isIdentity f  =  f === id
+
+{-# DEPRECATED identity "Use isIdentity." #-}
 identity :: Eq a => (a -> a) -> a -> Bool
 identity f  =  f === id
 
 -- | Is the given function never an identity? @f x /= x@
 --
--- > holds n $ neverIdentity not
+-- > > check $ neverIdentity not
+-- > +++ OK, passed 2 tests (exhausted).
 --
--- > fails n $ neverIdentity negate   -- yes, fails: negate 0 == 0, hah!
+-- > > check $ neverIdentity negate
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0
 --
--- Note: this is not the same as not being an identity.
+-- Note: this is not the same as not being an 'identity'.
+isNeverIdentity :: Eq a => (a -> a) -> a -> Bool
+isNeverIdentity  =  (not .) . identity
+
+{-# DEPRECATED neverIdentity "Use isNeverIdentity." #-}
 neverIdentity :: Eq a => (a -> a) -> a -> Bool
-neverIdentity  =  (not .) . identity
+neverIdentity  =  isNeverIdentity
 
 okEq :: Eq a => a -> a -> a -> Bool
 okEq  =  equivalence (==)
