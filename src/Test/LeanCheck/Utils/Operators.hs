@@ -80,9 +80,6 @@ module Test.LeanCheck.Utils.Operators
   )
 where
 
--- TODO: Add examples in the haddock documentation of most functions in this
---       module.
-
 import Test.LeanCheck ((==>))
 
 combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
