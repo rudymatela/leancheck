@@ -387,6 +387,9 @@ equivalence  =  isEquivalence
 --
 -- > > check $ isPartialOrder ((<=) :: Int->Int->Bool)
 -- > +++ OK, passed 200 tests.
+--
+-- > > check $ isPartialOrder isSubsetOf
+-- > +++ OK, passed 200 tests.
 isPartialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 isPartialOrder (<=)  =  \x y z -> reflexive     (<=) x
                                && antisymmetric (<=) x y
