@@ -77,10 +77,10 @@ tests n =
   , fails n $ isTransitive (/=) -:> int
 
   , holds n $ asymmetric    (<)  -:> int
-  , holds n $ antisymmetric (<=) -:> int
+  , holds n $ isAntisymmetric (<=) -:> int
   , fails n $ asymmetric    (<=) -:> int
   , holds n $ asymmetric    (>)  -:> int
-  , holds n $ antisymmetric (>=) -:> int
+  , holds n $ isAntisymmetric (>=) -:> int
   , fails n $ asymmetric    (>=) -:> int
 
   , holds n $ equivalence (==) -:> int

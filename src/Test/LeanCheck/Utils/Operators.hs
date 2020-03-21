@@ -43,6 +43,7 @@ module Test.LeanCheck.Utils.Operators
   , isSymmetric
   , symmetric
   , asymmetric
+  , isAntisymmetric
   , antisymmetric
 
   -- ** Order relations
@@ -304,7 +305,7 @@ irreflexive  =  isIrreflexive
 -- > *** Failed! Falsifiable (after 2 tests):
 -- > False True
 --
--- This is a type-restricted version of 'commutative'.
+-- This is a type-restricted version of 'isCommutative'.
 isSymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 isSymmetric  =  commutative
 
@@ -315,6 +316,17 @@ symmetric  =  isSymmetric
 -- | Is a given relation antisymmetric?
 --
 -- Not to be confused with not 'symmetric' or 'assymetric'.
+--
+-- > > check $ isAntisymmetric ((<=) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ isAntisymmetric ((/=) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 2 tests):
+-- > 0 1
+isAntisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
+isAntisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
+
+{-# DEPRECATED antisymmetric "Use isAntisymmetric." #-}
 antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
 antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 
