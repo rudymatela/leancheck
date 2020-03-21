@@ -48,6 +48,7 @@ module Test.LeanCheck.Utils.Operators
   , antisymmetric
 
   -- ** Order relations
+  , isEquivalence
   , equivalence
   , partialOrder
   , strictPartialOrder
@@ -349,23 +350,30 @@ asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
 
 -- | Is the given binary relation an equivalence?
---   Is the given relation reflexive, symmetric and transitive?
 --
--- > > check (equivalence (==) :: Int -> Int -> Int -> Bool)
+-- In other words,
+-- is the given relation reflexive, symmetric and transitive?
+--
+-- > > check (isEquivalence (==) :: Int -> Int -> Int -> Bool)
 -- > +++ OK, passed 200 tests.
--- > > check (equivalence (<=) :: Int -> Int -> Int -> Bool)
+--
+-- > > check (isEquivalence (<=) :: Int -> Int -> Int -> Bool)
 -- > *** Failed! Falsifiable (after 3 tests):
 -- > 0 1 0
 --
 -- Or, using "Test.LeanCheck.Utils.TypeBinding":
 --
--- > > check $ equivalence (<=) -:> int
+-- > > check $ isEquivalence (<=) -:> int
 -- > *** Failed! Falsifiable (after 3 tests):
 -- > 0 1 0
+isEquivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
+isEquivalence (==)  =  \x y z -> reflexive  (==) x
+                              && symmetric  (==) x y
+                              && transitive (==) x y z
+
+{-# DEPRECATED equivalence "Use isEquivalence." #-}
 equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
-equivalence (==)  =  \x y z -> reflexive  (==) x
-                            && symmetric  (==) x y
-                            && transitive (==) x y z
+equivalence  =  isEquivalence
 
 -- | Is the given binary relation a partial order?
 --   Is the given relation reflexive, antisymmetric and transitive?
@@ -395,7 +403,7 @@ strictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
                                 && transitive  (<) x y z
 
 comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
-comparison compare  =  \x y z -> equivalence (===) x y z
+comparison compare  =  \x y z -> isEquivalence (===) x y z
                               && irreflexive (<) x
                               && transitive  (<) x y z
                               && symmetric2  (<) (>) x y

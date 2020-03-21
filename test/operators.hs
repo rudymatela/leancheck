@@ -83,9 +83,9 @@ tests n =
   , holds n $ isAntisymmetric (>=) -:> int
   , fails n $ isAsymmetric    (>=) -:> int
 
-  , holds n $ equivalence (==) -:> int
-  , holds n $ equivalence ((==) `on` fst) -:> (int,int)
-  , holds n $ equivalence ((==) `on` length) -:> [int]
+  , holds n $ isEquivalence (==) -:> int
+  , holds n $ isEquivalence ((==) `on` fst) -:> (int,int)
+  , holds n $ isEquivalence ((==) `on` length) -:> [int]
 
   , holds n $       totalOrder (<=) -:> int
   , holds n $ strictTotalOrder (<)  -:> int
