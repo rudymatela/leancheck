@@ -514,7 +514,7 @@ okEqOrd x y z  =  okEq  x y z
                && okOrd x y z
                && (x == y) == (x `compare` y == EQ) -- consistent instances
 
--- | Like 'okNum' but restricted to positives.
+-- | Like 'okNum' but restricted to zero and positives.
 --
 -- > > check (okNumNonNegative :: Natural -> Natural -> Natural -> Bool)
 -- > +++ OK, passed 200 tests.
