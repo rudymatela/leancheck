@@ -182,10 +182,6 @@ infixr 2 ||||
 isCommutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
 isCommutative (?)  =  \x y -> x ? y == y ? x
 
-{-# DEPRECATED commutative "Use isCommutative." #-}
-commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
-commutative  =  isCommutative
-
 -- | Is a given operator associative?  @x + (y + z) = (x + y) + z@
 --
 -- > > check $ isAssociative (+)
@@ -196,10 +192,6 @@ commutative  =  isCommutative
 -- > 0 0 1
 isAssociative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
 isAssociative (?)  =  \x y z -> x ? (y ? z) == (x ? y) ? z
-
-{-# DEPRECATED associative "Use isAssociative." #-}
-associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
-associative  =  isAssociative
 
 -- | Does the first operator, left-distributes over the second?
 --
@@ -231,10 +223,6 @@ isLeftDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a 
 isRightDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
 (?) `isRightDistributiveOver` (#)  =  \x y z -> (y # z) ? x == (y ? x) # (z ? x)
 
-{-# DEPRECATED distributive "Use isDistributiveOver." #-}
-distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
-distributive  =  isDistributiveOver
-
 -- | Are two operators 'flip'ped versions of each other?
 --
 -- > > check $ ((<) `isFlipped` (>) :: Int -> Int -> Bool)
@@ -253,10 +241,6 @@ distributive  =  isDistributiveOver
 isFlipped :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
 (+-) `isFlipped` (-+)  =  \x y -> x +- y == y -+ x
 
-{-# DEPRECATED symmetric2 "Use isFlipped." #-}
-symmetric2 :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
-symmetric2  =  isFlipped
-
 -- | Is a given relation transitive?
 --
 -- A relation is transitive when
@@ -271,10 +255,6 @@ symmetric2  =  isFlipped
 isTransitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
 isTransitive (?)  =  \x y z -> x ? y && y ? z ==> x ? z
 
-{-# DEPRECATED transitive "Use isTransitive." #-}
-transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
-transitive  =  isTransitive
-
 -- | Is a given relation reflexive?
 --
 -- A relation is reflexive when
@@ -288,10 +268,6 @@ transitive  =  isTransitive
 -- > 0
 isReflexive :: (a -> a -> Bool) -> a -> Bool
 isReflexive (?)  =  \x -> x ? x
-
-{-# DEPRECATED reflexive "Use isReflexive." #-}
-reflexive :: (a -> a -> Bool) -> a -> Bool
-reflexive  =  isReflexive
 
 -- | Is a given relation irreflexive?
 --
@@ -309,10 +285,6 @@ reflexive  =  isReflexive
 isIrreflexive :: (a -> a -> Bool) -> a -> Bool
 isIrreflexive (?)  =  \x -> not $ x ? x
 
-{-# DEPRECATED irreflexive "Use isIrreflexive." #-}
-irreflexive :: (a -> a -> Bool) -> a -> Bool
-irreflexive  =  isIrreflexive
-
 -- | Is a given relation symmetric?
 --
 -- A relation is symmetric when
@@ -329,10 +301,6 @@ irreflexive  =  isIrreflexive
 isSymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 isSymmetric  =  commutative
 
-{-# DEPRECATED symmetric "Use isSymmetric." #-}
-symmetric :: (a -> a -> Bool) -> a -> a -> Bool
-symmetric  =  isSymmetric
-
 -- | Is a given relation antisymmetric?
 --
 -- Not to be confused with not 'symmetric' or 'assymetric'.
@@ -346,10 +314,6 @@ symmetric  =  isSymmetric
 isAntisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
 isAntisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 
-{-# DEPRECATED antisymmetric "Use isAntisymmetric." #-}
-antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
-antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
-
 -- | Is a given relation asymmetric?
 --
 -- Not to be confused with not 'symmetric' and 'antissymetric'.
@@ -362,10 +326,6 @@ antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
 -- > +++ OK, passed 200 tests.
 isAsymmetric :: (a -> a -> Bool) -> a -> a -> Bool
 isAsymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
-
-{-# DEPRECATED asymmetric "Use isAsymmetric." #-}
-asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
-asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
 
 -- | Is the given binary relation an equivalence?
 --
@@ -389,10 +349,6 @@ isEquivalence (==)  =  \x y z -> reflexive  (==) x
                               && symmetric  (==) x y
                               && transitive (==) x y z
 
-{-# DEPRECATED equivalence "Use isEquivalence." #-}
-equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
-equivalence  =  isEquivalence
-
 -- | Is the given binary relation a partial order?
 --
 -- In other words,
@@ -412,10 +368,6 @@ isPartialOrder (<=)  =  \x y z -> reflexive     (<=) x
                                && antisymmetric (<=) x y
                                && transitive    (<=) x y z
 
-{-# DEPRECATED partialOrder "Use isPartialOrder." #-}
-partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-partialOrder  =  isPartialOrder
-
 -- | Is the given binary relation a strict partial order?
 --
 -- In other words,
@@ -432,10 +384,6 @@ isStrictPartialOrder (<)  =  \x y z -> irreflexive (<) x
                                     && asymmetric  (<) x y -- implied?
                                     && transitive  (<) x y z
 
-{-# DEPRECATED strictPartialOrder "Use isStrictPartialOrder." #-}
-strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
-strictPartialOrder  =  isStrictPartialOrder
-
 -- | Is the given binary relation a total order?
 --
 -- > > check $ isTotalOrder ((<) :: Int->Int->Bool)
@@ -447,12 +395,6 @@ isTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 isTotalOrder (<=)  =  \x y z -> (x <= y || y <= x)
                              && antisymmetric (<=) x y
                              && transitive    (<=) x y z
-
-{-# DEPRECATED totalOrder "Use isTotalOrder." #-}
-totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-totalOrder (<=)  =  \x y z -> (x <= y || y <= x)
-                           && antisymmetric (<=) x y
-                           && transitive    (<=) x y z
 
 -- | Is the given binary relation a strict total order?
 --
@@ -467,10 +409,6 @@ isStrictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
                                   && irreflexive (<) x
                                   && asymmetric  (<) x y -- implied?
                                   && transitive  (<) x y z
-
-{-# DEPRECATED strictTotalOrder "Use isStrictTotalOrder." #-}
-strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-strictTotalOrder  =  isStrictTotalOrder
 
 -- | Does the given 'compare' function follow the required properties?
 --
@@ -488,10 +426,6 @@ isComparison compare  =  \x y z -> isEquivalence (===) x y z
   x  <  y  =  x `compare` y == LT
   x  >  y  =  x `compare` y == GT
 
-{-# DEPRECATED comparison "Use isComparison." #-}
-comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
-comparison  =  isComparison
-
 -- | Is the given function idempotent? @f (f x) == x@
 --
 -- > > check $ isIdempotent abs
@@ -506,10 +440,6 @@ comparison  =  isComparison
 isIdempotent :: Eq a => (a -> a) -> a -> Bool
 isIdempotent f  =  f . f === f
 
-{-# DEPRECATED idempotent "Use isIdempotent." #-}
-idempotent :: Eq a => (a -> a) -> a -> Bool
-idempotent f  =  f . f === f
-
 -- | Is the given function an identity? @f x == x@
 --
 -- > > check $ isIdentity (+0)
@@ -523,10 +453,6 @@ idempotent f  =  f . f === f
 isIdentity :: Eq a => (a -> a) -> a -> Bool
 isIdentity f  =  f === id
 
-{-# DEPRECATED identity "Use isIdentity." #-}
-identity :: Eq a => (a -> a) -> a -> Bool
-identity f  =  f === id
-
 -- | Is the given function never an identity? @f x /= x@
 --
 -- > > check $ neverIdentity not
@@ -539,10 +465,6 @@ identity f  =  f === id
 -- Note: this is not the same as not being an 'identity'.
 isNeverIdentity :: Eq a => (a -> a) -> a -> Bool
 isNeverIdentity  =  (not .) . identity
-
-{-# DEPRECATED neverIdentity "Use isNeverIdentity." #-}
-neverIdentity :: Eq a => (a -> a) -> a -> Bool
-neverIdentity  =  isNeverIdentity
 
 okEq :: Eq a => a -> a -> a -> Bool
 okEq  =  equivalence (==)
@@ -622,3 +544,81 @@ infixl 4 =|
 (|=) :: (a -> Bool) -> a -> Bool
 (|=)  =  ($)
 infixl 4 |=
+
+
+{-# DEPRECATED commutative "Use isCommutative." #-}
+commutative :: Eq b => (a -> a -> b) -> a -> a -> Bool
+commutative  =  isCommutative
+
+{-# DEPRECATED associative "Use isAssociative." #-}
+associative :: Eq a => (a -> a -> a) -> a -> a -> a -> Bool
+associative  =  isAssociative
+{-# DEPRECATED distributive "Use isDistributiveOver." #-}
+distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
+distributive  =  isDistributiveOver
+
+{-# DEPRECATED symmetric2 "Use isFlipped." #-}
+symmetric2 :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
+symmetric2  =  isFlipped
+
+{-# DEPRECATED transitive "Use isTransitive." #-}
+transitive :: (a -> a -> Bool) -> a -> a -> a -> Bool
+transitive  =  isTransitive
+
+{-# DEPRECATED reflexive "Use isReflexive." #-}
+reflexive :: (a -> a -> Bool) -> a -> Bool
+reflexive  =  isReflexive
+
+{-# DEPRECATED irreflexive "Use isIrreflexive." #-}
+irreflexive :: (a -> a -> Bool) -> a -> Bool
+irreflexive  =  isIrreflexive
+
+{-# DEPRECATED symmetric "Use isSymmetric." #-}
+symmetric :: (a -> a -> Bool) -> a -> a -> Bool
+symmetric  =  isSymmetric
+
+{-# DEPRECATED antisymmetric "Use isAntisymmetric." #-}
+antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
+antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
+
+{-# DEPRECATED asymmetric "Use isAsymmetric." #-}
+asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
+asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
+
+{-# DEPRECATED equivalence "Use isEquivalence." #-}
+equivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
+equivalence  =  isEquivalence
+
+{-# DEPRECATED partialOrder "Use isPartialOrder." #-}
+partialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+partialOrder  =  isPartialOrder
+
+{-# DEPRECATED strictPartialOrder "Use isStrictPartialOrder." #-}
+strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
+strictPartialOrder  =  isStrictPartialOrder
+
+{-# DEPRECATED totalOrder "Use isTotalOrder." #-}
+totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+totalOrder (<=)  =  \x y z -> (x <= y || y <= x)
+                           && antisymmetric (<=) x y
+                           && transitive    (<=) x y z
+
+{-# DEPRECATED strictTotalOrder "Use isStrictTotalOrder." #-}
+strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+strictTotalOrder  =  isStrictTotalOrder
+
+{-# DEPRECATED comparison "Use isComparison." #-}
+comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
+comparison  =  isComparison
+
+{-# DEPRECATED idempotent "Use isIdempotent." #-}
+idempotent :: Eq a => (a -> a) -> a -> Bool
+idempotent f  =  f . f === f
+
+{-# DEPRECATED identity "Use isIdentity." #-}
+identity :: Eq a => (a -> a) -> a -> Bool
+identity f  =  f === id
+
+{-# DEPRECATED neverIdentity "Use isNeverIdentity." #-}
+neverIdentity :: Eq a => (a -> a) -> a -> Bool
+neverIdentity  =  isNeverIdentity
