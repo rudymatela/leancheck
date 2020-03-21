@@ -19,51 +19,32 @@ module Test.LeanCheck.Utils.Operators
 
   -- * Properties of unary functions
   , isIdempotent
-  , idempotent
   , isIdentity
-  , identity
   , isNeverIdentity
-  , neverIdentity
 
   -- * Properties of operators (binary functions)
   , isCommutative
-  , commutative
   , isAssociative
-  , associative
   , isDistributiveOver
   , isLeftDistributiveOver
   , isRightDistributiveOver
-  , distributive
   , isFlipped
-  , symmetric2
 
   -- * Properties of relations (binary functions returning truth values)
   , isTransitive
-  , transitive
   , isReflexive
-  , reflexive
   , isIrreflexive
-  , irreflexive
   , isSymmetric
-  , symmetric
   , isAsymmetric
-  , asymmetric
   , isAntisymmetric
-  , antisymmetric
 
   -- ** Order relations
   , isEquivalence
-  , equivalence
   , isPartialOrder
-  , partialOrder
   , isStrictPartialOrder
-  , strictPartialOrder
   , isTotalOrder
-  , totalOrder
   , isStrictTotalOrder
-  , strictTotalOrder
   , isComparison
-  , comparison
 
   -- * Ternary comparison operators
   , (=$), ($=)
@@ -75,6 +56,27 @@ module Test.LeanCheck.Utils.Operators
   , okEqOrd
   , okNum
   , okNumNonNegative
+
+  -- * deprecated functions
+  , idempotent
+  , identity
+  , neverIdentity
+  , commutative
+  , associative
+  , distributive
+  , symmetric2
+  , transitive
+  , reflexive
+  , irreflexive
+  , symmetric
+  , asymmetric
+  , antisymmetric
+  , equivalence
+  , partialOrder
+  , strictPartialOrder
+  , totalOrder
+  , strictTotalOrder
+  , comparison
   )
 where
 
