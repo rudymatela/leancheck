@@ -574,15 +574,28 @@ okNum x y z  =  okNumNonNegative x y z
 
 -- | Equal under, a ternary operator with the same fixity as '=='.
 --
--- > x =$ f $= y  =  f x = f y
+-- > x =$ f $= y  =  f x == f y
 --
--- > [1,2,3,4,5] =$  take 2    $= [1,2,4,8,16] -- > True
--- > [1,2,3,4,5] =$  take 3    $= [1,2,4,8,16] -- > False
--- >     [1,2,3] =$    sort    $= [3,2,1]      -- > True
--- >          42 =$ (`mod` 10) $= 16842        -- > True
--- >          42 =$ (`mod`  9) $= 16842        -- > False
--- >         'a' =$  isLetter  $= 'b'          -- > True
--- >         'a' =$  isLetter  $= '1'          -- > False
+-- > > [1,2,3,4,5] =$ take 2 $= [1,2,4,8,16]
+-- > True
+--
+-- > > [1,2,3,4,5] =$ take 3 $= [1,2,4,8,16]
+-- > False
+--
+-- > > [1,2,3] =$ sort $= [3,2,1]
+-- > True
+--
+-- > > 42 =$ (`mod` 10) $= 16842
+-- > True
+--
+-- > > 42 =$ (`mod`  9) $= 16842
+-- > False
+--
+-- > > 'a' =$ isLetter $= 'b'
+-- > True
+--
+-- > > 'a' =$ isLetter $= '1'
+-- > False
 (=$) :: Eq b => a -> (a -> b) -> a -> Bool
 (x =$ f) y  =  f x == f y
 infixl 4 =$
