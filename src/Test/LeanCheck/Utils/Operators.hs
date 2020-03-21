@@ -462,7 +462,7 @@ isIdentity f  =  f === id
 --
 -- Note: this is not the same as not being an 'identity'.
 isNeverIdentity :: Eq a => (a -> a) -> a -> Bool
-isNeverIdentity  =  (not .) . identity
+isNeverIdentity  =  (not .) . isIdentity
 
 -- | Is this 'Eq' instance valid?
 --
@@ -479,7 +479,7 @@ isNeverIdentity  =  (not .) . identity
 -- > > check $ (okEq :: Bool -> Bool -> Bool -> Bool)
 -- > +++ OK, passed 8 tests (exhausted).
 okEq :: Eq a => a -> a -> a -> Bool
-okEq x y z  =  equivalence (==) x y z
+okEq x y z  =  isEquivalence (==) x y z
             && (x /= y) == not (x == y)
 
 -- | Is this 'Ord' instance valid?
@@ -493,8 +493,8 @@ okEq x y z  =  equivalence (==) x y z
 -- > > check $ (okOrd :: Bool -> Bool -> Bool -> Bool)
 -- > +++ OK, passed 8 tests (exhausted).
 okOrd :: Ord a => a -> a -> a -> Bool
-okOrd x y z  =  totalOrder (<=) x y z
-             && comparison compare x y z
+okOrd x y z  =  isTotalOrder (<=) x y z
+             && isComparison compare x y z
              && (x <= y) == ((x `compare` y) `elem` [LT,EQ])
 
 -- | Is this 'Eq' and 'Ord' instance valid and consistent?
@@ -517,15 +517,15 @@ okEqOrd x y z  =  okEq  x y z
 -- > > check (okNumNonNegative :: Natural -> Natural -> Natural -> Bool)
 -- > +++ OK, passed 200 tests.
 okNumNonNegative :: (Eq a, Num a) => a -> a -> a -> Bool
-okNumNonNegative x y z  =  commutative (+) x y
-                        && commutative (*) x y
-                        && associative (+) x y z
-                        && associative (*) x y z
-                        && distributive (*) (+) x y z
-                        && idempotent (+0) x
-                        && idempotent (*1) x
-                        && idempotent abs x
-                        && idempotent signum x
+okNumNonNegative x y z  =  isCommutative (+) x y
+                        && isCommutative (*) x y
+                        && isAssociative (+) x y z
+                        && isAssociative (*) x y z
+                        && ((*) `isDistributiveOver` (+)) x y z
+                        && isIdempotent (+0) x
+                        && isIdempotent (*1) x
+                        && isIdempotent abs x
+                        && isIdempotent signum x
                         && abs x * signum x == x
 
 -- | Is this 'Num' instance valid?
