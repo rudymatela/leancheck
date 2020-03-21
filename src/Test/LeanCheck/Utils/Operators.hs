@@ -34,6 +34,7 @@ module Test.LeanCheck.Utils.Operators
   , isLeftDistributiveOver
   , isRightDistributiveOver
   , distributive
+  , isFlipped
   , symmetric2
 
   -- * Properties of relations (binary functions returning truth values)
@@ -236,16 +237,27 @@ isRightDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a
 distributive :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
 distributive  =  isDistributiveOver
 
--- | Are two operators flipped versions of each other?
+-- | Are two operators 'flip'ped versions of each other?
 --
--- > holds n $ (<)  `symmetric2` (>)  -:> int
--- > holds n $ (<=) `symmetric2` (>=) -:> int
+-- > > check $ ((<) `isFlipped` (>) :: Int -> Int -> Bool)
+-- > +++ OK, passed 200 tests.
 --
--- > fails n $ (<)  `symmetric2` (>=) -:> int
--- > fails n $ (<=) `symmetric2` (>)  -:> int
+-- > > check $ ((<=) `isFlipped` (>=) :: Int -> Int -> Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ ((<) `isFlipped` (>=) :: Int -> Int -> Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0 0
+--
+-- > > check $ ((<=) `isFlipped` (>) :: Int -> Int -> Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0 0
+isFlipped :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
+(+-) `isFlipped` (-+)  =  \x y -> x +- y == y -+ x
+
+{-# DEPRECATED symmetric2 "Use isFlipped." #-}
 symmetric2 :: Eq c => (a -> b -> c) -> (b -> a -> c) -> a -> b -> Bool
-symmetric2 (+-) (-+)  =  \x y -> x +- y == y -+ x
--- TODO: possible names: isFlipped, isSymmetricTo
+symmetric2  =  isFlipped
 
 -- | Is a given relation transitive?
 --
@@ -472,7 +484,7 @@ isComparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
 isComparison compare  =  \x y z -> isEquivalence (===) x y z
                                 && irreflexive (<) x
                                 && transitive  (<) x y z
-                                && symmetric2  (<) (>) x y
+                                && ((<) `isFlipped` (>)) x y
   where
   x === y  =  x `compare` y == EQ
   x  <  y  =  x `compare` y == LT

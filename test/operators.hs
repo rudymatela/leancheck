@@ -62,10 +62,10 @@ tests n =
   , holds n $ isReflexive   (==) -:> int
   , holds n $ isIrreflexive (/=) -:> int
 
-  , holds n $ (<)  `symmetric2` (>)  -:> int
-  , holds n $ (<=) `symmetric2` (>=) -:> int
-  , fails n $ (<)  `symmetric2` (>=) -:> int
-  , fails n $ (<=) `symmetric2` (>)  -:> int
+  , holds n $ (<)  `isFlipped` (>)  -:> int
+  , holds n $ (<=) `isFlipped` (>=) -:> int
+  , fails n $ (<)  `isFlipped` (>=) -:> int
+  , fails n $ (<=) `isFlipped` (>)  -:> int
 
   , holds n $ isTransitive (==) -:> bool
   , holds n $ isTransitive (<)  -:> bool
