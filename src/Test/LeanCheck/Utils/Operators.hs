@@ -296,7 +296,7 @@ isIrreflexive (?)  =  \x -> not $ x ? x
 --
 -- This is a type-restricted version of 'isCommutative'.
 isSymmetric :: (a -> a -> Bool) -> a -> a -> Bool
-isSymmetric  =  commutative
+isSymmetric  =  isCommutative
 
 -- | Is a given relation antisymmetric?
 --
