@@ -87,17 +87,17 @@ tests n =
   , holds n $ isEquivalence ((==) `on` fst) -:> (int,int)
   , holds n $ isEquivalence ((==) `on` length) -:> [int]
 
-  , holds n $       totalOrder (<=) -:> int
+  , holds n $       isTotalOrder (<=) -:> int
   , holds n $ strictTotalOrder (<)  -:> int
-  , fails n $       totalOrder (<)  -:> int
+  , fails n $       isTotalOrder (<)  -:> int
   , fails n $ strictTotalOrder (<=) -:> int
-  , holds n $       totalOrder (>=) -:> int
+  , holds n $       isTotalOrder (>=) -:> int
   , holds n $ strictTotalOrder (>)  -:> int
-  , fails n $       totalOrder (>)  -:> int
+  , fails n $       isTotalOrder (>)  -:> int
   , fails n $ strictTotalOrder (>=) -:> int
 
   , holds n $ isPartialOrder isPrefixOf -:> [int]
-  , fails n $   totalOrder isPrefixOf -:> [int]
+  , fails n $   isTotalOrder isPrefixOf -:> [int]
 
   , holds n $ comparison compare -:> int
   , holds n $ comparison compare -:> bool

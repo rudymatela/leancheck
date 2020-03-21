@@ -54,6 +54,7 @@ module Test.LeanCheck.Utils.Operators
   , partialOrder
   , isStrictPartialOrder
   , strictPartialOrder
+  , isTotalOrder
   , totalOrder
   , strictTotalOrder
   , comparison
@@ -421,6 +422,18 @@ strictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
 strictPartialOrder  =  isStrictPartialOrder
 
 -- | Is the given binary relation a total order?
+--
+-- > > check $ isTotalOrder ((<) :: Int->Int->Bool)
+-- > *** Failed! Falsifiable (after 1 tests):
+-- > 0 0 0
+-- > > check $ isTotalOrder ((<=) :: Int->Int->Bool)
+-- > +++ OK, passed 200 tests.
+isTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
+isTotalOrder (<=)  =  \x y z -> (x <= y || y <= x)
+                             && antisymmetric (<=) x y
+                             && transitive    (<=) x y z
+
+{-# DEPRECATED totalOrder "Use isTotalOrder." #-}
 totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 totalOrder (<=)  =  \x y z -> (x <= y || y <= x)
                            && antisymmetric (<=) x y
