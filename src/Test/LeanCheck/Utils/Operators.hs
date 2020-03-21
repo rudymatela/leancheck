@@ -38,7 +38,7 @@ module Test.LeanCheck.Utils.Operators
   , isAsymmetric
   , isAntisymmetric
 
-  -- ** Order relations
+  -- * Properties of order relations
   , isEquivalence
   , isPartialOrder
   , isStrictPartialOrder
@@ -57,7 +57,7 @@ module Test.LeanCheck.Utils.Operators
   , okNum
   , okNumNonNegative
 
-  -- * deprecated functions
+  -- * Deprecated functions
   , idempotent
   , identity
   , neverIdentity
