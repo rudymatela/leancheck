@@ -343,9 +343,9 @@ isAsymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
 -- > *** Failed! Falsifiable (after 3 tests):
 -- > 0 1 0
 isEquivalence :: (a -> a -> Bool) -> a -> a -> a -> Bool
-isEquivalence (==)  =  \x y z -> reflexive  (==) x
-                              && symmetric  (==) x y
-                              && transitive (==) x y z
+isEquivalence (==)  =  \x y z -> isReflexive  (==) x
+                              && isSymmetric  (==) x y
+                              && isTransitive (==) x y z
 
 -- | Is the given binary relation a partial order?
 --
@@ -362,9 +362,9 @@ isEquivalence (==)  =  \x y z -> reflexive  (==) x
 -- > > check $ isPartialOrder isSubsetOf
 -- > +++ OK, passed 200 tests.
 isPartialOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-isPartialOrder (<=)  =  \x y z -> reflexive     (<=) x
-                               && antisymmetric (<=) x y
-                               && transitive    (<=) x y z
+isPartialOrder (<=)  =  \x y z -> isReflexive     (<=) x
+                               && isAntisymmetric (<=) x y
+                               && isTransitive    (<=) x y z
 
 -- | Is the given binary relation a strict partial order?
 --
@@ -378,9 +378,9 @@ isPartialOrder (<=)  =  \x y z -> reflexive     (<=) x
 -- > *** Failed! Falsifiable (after 1 tests):
 -- > 0 0 0
 isStrictPartialOrder :: (a -> a -> Bool) -> a -> a -> a -> Bool
-isStrictPartialOrder (<)  =  \x y z -> irreflexive (<) x
-                                    && asymmetric  (<) x y -- implied?
-                                    && transitive  (<) x y z
+isStrictPartialOrder (<)  =  \x y z -> isIrreflexive (<) x
+                                    && isAsymmetric  (<) x y -- implied?
+                                    && isTransitive  (<) x y z
 
 -- | Is the given binary relation a total order?
 --
@@ -391,8 +391,8 @@ isStrictPartialOrder (<)  =  \x y z -> irreflexive (<) x
 -- > +++ OK, passed 200 tests.
 isTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 isTotalOrder (<=)  =  \x y z -> (x <= y || y <= x)
-                             && antisymmetric (<=) x y
-                             && transitive    (<=) x y z
+                             && isAntisymmetric (<=) x y
+                             && isTransitive    (<=) x y z
 
 -- | Is the given binary relation a strict total order?
 --
@@ -404,9 +404,9 @@ isTotalOrder (<=)  =  \x y z -> (x <= y || y <= x)
 -- > +++ OK, passed 200 tests.
 isStrictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 isStrictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
-                                  && irreflexive (<) x
-                                  && asymmetric  (<) x y -- implied?
-                                  && transitive  (<) x y z
+                                  && isIrreflexive (<) x
+                                  && isAsymmetric  (<) x y -- implied?
+                                  && isTransitive  (<) x y z
 
 -- | Does the given 'compare' function follow the required properties?
 --
@@ -416,8 +416,8 @@ isStrictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
 -- > +++ OK, passed 200 tests.
 isComparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
 isComparison compare  =  \x y z -> isEquivalence (===) x y z
-                                && irreflexive (<) x
-                                && transitive  (<) x y z
+                                && isIrreflexive (<) x
+                                && isTransitive  (<) x y z
                                 && ((<) `isFlipped` (>)) x y
   where
   x === y  =  x `compare` y == EQ
