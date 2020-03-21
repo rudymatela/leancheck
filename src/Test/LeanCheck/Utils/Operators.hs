@@ -639,12 +639,12 @@ symmetric  =  isSymmetric
 -- | Deprecated: use 'isAntisymmetric'.
 {-# DEPRECATED antisymmetric "Use isAntisymmetric." #-}
 antisymmetric :: Eq a => (a -> a -> Bool) -> a -> a -> Bool
-antisymmetric (?)  =  \x y -> x ? y && y ? x ==> x == y
+antisymmetric  =  isAntisymmetric
 
 -- | Deprecated: use 'isAsymmetric'.
 {-# DEPRECATED asymmetric "Use isAsymmetric." #-}
 asymmetric :: (a -> a -> Bool) -> a -> a -> Bool
-asymmetric (?)  =  \x y -> x ? y ==> not (y ? x)
+asymmetric  =  isAsymmetric
 
 -- | Deprecated: use 'isEquivalence'.
 {-# DEPRECATED equivalence "Use isEquivalence." #-}
@@ -664,9 +664,7 @@ strictPartialOrder  =  isStrictPartialOrder
 -- | Deprecated: use 'isTotalOrder'.
 {-# DEPRECATED totalOrder "Use isTotalOrder." #-}
 totalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
-totalOrder (<=)  =  \x y z -> (x <= y || y <= x)
-                           && antisymmetric (<=) x y
-                           && transitive    (<=) x y z
+totalOrder  =  isTotalOrder
 
 -- | Deprecated: use 'isStrictTotalOrder'.
 {-# DEPRECATED strictTotalOrder "Use isStrictTotalOrder." #-}
@@ -681,12 +679,12 @@ comparison  =  isComparison
 -- | Deprecated: use 'isIdempotent'.
 {-# DEPRECATED idempotent "Use isIdempotent." #-}
 idempotent :: Eq a => (a -> a) -> a -> Bool
-idempotent f  =  f . f === f
+idempotent  =  isIdempotent
 
 -- | Deprecated: use 'isIdentity'.
 {-# DEPRECATED identity "Use isIdentity." #-}
 identity :: Eq a => (a -> a) -> a -> Bool
-identity f  =  f === id
+identity  =  isIdentity
 
 -- | Deprecated: use 'isNeverIdentity'.
 {-# DEPRECATED neverIdentity "Use isNeverIdentity." #-}
