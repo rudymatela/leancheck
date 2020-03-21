@@ -466,6 +466,20 @@ isIdentity f  =  f === id
 isNeverIdentity :: Eq a => (a -> a) -> a -> Bool
 isNeverIdentity  =  (not .) . identity
 
+-- | Is this 'Eq' instance valid?
+--
+-- This is useful for testing your custom 'Eq' instances
+-- against required properties.
+--
+-- In particular,
+-- this function tests that '==' is an equivalence
+-- and that '/=' is the negation of '=='.
+--
+-- > > check $ (okEq :: Int -> Int -> Int -> Bool)
+-- > +++ OK, passed 200 tests.
+--
+-- > > check $ (okEq :: Bool -> Bool -> Bool -> Bool)
+-- > +++ OK, passed 8 tests (exhausted).
 okEq :: Eq a => a -> a -> a -> Bool
 okEq  =  equivalence (==)
 -- TODO: okEq: test that (/=) /= (==)
