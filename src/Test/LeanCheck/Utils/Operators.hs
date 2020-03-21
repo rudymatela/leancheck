@@ -58,6 +58,7 @@ module Test.LeanCheck.Utils.Operators
   , totalOrder
   , isStrictTotalOrder
   , strictTotalOrder
+  , isComparison
   , comparison
 
   -- * Ternary comparison operators
@@ -458,16 +459,25 @@ isStrictTotalOrder (<)  =  \x y z -> (x /= y ==> x < y || y < x)
 strictTotalOrder :: Eq a => (a -> a -> Bool) -> a -> a -> a -> Bool
 strictTotalOrder  =  isStrictTotalOrder
 
-comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
-comparison compare  =  \x y z -> isEquivalence (===) x y z
-                              && irreflexive (<) x
-                              && transitive  (<) x y z
-                              && symmetric2  (<) (>) x y
+-- | Does the given 'compare' function follow the required properties?
+--
+-- This is useful for testing custom 'Ord' instances.
+--
+-- > > check $ isComparison (compare :: Int->Int->Ordering)
+-- > +++ OK, passed 200 tests.
+isComparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
+isComparison compare  =  \x y z -> isEquivalence (===) x y z
+                                && irreflexive (<) x
+                                && transitive  (<) x y z
+                                && symmetric2  (<) (>) x y
   where
   x === y  =  x `compare` y == EQ
   x  <  y  =  x `compare` y == LT
   x  >  y  =  x `compare` y == GT
 
+{-# DEPRECATED comparison "Use isComparison." #-}
+comparison :: (a -> a -> Ordering) -> a -> a -> a -> Bool
+comparison  =  isComparison
 
 -- | Is the given function idempotent? @f (f x) == x@
 --

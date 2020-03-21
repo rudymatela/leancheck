@@ -99,9 +99,9 @@ tests n =
   , holds n $ isPartialOrder isPrefixOf -:> [int]
   , fails n $   isTotalOrder isPrefixOf -:> [int]
 
-  , holds n $ comparison compare -:> int
-  , holds n $ comparison compare -:> bool
-  , holds n $ comparison compare -:> ()
+  , holds n $ isComparison compare -:> int
+  , holds n $ isComparison compare -:> bool
+  , holds n $ isComparison compare -:> ()
 
   , holds n $ okEqOrd -:> ()
   , holds n $ okEqOrd -:> int
