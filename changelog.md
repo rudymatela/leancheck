@@ -1,8 +1,8 @@
 Changelog for LeanCheck
 =======================
 
-upcoming
---------
+v0.9.2
+------
 
 * rename most functions on `Test.LeanCheck.Utils.Operators`;
   deprecated names are provided;
