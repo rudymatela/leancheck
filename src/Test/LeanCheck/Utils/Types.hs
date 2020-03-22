@@ -80,12 +80,13 @@ module Test.LeanCheck.Utils.Types
   , Letters (..)
   )
 where
--- TODO: Add Ix and Bits instances
+-- TODO: Add Bits instances
 
 import Test.LeanCheck (Listable(..), listIntegral)
 import Test.LeanCheck.Core ((+|),cons1)
 import Test.LeanCheck.Tiers (noDupListCons, setCons, bagCons, mapCons)
 import Data.Ratio ((%))
+import Data.Ix
 
 narrowU :: Int -> Int -> Int
 narrowU w i = i `mod` 2^w
@@ -489,6 +490,34 @@ instance Enum Natural where
   fromEnum = fromInteger . unNatural;
   enumFrom     (Natural x)             = map Natural [x..]
   enumFromThen (Natural x) (Natural s) = map Natural [x,s..]
+
+range' :: Enum a => (a,a) -> [a]
+range' (m,n)  =  [m..n]
+
+index' :: Integral a => (a,a) -> a -> Int
+index' b@(m,_) i  | inRange' b i  =  fromIntegral (i - m)
+                  | otherwise     =  error "Index out of range."
+
+inRange' :: Ord a => (a,a) -> a -> Bool
+inRange' (m,n) i  =  m <= i && i <= m
+
+instance Ix Int1 where range = range'; index = index'; inRange = inRange'
+instance Ix Int2 where range = range'; index = index'; inRange = inRange'
+instance Ix Int3 where range = range'; index = index'; inRange = inRange'
+instance Ix Int4 where range = range'; index = index'; inRange = inRange'
+instance Ix Word1 where range = range'; index = index'; inRange = inRange'
+instance Ix Word2 where range = range'; index = index'; inRange = inRange'
+instance Ix Word3 where range = range'; index = index'; inRange = inRange'
+instance Ix Word4 where range = range'; index = index'; inRange = inRange'
+instance Ix Nat where range = range'; index = index'; inRange = inRange'
+instance Ix Nat1 where range = range'; index = index'; inRange = inRange'
+instance Ix Nat2 where range = range'; index = index'; inRange = inRange'
+instance Ix Nat3 where range = range'; index = index'; inRange = inRange'
+instance Ix Nat4 where range = range'; index = index'; inRange = inRange'
+instance Ix Nat5 where range = range'; index = index'; inRange = inRange'
+instance Ix Nat6 where range = range'; index = index'; inRange = inRange'
+instance Ix Nat7 where range = range'; index = index'; inRange = inRange'
+instance Ix Natural where range = range'; index = index'; inRange = inRange'
 
 instance Listable Int1 where list = [0,minBound]
 instance Listable Int2 where list = listIntegral
