@@ -588,13 +588,13 @@ instance (Integral a, Bounded a) => Listable (X a) where list = map X listXInteg
 -- FIXME: make this work for Int2 / Word2 types
 --        by checking then using normal enumeration
 listXIntegral :: (Bounded a, Integral a) => [a]
-listXIntegral = l undefined
+listXIntegral = l
   where
-  l :: (Ord a, Num a, Bounded a, Integral a) => a -> [a]
-  l a | min < 0   = listXIntegralN
-      | otherwise = listXIntegralP
-    where
-    min = minBound `asTypeOf` a
+  a = head l
+  l | count a <= 4 = listIntegral
+    | min < 0      = listXIntegralN
+    | otherwise    = listXIntegralP
+  min = minBound `asTypeOf` a
 -- The type-hackery above is needed so that we don't need to activate
 -- ScopedTypeVariables
 
@@ -607,6 +607,14 @@ listXIntegralP :: (Bounded a, Integral a) => [a]
 listXIntegralP = 0 : [1..midBound] ++| [maxBound,(maxBound-1)..(midBound+1)]
   where
   midBound = maxBound `div` 3 * 2
+
+-- how many of this type exist?
+-- assumes 0 `elem` [minBound..maxBound]
+count :: (Bounded a, Integral a) => a -> Integer
+count a  =  1 + max + abs min
+  where
+  min = fromIntegral $ minBound `asTypeOf` a
+  max = fromIntegral $ maxBound `asTypeOf` a
 
 extremes :: (Integral a) => a -> a -> [a]
 extremes x y

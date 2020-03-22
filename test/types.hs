@@ -47,9 +47,8 @@ tests =
   , map unX list `permutation` [minBound..maxBound :: Int8]
   , map unX list `permutation` [minBound..maxBound :: Int4]
   , map unX list `permutation` [minBound..maxBound :: Int3]
--- TODO: make the following commented tests pass:
---, map unX list `permutation` [minBound..maxBound :: Int2]
---, map unX list `permutation` [minBound..maxBound :: Int1]
+  , map unX list `permutation` [minBound..maxBound :: Int2]
+  , map unX list `permutation` [minBound..maxBound :: Int1]
   , map unX list `permutation` [minBound..maxBound :: Word8]
   , map unX list `permutation` [minBound..maxBound :: Word4]
   , map unX list `permutation` [minBound..maxBound :: Word3]
@@ -59,10 +58,9 @@ tests =
   , map unX list `permutation` [minBound..maxBound :: Nat6]
   , map unX list `permutation` [minBound..maxBound :: Nat5]
   , map unX list `permutation` [minBound..maxBound :: Nat4]
--- TODO: make the following commented tests pass:
---, map unX list `permutation` [minBound..maxBound :: Nat3]
---, map unX list `permutation` [minBound..maxBound :: Nat2]
---, map unX list `permutation` [minBound..maxBound :: Nat1]
+  , map unX list `permutation` [minBound..maxBound :: Nat3]
+  , map unX list `permutation` [minBound..maxBound :: Nat2]
+  , map unX list `permutation` [minBound..maxBound :: Nat1]
 
   , (prefiX :: [Int8])  `isPrefixOf` map unX list
   , (prefiX :: [Int16]) `isPrefixOf` map unX list
