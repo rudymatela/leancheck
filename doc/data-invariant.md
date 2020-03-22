@@ -65,9 +65,13 @@ have three solutions:
 
 3. **Only generate valid values in the Listable instance** (elegant and efficient):
 
-    TODO: write!
+    We can use the [`setCons`] when declaring `tiers`:
+
+	    instance (Ord a, Listable a) => Listable (Set a) where
+		  tiers = setCons Set
 
 [`Listable`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
 [`list`]:     https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:list
 [`suchThat`]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:suchThat
+[`setCons`]:  https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck-Tiers.html#v:setCons
 [`Rational`]: https://hackage.haskell.org/package/base/docs/Data-Ratio.html#t:Ratio
