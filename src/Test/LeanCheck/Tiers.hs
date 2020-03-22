@@ -128,13 +128,34 @@ mapCons = (`mapT` maps tiers tiers)
 noDupListCons :: Listable a => ([a] -> b) -> [[b]]
 noDupListCons = (`mapT` noDupListsOf tiers)
 
+-- | Like 'cons0' but lifted over a 'Maybe' value.
+--
+-- Only a 'Just' value will be returned.
 maybeCons0 :: Maybe b -> [[b]]
 maybeCons0 Nothing  = []
 maybeCons0 (Just x) = [[x]]
 
+-- | Like 'cons1' but lifted over a 'Maybe' result.
+--
+-- This discard 'Nothing' values.
+-- Only 'Just' values are returned.
 maybeCons1 :: Listable a => (a -> Maybe b) -> [[b]]
 maybeCons1 f = delay $ mapMaybeT f tiers
 
+-- | Like 'cons2' but lifted over a 'Maybe' result.
+--
+-- This discard 'Nothing' values.
+-- Only 'Just' values are returned.
+--
+-- Useful when declaring generators which have pre-conditions:
+--
+-- > data Fraction = Fraction Int Int
+-- >
+-- > mkFraction _ 0 = Nothing
+-- > mkFraction n d = Fraction n d
+-- >
+-- > instance Listable Fraction where
+-- >   tiers = maybeCons2 mkFraction
 maybeCons2 :: (Listable a, Listable b) => (a -> b -> Maybe c) -> [[c]]
 maybeCons2 f = delay $ mapMaybeT (uncurry f) tiers
 
