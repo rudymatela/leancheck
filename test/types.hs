@@ -66,35 +66,30 @@ tests =
   , (prefiX :: [Int8])  `isPrefixOf` map unX list
   , (prefiX :: [Int16]) `isPrefixOf` map unX list
   , (prefiX :: [Int32]) `isPrefixOf` map unX list
-#ifndef __HUGS__
-  , (prefiX :: [Int64]) `isPrefixOf` map unX list
-#endif
   , (prefiX :: [Int])   `isPrefixOf` map unX list
 
   , (prefiXN :: [Word8])  `isPrefixOf` map unX list
   , (prefiXN :: [Word16]) `isPrefixOf` map unX list
   , (prefiXN :: [Word32]) `isPrefixOf` map unX list
-#ifndef __HUGS__
-  , (prefiXN :: [Word64]) `isPrefixOf` map unX list
-#endif
   , (prefiXN :: [Word])   `isPrefixOf` map unX list
 
   , (prefiXs :: [[Int8]])  `isPrefixOf` map unXs list
   , (prefiXs :: [[Int16]]) `isPrefixOf` map unXs list
   , (prefiXs :: [[Int32]]) `isPrefixOf` map unXs list
-#ifndef __HUGS__
-  , (prefiXs :: [[Int64]]) `isPrefixOf` map unXs list
-#endif
   , (prefiXs :: [[Int]])   `isPrefixOf` map unXs list
 
   , (prefiXNs :: [[Word8]])  `isPrefixOf` map unXs list
   , (prefiXNs :: [[Word16]]) `isPrefixOf` map unXs list
   , (prefiXNs :: [[Word32]]) `isPrefixOf` map unXs list
-#ifndef __HUGS__
-  , (prefiXNs :: [[Word64]]) `isPrefixOf` map unXs list
-#endif
   , (prefiXNs :: [[Word]])   `isPrefixOf` map unXs list
 
+#ifndef __HUGS__
+  -- Hugs returns an arithmetic overflow error for these tests
+  , (prefiX   :: [Int64])    `isPrefixOf` map unX  list
+  , (prefiXN  :: [Word64])   `isPrefixOf` map unX  list
+  , (prefiXs  :: [[Int64]])  `isPrefixOf` map unXs list
+  , (prefiXNs :: [[Word64]]) `isPrefixOf` map unXs list
+#endif
 
   , [minBound..maxBound :: Int1] == signedRange 1
   , [minBound..maxBound :: Int2] == signedRange 2
