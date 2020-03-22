@@ -7,6 +7,8 @@ List of things to do for LeanCheck.
 misc
 ----
 
+* fix missing haddock links (see `make haddock`)
+
 * parameterize number of tests in test programs and add slow-test target
 
 * sweep "TODO:" across the source code
