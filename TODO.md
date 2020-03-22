@@ -16,5 +16,3 @@ documentation
 -------------
 
 * on tutorial.md, write about how to create test programs;
-
-* on data-invariant.md, write missing section;
