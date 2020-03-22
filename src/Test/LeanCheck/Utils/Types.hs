@@ -591,8 +591,10 @@ listXIntegral :: (Bounded a, Integral a) => [a]
 listXIntegral = l undefined
   where
   l :: (Ord a, Num a, Bounded a, Integral a) => a -> [a]
-  l a | minBound `asTypeOf` a < 0 = listXIntegralN
-      | otherwise                 = listXIntegralP
+  l a | min < 0   = listXIntegralN
+      | otherwise = listXIntegralP
+    where
+    min = minBound `asTypeOf` a
 -- The type-hackery above is needed so that we don't need to activate
 -- ScopedTypeVariables
 
