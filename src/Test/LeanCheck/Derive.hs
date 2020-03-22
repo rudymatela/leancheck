@@ -115,7 +115,6 @@ deriveListableX warnExisting cascade t = do
            then reallyDeriveListableCascading t
            else reallyDeriveListable t
 
--- TODO: Somehow check if the enumeration has repetitions, then warn the user.
 reallyDeriveListable :: Name -> DecsQ
 reallyDeriveListable t = do
   (nt,vs) <- normalizeType t
