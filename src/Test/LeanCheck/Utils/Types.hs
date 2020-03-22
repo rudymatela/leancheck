@@ -80,7 +80,6 @@ module Test.LeanCheck.Utils.Types
   , Letters (..)
   )
 where
--- TODO: Add Bits instances
 
 import Test.LeanCheck (Listable(..), listIntegral)
 import Test.LeanCheck.Core ((+|),cons1)
