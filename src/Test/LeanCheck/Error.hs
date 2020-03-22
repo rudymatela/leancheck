@@ -147,6 +147,13 @@ errorToFalse = fromError False
 errorToTrue :: Bool -> Bool
 errorToTrue = fromError True
 
+-- | Transforms errors into a default value.
+--
+-- > > fromError 0 (15 :: Int)
+-- > 15
+--
+-- > > fromError 0 (undefined :: Int)
+-- > 0
 fromError :: a -> a -> a
 fromError x = fromMaybe x . errorToNothing
 
