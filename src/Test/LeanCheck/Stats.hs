@@ -197,12 +197,25 @@ classifyOn f xs = map (map fst)
                 . classifyBy ((==) `on` snd)
                 $ map (\x -> (x,f x)) xs
 
+-- | Returns the counts of each value in a list.
+--
+-- > > counts "Mississippi"
+-- > [('M',1),('i',4),('s',4),('p',2)]
+--
+-- Values are returned in the order they appear.
 counts :: Eq a => [a] -> [(a,Int)]
 counts = map headLength . classify
 
+-- | Returns the counts of each value in a list
+--   using a given comparison function.
 countsBy :: (a -> a -> Bool) -> [a] -> [(a,Int)]
 countsBy (==) = map headLength . classifyBy (==)
 
+-- | Returns the counts of each value in a list
+--   based on a projection.
+--
+-- > > countsOn length ["sheep", "chip", "ship", "cheap", "Mississippi"]
+-- > [(5,2),(4,2),(11,1)]
 countsOn :: Eq b => (a -> b) -> [a] -> [(b,Int)]
 countsOn f = map (\xs -> (f $ head xs, length xs)) . classifyOn f
 
