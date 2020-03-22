@@ -80,12 +80,12 @@ hugs: src/Test/LeanCheck.hugs
 hugs-test: \
   test/main.runhugs \
   test/fun.runhugs \
+  test/funshow.runhugs \
   test/io.runhugs \
   test/operators.runhugs \
   test/stats.runhugs \
   test/tiers.runhugs \
   test/error.runhugs
-# test/funshow.runhugs  # TODO: make this pass
 # test/types.runhugs    # TODO: make this pass
 
 install:

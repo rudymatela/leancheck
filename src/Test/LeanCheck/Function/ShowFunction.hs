@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 -- |
 -- Module      : Test.LeanCheck.Function.ShowFunction
 -- Copyright   : (c) 2015-2018 Rudy Matela
@@ -59,7 +60,6 @@ import Test.LeanCheck.Core
 import Test.LeanCheck.Error (errorToNothing)
 import Test.LeanCheck.Utils.Types
 import Test.LeanCheck.Stats (classifyOn)
-import Data.List (intercalate, sortBy)
 import Data.Maybe
 import Data.Function (on)
 import Data.Word
@@ -70,6 +70,22 @@ import Data.Char (GeneralCategory)
 import System.Exit (ExitCode)
 import System.IO (IOMode, BufferMode, SeekMode)
 import Foreign.C
+#ifndef __HUGS__
+import Data.List (intercalate, transpose, sortBy)
+#else
+import Data.List (transpose, sortBy)
+
+intercalate :: [a] -> [[a]] -> [a]
+intercalate xs xss = concat (intersperse xs xss)
+  where
+  intersperse             :: a -> [a] -> [a]
+  intersperse _   []      = []
+  intersperse sep (x:xs)  = x : prependToAll sep xs
+    where
+    prependToAll            :: a -> [a] -> [a]
+    prependToAll _   []     = []
+    prependToAll sep (x:xs) = sep : x : prependToAll sep xs
+#endif
 
 -- | A functional binding in a showable format.
 --   Argument values are represented as a list of strings.
@@ -312,6 +328,7 @@ instance (Show a, Show b, Show c, Show d)
       => ShowFunction (a,b,c,d) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e)
       => ShowFunction (a,b,c,d,e) where bindtiers = bindtiersShow
+#ifndef __HUGS__
 instance (Show a, Show b, Show c, Show d, Show e, Show f)
       => ShowFunction (a,b,c,d,e,f) where bindtiers = bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g)
@@ -334,6 +351,7 @@ instance ( Show a, Show b, Show c, Show d
          , Show e, Show f, Show g, Show h
          , Show i, Show j, Show k, Show l )
       => ShowFunction (a,b,c,d,e,f,g,h,i,j,k,l) where bindtiers = bindtiersShow
+#endif
 
 -- Data.Ratio
 instance (Integral a, Show a) => ShowFunction (Ratio a) where bindtiers = bindtiersShow
