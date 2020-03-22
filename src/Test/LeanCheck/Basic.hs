@@ -100,36 +100,43 @@ instance (Listable a, Listable b, Listable c, Listable d,
                         (x,y,z,w,v,u,r,s,t,o,p,q))
                       tiers tiers
 
+-- | Returns tiers of applications of a 6-argument constructor.
 cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]
 cons6 f = delay $ mapT (uncurry6 f) tiers
 
+-- | Returns tiers of applications of a 7-argument constructor.
 cons7 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g)
       => (a -> b -> c -> d -> e -> f -> g -> h) -> [[h]]
 cons7 f = delay $ mapT (uncurry7 f) tiers
 
+-- | Returns tiers of applications of a 8-argument constructor.
 cons8 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i) -> [[i]]
 cons8 f = delay $ mapT (uncurry8 f) tiers
 
+-- | Returns tiers of applications of a 9-argument constructor.
 cons9 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j) -> [[j]]
 cons9 f = delay $ mapT (uncurry9 f) tiers
 
+-- | Returns tiers of applications of a 10-argument constructor.
 cons10 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
            Listable f, Listable g, Listable h, Listable i, Listable j)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k) -> [[k]]
 cons10 f = delay $ mapT (uncurry10 f) tiers
 
+-- | Returns tiers of applications of a 11-argument constructor.
 cons11 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l) -> [[l]]
 cons11 f = delay $ mapT (uncurry11 f) tiers
 
+-- | Returns tiers of applications of a 12-argument constructor.
 cons12 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k, Listable l)

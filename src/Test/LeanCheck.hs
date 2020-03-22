@@ -1,4 +1,3 @@
-{-# OPTIONS_HADDOCK prune #-}
 -- |
 -- Module      : Test.LeanCheck
 -- Copyright   : (c) 2015-2020 Rudy Matela

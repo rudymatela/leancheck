@@ -383,11 +383,6 @@ cons4 :: (Listable a, Listable b, Listable c, Listable d)
 cons4 f = delay $ mapT (uncurry4 f) tiers
 
 -- | Returns tiers of applications of a 5-argument constructor.
---
--- "Test.LeanCheck.Basic" defines
--- 'Test.LeanCheck.Basic.cons6' up to 'Test.LeanCheck.Basic.cons12'.
--- Those are exported by default from "Test.LeanCheck",
--- but are hidden from the Haddock documentation.
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
 cons5 f = delay $ mapT (uncurry5 f) tiers
