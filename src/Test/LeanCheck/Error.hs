@@ -157,27 +157,49 @@ errorToTrue = fromError True
 fromError :: a -> a -> a
 fromError x = fromMaybe x . errorToNothing
 
+-- | An error-catching version of 'Test.LeanCheck.holds'
+--   that returns 'False' in case of errors.
+--
+-- > prop_cannot_be_seven :: Int -> Bool
+-- > prop_cannot_be_seven 7  =  error "Argument cannot be seven"
+-- > prop_cannot_be_seven _  =  True
+--
+-- > > import Test.LeanCheck
+-- > > holds 100 prop_cannot_be_seven
+-- > *** Exception: Argument cannot be seven
+--
+-- > > import Test.LeanCheck.Error
+-- > > holds 100 prop_cannot_be_seven
+-- > False
 holds :: Testable a => Int -> a -> Bool
 holds n = errorToFalse . C.holds n
 
+-- | An error-catching version of 'Test.LeanCheck.fails'
+--   that returns 'True' in case of errors.
 fails :: Testable a => Int -> a -> Bool
 fails n = errorToTrue . C.fails n
 
+-- | An error-catching version of 'Test.LeanCheck.exists'.
 exists :: Testable a => Int -> a -> Bool
 exists n = or . take n . map snd . results
 
+-- | An error-catching version of 'Test.LeanCheck.counterExample'.
 counterExample :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
 
+-- | An error-catching version of 'Test.LeanCheck.witness'.
 witness :: Testable a => Int -> a -> Maybe [String]
 witness n = listToMaybe . witnesses n
 
+-- | An error-catching version of 'Test.LeanCheck.counterExamples'.
 counterExamples :: Testable a => Int -> a -> [[String]]
 counterExamples n = map fst . filter (not . snd) . take n . results
 
+-- | An error-catching version of 'Test.LeanCheck.witnesses'.
 witnesses :: Testable a => Int -> a -> [[String]]
 witnesses n = map fst . filter snd . take n . results
 
+-- | An error-catching version of 'Test.LeanCheck.results'.
 results :: Testable a => a -> [([String],Bool)]
 results = map (mapSnd errorToFalse) . C.results
   where mapSnd f (x,y) = (x,f y)
