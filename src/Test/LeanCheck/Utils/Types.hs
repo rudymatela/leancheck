@@ -681,12 +681,64 @@ instance (Integral a, Bounded a) => Listable (Xs a) where
   tiers = cons1 (Xs . map unX)
 -- ^ Lists with elements of the 'X' type.
 
+-- | Space characters.
+--
+-- > list :: [Space]  =  " \t\n\r\f\v"
+--
+-- > > check $ \(Space c) -> isSpace c
+-- > +++ OK, passed 6 tests (exhausted).
 data Space  =  Space {unSpace :: Char}
+
+-- | Lowercase characters.
+--
+-- > list :: [Lower]  =  "abcdef..."
+--
+-- > > check $ \(Lower c) -> isLower c
+-- > +++ OK, passed 26 tests (exhausted).
 data Lower  =  Lower {unLower :: Char}
+
+-- | Uppercase characters.
+--
+-- > list :: [Upper]  =  "ABCDEF..."
+--
+-- > > check $ \(Upper c) -> isUpper c
+-- > +++ OK, passed 26 tests (exhausted).
 data Upper  =  Upper {unUpper :: Char}
+
+-- | Alphabetic characters.
+--
+-- > list :: [Alpha]  =  "aAbBcC..."
+--
+-- > > check $ \(Alpha c) -> isAlpha c
+-- > +++ OK, passed 52 tests (exhausted).
+--
+-- Equivalent to 'Letter'.
 data Alpha  =  Alpha {unAlpha :: Char}
+
+-- | Digits.
+--
+-- > list :: [Digit]  =  "0123456789"
+--
+-- > > check $ \(Digit c) -> isDigit c
+-- > +++ OK, passed 10 tests (exhausted).
 data Digit  =  Digit {unDigit :: Char}
+
+-- | Alphanumeric characters.
+--
+-- > list :: [AlphaNum]  =  "0a1A2b3B4c..."
+--
+-- > > check $ \(AlphaNum c) -> isAlphaNum c
+-- > +++ OK, passed 62 tests (exhausted).
 data AlphaNum  =  AlphaNum {unAlphaNum :: Char}
+
+-- | Alphabetic characters.
+--
+-- > list :: [Letter]  =  "aAbBcC..."
+--
+-- > > check $ \(Letter c) -> isLetter c
+-- > +++ OK, passed 52 tests (exhausted).
+--
+-- Equivalent to 'Alpha'.
 data Letter    =  Letter   {unLetter   :: Char}
 
 instance Show Space where show = show . unSpace
@@ -705,12 +757,25 @@ instance Listable Digit where list = map Digit ['0'..'9']
 instance Listable AlphaNum where list = map AlphaNum $ ['0'..'9'] +| ['a'..'z'] +| ['A'..'Z']
 instance Listable Letter   where list = map Letter $ ['a'..'z'] +| ['A'..'Z']
 
+-- | Strings of spaces.
 data Spaces  =  Spaces {unSpaces :: String}
+
+-- | Strings of lowercase characters.
 data Lowers  =  Lowers {unLowers :: String}
+
+-- | Strings of uppercase characters
 data Uppers  =  Uppers {unUppers :: String}
+
+-- | Strings of alphabetic characters
 data Alphas  =  Alphas {unAlphas :: String}
+
+-- | Strings of digits.
 data Digits  =  Digits {unDigits :: String}
+
+-- | Strings of alphanumeric characters
 data AlphaNums  =  AlphaNums {unAlphaNums :: String}
+
+-- | Strings of letters
 data Letters    =  Letters   {unLetters   :: String}
 
 instance Show Spaces where show = show . unSpaces
