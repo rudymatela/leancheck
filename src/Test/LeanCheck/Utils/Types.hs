@@ -541,7 +541,7 @@ newtype NoDup a = NoDup [a] deriving (Show, Read, Eq, Ord)
 -- > > take 6 (list :: [Bag Nat])
 -- > [Bag [],Bag [0],Bag [0,0],Bag [1],Bag [0,0,0],Bag [0,1]]
 --
--- See also: 'bagsOf' and 'bagCons'.
+-- See also: 'Test.LeanCheck.Tiers.bagsOf' and 'bagCons'.
 newtype Bag a = Bag [a] deriving (Show, Read, Eq, Ord)
 
 -- | Lists representing sets.

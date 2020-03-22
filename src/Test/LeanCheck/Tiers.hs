@@ -86,7 +86,7 @@ listCons = (`mapT` listsOf tiers)
 -- | Given a constructor that takes a bag of elements (as a list),
 --   lists tiers of applications of this constructor.
 --
--- For example, a 'Bag' represented as a list.
+-- For example, a @Bag@ represented as a list.
 --
 -- > bagCons Bag
 bagCons :: Listable a => ([a] -> b) -> [[b]]
@@ -286,7 +286,7 @@ normalizeT (xs:xss) = xs:normalizeT xss
 catMaybesT :: [[Maybe a]] -> [[a]]
 catMaybesT = map catMaybes
 
--- | Like 'mapMaybe' but for tiers.
+-- | Like 'Data.Maybe.mapMaybe' but for tiers.
 mapMaybeT :: (a -> Maybe b) -> [[a]] -> [[b]]
 mapMaybeT f = catMaybesT . mapT f
 

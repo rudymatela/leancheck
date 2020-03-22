@@ -30,7 +30,7 @@ import Control.Exception (Exception, catch, evaluate)
 type SomeException = Exception
 #endif
 
--- | Checks a property printing results on 'stdout'
+-- | Checks a property printing results on 'System.IO.stdout'
 --
 -- > > check $ \xs -> sort (sort xs) == sort (xs::[Int])
 -- > +++ OK, passed 200 tests.
@@ -41,7 +41,7 @@ check :: Testable a => a -> IO ()
 check p = checkResult p >> return ()
 
 -- | Check a property for a given number of tests
---   printing results on 'stdout'
+--   printing results on 'System.IO.stdout'
 --
 -- > > checkFor 1000 $ \xs -> sort (sort xs) == sort (xs::[Int])
 -- > +++ OK, passed 1000 tests.
@@ -49,7 +49,7 @@ checkFor :: Testable a => Int -> a -> IO ()
 checkFor n p = checkResultFor n p >> return ()
 
 -- | Check a property
---   printing results on 'stdout' and
+--   printing results on 'System.IO.stdout' and
 --   returning 'True' on success.
 --
 -- > > p <- checkResult $ \xs -> sort (sort xs) == sort (xs::[Int])
@@ -66,7 +66,7 @@ checkResult :: Testable a => a -> IO Bool
 checkResult p = checkResultFor 200 p
 
 -- | Check a property for a given number of tests
---   printing results on 'stdout' and
+--   printing results on 'System.IO.stdout' and
 --   returning 'True' on success.
 --
 -- > > checkResultFor 1000 $ \xs -> sort (sort xs) == sort (xs::[Int])

@@ -7,9 +7,9 @@
 -- This module is part of LeanCheck,
 -- a simple enumerative property-based testing library.
 --
--- This module exports a 'Listable' instance for functions.
+-- This module exports a 'Test.LeanCheck.Listable' instance for functions.
 --
--- LeanCheck provides one definition of 'Listable' functions:
+-- LeanCheck provides one definition of 'Test.LeanCheck.Listable' functions:
 --
 -- * "Test.LeanCheck.Function.Listable.ListsOfPairs":
 --   considers functions as a finite list of exceptional input-output cases to
