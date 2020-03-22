@@ -588,13 +588,14 @@ instance (Integral a, Bounded a) => Listable (X a) where list = map X listXInteg
 -- FIXME: make this work for Int2 / Word2 types
 --        by checking then using normal enumeration
 listXIntegral :: (Bounded a, Integral a) => [a]
-listXIntegral = l
+listXIntegral = l undefined
   where
-  a = head l
-  l | count a <= 4 = listIntegral
-    | min < 0      = listXIntegralN
-    | otherwise    = listXIntegralP
-  min = minBound `asTypeOf` a
+  l :: (Ord a, Num a, Bounded a, Integral a) => a -> [a]
+  l a | count a <= 4 = listIntegral
+      | min < 0      = listXIntegralN
+      | otherwise    = listXIntegralP
+    where
+    min = minBound `asTypeOf` a
 -- The type-hackery above is needed so that we don't need to activate
 -- ScopedTypeVariables
 
