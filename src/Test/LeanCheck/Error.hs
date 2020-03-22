@@ -81,6 +81,17 @@ bindArgumentType _ f = f
 --   * ArrayException
 --   * ErrorCall
 --   * PatternMatchFail
+--
+-- > > errorToNothing False
+-- > Just False
+--
+-- > > errorToNothing (0 :: Int)
+-- > Just 0
+--
+-- > > errorToNothing (undefined :: ())
+-- > Nothing
+--
+-- This function uses 'unsafePerformIO'.
 errorToNothing :: a -> Maybe a
 errorToNothing x = unsafePerformIO $
 #if __GLASGOW_HASKELL__
@@ -106,9 +117,33 @@ anyErrorToNothing x = unsafePerformIO $
   (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
 #endif
 
+-- | Transforms errors into 'False' values.
+--
+-- > > errorToFalse False
+-- > False
+--
+-- > > errorToFalse True
+-- > True
+--
+-- > > errorToFalse undefined
+-- > False
+--
+-- This functions uses 'unsafePerformIO'.
 errorToFalse :: Bool -> Bool
 errorToFalse = fromError False
 
+-- | Transforms errors into 'True' values.
+--
+-- > > errorToTrue False
+-- > False
+--
+-- > > errorToTrue True
+-- > True
+--
+-- > > errorToTrue undefined
+-- > True
+--
+-- This functions uses 'unsafePerformIO'.
 errorToTrue :: Bool -> Bool
 errorToTrue = fromError True
 
