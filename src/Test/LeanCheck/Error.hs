@@ -157,18 +157,26 @@ errorToTrue = fromError True
 fromError :: a -> a -> a
 fromError x = fromMaybe x . errorToNothing
 
-holds,fails,exists :: Testable a => Int -> a -> Bool
+holds :: Testable a => Int -> a -> Bool
 holds n = errorToFalse . C.holds n
-fails n = errorToTrue  . C.fails n
+
+fails :: Testable a => Int -> a -> Bool
+fails n = errorToTrue . C.fails n
+
+exists :: Testable a => Int -> a -> Bool
 exists n = or . take n . map snd . results
 
-counterExample,witness :: Testable a => Int -> a -> Maybe [String]
+counterExample :: Testable a => Int -> a -> Maybe [String]
 counterExample n = listToMaybe . counterExamples n
-witness        n = listToMaybe . witnesses n
 
-counterExamples,witnesses :: Testable a => Int -> a -> [[String]]
+witness :: Testable a => Int -> a -> Maybe [String]
+witness n = listToMaybe . witnesses n
+
+counterExamples :: Testable a => Int -> a -> [[String]]
 counterExamples n = map fst . filter (not . snd) . take n . results
-witnesses       n = map fst . filter snd         . take n . results
+
+witnesses :: Testable a => Int -> a -> [[String]]
+witnesses n = map fst . filter snd . take n . results
 
 results :: Testable a => a -> [([String],Bool)]
 results = map (mapSnd errorToFalse) . C.results
