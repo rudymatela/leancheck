@@ -590,7 +590,7 @@ instance (Integral a, Bounded a) => Listable (X a) where list = map X listXInteg
 listXIntegral :: (Bounded a, Integral a) => [a]
 listXIntegral = l undefined
   where
-  l :: (Ord a, Num a, Bounded a, Integral a) => a -> [a]
+  l :: (Bounded a, Integral a) => a -> [a]
   l a | count a <= 4 = listIntegral
       | min < 0      = listXIntegralN
       | otherwise    = listXIntegralP
