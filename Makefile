@@ -85,8 +85,8 @@ hugs-test: \
   test/operators.runhugs \
   test/stats.runhugs \
   test/tiers.runhugs \
+  test/types.runhugs \
   test/error.runhugs
-# test/types.runhugs    # TODO: make this pass
 
 install:
 	@echo "use \`cabal install' instead"

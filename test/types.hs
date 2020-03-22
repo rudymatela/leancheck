@@ -1,4 +1,5 @@
--- Copyright (c) 2015-2018 Rudy Matela.
+{-# LANGUAGE CPP #-}
+-- Copyright (c) 2015-2020 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test
 import System.Exit (exitFailure)
@@ -65,25 +66,33 @@ tests =
   , (prefiX :: [Int8])  `isPrefixOf` map unX list
   , (prefiX :: [Int16]) `isPrefixOf` map unX list
   , (prefiX :: [Int32]) `isPrefixOf` map unX list
+#ifndef __HUGS__
   , (prefiX :: [Int64]) `isPrefixOf` map unX list
+#endif
   , (prefiX :: [Int])   `isPrefixOf` map unX list
 
   , (prefiXN :: [Word8])  `isPrefixOf` map unX list
   , (prefiXN :: [Word16]) `isPrefixOf` map unX list
   , (prefiXN :: [Word32]) `isPrefixOf` map unX list
+#ifndef __HUGS__
   , (prefiXN :: [Word64]) `isPrefixOf` map unX list
+#endif
   , (prefiXN :: [Word])   `isPrefixOf` map unX list
 
   , (prefiXs :: [[Int8]])  `isPrefixOf` map unXs list
   , (prefiXs :: [[Int16]]) `isPrefixOf` map unXs list
   , (prefiXs :: [[Int32]]) `isPrefixOf` map unXs list
+#ifndef __HUGS__
   , (prefiXs :: [[Int64]]) `isPrefixOf` map unXs list
+#endif
   , (prefiXs :: [[Int]])   `isPrefixOf` map unXs list
 
   , (prefiXNs :: [[Word8]])  `isPrefixOf` map unXs list
   , (prefiXNs :: [[Word16]]) `isPrefixOf` map unXs list
   , (prefiXNs :: [[Word32]]) `isPrefixOf` map unXs list
+#ifndef __HUGS__
   , (prefiXNs :: [[Word64]]) `isPrefixOf` map unXs list
+#endif
   , (prefiXNs :: [[Word]])   `isPrefixOf` map unXs list
 
 
