@@ -71,9 +71,9 @@ import System.Exit (ExitCode)
 import System.IO (IOMode, BufferMode, SeekMode)
 import Foreign.C
 #ifndef __HUGS__
-import Data.List (intercalate, transpose, sortBy)
+import Data.List (intercalate, sortBy)
 #else
-import Data.List (transpose, sortBy)
+import Data.List (sortBy)
 
 intercalate :: [a] -> [[a]] -> [a]
 intercalate xs xss = concat (intersperse xs xss)
