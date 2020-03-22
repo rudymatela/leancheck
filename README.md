@@ -205,6 +205,8 @@ the only extension used by LeanCheck is [CPP].  This is to maintain
 compatibility with different compilers.  LeanCheck even compiles and runs on
 [Hugs98] from September 2006.
 
+LeanCheck has 100% Haddock coverage with most functions having examples.
+
 
 Further reading
 ---------------

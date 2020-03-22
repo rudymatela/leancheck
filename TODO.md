@@ -13,6 +13,4 @@ misc
 documentation
 -------------
 
-* add haddock to _all_ functions;
-
 * on tutorial.md, write about how to create test programs;
