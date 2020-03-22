@@ -1,6 +1,6 @@
 # Implicit rules for compiling Haskell code.
 #
-# Copyright (c) 2015-2019 Rudy Matela.
+# Copyright (c) 2015-2020 Rudy Matela.
 # Distributed under the 3-Clause BSD licence.
 #
 # You can optionally configure the "Configuration variables" below in your main
@@ -97,7 +97,7 @@ depend:
 haddock: doc/index.html
 
 clean-haddock:
-	rm -f doc/*.{html,css,js,png,gif,json} README.html
+	rm -f doc/*.{html,css,js,png,gif,json} doc/src/* README.html
 
 upload-haddock:
 	@echo "use \`cabal upload -d' instead"
