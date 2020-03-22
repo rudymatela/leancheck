@@ -181,7 +181,7 @@ Due to the way it is implemented (using lists of lists), LeanCheck can be quite
 memory intensive if we set the maximum number of tests of a property to
 millions of values (YMMV).
 
-For the default maximum number of tests (500) you should be safe on most cases.
+For the default maximum number of tests (200) you should be safe on most cases.
 If you use 1 000 or 10 000 as the maximum number of tests for a property you're
 also generally safe.  More than that, it is in a hit or miss basis.
 
