@@ -1,4 +1,4 @@
--- Copyright 2018 Rudy Matela
+-- Copyright 2018-2020 Rudy Matela
 --
 -- Backport of Data.Function for Hugs 2006-09.
 -- Only exports `on`

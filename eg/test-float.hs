@@ -1,6 +1,6 @@
 -- test-list.hs -- example program, testing Float using LeanCheck
 --
--- Copyright (c) 2017-2018 Rudy Matela.
+-- Copyright (c) 2017-2020 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
 
