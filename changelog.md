@@ -1,6 +1,22 @@
 Changelog for LeanCheck
 =======================
 
+upcoming
+--------
+
+* rename most functions on `Test.LeanCheck.Utils.Operators`;
+  deprecated names are provided;
+* improve documentation:
+	- 100% haddock coverage;
+	- LeanCheck memory usage thoroughly documented;
+* implement stub function `conditionStatsT`;
+* improve function display on `Test.LeanCheck.Function.*`;
+* fix some compiler warnings (newer GHC);
+* improve build scripts;
+* improve tests;
+* update tests scripts to support the new cabal (`test/sdist`).
+
+
 v0.9.1
 ------
 
