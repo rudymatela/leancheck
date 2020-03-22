@@ -161,9 +161,21 @@ conditionStatsT n = putStrLn . table " " . map show1 . (("total", const True):)
   show1 (s,f) = (s ++ ":") : map (show . count f) xss
   count f = length . filter f
 
+-- | Classify values using their 'Eq' instance.
+--
+-- > > classify [1,2,3,1,2,1]
+-- > [[1,1,1],[2,2],[3]]
+--
+-- (cf. 'classifyBy', 'classifyOn')
 classify :: Eq a => [a] -> [[a]]
 classify = classifyBy (==)
 
+-- | Classify values by a given comparison function.
+--
+-- > > classifyBy (\(x,_) (y,_) -> x == y) [(1,1),(1,2),(2,1),(2,2)]
+-- > [[(1,1),(1,2)],[(2,1),(2,2)]]
+--
+-- (cf. 'classify', 'classifyOn')
 classifyBy :: (a -> a -> Bool) -> [a] -> [[a]]
 classifyBy (==) []     = []
 classifyBy (==) (x:xs) = (x:filter (== x) xs)
@@ -171,6 +183,15 @@ classifyBy (==) (x:xs) = (x:filter (== x) xs)
   where
   x /= y = not (x == y)
 
+-- | Classify values based on the result of a given function.
+--
+-- > > classifyOn head ["sheep", "chip", "ship", "cheap"]
+-- > [["sheep","ship"],["chip","cheap"]]
+--
+-- > > classifyOn odd [1,2,3,4,5,6]
+-- > [[1,3,5],[2,4,6]]
+--
+-- (cf. 'classify', 'classifyBy')
 classifyOn :: Eq b => (a -> b) -> [a] -> [[a]]
 classifyOn f xs = map (map fst)
                 . classifyBy ((==) `on` snd)
