@@ -199,6 +199,12 @@ In the name of keeping the implementation easy to understand,
 a compromise were made in terms of performance
 (cf. [LeanCheck memory usage]).
 
+LeanCheck is mostly [Haskell 98] compliant and almost [Haskell 2010] compliant.
+With the exception of [`Listable`] derivation modules ([TH] and [Generics]),
+the only extension used by LeanCheck is [CPP].  This is to maintain
+compatibility with different compilers.  LeanCheck even compiles and runs on
+[Hugs98] from September 2006.
+
 
 Further reading
 ---------------
@@ -247,7 +253,13 @@ LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 [leancheck-instances]:                   https://hackage.haskell.org/package/leancheck-instances
 [the intentional exception of a few types]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck-Basic.html
 [Haskell 2010 Language Report]:          https://www.haskell.org/onlinereport/haskell2010/
+[Haskell 2010]:                          https://www.haskell.org/onlinereport/haskell2010/
+[Haskell 98]:                            https://www.haskell.org/onlinereport/
 [Haskell Platform]:                      https://www.haskell.org/platform/
+[Hugs98]:                                https://www.haskell.org/hugs/
+[TH]:  https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#template-haskell
+[CPP]: https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/phases.html#extension-CPP
+[Generics]: https://hackage.haskell.org/package/base/docs/GHC-Generics.html
 
 [leancheck-logo]: https://github.com/rudymatela/leancheck/raw/master/doc/leancheck.svg?sanitize=true
 
