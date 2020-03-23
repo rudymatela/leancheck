@@ -463,8 +463,17 @@ test/fun.o: \
   test/fun.hs \
   src/Test/LeanCheck/Utils/Types.hs \
   src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck/Stats.hs \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/Show.hs \
+  src/Test/LeanCheck/Function/ShowFunction.hs \
+  src/Test/LeanCheck/Function/Show/EightLines.hs \
+  src/Test/LeanCheck/Function.hs \
+  src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/Listable.hs \
+  src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
+  src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
