@@ -355,34 +355,69 @@ concatMapT f  =  concatT . mapT f
 
 -- | Given a constructor with no arguments,
 --   returns 'tiers' of all possible applications of this constructor.
---   Since in this case there is only one possible application (to no
---   arguments), only a single value, of size/weight 0, will be present in the
---   resulting list of tiers.
+--
+-- Since in this case there is only one possible application (to no
+-- arguments), only a single value, of size/weight 0, will be present in the
+-- resulting list of tiers.
+--
+-- To be used in the declaration of 'tiers' in 'Listable' instances.
+--
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ cons0 <Constructor>
+-- >          \/ ...
 cons0 :: a -> [[a]]
 cons0 x  =  [[x]]
 
 -- | Given a constructor with one 'Listable' argument,
 --   return 'tiers' of applications of this constructor.
---   By default, returned values will have size/weight of 1.
+--
+-- By default, returned values will have size/weight of 1.
+--
+-- To be used in the declaration of 'tiers' in 'Listable' instances.
+--
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ cons1 <Constructor>
+-- >          \/ ...
 cons1 :: Listable a => (a -> b) -> [[b]]
 cons1 f  =  delay $ mapT f tiers
 
 -- | Given a constructor with two 'Listable' arguments,
 --   return 'tiers' of applications of this constructor.
---   By default, returned values will have size/weight of 1.
+--
+-- By default, returned values will have size/weight of 1.
+--
+-- To be used in the declaration of 'tiers' in 'Listable' instances.
+--
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ cons2 <Constructor>
+-- >          \/ ...
 cons2 :: (Listable a, Listable b) => (a -> b -> c) -> [[c]]
 cons2 f  =  delay $ mapT (uncurry f) tiers
 
 -- | Returns tiers of applications of a 3-argument constructor.
+--
+-- To be used in the declaration of 'tiers' in 'Listable' instances.
+--
+-- > instance Listable <Type> where
+-- >   tiers  =  ...
+-- >          \/ cons3 <Constructor>
+-- >          \/ ...
 cons3 :: (Listable a, Listable b, Listable c) => (a -> b -> c -> d) -> [[d]]
 cons3 f  =  delay $ mapT (uncurry3 f) tiers
 
 -- | Returns tiers of applications of a 4-argument constructor.
+--
+-- To be used in the declaration of 'tiers' in 'Listable' instances.
 cons4 :: (Listable a, Listable b, Listable c, Listable d)
       => (a -> b -> c -> d -> e) -> [[e]]
 cons4 f  =  delay $ mapT (uncurry4 f) tiers
 
 -- | Returns tiers of applications of a 5-argument constructor.
+--
+-- To be used in the declaration of 'tiers' in 'Listable' instances.
 cons5 :: (Listable a, Listable b, Listable c, Listable d, Listable e)
       => (a -> b -> c -> d -> e -> f) -> [[f]]
 cons5 f  =  delay $ mapT (uncurry5 f) tiers
@@ -600,25 +635,38 @@ witness n  =  listToMaybe . witnesses n
 
 -- | Does a property __hold__ up to a number of test values?
 --
--- > holds 1000 $ \xs -> length (sort xs) == length xs
+-- > > holds 1000 $ \xs -> length (sort xs) == length xs
+-- > True
+--
+-- > > holds 1000 $ \x -> x == x + 1
+-- > False
 --
 -- The suggested number of test values are 500, 1 000 or 10 000.
 -- With more than that you may or may not run out of memory
 -- depending on the types being tested.
 -- This also applies to 'fails', 'exists', etc.
+--
+-- (cf. 'fails', 'counterExample')
 holds :: Testable a => Int -> a -> Bool
 holds n  =  and . take n . map snd . results
 
 -- | Does a property __fail__ for a number of test values?
 --
--- > fails 1000 $ \xs -> xs ++ ys == ys ++ xs
+-- > > fails 1000 $ \xs -> xs ++ ys == ys ++ xs
+-- > True
+--
+-- > > holds 1000 $ \xs -> length (sort xs) == length xs
+-- > False
+--
+-- This is the negation of 'holds'.
 fails :: Testable a => Int -> a -> Bool
 fails n  =  not . holds n
 
 -- | There __exists__ an assignment of values that satisfies a property
 --   up to a number of test values?
 --
--- > exists 1000 $ \x -> x > 10
+-- > > exists 1000 $ \x -> x > 10
+-- > True
 exists :: Testable a => Int -> a -> Bool
 exists n  =  or . take n . map snd . results
 

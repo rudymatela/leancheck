@@ -20,17 +20,33 @@
 --
 -- For example:
 --
--- > holds 1000 $ \xs -> length (sort xs) == length (xs::[Int])
---
+-- > > import Data.List (sort)
+-- > > holds 1000 $ \xs -> length (sort xs) == length (xs::[Int])
+-- > True
 --
 -- To get the smallest 'counterExample' by testing up to a thousand values,
 -- we evaluate:
 --
 -- > counterExample 1000 property
 --
+-- 'Nothing' indicates no counterexample was found,
+-- a 'Just' value indicates a counterexample.
+--
+-- For instance:
+--
+-- > > import Data.List (union)
+-- > > counterExample 1000 $ \xs ys -> union xs ys == union ys (xs :: [Int])
+-- > Just ["[]","[0,0]"]
+--
 -- The suggested values for the number of tests to use with LeanCheck are
 -- 500, 1 000 or 10 000.  LeanCheck is memory intensive and you should take
 -- care if you go beyond that.
+--
+-- The function 'check' can also be used to test and report counterexamples.
+--
+-- > > check $ \xs ys -> union xs ys == union ys (xs :: [Int])
+-- > *** Failed! Falsifiable (after 4 tests):
+-- > [] [0,0]
 --
 --
 -- Arguments of properties should be instances of the 'Listable' typeclass.

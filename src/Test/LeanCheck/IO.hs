@@ -34,6 +34,7 @@ type SomeException  =  Exception
 --
 -- > > check $ \xs -> sort (sort xs) == sort (xs::[Int])
 -- > +++ OK, passed 200 tests.
+--
 -- > > check $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
 -- > *** Failed! Falsifiable (after 4 tests):
 -- > [] [0,0]
@@ -54,9 +55,11 @@ checkFor n p  =  checkResultFor n p >> return ()
 --
 -- > > p <- checkResult $ \xs -> sort (sort xs) == sort (xs::[Int])
 -- > +++ OK, passed 200 tests.
+-- >
 -- > > q <- checkResult $ \xs ys -> xs `union` ys == ys `union` (xs::[Int])
 -- > *** Failed! Falsifiable (after 4 tests):
 -- > [] [0,0]
+-- >
 -- > > p && q
 -- > False
 --
