@@ -7,14 +7,15 @@ import Data.List (elemIndices)
 import Test.LeanCheck.Function ()
 
 main :: IO ()
-main =
-  case elemIndices False (tests 200) of
+main  =  do
+  max <- getMaxTestsFromArgs 200
+  case elemIndices False (tests max) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
 
 tests :: Int -> [Bool]
-tests n =
+tests n  =
   [ True
   , fails n prop_foldlr
   , holds n prop_foldlr'
@@ -23,7 +24,7 @@ tests n =
   , fails n prop_false'
   ]
 
-type A = Int
+type A  =  Int
 
 prop_foldlr :: (A -> A -> A) -> A -> [A] -> Bool
 prop_foldlr f z xs  =  foldr f z xs == foldl f z xs

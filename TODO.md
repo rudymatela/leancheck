@@ -4,12 +4,6 @@ TO DO list for LeanCheck
 List of things to do for LeanCheck.
 
 
-misc
-----
-
-* parameterize number of tests in test programs and add slow-test target
-
-
 documentation
 -------------
 

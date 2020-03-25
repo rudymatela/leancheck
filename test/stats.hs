@@ -41,8 +41,8 @@ main = do
   putStrLn "take 1 :: [Int] -> [Int]"
   classStatsT 6 (take 1  :: [Int] -> [Int])
 
-
-  case elemIndices False (tests 200) of
+  max <- getMaxTestsFromArgs 200
+  case elemIndices False (tests max) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure

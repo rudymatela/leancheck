@@ -49,8 +49,9 @@ instance Listable a => Listable (Tree a) where tiers = genericTiers
 
 
 main :: IO ()
-main =
-  case elemIndices False (tests 200) of
+main  =  do
+  max <- getMaxTestsFromArgs 200
+  case elemIndices False (tests max) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure

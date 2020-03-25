@@ -11,6 +11,8 @@
 module Test
   ( module Test.LeanCheck
 
+  , getMaxTestsFromArgs
+
   , tNatPairOrd
   , tNatTripleOrd
   , tNatQuadrupleOrd
@@ -35,7 +37,17 @@ where
 import Test.LeanCheck
 import Data.List
 import Data.Ord
+import Data.Maybe
+import Text.Read
+import System.Environment
 import Test.LeanCheck.Utils.Types (Nat(..))
+
+getMaxTestsFromArgs :: Int -> IO Int
+getMaxTestsFromArgs n = do
+  as <- getArgs
+  return $ case as of
+           (s:_) -> fromMaybe n $ readMaybe s
+           _     -> n
 
 -- | check if a list is ordered
 ordered :: Ord a => [a] -> Bool

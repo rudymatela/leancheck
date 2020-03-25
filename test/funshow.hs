@@ -1,6 +1,7 @@
 -- Copyright (c) 2015-2020 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 {-# OPTIONS_GHC -fno-warn-incomplete-patterns #-}
+import Test (getMaxTestsFromArgs)
 import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 import Test.LeanCheck.Function.ShowFunction
@@ -8,8 +9,9 @@ import Test.LeanCheck.Function.Show ()
 import Test.LeanCheck.Utils.TypeBinding
 
 main :: IO ()
-main =
-  case elemIndices False (tests 200) of
+main  =  do
+  max <- getMaxTestsFromArgs 200
+  case elemIndices False (tests max) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure

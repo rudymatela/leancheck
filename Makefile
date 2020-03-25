@@ -47,8 +47,13 @@ diff-test: diff-test-tiers diff-test-funtiers $(patsubst %,%.diff-test,$(EGS))
 
 update-diff-test: update-diff-test-tiers update-diff-test-funtiers $(patsubst %,%.update-diff-test,$(EGS))
 
+test-1000: $(patsubst %,%.run-1000,$(TESTS)) diff-test test-sdist
+
 %.run: %
 	./$<
+
+%.run-1000: %
+	./$< 1000
 
 eg/%.diff-test: eg/%
 	./$< | diff -rud test/diff/$<.out -
