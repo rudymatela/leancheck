@@ -35,6 +35,11 @@ To install the latest LeanCheck version from Hackage, just run:
 	$ cabal update
 	$ cabal install leancheck
 
+Starting from Cabal v3.0, you need to pass `--lib` as an argument to cabal
+install:
+
+	$ cabal install leancheck --lib
+
 
 Checking if properties are True
 -------------------------------
