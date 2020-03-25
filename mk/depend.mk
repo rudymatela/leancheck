@@ -249,11 +249,6 @@ mk/Toplibs.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs \
   mk/Toplibs.hs
-Setup.o: \
-  Setup.hs
-Setup: \
-  Setup.hs \
-  mk/toplibs
 src/Test/LeanCheck/Basic.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs

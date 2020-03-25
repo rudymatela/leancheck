@@ -39,7 +39,7 @@ DEPMK ?= mk/depend.mk
 # ALL_HSS: all Haskell files
 # You can override ALL/LIB_HSS in your main Makefile
 LIST_LIB_HSS ?= find src -name "*.hs"
-LIST_ALL_HSS ?= find \( -path "./dist" -o -path "./.stack-work" \) -prune \
+LIST_ALL_HSS ?= find \( -path "./dist*" -o -path "./.stack-work" -o -path "./Setup.hs" \) -prune \
                      -o -name "*.*hs" -print
 LIB_HSS ?= $(shell $(LIST_LIB_HSS))
 ALL_HSS ?= $(shell $(LIST_ALL_HSS))
