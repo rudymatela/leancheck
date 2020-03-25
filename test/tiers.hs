@@ -31,7 +31,7 @@ tests n =
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
-  , all (uncurry (/=)) . concat . take n $ distinctPairs (tiers :: [[Nat]])
+  , all (uncurry (/=)) . concat . take 200 $ distinctPairs (tiers :: [[Nat]])
 
   , productMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
   , productMaybeWith (flip ($))
