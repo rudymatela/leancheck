@@ -11,7 +11,7 @@ import Data.Char hiding (Space)
 
 main :: IO ()
 main =
-  case elemIndices False tests of
+  case elemIndices False (tests 100) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
@@ -23,8 +23,8 @@ signedRange,unsignedRange :: (Num n) => Int -> [n]
 signedRange n   = map fromIntegral [-(2^(n-1))..(2^(n-1))-1]
 unsignedRange n = map fromIntegral [0..(2^n)-1]
 
-tests :: [Bool]
-tests =
+tests :: Int -> [Bool]
+tests n =
   [ True
 
   , list `permutation` [minBound..maxBound :: Int1]
@@ -103,35 +103,35 @@ tests =
 
 
   -- abs minBound == minBound
-  , fails 100 (\i -> abs i > (0::Int1))
-  , fails 100 (\i -> abs i > (0::Int2))
-  , fails 100 (\i -> abs i > (0::Int3))
-  , fails 100 (\i -> abs i > (0::Int4))
+  , fails n (\i -> abs i > (0::Int1))
+  , fails n (\i -> abs i > (0::Int2))
+  , fails n (\i -> abs i > (0::Int3))
+  , fails n (\i -> abs i > (0::Int4))
 
   -- maxBound + 1 == minBound
-  , fails 100 (\i -> i + 1 < (i::Int1))
-  , fails 100 (\i -> i + 1 < (i::Int2))
-  , fails 100 (\i -> i + 1 < (i::Int3))
-  , fails 100 (\i -> i + 1 < (i::Int4))
+  , fails n (\i -> i + 1 < (i::Int1))
+  , fails n (\i -> i + 1 < (i::Int2))
+  , fails n (\i -> i + 1 < (i::Int3))
+  , fails n (\i -> i + 1 < (i::Int4))
 
-  , holds 100 (\(Nat n) -> n >= 0)
-  , holds 100 (\(Natural n) -> n >= 0)
+  , holds n (\(Nat n) -> n >= 0)
+  , holds n (\(Natural n) -> n >= 0)
 
-  , holds 100 $ \(Space c) -> isSpace c
-  , holds 100 $ \(Lower c) -> isLower c
-  , holds 100 $ \(Upper c) -> isUpper c
-  , holds 100 $ \(Alpha c) -> isAlpha c
-  , holds 100 $ \(Digit c) -> isDigit c
-  , holds 100 $ \(AlphaNum c) -> isAlphaNum c
-  , holds 100 $ \(Letter c) -> isLetter c
+  , holds n $ \(Space c) -> isSpace c
+  , holds n $ \(Lower c) -> isLower c
+  , holds n $ \(Upper c) -> isUpper c
+  , holds n $ \(Alpha c) -> isAlpha c
+  , holds n $ \(Digit c) -> isDigit c
+  , holds n $ \(AlphaNum c) -> isAlphaNum c
+  , holds n $ \(Letter c) -> isLetter c
 
-  , holds 100 $ \(Spaces s) -> all isSpace s
-  , holds 100 $ \(Lowers s) -> all isLower s
-  , holds 100 $ \(Uppers s) -> all isUpper s
-  , holds 100 $ \(Alphas s) -> all isAlpha s
-  , holds 100 $ \(Digits s) -> all isDigit s
-  , holds 100 $ \(AlphaNums s) -> all isAlphaNum s
-  , holds 100 $ \(Letters s)   -> all isLetter s
+  , holds n $ \(Spaces s) -> all isSpace s
+  , holds n $ \(Lowers s) -> all isLower s
+  , holds n $ \(Uppers s) -> all isUpper s
+  , holds n $ \(Alphas s) -> all isAlpha s
+  , holds n $ \(Digits s) -> all isDigit s
+  , holds n $ \(AlphaNums s) -> all isAlphaNum s
+  , holds n $ \(Letters s)   -> all isLetter s
   ]
   where
   unXs (Xs xs) = xs

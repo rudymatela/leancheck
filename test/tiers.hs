@@ -12,13 +12,13 @@ import Test.LeanCheck.Tiers
 
 main :: IO ()
 main =
-  case elemIndices False tests of
+  case elemIndices False (tests 100) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
 
-tests :: [Bool]
-tests =
+tests :: Int -> [Bool]
+tests n =
   [ True
 
   , checkNoDup 12
@@ -30,17 +30,17 @@ tests =
   , checkLengthListingsOfLength 5 5
   , checkSizesListingsOfLength 5 5
 
-  , all (uncurry (/=)) . concat . take 100 $ distinctPairs (tiers :: [[Nat]])
+  , all (uncurry (/=)) . concat . take n $ distinctPairs (tiers :: [[Nat]])
 
   , productMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
   , productMaybeWith (flip ($))
                      [[1],[2],[3],[4]]
                      [[const Nothing],[Just]] == [[],[1],[2],[3],[4]]
 
-  , holds 100 $ deleteT_is_map_delete 10 -:> nat
-  , holds 100 $ deleteT_is_map_delete 10 -:> int
-  , holds 100 $ deleteT_is_map_delete 10 -:> bool
-  , holds 100 $ deleteT_is_map_delete 10 -:> int2
+  , holds n $ deleteT_is_map_delete 10 -:> nat
+  , holds n $ deleteT_is_map_delete 10 -:> int
+  , holds n $ deleteT_is_map_delete 10 -:> bool
+  , holds n $ deleteT_is_map_delete 10 -:> int2
 
   , finite (tiers :: [[ Bool ]])  == True
   , finite (tiers :: [[ (Bool,Bool) ]]) == True
@@ -65,11 +65,11 @@ tests =
   , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool) ]]) == False
   , finite (tiers :: [[ (Bool,Bool,Bool,Bool,Bool,Bool) ]]) == False
 
-  , holds 100 $ \xss -> ordered . concat $ discardLaterT (<)  (xss::[[Int]])
-  , holds 100 $ \xss -> ordered . concat $ discardLaterT (<=) (xss::[[Int]])
+  , holds n $ \xss -> ordered . concat $ discardLaterT (<)  (xss::[[Int]])
+  , holds n $ \xss -> ordered . concat $ discardLaterT (<=) (xss::[[Int]])
   , (length . concat $ discardLaterT (<=) [[1..100]]) == 100
   , (length . concat $ discardLaterT (<=) [[00..99],[100..199::Int]]) == 200
-  , holds 100 $ \xss -> nub (concat xss) == concat (nubT xss :: [[Int]])
+  , holds n $ \xss -> nub (concat xss) == concat (nubT xss :: [[Int]])
   ]
 
 deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool
