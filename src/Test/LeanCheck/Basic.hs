@@ -60,113 +60,112 @@ import System.Exit
 instance (Listable a, Listable b, Listable c,
           Listable d, Listable e, Listable f) =>
          Listable (a,b,c,d,e,f) where
-  tiers = productWith (\x (y,z,w,v,u) -> (x,y,z,w,v,u)) tiers tiers
+  tiers  =  productWith (\x (y,z,w,v,u) -> (x,y,z,w,v,u)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g) =>
          Listable (a,b,c,d,e,f,g) where
-  tiers = productWith (\x (y,z,w,v,u,r) -> (x,y,z,w,v,u,r)) tiers tiers
+  tiers  =  productWith (\x (y,z,w,v,u,r) -> (x,y,z,w,v,u,r)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h) =>
          Listable (a,b,c,d,e,f,g,h) where
-  tiers = productWith (\x (y,z,w,v,u,r,s) -> (x,y,z,w,v,u,r,s))
-                      tiers tiers
+  tiers  =  productWith (\x (y,z,w,v,u,r,s) -> (x,y,z,w,v,u,r,s)) tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i) =>
          Listable (a,b,c,d,e,f,g,h,i) where
-  tiers = productWith (\x (y,z,w,v,u,r,s,t) -> (x,y,z,w,v,u,r,s,t))
-                      tiers tiers
+  tiers  =  productWith (\x (y,z,w,v,u,r,s,t) -> (x,y,z,w,v,u,r,s,t))
+                        tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i, Listable j) =>
          Listable (a,b,c,d,e,f,g,h,i,j) where
-  tiers = productWith (\x (y,z,w,v,u,r,s,t,o) -> (x,y,z,w,v,u,r,s,t,o))
-                      tiers tiers
+  tiers  =  productWith (\x (y,z,w,v,u,r,s,t,o) -> (x,y,z,w,v,u,r,s,t,o))
+                        tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h,
           Listable i, Listable j, Listable k) =>
          Listable (a,b,c,d,e,f,g,h,i,j,k) where
-  tiers = productWith (\x (y,z,w,v,u,r,s,t,o,p) -> (x,y,z,w,v,u,r,s,t,o,p))
-                      tiers tiers
+  tiers  =  productWith (\x (y,z,w,v,u,r,s,t,o,p) -> (x,y,z,w,v,u,r,s,t,o,p))
+                        tiers tiers
 
 instance (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h,
           Listable i, Listable j, Listable k, Listable l) =>
          Listable (a,b,c,d,e,f,g,h,i,j,k,l) where
-  tiers = productWith (\x (y,z,w,v,u,r,s,t,o,p,q) ->
-                        (x,y,z,w,v,u,r,s,t,o,p,q))
-                      tiers tiers
+  tiers  =  productWith (\x (y,z,w,v,u,r,s,t,o,p,q) ->
+                          (x,y,z,w,v,u,r,s,t,o,p,q))
+                        tiers tiers
 
 -- | Returns tiers of applications of a 6-argument constructor.
 cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]
-cons6 f = delay $ mapT (uncurry6 f) tiers
+cons6 f  =  delay $ mapT (uncurry6 f) tiers
 
 -- | Returns tiers of applications of a 7-argument constructor.
 cons7 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g)
       => (a -> b -> c -> d -> e -> f -> g -> h) -> [[h]]
-cons7 f = delay $ mapT (uncurry7 f) tiers
+cons7 f  =  delay $ mapT (uncurry7 f) tiers
 
 -- | Returns tiers of applications of a 8-argument constructor.
 cons8 :: (Listable a, Listable b, Listable c, Listable d,
           Listable e, Listable f, Listable g, Listable h)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i) -> [[i]]
-cons8 f = delay $ mapT (uncurry8 f) tiers
+cons8 f  =  delay $ mapT (uncurry8 f) tiers
 
 -- | Returns tiers of applications of a 9-argument constructor.
 cons9 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
           Listable f, Listable g, Listable h, Listable i)
       => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j) -> [[j]]
-cons9 f = delay $ mapT (uncurry9 f) tiers
+cons9 f  =  delay $ mapT (uncurry9 f) tiers
 
 -- | Returns tiers of applications of a 10-argument constructor.
 cons10 :: (Listable a, Listable b, Listable c, Listable d, Listable e,
            Listable f, Listable g, Listable h, Listable i, Listable j)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k) -> [[k]]
-cons10 f = delay $ mapT (uncurry10 f) tiers
+cons10 f  =  delay $ mapT (uncurry10 f) tiers
 
 -- | Returns tiers of applications of a 11-argument constructor.
 cons11 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k)
        => (a -> b -> c -> d -> e -> f -> g -> h -> i -> j -> k -> l) -> [[l]]
-cons11 f = delay $ mapT (uncurry11 f) tiers
+cons11 f  =  delay $ mapT (uncurry11 f) tiers
 
 -- | Returns tiers of applications of a 12-argument constructor.
 cons12 :: (Listable a, Listable b, Listable c, Listable d,
            Listable e, Listable f, Listable g, Listable h,
            Listable i, Listable j, Listable k, Listable l)
        => (a->b->c->d->e->f->g->h->i->j->k->l->m) -> [[m]]
-cons12 f = delay $ mapT (uncurry12 f) tiers
+cons12 f  =  delay $ mapT (uncurry12 f) tiers
 
 uncurry6 :: (a->b->c->d->e->f->g) -> (a,b,c,d,e,f) -> g
-uncurry6 f (x,y,z,w,v,u) = f x y z w v u
+uncurry6 f (x,y,z,w,v,u)  =  f x y z w v u
 
 uncurry7 :: (a->b->c->d->e->f->g->h) -> (a,b,c,d,e,f,g) -> h
-uncurry7 f (x,y,z,w,v,u,r) = f x y z w v u r
+uncurry7 f (x,y,z,w,v,u,r)  =  f x y z w v u r
 
 uncurry8 :: (a->b->c->d->e->f->g->h->i) -> (a,b,c,d,e,f,g,h) -> i
-uncurry8 f (x,y,z,w,v,u,r,s) = f x y z w v u r s
+uncurry8 f (x,y,z,w,v,u,r,s)  =  f x y z w v u r s
 
 uncurry9 :: (a->b->c->d->e->f->g->h->i->j) -> (a,b,c,d,e,f,g,h,i) -> j
-uncurry9 f (x,y,z,w,v,u,r,s,t) = f x y z w v u r s t
+uncurry9 f (x,y,z,w,v,u,r,s,t)  =  f x y z w v u r s t
 
 uncurry10 :: (a->b->c->d->e->f->g->h->i->j->k) -> (a,b,c,d,e,f,g,h,i,j) -> k
-uncurry10 f (x,y,z,w,v,u,r,s,t,o) = f x y z w v u r s t o
+uncurry10 f (x,y,z,w,v,u,r,s,t,o)  =  f x y z w v u r s t o
 
 uncurry11 :: (a->b->c->d->e->f->g->h->i->j->k->l)
           -> (a,b,c,d,e,f,g,h,i,j,k) -> l
-uncurry11 f (x,y,z,w,v,u,r,s,t,o,p) = f x y z w v u r s t o p
+uncurry11 f (x,y,z,w,v,u,r,s,t,o,p)  =  f x y z w v u r s t o p
 
 uncurry12 :: (a->b->c->d->e->f->g->h->i->j->k->l->m)
           -> (a,b,c,d,e,f,g,h,i,j,k,l) -> m
-uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q) = f x y z w v u r s t o p q
+uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q)  =  f x y z w v u r s t o p q
 
--- | > list :: [Rational] =
+-- | > list :: [Rational]  =
 --   >   [   0  % 1
 --   >   ,   1  % 1
 --   >   , (-1) % 1
@@ -181,86 +180,86 @@ uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q) = f x y z w v u r s t o p q
 --   >   , ...
 --   >   ]
 instance (Integral a, Listable a) => Listable (Ratio a) where
-  tiers = mapT (uncurry (%)) . reset
+  tiers  =  mapT (uncurry (%)) . reset
         $ tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
 
 instance (RealFloat a, Listable a) => Listable (Complex a) where
-  tiers = cons2 (:+)
+  tiers  =  cons2 (:+)
 
--- | > list :: [Word] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
+-- | > list :: [Word]  =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
 instance Listable Word where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Word8] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 255]
+-- | > list :: [Word8]  =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 255]
 instance Listable Word8 where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Word16] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 65535]
+-- | > list :: [Word16]  =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..., 65535]
 instance Listable Word16 where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Word32] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
+-- | > list :: [Word32]  =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
 instance Listable Word32 where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Word64] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
+-- | > list :: [Word64]  =  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, ...]
 instance Listable Word64 where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Int8] = [0, 1, -1, 2, -2, 3, -3, ..., 127, -127, -128]
+-- | > list :: [Int8]  =  [0, 1, -1, 2, -2, 3, -3, ..., 127, -127, -128]
 instance Listable Int8 where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Int16] = [0, 1, -1, 2, -2, ..., 32767, -32767, -32768]
+-- | > list :: [Int16]  =  [0, 1, -1, 2, -2, ..., 32767, -32767, -32768]
 instance Listable Int16 where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Int32] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
+-- | > list :: [Int32]  =  [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 instance Listable Int32 where
-  list = listIntegral
+  list  =  listIntegral
 
--- | > list :: [Int64] = [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
+-- | > list :: [Int64]  =  [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 instance Listable Int64 where
-  list = listIntegral
+  list  =  listIntegral
 
-instance Listable CChar      where list = listIntegral
-instance Listable CSChar     where list = listIntegral
-instance Listable CUChar     where list = listIntegral
-instance Listable CShort     where list = listIntegral
-instance Listable CUShort    where list = listIntegral
-instance Listable CInt       where list = listIntegral
-instance Listable CUInt      where list = listIntegral
-instance Listable CLong      where list = listIntegral
-instance Listable CULong     where list = listIntegral
-instance Listable CPtrdiff   where list = listIntegral
-instance Listable CSize      where list = listIntegral
-instance Listable CWchar     where list = listIntegral
-instance Listable CSigAtomic where list = listIntegral
-instance Listable CLLong     where list = listIntegral
-instance Listable CULLong    where list = listIntegral
-instance Listable CIntPtr    where list = listIntegral
-instance Listable CUIntPtr   where list = listIntegral
-instance Listable CIntMax    where list = listIntegral
-instance Listable CUIntMax   where list = listIntegral
-instance Listable CClock     where list = listIntegral
-instance Listable CTime      where list = listIntegral
-instance Listable CFloat     where tiers = tiersFloating
-instance Listable CDouble    where tiers = tiersFloating
+instance Listable CChar      where  list  =  listIntegral
+instance Listable CSChar     where  list  =  listIntegral
+instance Listable CUChar     where  list  =  listIntegral
+instance Listable CShort     where  list  =  listIntegral
+instance Listable CUShort    where  list  =  listIntegral
+instance Listable CInt       where  list  =  listIntegral
+instance Listable CUInt      where  list  =  listIntegral
+instance Listable CLong      where  list  =  listIntegral
+instance Listable CULong     where  list  =  listIntegral
+instance Listable CPtrdiff   where  list  =  listIntegral
+instance Listable CSize      where  list  =  listIntegral
+instance Listable CWchar     where  list  =  listIntegral
+instance Listable CSigAtomic where  list  =  listIntegral
+instance Listable CLLong     where  list  =  listIntegral
+instance Listable CULLong    where  list  =  listIntegral
+instance Listable CIntPtr    where  list  =  listIntegral
+instance Listable CUIntPtr   where  list  =  listIntegral
+instance Listable CIntMax    where  list  =  listIntegral
+instance Listable CUIntMax   where  list  =  listIntegral
+instance Listable CClock     where  list  =  listIntegral
+instance Listable CTime      where  list  =  listIntegral
+instance Listable CFloat     where  tiers  =  tiersFloating
+instance Listable CDouble    where  tiers  =  tiersFloating
 #if __GLASGOW_HASKELL__ >= 802
-instance Listable CBool      where list = listIntegral
+instance Listable CBool      where  list  =  listIntegral
 #endif
 #if __GLASGOW_HASKELL__
-instance Listable CUSeconds  where list = listIntegral
-instance Listable CSUSeconds where list = listIntegral
+instance Listable CUSeconds  where  list  =  listIntegral
+instance Listable CSUSeconds where  list  =  listIntegral
 #endif
 
 -- | Only includes valid POSIX exit codes
 --
 -- > > list :: [ExitCode]
 -- > [ExitSuccess, ExitFailure 1, ExitFailure 2, ..., ExitFailure 255]
-instance Listable ExitCode where list = ExitSuccess : map ExitFailure [1..255]
+instance Listable ExitCode where  list  =  ExitSuccess : map ExitFailure [1..255]
 
-instance Listable GeneralCategory where list = [minBound..maxBound]
+instance Listable GeneralCategory where  list  =  [minBound..maxBound]
 
 instance Listable IOMode where
   tiers  =  cons0 ReadMode
@@ -303,7 +302,7 @@ instance Listable SeekMode where
 -- @ \`ofWeight\` /n/ @ is equivalent to 'reset' followed
 -- by @/n/@ applications of 'delay'.
 ofWeight :: [[a]] -> Int -> [[a]]
-ofWeight xss w = dropWhile null xss `addWeight` w
+ofWeight xss w  =  dropWhile null xss `addWeight` w
 
 -- | Adds to the weight of a constructor or tiers.
 --
@@ -325,4 +324,4 @@ ofWeight xss w = dropWhile null xss `addWeight` w
 --
 -- @ \`addWeight\` /n/ @ is equivalent to @/n/@ applications of 'delay'.
 addWeight :: [[a]] -> Int -> [[a]]
-addWeight xss w = replicate w [] ++ xss
+addWeight xss w  =  replicate w [] ++ xss
