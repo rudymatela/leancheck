@@ -108,7 +108,7 @@ tests n =
   , holds n $ okEqOrd -:> int
   , holds n $ okEqOrd -:> char
   , holds n $ okEqOrd -:> bool
-  , holds n $ okEqOrd -:> [()]
+  , holds m $ okEqOrd -:> [()]
   , holds n $ okEqOrd -:> [int]
   , holds n $ okEqOrd -:> [bool]
   , holds n $ okEqOrd -:> float  -- fails if NaN is included in enumeration
@@ -135,7 +135,7 @@ tests n =
 
   , holds n $ isIdentity id   -:> int
   , holds n $ isIdentity (+0) -:> int
-  , holds n $ isIdentity sort -:> [()]
+  , holds m $ isIdentity sort -:> [()]
   , holds n $ isIdentity (not . not)
   , fails n $ isIdentity not
 
@@ -143,6 +143,8 @@ tests n =
   , fails n $ isNeverIdentity abs    -:> int
   , fails n $ isNeverIdentity negate -:> int
   ]
+  where
+  m = 200
 
 --none :: (a -> Bool) -> [a] -> Bool
 --none p = not . or . map p
