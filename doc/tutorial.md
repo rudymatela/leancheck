@@ -242,6 +242,53 @@ The disadvantage is:
 If you are unsure, you can always use *both* PBT and UT.
 
 
+Writing a test program
+----------------------
+
+Writing a test program with LeanCheck is pretty simple.  The following example
+shows a full test program for the function `sort`.
+
+	import Test.LeanCheck
+	import Data.List (sort, elemIndices)
+	import System.Exit (exitFailure)
+
+	main :: IO ()
+	main  =
+	  case elemIndices False (tests 100) of
+	  [] -> putStrLn "Tests passed!"
+	  is -> putStrLn ("Failed tests:" ++ show is) >> exitFailure
+
+	-- given a maximum number of tests,
+	-- this function returns the test results
+	tests :: Int -> [Bool]
+	tests n  =
+	  [ holds n $ \xs -> ordered (sort xs :: [Int])
+	  , holds n $ \xs -> length (sort xs :: [Int]) == length xs
+	  , holds n $ \x xs -> (x `elem` (sort xs :: [Int])) == (x `elem` xs)
+	  ]
+
+	ordered :: Ord a => [a] -> Bool
+	ordered (x:y:xs)  =  x <= y && ordered (y:xs)
+	ordered _         =  True
+
+The above program prints the indices of failed tests if there are any.
+The programmer can then copy-paste the selected test in GHCi to investigate.
+The above program also returns an error code in case one of the tests fails
+using `exitFailure`, so `make` or a CI system will detect that a test has
+failed.
+
+If you prefer a more heavyweight solution, LeanCheck has providers for the
+Haskell testing frameworks [Tasty], [test-framework] and [Hspec]:
+
+* [LeanCheck provider for Tasty]
+  -- `$ cabal install tasty-leancheck` ;
+* [LeanCheck provider for test-framework]
+  -- `$ cabal install test-framework-leancheck` ;
+* [LeanCheck provider for Hspec]
+  -- `$ cabal install hspec-leancheck` .
+
+
+
 Other property-based testing tools for Haskell
 ----------------------------------------------
 
@@ -283,3 +330,9 @@ Further reading
 
 [Ranking programs using Black-Box testing (2010)]: http://www.cse.chalmers.se/~nicsma/papers/ranking-programs.pdf
 
+[Tasty]:          https://github.com/feuerbach/tasty#readme
+[test-framework]: https://haskell.github.io/test-framework/
+[Hspec]:          https://hspec.github.io/
+[LeanCheck provider for Tasty]:          https://hackage.haskell.org/package/tasty-leancheck
+[LeanCheck provider for test-framework]: https://hackage.haskell.org/package/test-framework-leancheck
+[LeanCheck provider for Hspec]:          https://hackage.haskell.org/package/hspec-leancheck
