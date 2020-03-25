@@ -23,7 +23,7 @@ signedRange,unsignedRange :: (Num n) => Int -> [n]
 signedRange n   = map fromIntegral [-(2^(n-1))..(2^(n-1))-1]
 unsignedRange n = map fromIntegral [0..(2^n)-1]
 
-
+tests :: [Bool]
 tests =
   [ True
 

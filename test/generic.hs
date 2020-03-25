@@ -55,6 +55,7 @@ main =
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
 
+tests :: Int -> [Bool]
 tests n =
   [ True
 

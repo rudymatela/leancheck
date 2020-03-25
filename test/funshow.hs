@@ -9,13 +9,13 @@ import Test.LeanCheck.Utils.TypeBinding
 
 main :: IO ()
 main =
-  case elemIndices False tests of
+  case elemIndices False (tests 100) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
 
-tests :: [Bool]
-tests =
+tests :: Int -> [Bool]
+tests _ =
   [ True
 
   -- undefined values --
