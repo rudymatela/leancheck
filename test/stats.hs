@@ -42,7 +42,7 @@ main = do
   classStatsT 6 (take 1  :: [Int] -> [Int])
 
 
-  case elemIndices False (tests 100) of
+  case elemIndices False (tests 200) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure

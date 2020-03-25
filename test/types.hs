@@ -11,7 +11,7 @@ import Data.Char hiding (Space)
 
 main :: IO ()
 main =
-  case elemIndices False (tests 100) of
+  case elemIndices False (tests 200) of
     [] -> putStrLn "Tests passed!"
     is -> do putStrLn ("Failed tests:" ++ show is)
              exitFailure
