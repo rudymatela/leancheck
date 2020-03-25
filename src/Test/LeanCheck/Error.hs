@@ -73,7 +73,7 @@ import Control.Exception ( evaluate
 -- | Takes a value and a function.  Ignores the value.  Binds the argument of
 --   the function to the type of the value.
 bindArgumentType :: a -> (a -> b) -> a -> b
-bindArgumentType _ f = f
+bindArgumentType _ f  =  f
 
 -- | Transforms a value into 'Just' that value or 'Nothing' on some errors:
 --
@@ -93,7 +93,7 @@ bindArgumentType _ f = f
 --
 -- This function uses 'unsafePerformIO'.
 errorToNothing :: a -> Maybe a
-errorToNothing x = unsafePerformIO $
+errorToNothing x  =  unsafePerformIO $
 #if __GLASGOW_HASKELL__
   (Just `liftM` evaluate x) `catches` map ($ return Nothing)
                                       [ hf (undefined :: ArithException)
@@ -101,17 +101,18 @@ errorToNothing x = unsafePerformIO $
                                       , hf (undefined :: ErrorCall)
                                       , hf (undefined :: PatternMatchFail)
                                       ]
-  where hf :: Exception e => e -> IO a -> Handler a -- handlerFor
-        hf e h = Handler $ bindArgumentType e (\_ -> h)
+  where
+  hf :: Exception e => e -> IO a -> Handler a -- handlerFor
+  hf e h  =  Handler $ bindArgumentType e (\_ -> h)
 #else
   (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
 #endif
 
 -- | Transforms a value into 'Just' that value or 'Nothing' on error.
 anyErrorToNothing :: a -> Maybe a
-anyErrorToNothing x = unsafePerformIO $
+anyErrorToNothing x  =  unsafePerformIO $
 #if __GLASGOW_HASKELL__
-  (Just `liftM` evaluate x) `catch` \e -> do let _ = e :: SomeException
+  (Just `liftM` evaluate x) `catch` \e -> do let _  =  e :: SomeException
                                              return Nothing
 #else
   (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
@@ -130,7 +131,7 @@ anyErrorToNothing x = unsafePerformIO $
 --
 -- This functions uses 'unsafePerformIO'.
 errorToFalse :: Bool -> Bool
-errorToFalse = fromError False
+errorToFalse  =  fromError False
 
 -- | Transforms errors into 'True' values.
 --
@@ -145,7 +146,7 @@ errorToFalse = fromError False
 --
 -- This functions uses 'unsafePerformIO'.
 errorToTrue :: Bool -> Bool
-errorToTrue = fromError True
+errorToTrue  =  fromError True
 
 -- | Transforms errors into a default value.
 --
@@ -155,7 +156,7 @@ errorToTrue = fromError True
 -- > > fromError 0 (undefined :: Int)
 -- > 0
 fromError :: a -> a -> a
-fromError x = fromMaybe x . errorToNothing
+fromError x  =  fromMaybe x . errorToNothing
 
 -- | An error-catching version of 'Test.LeanCheck.holds'
 --   that returns 'False' in case of errors.
@@ -172,34 +173,35 @@ fromError x = fromMaybe x . errorToNothing
 -- > > holds 100 prop_cannot_be_seven
 -- > False
 holds :: Testable a => Int -> a -> Bool
-holds n = errorToFalse . C.holds n
+holds n  =  errorToFalse . C.holds n
 
 -- | An error-catching version of 'Test.LeanCheck.fails'
 --   that returns 'True' in case of errors.
 fails :: Testable a => Int -> a -> Bool
-fails n = errorToTrue . C.fails n
+fails n  =  errorToTrue . C.fails n
 
 -- | An error-catching version of 'Test.LeanCheck.exists'.
 exists :: Testable a => Int -> a -> Bool
-exists n = or . take n . map snd . results
+exists n  =  or . take n . map snd . results
 
 -- | An error-catching version of 'Test.LeanCheck.counterExample'.
 counterExample :: Testable a => Int -> a -> Maybe [String]
-counterExample n = listToMaybe . counterExamples n
+counterExample n  =  listToMaybe . counterExamples n
 
 -- | An error-catching version of 'Test.LeanCheck.witness'.
 witness :: Testable a => Int -> a -> Maybe [String]
-witness n = listToMaybe . witnesses n
+witness n  =  listToMaybe . witnesses n
 
 -- | An error-catching version of 'Test.LeanCheck.counterExamples'.
 counterExamples :: Testable a => Int -> a -> [[String]]
-counterExamples n = map fst . filter (not . snd) . take n . results
+counterExamples n  =  map fst . filter (not . snd) . take n . results
 
 -- | An error-catching version of 'Test.LeanCheck.witnesses'.
 witnesses :: Testable a => Int -> a -> [[String]]
-witnesses n = map fst . filter snd . take n . results
+witnesses n  =  map fst . filter snd . take n . results
 
 -- | An error-catching version of 'Test.LeanCheck.results'.
 results :: Testable a => a -> [([String],Bool)]
-results = map (mapSnd errorToFalse) . C.results
-  where mapSnd f (x,y) = (x,f y)
+results  =  map (mapSnd errorToFalse) . C.results
+  where
+  mapSnd f (x,y)  =  (x,f y)
