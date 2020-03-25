@@ -38,9 +38,13 @@ import Test.LeanCheck
 import Data.List
 import Data.Ord
 import Data.Maybe
-import Text.Read
 import System.Environment
 import Test.LeanCheck.Utils.Types (Nat(..))
+
+readMaybe :: Read a => String -> Maybe a
+readMaybe s = case readsPrec 0 s of
+              [(x,"")] -> Just x
+              _ -> Nothing
 
 getMaxTestsFromArgs :: Int -> IO Int
 getMaxTestsFromArgs n = do
