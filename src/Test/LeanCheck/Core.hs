@@ -343,6 +343,16 @@ filterT :: (a -> Bool) -> [[a]] -> [[a]]
 filterT f  =  map (filter f)
 
 -- | 'concat' tiers of tiers
+--
+-- > concatT [ [xss0, yss0, zss0, ...]
+-- >         , [xss1, yss1, zss1, ...]
+-- >         , [xss2, yss2, zss2, ...]
+-- >         , ...
+-- >         ]
+-- >   =  xss0 \/ yss0 \/ zss0 \/ ...
+-- >           \/ delay (xss1 \/ yss1 \/ zss1 \/ ...
+-- >                          \/ delay (xss2 \/ yss2 \/ zss2 \/ ...
+-- >                                         \/ (delay ...)))
 concatT :: [[ [[a]] ]] -> [[a]]
 concatT  =  foldr (\+:/) [] . map (foldr (\/) [])
   where
