@@ -359,6 +359,16 @@ concatT  =  foldr (\+:/) [] . map (foldr (\/) [])
   xss \+:/ yss  =  xss \/ ([]:yss)
 
 -- | 'concatMap' over tiers
+--
+-- > concatMapT f [ [x0, y0, z0]
+-- >              , [x1, y1, z1]
+-- >              , [x2, y2, z2]
+-- >              , ...
+-- >              ]
+-- >   =  f x0 \/ f y0 \/ f z0 \/ ...
+-- >           \/ delay (f x1 \/ f y1 \/ f z1 \/ ...
+-- >                          \/ delay (f x2 \/ f y2 \/ f z2 \/ ...
+-- >                                         \/ (delay ...)))
 concatMapT :: (a -> [[b]]) -> [[a]] -> [[b]]
 concatMapT f  =  concatT . mapT f
 
