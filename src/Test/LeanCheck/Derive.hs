@@ -9,7 +9,7 @@
 -- a simple enumerative property-based testing library.
 --
 -- Needs GHC and Template Haskell
--- (tested on GHC 7.4, 7.6, 7.8, 7.10, 8.0, 8.2 and 8.4).
+-- (tested on GHC 7.4, 7.6, 7.8, 7.10, 8.0, 8.2, 8.4, 8.6 and 8.8).
 --
 -- If LeanCheck does not compile under later GHCs, this module is probably the
 -- culprit.

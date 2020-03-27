@@ -353,6 +353,8 @@ filterT f  =  map (filter f)
 -- >           \/ delay (xss1 \/ yss1 \/ zss1 \/ ...
 -- >                          \/ delay (xss2 \/ yss2 \/ zss2 \/ ...
 -- >                                         \/ (delay ...)))
+--
+-- (cf. 'concatMapT')
 concatT :: [[ [[a]] ]] -> [[a]]
 concatT  =  foldr (\+:/) [] . map (foldr (\/) [])
   where
@@ -369,6 +371,8 @@ concatT  =  foldr (\+:/) [] . map (foldr (\/) [])
 -- >           \/ delay (f x1 \/ f y1 \/ f z1 \/ ...
 -- >                          \/ delay (f x2 \/ f y2 \/ f z2 \/ ...
 -- >                                         \/ (delay ...)))
+--
+-- (cf. 'concatT')
 concatMapT :: (a -> [[b]]) -> [[a]] -> [[b]]
 concatMapT f  =  concatT . mapT f
 
@@ -550,6 +554,8 @@ infixr 7 \\//
 -- >   , [(3,0),(2,1),(1,2),(0,3)]
 -- >   , ...
 -- >   ]
+--
+-- (cf. 'productWith')
 (><) :: [[a]] -> [[b]] -> [[(a,b)]]
 (><)  =  productWith (,)
 infixr 8 ><
@@ -558,6 +564,8 @@ infixr 8 ><
 --   'productWith' can be defined by '><', as:
 --
 -- > productWith f xss yss  =  map (uncurry f) $ xss >< yss
+--
+-- (cf. '><')
 productWith :: (a->b->c) -> [[a]] -> [[b]] -> [[c]]
 productWith _ _ []  =  []
 productWith _ [] _  =  []
@@ -579,6 +587,8 @@ productWith f (xs:xss) yss  =  map (xs **) yss
 --
 -- * @ Int -> Bool @
 -- * @ String -> [Int] -> Bool @
+--
+-- (cf. 'results')
 class Testable a where
   resultiers :: a -> [[([String],Bool)]]
 
