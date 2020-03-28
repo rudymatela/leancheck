@@ -1,6 +1,13 @@
 Changelog for LeanCheck
 =======================
 
+upcoming
+--------
+
+* improve Haddock documentation
+* change code formatting
+* improve CI scripts and Makefile
+
 v0.9.2
 ------
 
