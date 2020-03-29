@@ -1,8 +1,8 @@
 Changelog for LeanCheck
 =======================
 
-upcoming
---------
+v0.9.3
+------
 
 * improve Haddock documentation
 * use consistent code format
