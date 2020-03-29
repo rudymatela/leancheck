@@ -5,7 +5,7 @@ upcoming
 --------
 
 * improve Haddock documentation
-* change code formatting
+* use consistent code format
 * improve CI scripts and Makefile
 
 v0.9.2
