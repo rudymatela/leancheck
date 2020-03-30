@@ -174,10 +174,65 @@ for Tasty and Hspec would be simple.
 LeanCheck facilitates the use of [Extrapolate] to generalize counterexamples.
 
 
+Are LeanCheck property tests biased towards the first argument?
+---------------------------------------------------------------
+
+No and yes.
+
+LeanCheck is only biased towards the first argument on the _very last tier_
+being tested.  For all other tiers it is fair.
+
+LeanCheck tries to be fair between tiers, but not within them. The idea is that
+values on the same tier have the same "priority" when tested, none is more
+important than others. One way to make it so that tests are always fair could
+be to use size, instead of the number of tests as a parameter to holds and
+check. And that's exactly what [SmallCheck] and [Feat] do -- on them you choose
+the number of tests by configuring the maximum depth/size.
+
+On LeanCheck, we choose to use the number of tests for two reasons:
+
+* it just seems simpler from the user's perspective;
+* it allows for a more precise control of runtime if you have expensive tests;
+
+The drawback is that LeanCheck may end up being "unfair" to the last tier being
+tested, being biased towards the first property and constructor arguments.
+However that only happens for the _very last_ tier of values.
+
+One way to still keep it simpler but loosing fine grained control of runtime,
+is to define holds as follows:
+
+```
+-- | Does a property __hold__ for at least the given number of test values?
+--
+-- > holds 1000 $ \xs -> length (sort xs) == length xs
+--
+-- The actual number of tests may be higher than the given number of test
+-- values to account for fairness: if we start testing a tier of values, we do
+-- so until the end.
+holdsForAtLeast :: Testable a => Int -> a -> Bool
+holdsForAtLeast n = and
+                  . map snd
+                  . concatMap snd
+                  . takeWhile ((<= n) . fst)
+                  . accumulate 0
+                  . resultiers
+  where
+  accumulate n [] = []
+  accumulate n (xs:xss) = let n' = n + length xs
+                          in  (n',xs) : accumulate n' xss
+```
+
+That way, it will be fair to the last tier being tested -- which is where the
+unfairness may rise.
+
+(cf. [LeanCheck GitHub issue #14](https://github.com/rudymatela/leancheck/issues/14))
+
+
 [LeanCheck]:    https://hackage.haskell.org/package/leancheck
 [QuickCheck]:   https://hackage.haskell.org/package/QuickCheck
 [Feat]:         https://hackage.haskell.org/package/testing-feat
 [Extrapolate]:  https://hackage.haskell.org/package/extrapolate
+[SmallCheck]:   https://hackage.haskell.org/package/smallcheck
 [LeanCheck tutorial]: doc/tutorial.md
 [`Listable`]:  https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
 [`Testable`]:  https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Testable
