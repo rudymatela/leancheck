@@ -23,6 +23,9 @@ before_install:
 - ghc --version
 - cabal --version
 - haddock --version
+- du -hd3 ~/.cabal ~/.ghc || true
+- du -hd4 ~/.stack || true
+- rm -f ~/.cabal/config && cabal update
 # Download and unpack the stack executable
 # "Once Travis whitelists the stack.dev files," simply include stack in the
 # addons section. -- https://docs.haskellstack.org/en/stable/travis_ci/
