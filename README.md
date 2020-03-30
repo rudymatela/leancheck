@@ -226,9 +226,12 @@ and a step-by-step guide to LeanCheck, see the
 
 LeanCheck is subject to a chapter in a [PhD Thesis (2017)].
 
+LeanCheck has a list of [frequently asked questions] and answers.
+
 [LeanCheck's Haddock documentation]: https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html
 [tutorial on property-based testing with LeanCheck]: https://github.com/rudymatela/leancheck/blob/master/doc/tutorial.md
 [LeanCheck memory usage]: https://github.com/rudymatela/leancheck/blob/master/doc/memory-usage.md
+[frequently asked questions]: https://github.com/rudymatela/leancheck/blob/master/doc/faq.md
 
 [`Listable`]:       https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
 [`holds`]:          https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:holds
