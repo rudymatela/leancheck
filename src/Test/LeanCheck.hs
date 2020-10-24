@@ -144,6 +144,7 @@ module Test.LeanCheck
   -- * Test results
   , Testable
   , results
+  , resultsWithErrors
   )
 where
 
