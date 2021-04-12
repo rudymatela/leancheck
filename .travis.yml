@@ -46,6 +46,7 @@ script:
 matrix:
   allow_failures:
   - ghc: 'head'
+  - ghc: '9.0'
   include:
   - ghc: 'head'
     env:                   GHCVER=head        CABALVER=head    STACKVER=nightly-2021-04-06
