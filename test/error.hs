@@ -59,6 +59,30 @@ tests n  =
   , errorToNothing (tail "abc")  ==  Just "bc"
   , errorToNothing (head "")  ==  Nothing
   , errorToNothing (tail "")  ==  Nothing
+
+  , errorToLeft ()                   ==  Right ()
+  , errorToLeft (undefined   :: ())  ==  Left "Prelude.undefined"
+  , errorToLeft (error "err" :: ())  ==  Left "err"
+
+  , errorToLeft False                  ==  Right False
+  , errorToLeft True                   ==  Right True
+  , errorToLeft (undefined   :: Bool)  ==  Left "Prelude.undefined"
+  , errorToLeft (error "err" :: Bool)  ==  Left "err"
+
+  , errorToLeft (0           :: Int)  ==  Right 0
+  , errorToLeft (1           :: Int)  ==  Right 1
+  , errorToLeft (undefined   :: Int)  ==  Left "Prelude.undefined"
+  , errorToLeft (error "err" :: Int)  ==  Left "err"
+  , errorToLeft (1 `div` 0   :: Int)  ==  Left "divide by zero"
+
+  , errorToLeft (head "abc")  ==  Right 'a'
+  , errorToLeft (tail "abc")  ==  Right "bc"
+
+  , errorToLeft (head "")  ==  Left "Prelude.head: empty list" ||    -- GHC
+    errorToLeft (head "")  ==  Left "pattern match failure: head []" -- Hugs
+
+  , errorToLeft (tail "")  ==  Left "Prelude.tail: empty list" ||    -- GHC
+    errorToLeft (tail "")  ==  Left "pattern match failure: tail []" -- Hugs
   ]
 
 prop_sortMinE :: [Nat] -> Bool
