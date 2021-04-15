@@ -142,6 +142,8 @@ anyErrorToNothing x  =  unsafePerformIO $
 -- > > errorToLeft (1 `div` 0 :: Int)
 -- > Left "divide by zero"
 --
+-- Only the first line of the error's string representation is included.
+--
 -- This function uses 'unsafePerformIO'.
 errorToLeft :: a -> Either String a
 errorToLeft x  =  unsafePerformIO $
@@ -160,6 +162,10 @@ errorToLeft x  =  unsafePerformIO $
   show1st  =  concat . take 1 . lines . show
 
 -- | Transforms a value into 'Right' that value or 'Left String' on error.
+--
+-- Only the first line of the error's string representation is included.
+--
+-- This function uses 'unsafePerformIO'.  See: 'errorToLeft'.
 anyErrorToLeft :: a -> Either String a
 anyErrorToLeft x  =  unsafePerformIO $
 #if __GLASGOW_HASKELL__
