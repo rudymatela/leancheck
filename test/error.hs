@@ -39,6 +39,26 @@ tests n  =
   , witness         n someOthers == Just ["2","2"]
   , witnesses  (20*n) someOthers == (map.map) show [[2,2],[2,4],[3,3]
                                                    ,[2,8],[3,9],[3,27]]
+
+  , errorToNothing ()                   ==  Just ()
+  , errorToNothing (undefined   :: ())  ==  Nothing
+  , errorToNothing (error "err" :: ())  ==  Nothing
+
+  , errorToNothing False                  ==  Just False
+  , errorToNothing True                   ==  Just True
+  , errorToNothing (undefined   :: Bool)  ==  Nothing
+  , errorToNothing (error "err" :: Bool)  ==  Nothing
+
+  , errorToNothing (0           :: Int)  ==  Just 0
+  , errorToNothing (1           :: Int)  ==  Just 1
+  , errorToNothing (undefined   :: Int)  ==  Nothing
+  , errorToNothing (error "err" :: Int)  ==  Nothing
+  , errorToNothing (1 `div` 0   :: Int)  ==  Nothing
+
+  , errorToNothing (head "abc")  ==  Just 'a'
+  , errorToNothing (tail "abc")  ==  Just "bc"
+  , errorToNothing (head "")  ==  Nothing
+  , errorToNothing (tail "")  ==  Nothing
   ]
 
 prop_sortMinE :: [Nat] -> Bool
