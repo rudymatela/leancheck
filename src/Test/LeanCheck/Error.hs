@@ -26,7 +26,9 @@ module Test.LeanCheck.Error
   , errorToNothing
   , errorToFalse
   , errorToTrue
+  , errorToLeft
   , anyErrorToNothing
+  , anyErrorToLeft
 
   , module Test.LeanCheck
   )
@@ -117,6 +119,57 @@ anyErrorToNothing x  =  unsafePerformIO $
 #else
   (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
 #endif
+
+-- | Transforms a value into 'Right' that value or 'Left String' on some errors:
+--
+--   * ArithException
+--   * ArrayException
+--   * ErrorCall
+--   * PatternMatchFail
+--
+-- > > errorToLeft False
+-- > Just False
+--
+-- > > errorToLeft (0 :: Int)
+-- > Just 0
+--
+-- > > errorToLeft (undefined :: ())
+-- > Left "Prelude.undefined"
+--
+-- > > errorToLeft (error "error message")
+-- > Left "error message"
+--
+-- > > errorToLeft (1 `div` 0 :: Int)
+-- > Left "divide by zero"
+--
+-- This function uses 'unsafePerformIO'.
+errorToLeft :: a -> Either String a
+errorToLeft x  =  unsafePerformIO $
+#if __GLASGOW_HASKELL__
+  (Right `liftM` evaluate x) `catches`
+    [ Handler $ \e -> return . Left $ show1st (e :: ArithException)
+    , Handler $ \e -> return . Left $ show1st (e :: ArrayException)
+    , Handler $ \e -> return . Left $ show1st (e :: ErrorCall)
+    , Handler $ \e -> return . Left $ show1st (e :: PatternMatchFail)
+    ]
+#else
+  (Right `liftM` evaluate x) `catch` (return . Left . show1st)
+#endif
+  where
+  show1st :: Show a => a -> String
+  show1st  =  concat . take 1 . lines . show
+
+-- | Transforms a value into 'Right' that value or 'Left String' on error.
+anyErrorToLeft :: a -> Either String a
+anyErrorToLeft x  =  unsafePerformIO $
+#if __GLASGOW_HASKELL__
+  (Right `liftM` evaluate x) `catch` (\e -> return . Left $ show1st (e :: SomeException))
+#else
+  (Right `liftM` evaluate x) `catch` (return . Left . show1st)
+#endif
+  where
+  show1st :: Show a => a -> String
+  show1st  =  concat . take 1 . lines . show
 
 -- | Transforms errors into 'False' values.
 --
