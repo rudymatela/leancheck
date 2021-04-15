@@ -61,7 +61,6 @@ import Data.Maybe (listToMaybe, fromMaybe)
 import Control.Exception ( evaluate
                          , catch
 #if __GLASGOW_HASKELL__
-                         , Exception
                          , SomeException
                          , ArithException
                          , ArrayException
@@ -72,10 +71,9 @@ import Control.Exception ( evaluate
 #endif
                          )
 
--- | Takes a value and a function.  Ignores the value.  Binds the argument of
---   the function to the type of the value.
-bindArgumentType :: a -> (a -> b) -> a -> b
-bindArgumentType _ f  =  f
+etom :: Either b a -> Maybe a
+etom (Right x)  =  Just x
+etom (Left _)   =  Nothing
 
 -- | Transforms a value into 'Just' that value or 'Nothing' on some errors:
 --
@@ -95,30 +93,11 @@ bindArgumentType _ f  =  f
 --
 -- This function uses 'unsafePerformIO'.
 errorToNothing :: a -> Maybe a
-errorToNothing x  =  unsafePerformIO $
-#if __GLASGOW_HASKELL__
-  (Just `liftM` evaluate x) `catches` map ($ return Nothing)
-                                      [ hf (undefined :: ArithException)
-                                      , hf (undefined :: ArrayException)
-                                      , hf (undefined :: ErrorCall)
-                                      , hf (undefined :: PatternMatchFail)
-                                      ]
-  where
-  hf :: Exception e => e -> IO a -> Handler a -- handlerFor
-  hf e h  =  Handler $ bindArgumentType e (\_ -> h)
-#else
-  (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
-#endif
+errorToNothing  =  etom . errorToLeft
 
 -- | Transforms a value into 'Just' that value or 'Nothing' on error.
 anyErrorToNothing :: a -> Maybe a
-anyErrorToNothing x  =  unsafePerformIO $
-#if __GLASGOW_HASKELL__
-  (Just `liftM` evaluate x) `catch` \e -> do let _  =  e :: SomeException
-                                             return Nothing
-#else
-  (Just `liftM` evaluate x) `catch` (\_ -> return Nothing)
-#endif
+anyErrorToNothing  =  etom . anyErrorToLeft
 
 -- | Transforms a value into 'Right' that value or 'Left String' on some errors:
 --
