@@ -83,6 +83,27 @@ tests n  =
 
   , errorToLeft (tail "")  ==  Left "Prelude.tail: empty list" ||    -- GHC
     errorToLeft (tail "")  ==  Left "pattern match failure: tail []" -- Hugs
+
+  , (1 `div` 1  ?==?  2 `div` 2)   == True
+  , (1 `div` 1  ?==?  1 `div` 2)   == False
+  , (1 `div` 1  ?==?  1 `div` 0)   == False
+  , (6 `mod` 0  ?==?  2 `div` 0)   == True
+  , (head [] ?==? tail ([]::[()])) == True
+  , (error "a"  ?==?  (error "a"::())) == True
+  , (error "a"  ?==?  (error "b"::())) == True
+
+  , (1 `div` 1  !==!  2 `div` 2)   == True
+  , (1 `div` 1  !==!  1 `div` 2)   == False
+  , (1 `div` 1  !==!  1 `div` 0)   == False
+  , (6 `mod` 0  !==!  2 `div` 0)   == True
+  , (head [] !==! tail ([]::[()])) == False
+  , (error "a"  !==!  (error "a"::())) == True
+  , (error "a"  !==!  (error "b"::())) == False
+
+  , holds n $ \x y -> (x !==! y)  ==  (x == (y::Int))
+  , holds n $ \x y -> (x !==! y)  ==  (x == (y::Bool))
+  , holds n $ \x y -> (x ?==? y)  ==  (x == (y::Int))
+  , holds n $ \x y -> (x ?==? y)  ==  (x == (y::Bool))
   ]
 
 prop_sortMinE :: [Nat] -> Bool

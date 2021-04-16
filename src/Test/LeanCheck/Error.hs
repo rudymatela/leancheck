@@ -29,6 +29,8 @@ module Test.LeanCheck.Error
   , errorToLeft
   , anyErrorToNothing
   , anyErrorToLeft
+  , (?==?)
+  , (!==!)
 
   , module Test.LeanCheck
   )
@@ -58,6 +60,7 @@ import qualified Test.LeanCheck as C
 import Control.Monad (liftM)
 import System.IO.Unsafe (unsafePerformIO)
 import Data.Maybe (listToMaybe, fromMaybe)
+import Data.Function (on)
 import Control.Exception ( evaluate
                          , catch
 #if __GLASGOW_HASKELL__
@@ -195,6 +198,63 @@ errorToTrue  =  fromError True
 -- > 0
 fromError :: a -> a -> a
 fromError x  =  fromMaybe x . errorToNothing
+
+-- | Equality '==' lifted over 'errorToNothing'
+--
+-- > > 1 `div` 1  ?==?  2 `div` 2
+-- > True
+--
+-- > > 1 `div` 1  ?==?  1 `div` 2
+-- > False
+--
+-- > > 1 `div` 1  ?==?  1 `div` 0
+-- > False
+--
+-- > > 6 `mod` 0  ?==?  2 `div` 0
+-- > True
+--
+-- > > head []  ?==?  tail []
+-- > True
+--
+-- > > error "a"  ?==?  error "a"
+-- > True
+--
+-- > > error "a"  ?==?  error "b"
+-- > True
+--
+-- This function consider error values equal.
+(?==?) :: Eq a => a -> a -> Bool
+(?==?)  =  (==) `on` errorToNothing
+infix 4 ?==?
+
+-- | Equality '==' lifted over 'errorToLeft'
+--
+-- > > 1 `div` 1  !==!  2 `div` 2
+-- > True
+--
+-- > > 1 `div` 1  !==!  1 `div` 2
+-- > False
+--
+-- > > 1 `div` 1  !==!  1 `div` 0
+-- > False
+--
+-- > > 6 `mod` 0  !==!  2 `div` 0
+-- > True
+--
+-- > > head []  !==!  tail []
+-- > False
+--
+-- > > error "a"  !==!  error "a"
+-- > True
+--
+-- > > error "a"  !==!  error "b"
+-- > False
+--
+-- On error, this function returns the result
+-- of comparing the first line of error values.
+(!==!) :: Eq a => a -> a -> Bool
+(!==!)  =  (==) `on` errorToLeft
+infix 4 !==!
 
 -- | An error-catching version of 'Test.LeanCheck.holds'
 --   that returns 'False' in case of errors.
