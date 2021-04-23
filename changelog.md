@@ -1,8 +1,8 @@
 Changelog for LeanCheck
 =======================
 
-upcoming
---------
+v0.9.4
+------
 
 * no code changes in what is exported by `Test.LeanCheck`
 * add `errorToLeft` and `anyErrorToLeft` on `Test.LeanCheck.Error`
