@@ -269,6 +269,8 @@ src/Test/LeanCheck/Error.o: \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Eq: \
+  mk/toplibs
 src/Test/LeanCheck/Function/Eq.o: \
   src/Test/LeanCheck/Tiers.hs \
   src/Test/LeanCheck.hs \
@@ -312,6 +314,19 @@ src/Test/LeanCheck/Function/ListsOfPairs.o: \
   src/Test/LeanCheck.hs \
   src/Test/LeanCheck/IO.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/Ord: \
+  mk/toplibs
+src/Test/LeanCheck/Function/Ord.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/Ord.hs \
+  src/Test/LeanCheck/Function/List.hs \
+  src/Test/LeanCheck/Function/Eq.hs \
+  src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs

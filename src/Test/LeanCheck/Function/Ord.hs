@@ -1,5 +1,5 @@
 -- |
--- Module      : Test.LeanCheck.Function.Eq
+-- Module      : Test.LeanCheck.Function.Ord
 -- Copyright   : (c) 2015-2021 Rudy Matela
 -- License     : 3-Clause BSD  (see the file LICENSE)
 -- Maintainer  : Rudy Matela <rudy@matela.com.br>
@@ -7,13 +7,13 @@
 -- This /optional/ module is part of LeanCheck,
 -- a simple enumerative property-based testing library.
 --
--- A toy 'Eq' instance for functions.
+-- Toy 'Eq' and 'Ord' instance for functions.
 --
 -- > instance (Listable a, Eq b) => Eq (a -> b) where
 -- >   (==)  =  areEqualFor 12
 --
---
---
+-- > instance (Listable a, Ord b) => Ord (a -> b) where
+-- >   compare  =  compareFor 12
 --
 -- This compares functions by testing them
 -- for up to 12 different values of each argument.
@@ -32,14 +32,14 @@
 -- this is only intended to be used in testing modules.
 -- Avoid importing this on modules that are used as libraries
 -- as there is no way to unimport a typeclass instance.
-module Test.LeanCheck.Function.Eq () where
+module Test.LeanCheck.Function.Ord () where
 
 import Test.LeanCheck.Core
 import Test.LeanCheck.Function.List
+import Test.LeanCheck.Function.Eq
 
-
--- | Two functions are considered equal if their results are equal
---   for twelve different enumerated values of each argument.
+-- | Two functions are compared based on the results
+--   of twelve different enumerated values for each argument.
 --
 -- Single argument functions are tested 12 times.
 -- Two argument functions are tested 144 times.
@@ -51,5 +51,5 @@ import Test.LeanCheck.Function.List
 -- but not on libraries.  If you see this exported on a library
 -- that is not specifically intended to consider equality between
 -- functions, file a bug report to the library maintainer.
-instance (Listable a, Eq b) => Eq (a -> b) where
-  (==)  =  areEqualFor 12
+instance (Listable a, Ord b) => Ord (a -> b) where
+  compare  =  compareFor 12

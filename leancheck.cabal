@@ -107,6 +107,7 @@ library
                  , Test.LeanCheck.Stats
                  , Test.LeanCheck.Function
                  , Test.LeanCheck.Function.Eq
+                 , Test.LeanCheck.Function.Ord
                  , Test.LeanCheck.Function.Show
                  , Test.LeanCheck.Function.Show.EightLines
                  , Test.LeanCheck.Function.Show.FourCases
