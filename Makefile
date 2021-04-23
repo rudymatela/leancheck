@@ -74,8 +74,7 @@ clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-4cases.hs
 	rm -f $(TESTS) $(BENCHS) $(EGS) mk/toplibs
 
-full-clean: clean
-	rm -rf .stack-work
+full-clean: clean clean-cabal clean-stack
 	rm -f tags TAGS
 
 ghci: mk/All.ghci
