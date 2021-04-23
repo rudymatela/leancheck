@@ -1,6 +1,6 @@
 -- |
 -- Module      : Test.LeanCheck.Function.Eq
--- Copyright   : (c) 2015-2020 Rudy Matela
+-- Copyright   : (c) 2015-2021 Rudy Matela
 -- License     : 3-Clause BSD  (see the file LICENSE)
 -- Maintainer  : Rudy Matela <rudy@matela.com.br>
 --
@@ -14,6 +14,7 @@
 module Test.LeanCheck.Function.Eq () where
 
 import Test.LeanCheck.Core
+import Test.LeanCheck.Function.List
 
 instance (Listable a, Eq b) => Eq (a -> b) where
-  f == g  =  and [f x == g x | x <- take 60 list]
+  (==)  =  areEqualFor 60

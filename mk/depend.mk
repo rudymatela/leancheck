@@ -56,6 +56,7 @@ bench/tiers-4cases.o: \
   src/Test/LeanCheck/Function/ShowFunction.hs \
   src/Test/LeanCheck/Function/Show/FourCases.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/List.hs \
   src/Test/LeanCheck/Function/Listable.hs \
   src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Eq.hs \
@@ -81,6 +82,7 @@ bench/tiers-default.o: \
   src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/List.hs \
   src/Test/LeanCheck/Function/Listable.hs \
   src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Eq.hs \
@@ -100,6 +102,7 @@ bench/tiers.o: \
   src/Test/LeanCheck/Function/Show/EightLines.hs \
   src/Test/LeanCheck/Function.hs \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
+  src/Test/LeanCheck/Function/List.hs \
   src/Test/LeanCheck/Function/Listable.hs \
   src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Eq.hs \
@@ -267,8 +270,15 @@ src/Test/LeanCheck/Error.o: \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs
 src/Test/LeanCheck/Function/Eq.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/List.hs \
   src/Test/LeanCheck/Function/Eq.hs \
-  src/Test/LeanCheck/Core.hs
+  src/Test/LeanCheck/Error.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
 src/Test/LeanCheck/Function/Listable/ListsOfPairs.o: \
   src/Test/LeanCheck/Tiers.hs \
   src/Test/LeanCheck.hs \
@@ -285,6 +295,15 @@ src/Test/LeanCheck/Function/Listable.o: \
   src/Test/LeanCheck/Function/ListsOfPairs.hs \
   src/Test/LeanCheck/Function/Listable.hs \
   src/Test/LeanCheck/Function/Listable/ListsOfPairs.hs \
+  src/Test/LeanCheck/Derive.hs \
+  src/Test/LeanCheck/Core.hs \
+  src/Test/LeanCheck/Basic.hs
+src/Test/LeanCheck/Function/List.o: \
+  src/Test/LeanCheck/Tiers.hs \
+  src/Test/LeanCheck.hs \
+  src/Test/LeanCheck/IO.hs \
+  src/Test/LeanCheck/Function/List.hs \
+  src/Test/LeanCheck/Error.hs \
   src/Test/LeanCheck/Derive.hs \
   src/Test/LeanCheck/Core.hs \
   src/Test/LeanCheck/Basic.hs

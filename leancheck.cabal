@@ -110,6 +110,7 @@ library
                  , Test.LeanCheck.Function.Show
                  , Test.LeanCheck.Function.Show.EightLines
                  , Test.LeanCheck.Function.Show.FourCases
+                 , Test.LeanCheck.Function.List
                  , Test.LeanCheck.Function.Listable
                  , Test.LeanCheck.Function.Listable.ListsOfPairs
                  , Test.LeanCheck.Function.ListsOfPairs
