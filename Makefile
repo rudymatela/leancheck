@@ -332,7 +332,7 @@ bench/tiers-%.diff-test: bench/tiers-%
 	$< "Int->Int->Int->Int"     4 | diff -rud test/diff/tiers-$*-Int-Int-Int-Int.out -
 	$< "Bool->Bool->Bool->Bool"   | diff -rud test/diff/tiers-$*-Bool-Bool-Bool-Bool.out -
 	# functions of lists
-	$< "[Bool]->[Bool]" 6 | diff -rud test/diff/tiers-$*-Bools-Bools.out -
+	$< "[Bool]->[Bool]" 5 | diff -rud test/diff/tiers-$*-Bools-Bools.out -
 	$< "[Nat]->[Nat]"   6 | diff -rud test/diff/tiers-$*-Nats-Nats.out   -
 	$< "[Int]->[Int]"   6 | diff -rud test/diff/tiers-$*-Ints-Ints.out   -
 	# more functions
@@ -366,7 +366,7 @@ bench/tiers-%.update-diff-test: bench/tiers-%
 	$< "Bool->Bool->Bool->Bool"   > test/diff/tiers-$*-Bool-Bool-Bool-Bool.out
 	# functions of lists
 	$< "[()]->[()]"     6 > test/diff/tiers-$*-Us-Us.out
-	$< "[Bool]->[Bool]" 6 > test/diff/tiers-$*-Bools-Bools.out
+	$< "[Bool]->[Bool]" 5 > test/diff/tiers-$*-Bools-Bools.out
 	$< "[Nat]->[Nat]"   6 > test/diff/tiers-$*-Nats-Nats.out
 	$< "[Int]->[Int]"   6 > test/diff/tiers-$*-Ints-Ints.out
 	# more functions
