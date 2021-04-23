@@ -1,6 +1,18 @@
 Changelog for LeanCheck
 =======================
 
+upcoming
+--------
+
+* no code changes in what is exported by `Test.LeanCheck`
+* add `errorToLeft` and `anyErrorToLeft` on `Test.LeanCheck.Error`
+* add `?==?` and `!==!` on `Test.LeanCheck.Error`
+* add `Test.LeanCheck.Function.List`
+* add `Test.LeanCheck.Function.Ord`
+* reduce default argument enumeration to 12 on `Test.LeanCheck.Function.Eq`
+* add FAQ
+* improve Makefile and test scripts
+
 v0.9.3
 ------
 
