@@ -99,10 +99,12 @@ test-sdist:
 	./test/sdist
 
 test-via-cabal:
-	cabal test
+	cabal configure --enable-tests --enable-benchmarks --ghc-options="$(GHCFLAGS) -O0"
+	cabal build
+	cabal test main
 
 test-via-stack:
-	stack test
+	stack test leancheck:test:main --ghc-options="$(GHCFLAGS) -O0" --system-ghc --no-install-ghc --no-terminal
 
 legacy-test: # needs ghc-8.8 .. ghc-7.8 installed as such
 	make clean  &&  make test -j GHC=ghc-8.8
@@ -123,6 +125,8 @@ legacy-test-via-cabal: # needs similarly named cabal wrappers
 	cabal clean  &&  cabal-ghc-7.10 configure  &&  cabal-ghc-7.10 test
 	cabal clean  &&  cabal-ghc-7.8  configure  &&  cabal-ghc-7.8  test
 	cabal clean  &&  cabal test
+
+install-dependencies: # no dependencies
 
 hlint:
 	hlint \
