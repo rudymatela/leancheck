@@ -31,7 +31,7 @@ BENCHS = \
 GHCIMPORTDIRS = src:test
 GHCFLAGS = -O2 $(shell grep -q "Arch Linux" /etc/lsb-release && echo -dynamic) \
   -W -fno-warn-unused-matches -Werror
-HADDOCKFLAGS = --no-print-missing-docs
+HADDOCKFLAGS = $(shell haddock --help | grep -q -- --no-print-missing-docs && echo --no-print-missing-docs)
 HUGSIMPORTDIRS = .:./src:./test:./etc/hugs-backports:/usr/lib/hugs/packages/*
 HUGSFLAGS = -98 -h32M
 
