@@ -36,7 +36,7 @@ module Test.LeanCheck.Function.Ord () where
 
 import Test.LeanCheck.Core
 import Test.LeanCheck.Function.List
-import Test.LeanCheck.Function.Eq
+import Test.LeanCheck.Function.Eq ()
 
 -- | Two functions are compared based on the results
 --   of twelve different enumerated values for each argument.
