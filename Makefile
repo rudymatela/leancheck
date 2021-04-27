@@ -125,8 +125,6 @@ legacy-test-via-cabal: # needs similarly named cabal wrappers
 	cabal clean  &&  cabal-ghc-7.8  configure  &&  cabal-ghc-7.8  test
 	cabal clean  &&  cabal test
 
-install-dependencies: # no dependencies
-
 hlint:
 	hlint \
 	  --ignore "Use import/export shortcut" \
