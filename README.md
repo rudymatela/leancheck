@@ -273,8 +273,8 @@ LeanCheck has a list of [frequently asked questions] and answers.
 
 [leancheck-logo]: https://github.com/rudymatela/leancheck/raw/master/doc/leancheck.svg?sanitize=true
 
-[build-log]:    https://github.com/rudymatela/hello-haskell/actions/workflows/build.yml
-[build-status]: https://github.com/rudymatela/hello-haskell/actions/workflows/build.yml/badge.svg
+[build-log]:    https://github.com/rudymatela/leancheck/actions/workflows/build.yml
+[build-status]: https://github.com/rudymatela/leancheck/actions/workflows/build.yml/badge.svg
 [hackage-version]: https://img.shields.io/hackage/v/leancheck.svg
 [leancheck-on-hackage]: https://hackage.haskell.org/package/leancheck
 [stackage-lts-badge]:            https://stackage.org/package/leancheck/badge/lts
