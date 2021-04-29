@@ -30,15 +30,18 @@ LeanCheck implementation is easy to understand.
 Installing
 ----------
 
-To install the latest LeanCheck version from Hackage, just run:
+To install the latest LeanCheck version from Hackage using Cabal v3.0 or later, just run:
+
+	$ cabal v1-update
+	$ cabal v1-install leancheck
+
+If you are using a cabal earlier than v3.0, just run:
 
 	$ cabal update
 	$ cabal install leancheck
 
-Starting from Cabal v3.0, you need to pass `--lib` as an argument to cabal
-install:
-
-	$ cabal install leancheck --lib
+With Cabal v3.0 or later,
+[using `v1-install` is preferred for the time being.](https://github.com/haskell/cabal/issues/7373)
 
 
 Checking if properties are True
