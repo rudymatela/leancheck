@@ -1,6 +1,15 @@
 Changelog for LeanCheck
 =======================
 
+upcoming
+--------
+
+* no code changes in what is exported by `Test.LeanCheck`
+* `Test.LeanCheck.Utils.Types`: export the `A`, `B`, `C`, `D`, `E` and `F` types
+* slightly improve README
+* improve Makefile and tests
+* replace Travis by GitHub Actions as the CI system
+
 v0.9.4
 ------
 
