@@ -1,8 +1,8 @@
 Changelog for LeanCheck
 =======================
 
-upcoming
---------
+v0.9.6
+------
 
 * no code changes in what is exported by `Test.LeanCheck`
 * `Test.LeanCheck.Utils.Types`: export the `A`, `B`, `C`, `D`, `E` and `F` types
