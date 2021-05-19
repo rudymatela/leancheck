@@ -45,7 +45,6 @@ extra-doc-files: README.md
                , doc/tutorial.md
                , doc/leancheck.svg
 extra-source-files: .gitignore
-                  , .travis.yml
                   , .github/workflows/build.yml
                   , Makefile
                   , bench/dets.hs
