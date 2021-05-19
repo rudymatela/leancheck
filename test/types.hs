@@ -46,6 +46,20 @@ tests n =
   , list `permutation` [minBound..maxBound :: Nat6]
   , list `permutation` [minBound..maxBound :: Nat7]
 
+  , list `permutation` [minBound..maxBound :: A]
+  , list `permutation` [minBound..maxBound :: B]
+  , list `permutation` [minBound..maxBound :: C]
+  , list `permutation` [minBound..maxBound :: D]
+  , list `permutation` [minBound..maxBound :: E]
+  , list `permutation` [minBound..maxBound :: F]
+
+  , tiers == [[0], [1], [2], [3], [4], [5 :: A]]
+  , tiers == [[0], [1], [2], [3], [4], [5 :: B]]
+  , tiers == [[0], [1], [2], [3], [4], [5 :: C]]
+  , tiers == [[0], [1], [2], [3], [4], [5 :: D]]
+  , tiers == [[0], [1], [2], [3], [4], [5 :: E]]
+  , tiers == [[0], [1], [2], [3], [4], [5 :: F]]
+
   , map unX list `permutation` [minBound..maxBound :: Int8]
   , map unX list `permutation` [minBound..maxBound :: Int4]
   , map unX list `permutation` [minBound..maxBound :: Int3]

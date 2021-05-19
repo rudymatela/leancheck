@@ -78,6 +78,9 @@ module Test.LeanCheck.Utils.Types
   , Digits (..)
   , AlphaNums (..)
   , Letters (..)
+
+  -- * Generic types
+  , A, B, C, D, E, F
   )
 where
 
@@ -187,6 +190,85 @@ newtype Nat6 = Nat6 { unNat6 :: Int } deriving (Eq, Ord)
 -- | Natural numbers modulo 7: 0, 1, 2, 3, 4, 5, 6
 newtype Nat7 = Nat7 { unNat7 :: Int } deriving (Eq, Ord)
 
+-- | Generic type 'A'.
+--
+-- Can be used to test polymorphic functions with a type variable
+-- such as 'take' or 'sort':
+--
+-- > take :: Int -> [a] -> [a]
+-- > sort :: Ord a => [a] -> [a]
+--
+-- by binding them to the following types:
+--
+-- > take :: Int -> [A] -> [A]
+-- > sort :: [A] -> [A]
+--
+-- This type is homomorphic to 'Nat6', 'B', 'C', 'D', 'E' and 'F'.
+--
+-- It is instance to several typeclasses so that it can be used
+-- to test functions with type contexts.
+newtype A = A Int deriving (Eq, Ord)
+
+-- | Generic type 'B'.
+--
+-- Can be used to test polymorphic functions with two type variables
+-- such as 'map' or 'foldr':
+--
+-- > map :: (a -> b) -> [a] -> [b]
+-- > foldr :: (a -> b -> b) -> b -> [a] -> b
+--
+-- by binding them to the following types:
+--
+-- > map :: (A -> B) -> [A] -> [B]
+-- > foldr :: (A -> B -> B) -> B -> [A] -> B
+--
+-- This type is homomorphic to 'A', 'Nat6', 'C', 'D', 'E' and 'F'.
+newtype B = B Int deriving (Eq, Ord)
+
+-- | Generic type 'C'.
+--
+-- Can be used to test polymorphic functions with three type variables
+-- such as 'uncurry' or 'zipWith':
+--
+-- > uncurry :: (a -> b -> c) -> (a, b) -> c
+-- > zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+--
+-- by binding them to the following types:
+--
+-- > uncurry :: (A -> B -> C) -> (A, B) -> C
+-- > zipWith :: (A -> B -> C) -> [A] -> [B] -> [C]
+--
+-- This type is homomorphic to 'A', 'B', 'Nat6', 'D', 'E' and 'F'.
+newtype C = C Int deriving (Eq, Ord)
+
+-- | Generic type 'D'.
+--
+-- Can be used to test polymorphic functions with four type variables.
+--
+-- This type is homomorphic to 'A', 'B', 'C', 'Nat6', 'E' and 'F'.
+newtype D = D Int deriving (Eq, Ord)
+
+-- | Generic type 'E'.
+--
+-- Can be used to test polymorphic functions with five type variables.
+--
+-- This type is homomorphic to 'A', 'B', 'C', 'D', 'Nat6' and 'F'.
+newtype E = E Int deriving (Eq, Ord)
+
+-- | Generic type 'F'.
+--
+-- Can be used to test polymorphic functions with five type variables.
+--
+-- This type is homomorphic to 'A', 'B', 'C', 'D', 'E' and 'Nat6'.
+newtype F = F Int deriving (Eq, Ord)
+
+unA :: A -> Int;  unA (A n)  =  n
+unB :: B -> Int;  unB (B n)  =  n
+unC :: C -> Int;  unC (C n)  =  n
+unD :: D -> Int;  unD (D n)  =  n
+unE :: E -> Int;  unE (E n)  =  n
+unF :: F -> Int;  unF (F n)  =  n
+
 int1  :: Int -> Int1;   int1  = Int1  . narrowS 1
 int2  :: Int -> Int2;   int2  = Int2  . narrowS 2
 int3  :: Int -> Int3;   int3  = Int3  . narrowS 3
@@ -204,6 +286,12 @@ nat6 :: Int -> Nat6;  nat6 = Nat6 . (`mod` 6)
 nat7 :: Int -> Nat7;  nat7 = Nat7 . (`mod` 7)
 nat  :: Int -> Nat;   nat  = Nat  . (\x -> if x < 0 then 0 else x)
 natural :: Integer -> Natural;  natural = Natural . (\x -> if x < 0 then 0 else x)
+mkA :: Int -> A;  mkA  =  A . (`mod` 6)
+mkB :: Int -> B;  mkB  =  B . (`mod` 6)
+mkC :: Int -> C;  mkC  =  C . (`mod` 6)
+mkD :: Int -> D;  mkD  =  D . (`mod` 6)
+mkE :: Int -> E;  mkE  =  E . (`mod` 6)
+mkF :: Int -> F;  mkF  =  F . (`mod` 6)
 
 oInt1  ::(Int->Int->Int)->(Int1->Int1->Int1)   ; oInt1  = oNewtype int1  unInt1
 oInt2  ::(Int->Int->Int)->(Int2->Int2->Int2)   ; oInt2  = oNewtype int2  unInt2
@@ -223,6 +311,12 @@ oNat6  ::(Int->Int->Int)->(Nat6->Nat6->Nat6)   ; oNat6  = oNewtype nat6  unNat6
 oNat7  ::(Int->Int->Int)->(Nat7->Nat7->Nat7)   ; oNat7  = oNewtype nat7  unNat7
 oNatural :: (Integer->Integer->Integer) -> (Natural->Natural->Natural)
 oNatural = oNewtype natural unNatural
+oA :: (Int -> Int -> Int) -> (A -> A -> A);  oA  =  oNewtype mkA unA
+oB :: (Int -> Int -> Int) -> (B -> B -> B);  oB  =  oNewtype mkB unB
+oC :: (Int -> Int -> Int) -> (C -> C -> C);  oC  =  oNewtype mkC unC
+oD :: (Int -> Int -> Int) -> (D -> D -> D);  oD  =  oNewtype mkD unD
+oE :: (Int -> Int -> Int) -> (E -> E -> E);  oE  =  oNewtype mkE unE
+oF :: (Int -> Int -> Int) -> (F -> F -> F);  oF  =  oNewtype mkF unF
 
 fInt1  :: (Int->Int) -> (Int1->Int1)   ; fInt1  = fNewtype int1  unInt1
 fInt2  :: (Int->Int) -> (Int2->Int2)   ; fInt2  = fNewtype int2  unInt2
@@ -242,6 +336,12 @@ fNat6  :: (Int->Int) -> (Nat6->Nat6)   ; fNat6  = fNewtype nat6  unNat6
 fNat7  :: (Int->Int) -> (Nat7->Nat7)   ; fNat7  = fNewtype nat7  unNat7
 fNatural :: (Integer->Integer) -> (Natural->Natural)
 fNatural = fNewtype Natural unNatural
+fA :: (Int -> Int) -> (A -> A);  fA  =  fNewtype mkA unA
+fB :: (Int -> Int) -> (B -> B);  fB  =  fNewtype mkB unB
+fC :: (Int -> Int) -> (C -> C);  fC  =  fNewtype mkC unC
+fD :: (Int -> Int) -> (D -> D);  fD  =  fNewtype mkD unD
+fE :: (Int -> Int) -> (E -> E);  fE  =  fNewtype mkE unE
+fF :: (Int -> Int) -> (F -> F);  fF  =  fNewtype mkF unF
 
 instance Show Int1 where show = show . unInt1
 instance Show Int2 where show = show . unInt2
@@ -260,6 +360,12 @@ instance Show Nat5 where show = show . unNat5
 instance Show Nat6 where show = show . unNat6
 instance Show Nat7 where show = show . unNat7
 instance Show Natural where show (Natural x) = show x
+instance Show A where show = show . unA
+instance Show B where show = show . unB
+instance Show C where show = show . unC
+instance Show D where show = show . unD
+instance Show E where show = show . unE
+instance Show F where show = show . unF
 
 instance Read Int1 where readsPrec = readsPrecNewtype int1
 instance Read Int2 where readsPrec = readsPrecNewtype int2
@@ -278,6 +384,12 @@ instance Read Nat5 where readsPrec = readsPrecNewtype nat5
 instance Read Nat6 where readsPrec = readsPrecNewtype nat6
 instance Read Nat7 where readsPrec = readsPrecNewtype nat7
 instance Read Natural where readsPrec = readsPrecNewtype natural
+instance Read A where readsPrec = readsPrecNewtype mkA
+instance Read B where readsPrec = readsPrecNewtype mkB
+instance Read C where readsPrec = readsPrecNewtype mkC
+instance Read D where readsPrec = readsPrecNewtype mkD
+instance Read E where readsPrec = readsPrecNewtype mkE
+instance Read F where readsPrec = readsPrecNewtype mkF
 
 
 instance Num Int1 where (+) = oInt1 (+);  abs    = fInt1 abs
@@ -349,6 +461,30 @@ instance Num Natural where
   (-) = oNatural (-);  signum = fNatural signum
   (*) = oNatural (*);  fromInteger = natural . fromInteger
 
+instance Num A where (+) = oA (+);  abs    = fA abs
+                     (-) = oA (-);  signum = fA signum
+                     (*) = oA (*);  fromInteger = mkA . fromInteger
+
+instance Num B where (+) = oB (+);  abs    = fB abs
+                     (-) = oB (-);  signum = fB signum
+                     (*) = oB (*);  fromInteger = mkB . fromInteger
+
+instance Num C where (+) = oC (+);  abs    = fC abs
+                     (-) = oC (-);  signum = fC signum
+                     (*) = oC (*);  fromInteger = mkC . fromInteger
+
+instance Num D where (+) = oD (+);  abs    = fD abs
+                     (-) = oD (-);  signum = fD signum
+                     (*) = oD (*);  fromInteger = mkD . fromInteger
+
+instance Num E where (+) = oE (+);  abs    = fE abs
+                     (-) = oE (-);  signum = fE signum
+                     (*) = oE (*);  fromInteger = mkE . fromInteger
+
+instance Num F where (+) = oF (+);  abs    = fF abs
+                     (-) = oF (-);  signum = fF signum
+                     (*) = oF (*);  fromInteger = mkF . fromInteger
+
 
 instance Real Int1 where toRational (Int1 x) = fromIntegral x % 1
 instance Real Int2 where toRational (Int2 x) = fromIntegral x % 1
@@ -367,6 +503,12 @@ instance Real Nat5 where toRational (Nat5 x) = fromIntegral x % 1
 instance Real Nat6 where toRational (Nat6 x) = fromIntegral x % 1
 instance Real Nat7 where toRational (Nat7 x) = fromIntegral x % 1
 instance Real Natural where toRational (Natural x) = fromIntegral x % 1
+instance Real A where toRational (A x) = fromIntegral x % 1
+instance Real B where toRational (B x) = fromIntegral x % 1
+instance Real C where toRational (C x) = fromIntegral x % 1
+instance Real D where toRational (D x) = fromIntegral x % 1
+instance Real E where toRational (E x) = fromIntegral x % 1
+instance Real F where toRational (F x) = fromIntegral x % 1
 
 instance Integral Int1 where quotRem = otNewtype int1 unInt1 quotRem
                              toInteger = toInteger . unInt1
@@ -419,6 +561,24 @@ instance Integral Nat7 where quotRem = otNewtype nat7 unNat7 quotRem
 instance Integral Natural where quotRem = otNewtype natural unNatural quotRem
                                 toInteger = toInteger . unNatural
 
+instance Integral A where quotRem = otNewtype mkA unA quotRem
+                          toInteger = toInteger . unA
+
+instance Integral B where quotRem = otNewtype mkB unB quotRem
+                          toInteger = toInteger . unB
+
+instance Integral C where quotRem = otNewtype mkC unC quotRem
+                          toInteger = toInteger . unC
+
+instance Integral D where quotRem = otNewtype mkD unD quotRem
+                          toInteger = toInteger . unD
+
+instance Integral E where quotRem = otNewtype mkE unE quotRem
+                          toInteger = toInteger . unE
+
+instance Integral F where quotRem = otNewtype mkF unF quotRem
+                          toInteger = toInteger . unF
+
 instance Bounded Int1 where maxBound = Int1 0; minBound = Int1 (-1)
 instance Bounded Int2 where maxBound = Int2 1; minBound = Int2 (-2)
 instance Bounded Int3 where maxBound = Int3 3; minBound = Int3 (-4)
@@ -435,6 +595,12 @@ instance Bounded Nat4 where maxBound = Nat4 3; minBound = Nat4 0
 instance Bounded Nat5 where maxBound = Nat5 4; minBound = Nat5 0
 instance Bounded Nat6 where maxBound = Nat6 5; minBound = Nat6 0
 instance Bounded Nat7 where maxBound = Nat7 6; minBound = Nat7 0
+instance Bounded A where maxBound = A 5; minBound = A 0
+instance Bounded B where maxBound = B 5; minBound = B 0
+instance Bounded C where maxBound = C 5; minBound = C 0
+instance Bounded D where maxBound = D 5; minBound = D 0
+instance Bounded E where maxBound = E 5; minBound = E 0
+instance Bounded F where maxBound = F 5; minBound = F 0
 
 instance Enum Int1 where toEnum   = int1;   enumFrom     = boundedEnumFrom
                          fromEnum = unInt1; enumFromThen = boundedEnumFromThen
@@ -490,6 +656,24 @@ instance Enum Natural where
   enumFrom     (Natural x)             = map Natural [x..]
   enumFromThen (Natural x) (Natural s) = map Natural [x,s..]
 
+instance Enum A where toEnum   = mkA; enumFrom     = boundedEnumFrom
+                      fromEnum = unA; enumFromThen = boundedEnumFromThen
+
+instance Enum B where toEnum   = mkB; enumFrom     = boundedEnumFrom
+                      fromEnum = unB; enumFromThen = boundedEnumFromThen
+
+instance Enum C where toEnum   = mkC; enumFrom     = boundedEnumFrom
+                      fromEnum = unC; enumFromThen = boundedEnumFromThen
+
+instance Enum D where toEnum   = mkD; enumFrom     = boundedEnumFrom
+                      fromEnum = unD; enumFromThen = boundedEnumFromThen
+
+instance Enum E where toEnum   = mkE; enumFrom     = boundedEnumFrom
+                      fromEnum = unE; enumFromThen = boundedEnumFromThen
+
+instance Enum F where toEnum   = mkF; enumFrom     = boundedEnumFrom
+                      fromEnum = unF; enumFromThen = boundedEnumFromThen
+
 range' :: Enum a => (a,a) -> [a]
 range' (m,n)  =  [m..n]
 
@@ -517,6 +701,12 @@ instance Ix Nat5 where range = range'; index = index'; inRange = inRange'
 instance Ix Nat6 where range = range'; index = index'; inRange = inRange'
 instance Ix Nat7 where range = range'; index = index'; inRange = inRange'
 instance Ix Natural where range = range'; index = index'; inRange = inRange'
+instance Ix A where range = range'; index = index'; inRange = inRange'
+instance Ix B where range = range'; index = index'; inRange = inRange'
+instance Ix C where range = range'; index = index'; inRange = inRange'
+instance Ix D where range = range'; index = index'; inRange = inRange'
+instance Ix E where range = range'; index = index'; inRange = inRange'
+instance Ix F where range = range'; index = index'; inRange = inRange'
 
 instance Listable Int1 where list = [0,minBound]
 instance Listable Int2 where list = listIntegral
@@ -535,6 +725,12 @@ instance Listable Nat5 where list = listIntegral
 instance Listable Nat6 where list = listIntegral
 instance Listable Nat7 where list = listIntegral
 instance Listable Natural where list = listIntegral
+instance Listable A where list = listIntegral
+instance Listable B where list = listIntegral
+instance Listable C where list = listIntegral
+instance Listable D where list = listIntegral
+instance Listable E where list = listIntegral
+instance Listable F where list = listIntegral
 
 -- | Deprecated.  Use 'Word1'.
 type UInt1 = Word1
