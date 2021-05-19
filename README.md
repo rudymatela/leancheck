@@ -42,6 +42,20 @@ If you are using a cabal earlier than v3.0, just run:
 
 With Cabal v3.0 or later,
 [using `v1-install` is preferred for the time being.](https://github.com/haskell/cabal/issues/7373)
+If all fails, you can start over by resetting your user's cabal installation
+with:
+
+	rm -rf ~/.cabal/{bin,lib,logs,share,store} ~/.ghc/*/
+
+WARNING: the above command will erase all user-local packages.
+
+LeanCheck has (official) packages available on
+[Stackage](https://www.stackage.org/package/leancheck),
+[OpenSUSE](https://packagehub.suse.com/packages/ghc-leancheck/),
+[Gentoo](https://packages.gentoo.org/packages/dev-haskell/leancheck),
+[Arch Linux](https://archlinux.org/packages/community/x86_64/haskell-leancheck/) and
+[NixOS](https://hydra.nixos.org/job/nixpkgs/trunk/haskellPackages.leancheck.x86_64-linux).
+
 
 
 Checking if properties are True
