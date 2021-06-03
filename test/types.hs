@@ -8,6 +8,9 @@ import Test.LeanCheck.Utils.Types
 import Data.Word
 import Data.Int
 import Data.Char hiding (Space)
+#if __GLASGOW_HASKELL__ >= 710
+import Data.Typeable (typeOf)
+#endif
 
 main :: IO ()
 main  =  do
@@ -147,6 +150,8 @@ tests n =
   , holds n $ \(Digits s) -> all isDigit s
   , holds n $ \(AlphaNums s) -> all isAlphaNum s
   , holds n $ \(Letters s)   -> all isLetter s
+
+  , allTypeable || True
   ]
   where
   unXs (Xs xs) = xs
@@ -201,3 +206,57 @@ permutation :: Eq a => [a] -> [a] -> Bool
 (_:_)  `permutation` []    = False
 []     `permutation` (_:_) = False
 (x:xs) `permutation` ys    = x `elem` ys  &&  xs `permutation` delete x ys
+
+
+allTypeable :: Bool
+#if __GLASGOW_HASKELL__ >= 710
+allTypeable  =  True
+  where
+  _  =  [ typeOf (undefined :: Int1)
+        , typeOf (undefined :: Int1)
+        , typeOf (undefined :: Int2)
+        , typeOf (undefined :: Int3)
+        , typeOf (undefined :: Int4)
+        , typeOf (undefined :: Word1)
+        , typeOf (undefined :: Word2)
+        , typeOf (undefined :: Word3)
+        , typeOf (undefined :: Word4)
+        , typeOf (undefined :: Nat)
+        , typeOf (undefined :: Nat1)
+        , typeOf (undefined :: Nat2)
+        , typeOf (undefined :: Nat3)
+        , typeOf (undefined :: Nat4)
+        , typeOf (undefined :: Nat5)
+        , typeOf (undefined :: Nat6)
+        , typeOf (undefined :: Nat7)
+        , typeOf (undefined :: Natural)
+        , typeOf (undefined :: X A)
+        , typeOf (undefined :: Xs [A])
+        , typeOf (undefined :: NoDup [A])
+        , typeOf (undefined :: Bag [A])
+        , typeOf (undefined :: Set [A])
+        , typeOf (undefined :: Map [A] [A])
+        , typeOf (undefined :: Space)
+        , typeOf (undefined :: Lower)
+        , typeOf (undefined :: Upper)
+        , typeOf (undefined :: Alpha)
+        , typeOf (undefined :: Digit)
+        , typeOf (undefined :: AlphaNum)
+        , typeOf (undefined :: Letter)
+        , typeOf (undefined :: Spaces)
+        , typeOf (undefined :: Lowers)
+        , typeOf (undefined :: Uppers)
+        , typeOf (undefined :: Alphas)
+        , typeOf (undefined :: Digits)
+        , typeOf (undefined :: AlphaNums)
+        , typeOf (undefined :: Letters)
+        , typeOf (undefined :: A)
+        , typeOf (undefined :: B)
+        , typeOf (undefined :: C)
+        , typeOf (undefined :: D)
+        , typeOf (undefined :: E)
+        , typeOf (undefined :: F)
+        ]
+#else
+allTypeable  =  False
+#endif

@@ -8,6 +8,11 @@
 -- a simple enumerative property-based testing library.
 --
 -- Types to aid in property-based testing.
+{-# LANGUAGE CPP #-}
+#if __GLASGOW_HASKELL__ == 710
+{-# LANGUAGE AutoDeriveTypeable #-}
+-- from GHC 8.0 onward, Typeable instances are created automatically for all types.
+#endif
 module Test.LeanCheck.Utils.Types
   (
   -- * Integer types
