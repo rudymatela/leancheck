@@ -1,6 +1,13 @@
 Changelog for LeanCheck
 =======================
 
+v0.9.8
+------
+
+* `Test.LeanCheck.Utils.Type`: Typeable instances on GHC 7.10.
+  Behaviour on newer GHCs (>= 8.0) versions is unaffected
+  as they automatically derive Typeable instances for all types.
+
 v0.9.6
 ------
 
