@@ -15,6 +15,7 @@ v0.9.8
   ~Behaviour on newer GHCs (>= 8.0) versions is unaffected~
   ~as they automatically derive Typeable instances for all types.~
   _Update:_ these instances were already present on v0.9.6.
+  LeanCheck v0.9.8 is essentially the same as v0.9.6.
 
 v0.9.6
 ------
