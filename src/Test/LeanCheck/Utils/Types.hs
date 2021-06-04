@@ -998,6 +998,8 @@ instance Listable AlphaNums where tiers = cons1 (AlphaNums . map unAlphaNum)
 instance Listable Letters   where tiers = cons1 (Letters   . map unLetter)
 
 #if __GLASGOW_HASKELL__ == 708
+-- there's no need to derive these on GHC >= 7.10
+-- as they are automatically derived
 deriving instance Typeable Int1
 deriving instance Typeable Int2
 deriving instance Typeable Int3
