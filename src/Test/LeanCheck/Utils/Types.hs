@@ -9,9 +9,8 @@
 --
 -- Types to aid in property-based testing.
 {-# LANGUAGE CPP #-}
-#if __GLASGOW_HASKELL__ == 710
-{-# LANGUAGE AutoDeriveTypeable #-}
--- from GHC 8.0 onward, Typeable instances are created automatically for all types.
+#if __GLASGOW_HASKELL__ == 708
+{-# LANGUAGE DeriveDataTypeable, StandaloneDeriving #-}
 #endif
 module Test.LeanCheck.Utils.Types
   (
@@ -94,6 +93,9 @@ import Test.LeanCheck.Core ((+|),cons1)
 import Test.LeanCheck.Tiers (noDupListCons, setCons, bagCons, mapCons)
 import Data.Ratio ((%))
 import Data.Ix
+#if __GLASGOW_HASKELL__ == 708
+import Data.Typeable (Typeable)
+#endif
 
 narrowU :: Int -> Int -> Int
 narrowU w i = i `mod` 2^w
@@ -994,3 +996,49 @@ instance Listable Alphas where tiers = cons1 (Alphas . map unAlpha)
 instance Listable Digits where tiers = cons1 (Digits . map unDigit)
 instance Listable AlphaNums where tiers = cons1 (AlphaNums . map unAlphaNum)
 instance Listable Letters   where tiers = cons1 (Letters   . map unLetter)
+
+#if __GLASGOW_HASKELL__ == 708
+deriving instance Typeable Int1
+deriving instance Typeable Int2
+deriving instance Typeable Int3
+deriving instance Typeable Int4
+deriving instance Typeable Word1
+deriving instance Typeable Word2
+deriving instance Typeable Word3
+deriving instance Typeable Word4
+deriving instance Typeable Nat
+deriving instance Typeable Nat1
+deriving instance Typeable Nat2
+deriving instance Typeable Nat3
+deriving instance Typeable Nat4
+deriving instance Typeable Nat5
+deriving instance Typeable Nat6
+deriving instance Typeable Nat7
+deriving instance Typeable Natural
+deriving instance Typeable X
+deriving instance Typeable Xs
+deriving instance Typeable NoDup
+deriving instance Typeable Bag
+deriving instance Typeable Set
+deriving instance Typeable Map
+deriving instance Typeable Space
+deriving instance Typeable Lower
+deriving instance Typeable Upper
+deriving instance Typeable Alpha
+deriving instance Typeable Digit
+deriving instance Typeable AlphaNum
+deriving instance Typeable Letter
+deriving instance Typeable Spaces
+deriving instance Typeable Lowers
+deriving instance Typeable Uppers
+deriving instance Typeable Alphas
+deriving instance Typeable Digits
+deriving instance Typeable AlphaNums
+deriving instance Typeable Letters
+deriving instance Typeable A
+deriving instance Typeable B
+deriving instance Typeable C
+deriving instance Typeable D
+deriving instance Typeable E
+deriving instance Typeable F
+#endif

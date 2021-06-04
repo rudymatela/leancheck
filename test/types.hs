@@ -8,7 +8,7 @@ import Test.LeanCheck.Utils.Types
 import Data.Word
 import Data.Int
 import Data.Char hiding (Space)
-#if __GLASGOW_HASKELL__ >= 710
+#if __GLASGOW_HASKELL__ >= 708
 import Data.Typeable (typeOf)
 #endif
 
@@ -209,7 +209,7 @@ permutation :: Eq a => [a] -> [a] -> Bool
 
 
 allTypeable :: Bool
-#if __GLASGOW_HASKELL__ >= 710
+#if __GLASGOW_HASKELL__ >= 708
 allTypeable  =  True
   where
   _  =  [ typeOf (undefined :: Int1)
