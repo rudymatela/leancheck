@@ -11,7 +11,7 @@
 -- this cabal file too complicated.  -- Rudy
 
 name:                leancheck
-version:             0.9.10
+version:             0.9.11
 synopsis:            Enumerative property-based testing
 description:
   LeanCheck is a simple enumerative property-based testing library.
@@ -89,7 +89,7 @@ source-repository head
 source-repository this
   type:            git
   location:        https://github.com/rudymatela/leancheck
-  tag:             v0.9.10
+  tag:             v0.9.11
 
 library
   exposed-modules: Test.LeanCheck
