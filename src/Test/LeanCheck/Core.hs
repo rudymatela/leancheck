@@ -29,6 +29,7 @@
 --      "Test.LeanCheck.Basic",
 --      most of "Test.LeanCheck.Tiers" and
 --      'Test.LeanCheck.Derive.deriveListable'.
+{-# LANGUAGE FlexibleInstances #-}
 module Test.LeanCheck.Core
   (
   -- * Checking and testing
@@ -42,6 +43,7 @@ module Test.LeanCheck.Core
   , Testable(..)
 
   , results
+  , resultsWithErrors
 
   -- * Listing test values
   , Listable(..)
@@ -81,6 +83,8 @@ module Test.LeanCheck.Core
   )
 where
 
+import Data.Bool (bool)
+import Data.Either (isRight)
 import Data.Maybe (listToMaybe)
 
 
@@ -590,15 +594,22 @@ productWith f (xs:xss) yss  =  map (xs **) yss
 --
 -- (cf. 'results')
 class Testable a where
+  {-# MINIMAL resultiers | resultiersWithErrors #-}
   resultiers :: a -> [[([String],Bool)]]
+  resultiers = (fmap . fmap . fmap) isRight . resultiersWithErrors
+  resultiersWithErrors :: a -> [[([String], Either String ())]]
+  resultiersWithErrors = (fmap . fmap . fmap) (bool (Left "") (Right ())) . resultiers
 
 instance Testable Bool where
   resultiers p  =  [[([],p)]]
 
+instance Testable (Either String ()) where
+  resultiersWithErrors p = [[([],p)]]
+
 instance (Testable b, Show a, Listable a) => Testable (a->b) where
-  resultiers p  =  concatMapT resultiersFor tiers
+  resultiersWithErrors p = concatMapT resultiersFor tiers
     where
-    resultiersFor x  =  mapFst (showsPrec 11 x "":) `mapT` resultiers (p x)
+    resultiersFor x =  mapFst (showsPrec 11 x "":) `mapT` resultiersWithErrors (p x)
     mapFst f (x,y)  =  (f x, y)
 
 -- | List all results of a 'Testable' property.
@@ -630,6 +641,16 @@ instance (Testable b, Show a, Listable a) => Testable (a->b) where
 -- > ]
 results :: Testable a => a -> [([String],Bool)]
 results  =  concat . resultiers
+
+-- | List all results of a 'Testable' property, including messages of failures,
+-- if given. Each result is a pair of a list of strings and a boolean.
+-- The list of strings is a printable representation of one possible choice of
+-- argument values for the property.  Each 'Either String ()' paired with such a
+-- list indicates whether the property holds for this choice: it is 'Right' if
+-- the property holds, and 'Left' if not.  The outer list is potentially
+-- infinite and lazily evaluated.
+resultsWithErrors :: Testable a => a -> [([String], Either String ())]
+resultsWithErrors = concat . resultiersWithErrors
 
 -- | Lists all counter-examples for a number of tests to a property,
 --
