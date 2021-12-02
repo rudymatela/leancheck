@@ -30,20 +30,15 @@ LeanCheck implementation is easy to understand.
 Installing
 ----------
 
-To install the latest LeanCheck version from Hackage using Cabal v3.0 or later, just run:
-
-	$ cabal v1-update
-	$ cabal v1-install leancheck
-
-If you are using a cabal earlier than v3.0, just run:
+To install the latest LeanCheck version from Hackage just run:
 
 	$ cabal update
 	$ cabal install leancheck
 
-With Cabal v3.0 or later,
-[using `v1-install` is preferred for the time being.](https://github.com/haskell/cabal/issues/7373)
-If all fails, you can start over by resetting your user's cabal installation
-with:
+If you already have LeanCheck installed
+[Cabal may refuse to update](https://github.com/haskell/cabal/issues/7373)
+to the latest version.
+To update, you need to reset your user's cabal installation with:
 
 	rm -rf ~/.cabal/{bin,lib,logs,share,store} ~/.ghc/*/
 
