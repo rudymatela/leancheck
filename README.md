@@ -30,7 +30,7 @@ LeanCheck implementation is easy to understand.
 Installing
 ----------
 
-To install the latest LeanCheck version from Hackage just run:
+To install the [latest LeanCheck version from Hackage] just run:
 
 	$ cabal update
 	$ cabal install leancheck
@@ -249,6 +249,7 @@ LeanCheck has a list of [frequently asked questions] and answers.
 [tutorial on property-based testing with LeanCheck]: https://github.com/rudymatela/leancheck/blob/master/doc/tutorial.md
 [LeanCheck memory usage]: https://github.com/rudymatela/leancheck/blob/master/doc/memory-usage.md
 [frequently asked questions]: https://github.com/rudymatela/leancheck/blob/master/doc/faq.md
+[latest LeanCheck version from Hackage]: https://hackage.haskell.org/package/leancheck
 
 [`Listable`]:       https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#t:Listable
 [`holds`]:          https://hackage.haskell.org/package/leancheck/docs/Test-LeanCheck.html#v:holds
