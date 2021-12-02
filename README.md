@@ -35,6 +35,11 @@ To install the latest LeanCheck version from Hackage just run:
 	$ cabal update
 	$ cabal install leancheck
 
+Starting from Cabal v3.0, you need to pass `--lib` as an argument to
+`cabal install` to install packages globally on the `default` user environment:
+
+	$ cabal install leancheck --lib
+
 If you already have LeanCheck installed
 [Cabal may refuse to update](https://github.com/haskell/cabal/issues/7373)
 to the latest version.
