@@ -267,7 +267,7 @@ LeanCheck has a list of [frequently asked questions] and answers.
 [Feat]: https://hackage.haskell.org/package/testing-feat
 [SmallCheck]: https://hackage.haskell.org/package/smallcheck
 [QuickCheck]: https://hackage.haskell.org/package/QuickCheck
-[PhD Thesis (2017)]: https://matela.com.br/paper/rudy-phd-thesis-2017.pdf
+[PhD Thesis (2017)]: https://matela.com.br/thesis-rudy.pdf
 
 [symbol `>`]: https://www.haskell.org/haddock/doc/html/ch03s08.html#idm140354810780208
 [Template Haskell]: https://wiki.haskell.org/Template_Haskell
