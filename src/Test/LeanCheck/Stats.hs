@@ -179,7 +179,7 @@ classify  =  classifyBy (==)
 classifyBy :: (a -> a -> Bool) -> [a] -> [[a]]
 classifyBy (==) []      =  []
 classifyBy (==) (x:xs)  =  (x:filter (== x) xs)
-                       : classifyBy (==) (filter (/= x) xs)
+                        :  classifyBy (==) (filter (/= x) xs)
   where
   x /= y  =  not (x == y)
 
@@ -194,8 +194,8 @@ classifyBy (==) (x:xs)  =  (x:filter (== x) xs)
 -- (cf. 'classify', 'classifyBy')
 classifyOn :: Eq b => (a -> b) -> [a] -> [[a]]
 classifyOn f xs  =  map (map fst)
-                . classifyBy ((==) `on` snd)
-                $ map (\x -> (x,f x)) xs
+                 .  classifyBy ((==) `on` snd)
+                 $  map (\x -> (x,f x)) xs
 
 -- | Returns the counts of each value in a list.
 --
