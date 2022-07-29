@@ -76,6 +76,8 @@ module Test.LeanCheck.Core
   -- ** Misc utilities
   , (+|)
   , listIntegral
+  , listFractional
+  , listFloating
   , tiersFractional
   , tiersFloating
   )
@@ -250,6 +252,46 @@ instance (Listable a, Listable b, Listable c, Listable d, Listable e) =>
 instance (Listable a) => Listable [a] where
   tiers  =  cons0 []
          \/ cons2 (:)
+
+-- | Listing of 'Fractional' values.
+--   This can be used as the implementation of 'list' for 'Fractional' types.
+--
+-- > listFractional :: [[Rational]]  =
+-- >   [0 % 1, 1 % 1, (-1) % 1, 1 % 2, (-1) % 2, 2 % 1, (-2) % 1, 1 % 3, ...]
+--
+-- All rationals are included without repetition in their most simple form.
+-- This is the Calkin-Wilf sequence
+-- computed with the help of the @fusc@ function (EWD 570).
+--
+-- This also works for unsigned types that wrap around zero, yielding:
+--
+-- > listFractional :: [Ratio Word]  =
+-- >   [0 % 1, 1 % 1, 1 % 2, 2 % 1, 1 % 3, 3 % 2, 2 % 3, 3 % 1, 1 % 4, 4 % 3, ...]
+
+listFractional :: (Ord a, Fractional a) => [a]
+listFractional  =  0 : positives +| negatives
+  where
+  stern  =  map (fromInteger . fusc) [1..]
+  positives  =  takeWhile (>0) $ zipWith (/) stern (tail stern)
+  negatives  =  takeWhile (<0) $ map negate positives
+  fusc  =  fu 1 0  where  fu a b 0 = b
+                          fu a b n | even n    = fu (a + b) b (n `div` 2)
+                                   | otherwise = fu a (a + b) ((n-1) `div` 2)
+
+-- | Listing of 'Floating' values.
+--   This can be used as the implementation of 'list' for 'Floating' types.
+--
+-- > listFloating :: [Double]  =
+-- >   [0.0, 1.0, -1.0, 0.5, -0.5, 2.0, Infinity, -Infinity, -2.0, 0.333, ...]
+--
+-- This follow the same Calkin-Wilf sequence of 'listFractional'
+-- but positive and negative infinities are artificially included after two.
+--
+-- @NaN@ and @-0@ are excluded from this enumeration.
+listFloating :: (Ord a, Fractional a) => [a]
+listFloating  =  heading ++ [two, 1/0, -1/0] ++ etc
+  where
+  (heading,two:etc)  =  span (< 2) listFractional
 
 -- | Tiers of 'Fractional' values.
 --   This can be used as the implementation of 'tiers' for 'Fractional' types.
