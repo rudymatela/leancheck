@@ -181,7 +181,7 @@ uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q)  =  f x y z w v u r s t o p q
 --   >   ]
 instance (Integral a, Listable a) => Listable (Ratio a) where
   tiers  =  mapT (uncurry (%)) . reset
-        $ tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
+         $  tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
 
 instance (RealFloat a, Listable a) => Listable (Complex a) where
   tiers  =  cons2 (:+)
