@@ -180,8 +180,7 @@ uncurry12 f (x,y,z,w,v,u,r,s,t,o,p,q)  =  f x y z w v u r s t o p q
 --   >   , ...
 --   >   ]
 instance (Integral a, Listable a) => Listable (Ratio a) where
-  tiers  =  mapT (uncurry (%)) . reset
-         $  tiers `suchThat` (\(n,d) -> d > 0 && n `gcd` d == 1)
+  list  =  listFractional
 
 instance (RealFloat a, Listable a) => Listable (Complex a) where
   tiers  =  cons2 (:+)
@@ -243,8 +242,8 @@ instance Listable CIntMax    where  list  =  listIntegral
 instance Listable CUIntMax   where  list  =  listIntegral
 instance Listable CClock     where  list  =  listIntegral
 instance Listable CTime      where  list  =  listIntegral
-instance Listable CFloat     where  tiers  =  tiersFloating
-instance Listable CDouble    where  tiers  =  tiersFloating
+instance Listable CFloat     where  list  =  listFloating
+instance Listable CDouble    where  list  =  listFloating
 #if __GLASGOW_HASKELL__ >= 802
 instance Listable CBool      where  list  =  listIntegral
 #endif

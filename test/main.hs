@@ -60,8 +60,6 @@ tests n =
 
   , allUnique (take n list :: [Rational])
   , allUnique (take n list :: [Ratio Nat])
-  , orderedOn (\r -> numerator r + denominator r) (take n (list :: [Ratio Nat]))
-  , orderedOn (\r -> abs (numerator r) + abs(denominator r)) (take n (list :: [Rational]))
 
   , list == [LT, EQ, GT]
   , orderedOn length (take n (list :: [[Ordering]]))

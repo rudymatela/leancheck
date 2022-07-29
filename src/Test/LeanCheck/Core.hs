@@ -78,8 +78,6 @@ module Test.LeanCheck.Core
   , listIntegral
   , listFractional
   , listFloating
-  , tiersFractional
-  , tiersFloating
   )
 where
 
@@ -293,56 +291,6 @@ listFloating  =  heading ++ [two, 1/0, -1/0] ++ etc
   where
   (heading,two:etc)  =  span (< 2) listFractional
 
--- | Tiers of 'Fractional' values.
---   This can be used as the implementation of 'tiers' for 'Fractional' types.
---
--- > tiersFractional :: [[Rational]]  =
--- >   [ [  0  % 1]
--- >   , [  1  % 1]
--- >   , [(-1) % 1]
--- >   , [  1  % 2,   2  % 1]
--- >   , [(-1) % 2, (-2) % 1]
--- >   , [  1  % 3,   3  % 1]
--- >   , [(-1) % 3, (-3) % 1]
--- >   , [  1  % 4,   2  % 3,   3  % 2,   4  % 1]
--- >   , [(-1) % 4, (-2) % 3, (-3) % 2, (-4) % 1]
--- >   , [  1  % 5,   5  % 1]
--- >   , [(-1) % 5, (-5) % 1]
--- >   , [  1  % 6,   2 % 5,    3  % 4,   4  % 3,   5  % 2,   6  % 1]
--- >   , [(-1) % 6, (-2) % 5, (-3) % 4, (-4) % 3, (-5) % 2, (-6) % 1]
--- >   , ...
--- >   ]
-tiersFractional :: Fractional a => [[a]]
-tiersFractional  =  mapT (\(x,y) -> fromInteger x / fromInteger y) . reset
-                 $  tiers `suchThat` \(n,d) -> d > 0 && n `gcd` d == 1
-
--- | Tiers of 'Floating' values.
---   This can be used as the implementation of 'tiers' for 'Floating' types.
---
---   This function is equivalent to 'tiersFractional'
---   with positive and negative infinities included: 1/0 and -1/0.
---
--- > tiersFloating :: [[Float]]  =
--- >   [ [0.0]
--- >   , [1.0]
--- >   , [-1.0, Infinity]
--- >   , [ 0.5,  2.0, -Infinity]
--- >   , [-0.5, -2.0]
--- >   , [ 0.33333334,  3.0]
--- >   , [-0.33333334, -3.0]
--- >   , [ 0.25,  0.6666667,  1.5,  4.0]
--- >   , [-0.25, -0.6666667, -1.5, -4.0]
--- >   , [ 0.2,  5.0]
--- >   , [-0.2, -5.0]
--- >   , [ 0.16666667,  0.4,  0.75,  1.3333334,  2.5,  6.0]
--- >   , [-0.16666667, -0.4, -0.75, -1.3333334, -2.5, -6.0]
--- >   , ...
--- >   ]
---
---   @NaN@ and @-0@ are excluded from this enumeration.
-tiersFloating :: Fractional a => [[a]]
-tiersFloating  =  tiersFractional \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -} ]
-
 -- | @NaN@ and @-0@ are not included in the list of 'Float's.
 --
 -- > list :: [Float]  =
@@ -354,13 +302,13 @@ tiersFloating  =  tiersFractional \/ [ [], [], [1/0], [-1/0] {- , [-0], [0/0] -}
 -- >   , ...
 -- >   ]
 instance Listable Float where
-  tiers  =  tiersFloating
+  list  =  listFloating
 
 -- | @NaN@ and @-0@ are not included in the list of 'Double's.
 --
 -- > list :: [Double]  =  [0.0, 1.0, -1.0, Infinity, 0.5, 2.0, ...]
 instance Listable Double where
-  tiers  =  tiersFloating
+  list  =  listFloating
 
 -- | > list :: [Ordering]  =  [LT, EQ, GT]
 instance Listable Ordering where
