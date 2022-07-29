@@ -24,7 +24,7 @@ entered into an interactive interpreter (`ghci`).  The result of evaluating the
 expression is then printed on the following line.
 
 LeanCheck implementation is easy to understand.
-[LeanCheck's core] is under 190 lines of code.
+[LeanCheck's core] is under 200 lines of code.
 
 
 Installing
