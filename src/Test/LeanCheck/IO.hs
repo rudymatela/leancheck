@@ -46,6 +46,12 @@ check p  =  checkResult p >> return ()
 --
 -- > > checkFor 1000 $ \xs -> sort (sort xs) == sort (xs::[Int])
 -- > +++ OK, passed 1000 tests.
+--
+-- Test exhaustion is reported when the configured number of tests
+-- is one more than the number of available test values:
+--
+-- > > checkFor 3 $ \p -> p == not (not p)
+-- > +++ OK, passed 2 tests (exhausted).
 checkFor :: Testable a => Int -> a -> IO ()
 checkFor n p  =  checkResultFor n p >> return ()
 
