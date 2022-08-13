@@ -48,7 +48,7 @@ check p  =  checkResult p >> return ()
 -- > +++ OK, passed 1000 tests.
 --
 -- Test exhaustion is reported when the configured number of tests
--- is one more than the number of available test values:
+-- is larger than the number of available test values:
 --
 -- > > checkFor 3 $ \p -> p == not (not p)
 -- > +++ OK, passed 2 tests (exhausted).
