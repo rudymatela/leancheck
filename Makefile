@@ -25,6 +25,7 @@ BENCHS = \
 	bench/dets \
 	bench/pick \
 	bench/memory-usage \
+	bench/list-fractionals \
 	bench/tiers-default \
 	bench/tiers-4cases \
 	bench/tiers

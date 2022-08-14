@@ -32,6 +32,7 @@ test/stats
 bench/dets
 bench/pick
 bench/memory-usage
+bench/list-fractionals
 bench/tiers
 bench/tiers-colistable
 bench/tiers-colistable.hs
