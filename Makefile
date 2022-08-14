@@ -63,11 +63,12 @@ eg/%.update-diff-test: eg/%
 
 # Evaluation order changed from GHC 8.4 to GHC 8.6, so we need to skip the
 # contents of the exception for test-list.diff-test.
+# Exception is multiline starting with GHC 9.4, hence the 'tr' trick
 eg/test-list.diff-test: eg/test-list
-	./$< | sed -e "s/Exception '[^']*'/Exception '...'/" | diff -rud test/diff/$<.out -
+	./$< | tr '\n' '\0' | sed -e "s/Exception '[^']*'/Exception '...'/" | tr '\0' '\n' | diff -rud test/diff/$<.out -
 
 eg/test-list.update-diff-test: eg/test-list
-	./$< | sed -e "s/Exception '[^']*'/Exception '...'/" >           test/diff/$<.out
+	./$< | tr '\n' '\0' | sed -e "s/Exception '[^']*'/Exception '...'/" | tr '\0' '\n' >           test/diff/$<.out
 
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-default.hs
