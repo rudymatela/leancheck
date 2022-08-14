@@ -72,7 +72,8 @@ extra-source-files: .gitignore
                   , test/diff/*.out
                   , test/diff/eg/*.out
                   , test/sdist
-tested-with: GHC==9.0
+tested-with: GHC==9.2
+           , GHC==9.0
            , GHC==8.10
            , GHC==8.8
            , GHC==8.6
