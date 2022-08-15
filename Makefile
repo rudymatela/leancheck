@@ -158,11 +158,11 @@ mk/toplibs: mk/Toplibs.o
 d=..........
 e=$d$d$d$d$d$d$d$d
 list-80:
-	find src test bench eg -name "*.hs" | xargs grep -n --color -R "^$e."
+	find src test bench eg -name "*.hs" | xargs grep -n --color -R "^$e." || true
 
 # list = definitions surrounded by a single space
 list-single-space-equals:
-	find src test bench eg -name "*.hs" | xargs grep -n --color -R "[^ ] = [^ ]"
+	find src test bench eg -name "*.hs" | xargs grep -n --color -R "[^ ] = [^ ]" || true
 
 include mk/haskell.mk
 
