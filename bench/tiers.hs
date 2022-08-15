@@ -15,44 +15,45 @@ import Data.Word
 import Data.Complex
 
 dropEmptyTiersTail :: [[a]] -> [[a]]
-dropEmptyTiersTail ([]:[]:[]: []:[]:[]: _) = []
-dropEmptyTiersTail (xs:xss) = xs:dropEmptyTiersTail xss
-dropEmptyTiersTail []     = []
+dropEmptyTiersTail ([]:[]:[]: []:[]:[]: _)  =  []
+dropEmptyTiersTail (xs:xss)                 =  xs:dropEmptyTiersTail xss
+dropEmptyTiersTail []                       =  []
 
 lengthT :: [[a]] -> Maybe Int
-lengthT xss | finite xss' = Just . length $ concat xss'
-            | otherwise   = Nothing
-  where xss' = dropEmptyTiersTail xss
+lengthT xss | finite xss'  =  Just . length $ concat xss'
+            | otherwise    =  Nothing
+  where
+  xss'  =  dropEmptyTiersTail xss
 
 allUnique :: Eq a => [a] -> Bool
-allUnique [] = True
-allUnique (x:xs) = x `notElem` xs
-                && allUnique (filter (/= x) xs)
+allUnique []      =  True
+allUnique (x:xs)  =  x `notElem` xs
+                  && allUnique (filter (/= x) xs)
 
 countRepetitions :: Eq a => [a] -> Int
-countRepetitions xs = length xs - length (nub xs)
+countRepetitions xs  =  length xs - length (nub xs)
 
 ratioRepetitions :: Eq a => [a] -> Rational
-ratioRepetitions [] = 0
-ratioRepetitions xs = fromIntegral (countRepetitions xs) % fromIntegral (length xs)
+ratioRepetitions []  =  0
+ratioRepetitions xs  =  fromIntegral (countRepetitions xs) % fromIntegral (length xs)
 
 showLengthT :: [[a]] -> String
-showLengthT xss = case lengthT xss of
+showLengthT xss  =  case lengthT xss of
                     Nothing -> "Infinity"
                     Just x  -> show x
 
 showDotsLongerThan :: Show a => Int -> [a] -> String
-showDotsLongerThan n xs = "["
-                       ++ intercalate "," (dotsLongerThan n $ map show xs)
-                       ++ "]"
+showDotsLongerThan n xs  =  "["
+                         ++ intercalate "," (dotsLongerThan n $ map show xs)
+                         ++ "]"
   where
-  dotsLongerThan n xs = take n xs ++ ["..." | not . null $ drop n xs]
+  dotsLongerThan n xs  =  take n xs ++ ["..." | not . null $ drop n xs]
 
 printTiers :: Show a => Int -> [[a]] -> IO ()
-printTiers n = putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
+printTiers n  =  putStrLn . init . unlines . map ("  " ++) . lines . showTiers n
 
 put :: (Show a, Eq a, Listable a) => String -> Int -> a -> IO ()
-put t n a = do
+put t n a  =  do
   putStrLn $ "map length (tiers :: [[ " ++ t ++ " ]])  =  "
           ++ showDotsLongerThan n (map length $ tiers `asTypeOf` [[a]])
   putStrLn $ ""
@@ -69,15 +70,15 @@ put t n a = do
   printTiers n $ tiers `asTypeOf` [[a]]
 
 u :: a
-u = undefined
+u  =  undefined
 
 main :: IO ()
-main = do
+main  =  do
   as <- getArgs
-  let (t,n) = case as of
-              []      -> ("Int", 12)
-              [t]     -> (t,     12)
-              (t:n:_) -> (t, read n)
+  let (t,n)  =  case as of
+                []      -> ("Int", 12)
+                [t]     -> (t,     12)
+                (t:n:_) -> (t, read n)
   case t of
     -- simple types
     "()"               -> put t n (u :: ()                   )
