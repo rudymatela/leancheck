@@ -52,8 +52,6 @@ extra-source-files: .gitignore
                   , bench/pick.hs
                   , bench/tiers.hs
                   , bench/time-and-memory
-                  , bench/list-fractionals.hs
-                  , bench/old-new-fractionals
                   , eg/higher-order.hs
                   , eg/overflow.hs
                   , eg/test-bool.hs
