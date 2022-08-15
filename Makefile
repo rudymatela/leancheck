@@ -154,6 +154,16 @@ markdown: \
 mk/toplibs: mk/Toplibs.o
 	touch mk/toplibs
 
+# list lines that are longer than 80 characters
+d=..........
+e=$d$d$d$d$d$d$d$d
+list-80:
+	find src test bench eg -name "*.hs" | xargs grep -n --color -R "^$e."
+
+# list = definitions surrounded by a single space
+list-single-space-equals:
+	find src test bench eg -name "*.hs" | xargs grep -n --color -R "[^ ] = [^ ]"
+
 include mk/haskell.mk
 
 diff-test-tiers: bench/tiers
