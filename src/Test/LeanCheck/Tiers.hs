@@ -418,11 +418,13 @@ choices  =  choicesWith (,)
 
 -- | Like 'choices', but allows a custom function.
 choicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-choicesWith f []            =  []
-choicesWith f [[]]          =  []
-choicesWith f ([]:xss)      =  [] : choicesWith (\y yss -> f y ([]:normalizeT yss)) xss
-choicesWith f ((x:xs):xss)  =  [[f x (xs:xss)]]
-                            \/ choicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
+choicesWith f []  =  []
+choicesWith f [[]]  =  []
+choicesWith f ([]:xss)
+  =  [] : choicesWith (\y yss -> f y ([]:normalizeT yss)) xss
+choicesWith f ((x:xs):xss)
+  =  [[f x (xs:xss)]]
+  \/ choicesWith (\y (ys:yss) -> f y ((x:ys):yss)) (xs:xss)
 
 -- | Like 'choices' but lists tiers of non-decreasing (ascending) choices.
 --   Used to construct 'bagsOf' values.
@@ -442,11 +444,14 @@ bagChoices  =  bagChoicesWith (,)
 
 -- | Like 'bagChoices' but customized by a function.
 bagChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-bagChoicesWith f []            =  []
-bagChoicesWith f [[]]          =  []
-bagChoicesWith f ([]:xss)      =  [] : bagChoicesWith (\y yss -> f y ([]:yss)) xss
-bagChoicesWith f ((x:xs):xss)  =  [[f x ((x:xs):xss)]]
-                               \/ bagChoicesWith f (xs:xss)
+bagChoicesWith f []  =  []
+bagChoicesWith f [[]]  =  []
+bagChoicesWith f ([]:xss)
+  =  []
+  :  bagChoicesWith (\y yss -> f y ([]:yss)) xss
+bagChoicesWith f ((x:xs):xss)
+  =  [[f x ((x:xs):xss)]]
+  \/ bagChoicesWith f (xs:xss)
 
 -- | Like 'choices' but lists tiers of strictly ascending choices.
 --   Used to construct 'setsOf' values.
@@ -462,11 +467,14 @@ setChoices  =  setChoicesWith (,)
 
 -- | Like 'setChoices' but customized by a function.
 setChoicesWith :: (a -> [[a]] -> b) -> [[a]] -> [[b]]
-setChoicesWith f []            =  []
-setChoicesWith f [[]]          =  []
-setChoicesWith f ([]:xss)      =  [] : setChoicesWith (\y yss -> f y ([]:normalizeT yss)) xss
-setChoicesWith f ((x:xs):xss)  =  [[f x (xs:xss)]]
-                               \/ setChoicesWith f (xs:xss)
+setChoicesWith f []  =  []
+setChoicesWith f [[]]  =  []
+setChoicesWith f ([]:xss)
+  =  []
+  :  setChoicesWith (\y yss -> f y ([]:normalizeT yss)) xss
+setChoicesWith f ((x:xs):xss)
+  =  [[f x (xs:xss)]]
+  \/ setChoicesWith f (xs:xss)
 
 -- | Takes as argument an integer length and tiers of element values;
 --   returns tiers of lists of element values of the given length.
