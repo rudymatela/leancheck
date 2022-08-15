@@ -139,9 +139,6 @@ errorToLeft x  =  unsafePerformIO $
 #else
   (Right `liftM` evaluate x) `catch` (return . Left . show1st)
 #endif
-  where
-  show1st :: Show a => a -> String
-  show1st  =  concat . take 1 . lines . show
 
 -- | Transforms a value into 'Right' that value or 'Left String' on error.
 --
@@ -151,13 +148,14 @@ errorToLeft x  =  unsafePerformIO $
 anyErrorToLeft :: a -> Either String a
 anyErrorToLeft x  =  unsafePerformIO $
 #if __GLASGOW_HASKELL__
-  (Right `liftM` evaluate x) `catch` (\e -> return . Left $ show1st (e :: SomeException))
+  (Right `liftM` evaluate x)
+    `catch` (\e -> return . Left $ show1st (e :: SomeException))
 #else
   (Right `liftM` evaluate x) `catch` (return . Left . show1st)
 #endif
-  where
-  show1st :: Show a => a -> String
-  show1st  =  concat . take 1 . lines . show
+
+show1st :: Show a => a -> String
+show1st  =  concat . take 1 . lines . show
 
 -- | Transforms errors into 'False' values.
 --
