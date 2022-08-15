@@ -78,8 +78,6 @@ module Test.LeanCheck.Core
   , listIntegral
   , listFractional
   , listFloating
-  , tiersFractional
-  , tiersFloating
   )
 where
 
@@ -291,25 +289,6 @@ listFloating :: (Ord a, Fractional a) => [a]
 listFloating  =  heading ++ [two, 1/0, -1/0] ++ etc
   where
   (heading,two:etc)  =  span (< 2) listFractional
-
--- | Tiers of 'Fractional' values.
---   This can be used as the implementation of 'tiers' for 'Fractional' types.
---
--- This function is deprecated, please use 'toTiers' 'listFractional'.
-tiersFractional :: (Ord a, Fractional a) => [[a]]
-tiersFractional  =  toTiers listFractional
-
--- | Tiers of 'Floating' values.
---   This can be used as the implementation of 'tiers' for 'Floating' types.
---
---   This function is equivalent to 'tiersFractional'
---   with positive and negative infinities included: 1/0 and -1/0.
---
---   @NaN@ and @-0@ are excluded from this enumeration.
---
--- This function is deprecated, please use 'toTiers' 'listFloating'.
-tiersFloating :: (Ord a, Fractional a) => [[a]]
-tiersFloating  =  toTiers listFloating
 
 -- | @NaN@ and @-0@ are not included in the list of 'Float's.
 --

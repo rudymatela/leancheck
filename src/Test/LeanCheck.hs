@@ -153,3 +153,24 @@ import Test.LeanCheck.Basic
 import Test.LeanCheck.Tiers
 import Test.LeanCheck.Derive
 import Test.LeanCheck.IO
+
+-- | Tiers of 'Fractional' values.
+--   This can be used as the implementation of 'tiers' for 'Fractional' types.
+--
+-- This function is deprecated.  Please consider using 'listFractional' instead
+-- or use 'toTiers' 'listFractional'.
+tiersFractional :: (Ord a, Fractional a) => [[a]]
+tiersFractional  =  toTiers listFractional
+
+-- | Tiers of 'Floating' values.
+--   This can be used as the implementation of 'tiers' for 'Floating' types.
+--
+--   This function is equivalent to 'tiersFractional'
+--   with positive and negative infinities included: 1/0 and -1/0.
+--
+--   @NaN@ and @-0@ are excluded from this enumeration.
+--
+-- This function is deprecated.  Please consider using 'listFloating' instead
+-- or use 'toTiers' 'listFloating'.
+tiersFloating :: (Ord a, Fractional a) => [[a]]
+tiersFloating  =  toTiers listFloating
