@@ -164,6 +164,9 @@ list-80:
 list-single-space-equals:
 	find src test bench eg -name "*.hs" | xargs grep -n --color -R "[^ ] = [^ ]" || true
 
+list-missing-copyright:
+	find src test bench eg -name "*.hs" | xargs grep -LR Copyright || true
+
 include mk/haskell.mk
 
 diff-test-tiers: bench/tiers
