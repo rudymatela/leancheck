@@ -5,7 +5,7 @@
 import Test.LeanCheck
 
 main :: IO ()
-main = do
+main  =  do
   -- identities on floats
   -- some of these properties fail due to rounding errors
   checkFor n $ \x y -> not (isInfinite y) ==> x - y + y == (x::Float)
@@ -21,4 +21,4 @@ main = do
   checkFor n $ \x -> x >= 0 ==> (x ** 2) ** 0.5 == (x::Float)
   checkFor n $ \x -> x >= 0 ==> (x ** 0.5) ** 2 == (x::Float)
   where
-  n = 10000
+  n  =  10000

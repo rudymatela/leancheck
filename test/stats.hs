@@ -10,7 +10,7 @@ import Data.List (elemIndices)
 import Data.Function (on)
 
 main :: IO ()
-main = do
+main   = do
   putStrLn "sum :: [Int] -> Bool"
   classStats 100 (sum     :: [Int] -> Int)
 

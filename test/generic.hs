@@ -10,42 +10,42 @@ import Data.List (elemIndices,sort)
 import Test.LeanCheck.Utils
 import GHC.Generics (Generic)
 
-data D0       = D0                    deriving (Eq, Show, Generic)
-data D1 a     = D1 a                  deriving (Eq, Show, Generic)
-data D2 a b   = D2 a b                deriving (Eq, Show, Generic)
-data D3 a b c = D3 a b c              deriving (Eq, Show, Generic)
-data C1 a     =           C11 a | C10 deriving (Eq, Show, Generic)
-data C2 a b   = C22 a b | C21 a | C20 deriving (Eq, Show, Generic)
-data I a b    = a :+ b                deriving (Eq, Show, Generic)
+data D0        =  D0                     deriving (Eq, Show, Generic)
+data D1 a      =  D1 a                   deriving (Eq, Show, Generic)
+data D2 a b    =  D2 a b                 deriving (Eq, Show, Generic)
+data D3 a b c  =  D3 a b c               deriving (Eq, Show, Generic)
+data C1 a      =            C11 a | C10  deriving (Eq, Show, Generic)
+data C2 a b    =  C22 a b | C21 a | C20  deriving (Eq, Show, Generic)
+data I a b     =  a :+ b                 deriving (Eq, Show, Generic)
 
-instance Listable D0                   where tiers = genericTiers
+instance Listable D0                   where  tiers  =  genericTiers
 
-instance Listable a => Listable (D1 a) where tiers = genericTiers
+instance Listable a => Listable (D1 a) where  tiers  =  genericTiers
 
 instance (Listable a, Listable b)
-      => Listable (D2 a b)             where tiers = genericTiers
+      => Listable (D2 a b)             where  tiers  =  genericTiers
 
 instance (Listable a, Listable b, Listable c)
-      => Listable (D3 a b c)           where tiers = genericTiers
+      => Listable (D3 a b c)           where  tiers  =  genericTiers
 
-instance Listable a => Listable (C1 a) where tiers = genericTiers
-
-instance (Listable a, Listable b)
-      => Listable (C2 a b)             where tiers = genericTiers
+instance Listable a => Listable (C1 a) where  tiers  =  genericTiers
 
 instance (Listable a, Listable b)
-      => Listable (I a b)              where tiers = genericTiers
+      => Listable (C2 a b)             where  tiers  =  genericTiers
+
+instance (Listable a, Listable b)
+      => Listable (I a b)              where  tiers  =  genericTiers
 
 -- recursive datatypes
-data Peano = Zero | Succ Peano deriving (Show, Generic)
-data List a = a :- List a | Nil deriving (Show, Generic)
-data Bush a = Bush a :-: Bush a | Leaf a deriving (Show, Eq, Generic)
-data Tree a = Node (Tree a) a (Tree a) | Null deriving (Show, Eq, Generic)
+data Peano  =  Zero | Succ Peano  deriving (Show, Generic)
+data List a  =  a :- List a | Nil  deriving (Show, Generic)
+data Bush a  =  Bush a :-: Bush a | Leaf a  deriving (Show, Eq, Generic)
+data Tree a  =  Node (Tree a) a (Tree a) | Null  deriving (Show, Eq, Generic)
 
-instance Listable Peano where tiers = genericTiers
-instance Listable a => Listable (List a) where tiers = genericTiers
-instance Listable a => Listable (Bush a) where tiers = genericTiers
-instance Listable a => Listable (Tree a) where tiers = genericTiers
+instance Listable Peano where  tiers  =  genericTiers
+instance Listable a => Listable (List a) where  tiers  =  genericTiers
+instance Listable a => Listable (Bush a) where  tiers  =  genericTiers
+instance Listable a => Listable (Tree a) where  tiers  =  genericTiers
 
 
 main :: IO ()
@@ -57,7 +57,7 @@ main  =  do
              exitFailure
 
 tests :: Int -> [Bool]
-tests n =
+tests n  =
   [ True
 
   , map unD0 list =| n |= list
@@ -121,15 +121,15 @@ tests n =
   , (genericTiers :: [[ Either Bool Int ]])  =| 6 |=  $(deriveTiers ''Either)
   ]
   where
-  unD0 (D0)       = ()
-  unD1 (D1 x)     = (x)
-  unD2 (D2 x y)   = (x,y)
-  unD3 (D3 x y z) = (x,y,z)
+  unD0 (D0)        =  ()
+  unD1 (D1 x)      =  (x)
+  unD2 (D2 x y)    =  (x,y)
+  unD3 (D3 x y z)  =  (x,y,z)
 
 peanoToNat :: Peano -> Nat
-peanoToNat Zero = 0
-peanoToNat (Succ n) = 1 + peanoToNat n
+peanoToNat Zero  =  0
+peanoToNat (Succ n)  =  1 + peanoToNat n
 
 listToList :: List a -> [a]
-listToList Nil = []
-listToList (x :- xs) = x : listToList xs
+listToList Nil  =  []
+listToList (x :- xs)  =  x : listToList xs

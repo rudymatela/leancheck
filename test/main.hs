@@ -95,10 +95,10 @@ tests n =
   ]
 
 allUnique :: Ord a => [a] -> Bool
-allUnique [] = True
-allUnique (x:xs) = x `notElem` xs
-                && allUnique (filter (< x) xs)
-                && allUnique (filter (> x) xs)
+allUnique []  =  True
+allUnique (x:xs)  =  x `notElem` xs
+                  && allUnique (filter (< x) xs)
+                  && allUnique (filter (> x) xs)
 
 
 -- | 'zipwith\'' works similarly to 'zipWith', but takes neutral elements to
@@ -110,7 +110,7 @@ allUnique (x:xs) = x `notElem` xs
 --
 -- > zipWith' (+) 0 0 [1,2,3] [1,2,3,4,5,6] == [2,4,6,4,5,6]
 zipWith' :: (a->b->c) -> a -> b  -> [a] -> [b] -> [c]
-zipWith' _ _  _  []     [] = []
-zipWith' f _  zy xs     [] = map (`f` zy) xs
-zipWith' f zx _  []     ys = map (f zx) ys
-zipWith' f zx zy (x:xs) (y:ys) = f x y : zipWith' f zx zy xs ys
+zipWith' _ _  _  []     []      =  []
+zipWith' f _  zy xs     []      =  map (`f` zy) xs
+zipWith' f zx _  []     ys      =  map (f zx) ys
+zipWith' f zx zy (x:xs) (y:ys)  =  f x y : zipWith' f zx zy xs ys

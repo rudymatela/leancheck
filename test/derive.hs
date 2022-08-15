@@ -8,13 +8,13 @@ import System.Exit (exitFailure)
 import Data.List (elemIndices,sort)
 import Test.LeanCheck.Utils
 
-data D0       = D0                    deriving Show
-data D1 a     = D1 a                  deriving Show
-data D2 a b   = D2 a b                deriving Show
-data D3 a b c = D3 a b c              deriving Show
-data C1 a     =           C11 a | C10 deriving Show
-data C2 a b   = C22 a b | C21 a | C20 deriving Show
-data I a b    = a :+ b                deriving Show
+data D0        =  D0                     deriving Show
+data D1 a      =  D1 a                   deriving Show
+data D2 a b    =  D2 a b                 deriving Show
+data D3 a b c  =  D3 a b c               deriving Show
+data C1 a      =            C11 a | C10  deriving Show
+data C2 a b    =  C22 a b | C21 a | C20  deriving Show
+data I a b     =  a :+ b                 deriving Show
 
 deriveListable ''D0
 deriveListable ''D1
@@ -25,10 +25,10 @@ deriveListable ''C2
 deriveListable ''I
 
 -- recursive datatypes
-data Peano = Zero | Succ Peano deriving Show
-data List a = a :- List a | Nil deriving Show
-data Bush a = Bush a :-: Bush a | Leaf a deriving (Show, Eq)
-data Tree a = Node (Tree a) a (Tree a) | Null deriving (Show, Eq)
+data Peano  =  Zero | Succ Peano  deriving Show
+data List a  =  a :- List a | Nil  deriving Show
+data Bush a  =  Bush a :-: Bush a | Leaf a  deriving (Show, Eq)
+data Tree a  =  Node (Tree a) a (Tree a) | Null  deriving (Show, Eq)
 
 deriveListable ''Peano
 deriveListable ''List
@@ -36,30 +36,30 @@ deriveListable ''Bush
 deriveListable ''Tree
 
 -- Nested datatype cascade
-data Nested = Nested N0 (N1 Int) (N2 Int Int)
-data N0     = R0 Int
-data N1 a   = R1 a
-data N2 a b = R2 a b
+data Nested  =  Nested N0 (N1 Int) (N2 Int Int)
+data N0      =  R0 Int
+data N1 a    =  R1 a
+data N2 a b  =  R2 a b
 deriveListableCascading ''Nested
 
 -- Recursive nested datatype cascade
-data RN      = RN RN0 (RN1 Int) (RN2 Int RN)
-data RN0     = Nest0 Int | Recurse0 RN
-data RN1 a   = Nest1 a   | Recurse1 RN
-data RN2 a b = Nest2 a b | Recurse2 RN
+data RN       =  RN RN0 (RN1 Int) (RN2 Int RN)
+data RN0      =  Nest0 Int | Recurse0 RN
+data RN1 a    =  Nest1 a   | Recurse1 RN
+data RN2 a b  =  Nest2 a b | Recurse2 RN
 deriveListableCascading ''RN
 
 -- Type synonyms
-data Pair a = Pair a a
-type Alias a = Pair a
+data Pair a  =  Pair a a
+type Alias a  =  Pair a
 -- deriveListable ''Alias -- this will fail
 deriveListableCascading ''Alias
 deriveListableIfNeeded ''Alias -- only works because instance already exists
 
 -- Nested type synonyms
-data Triple a = Triple a a a
-type Tralias a = Triple a
-data Pairiple a = Pairriple (Tralias a) (Tralias a)
+data Triple a  =  Triple a a a
+type Tralias a  =  Triple a
+data Pairiple a  =  Pairriple (Tralias a) (Tralias a)
 deriveListableCascading ''Pairiple
 
 -- Those should have no effect (instance already exists):
@@ -139,15 +139,15 @@ tests n  =
   , (list :: [ Maybe Bool ]) =| n |= $(deriveList ''Maybe)
   ]
   where
-  unD0 (D0)       = ()
-  unD1 (D1 x)     = (x)
-  unD2 (D2 x y)   = (x,y)
-  unD3 (D3 x y z) = (x,y,z)
+  unD0 (D0)        =  ()
+  unD1 (D1 x)      =  (x)
+  unD2 (D2 x y)    =  (x,y)
+  unD3 (D3 x y z)  =  (x,y,z)
 
 peanoToNat :: Peano -> Nat
-peanoToNat Zero = 0
-peanoToNat (Succ n) = 1 + peanoToNat n
+peanoToNat Zero  =  0
+peanoToNat (Succ n)  =  1 + peanoToNat n
 
 listToList :: List a -> [a]
-listToList Nil = []
-listToList (x :- xs) = x : listToList xs
+listToList Nil  =  []
+listToList (x :- xs)  =  x : listToList xs

@@ -7,7 +7,7 @@ import Test.LeanCheck.Function ()
 import Test.LeanCheck.Utils
 
 main :: IO ()
-main = do
+main  =  do
   putStrLn "not . not === id";  check $ isIdentity (not . not)
   putStrLn "(&&) commutes";     check $ isCommutative (&&)
   putStrLn "(||) commutes";     check $ isCommutative (||)

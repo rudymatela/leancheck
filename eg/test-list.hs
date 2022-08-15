@@ -6,7 +6,7 @@ import Test.LeanCheck
 import Data.List
 
 main :: IO ()
-main = do
+main  =  do
   -- three wrong properties about Data.List:
   check $ \xs ys -> xs `union` ys == ys `union` (xs :: [Int])
   check $ \xs -> [head xs] == take 1 (xs :: [Int])

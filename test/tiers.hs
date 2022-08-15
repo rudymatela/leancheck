@@ -74,42 +74,46 @@ tests n =
   ]
 
 deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool
-deleteT_is_map_delete n x = deleteT x tiers
-                    =| n |= normalizeT (map (delete x) tiers)
+deleteT_is_map_delete n x  =
+  deleteT x tiers =| n |= normalizeT (map (delete x) tiers)
 
 checkNoDup :: Int -> Bool
-checkNoDup n = noDupListsOf (tiers :: [[Int]]) =| n |= tiers `suchThat` noDup
-  where noDup xs = nub (sort xs) == sort xs
+checkNoDup n  =
+  noDupListsOf (tiers :: [[Int]]) =| n |= tiers `suchThat` noDup
+  where
+  noDup xs  =  nub (sort xs) == sort xs
 
 checkBags :: Int -> Bool
-checkBags n = bagsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` ordered
+checkBags n  =
+  bagsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` ordered
 
 checkSets :: Int -> Bool
-checkSets n = setsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` strictlyOrdered
+checkSets n  =
+  setsOf (tiers :: [[Nat]]) =| n |= tiers `suchThat` strictlyOrdered
 
 checkDistinctPairs :: Int -> Bool
-checkDistinctPairs n =
+checkDistinctPairs n  =
   distinctPairs (tiers :: [[Nat]]) =| n |= tiers `suchThat` uncurry (/=)
 
 checkUnorderedDistinctPairs :: Int -> Bool
-checkUnorderedDistinctPairs n =
+checkUnorderedDistinctPairs n  =
   unorderedDistinctPairs (tiers :: [[Nat]]) =| n |= tiers `suchThat` uncurry (<)
 
 checkUnorderedPairs :: Int -> Bool
-checkUnorderedPairs n =
+checkUnorderedPairs n  =
   unorderedPairs (tiers :: [[Nat]]) =| n |= tiers `suchThat` uncurry (<=)
 
 checkLengthListingsOfLength :: Int -> Int -> Bool
-checkLengthListingsOfLength n m = all check [1..m]
-  where check m = all (\xs -> length xs == m)
-                $ concat . take n
-                $ listsOfLength m natTiers
+checkLengthListingsOfLength n m  =  all check [1..m]
+  where check m  =  all (\xs -> length xs == m)
+                 $  concat . take n
+                 $  listsOfLength m natTiers
 
 checkSizesListingsOfLength :: Int -> Int -> Bool
-checkSizesListingsOfLength n m = all check [1..m]
-  where check m = orderedBy compare
-                $ map sum . concat . take n
-                $ listsOfLength m natTiers
+checkSizesListingsOfLength n m  =  all check [1..m]
+  where check m  =  orderedBy compare
+                 $  map sum . concat . take n
+                 $  listsOfLength m natTiers
 
 natTiers :: [[Nat]]
-natTiers = tiers
+natTiers  =  tiers

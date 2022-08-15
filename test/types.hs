@@ -24,8 +24,8 @@ main  =  do
 -- | Given the number of bits, generates a range for signed/unsigned integers
 --   of that width.
 signedRange,unsignedRange :: (Num n) => Int -> [n]
-signedRange n   = map fromIntegral [-(2^(n-1))..(2^(n-1))-1]
-unsignedRange n = map fromIntegral [0..(2^n)-1]
+signedRange n    =  map fromIntegral [-(2^(n-1))..(2^(n-1))-1]
+unsignedRange n  =  map fromIntegral [0..(2^n)-1]
 
 tests :: Int -> [Bool]
 tests n =
@@ -154,7 +154,7 @@ tests n =
   , allTypeable || True
   ]
   where
-  unXs (Xs xs) = xs
+  unXs (Xs xs)  =  xs
 
 
 prefiX :: (Bounded a, Integral a) => [a]
@@ -202,10 +202,10 @@ prefiXNs =
   ]
 
 permutation :: Eq a => [a] -> [a] -> Bool
-[]     `permutation` []    = True
-(_:_)  `permutation` []    = False
-[]     `permutation` (_:_) = False
-(x:xs) `permutation` ys    = x `elem` ys  &&  xs `permutation` delete x ys
+[]     `permutation` []     =  True
+(_:_)  `permutation` []     =  False
+[]     `permutation` (_:_)  =  False
+(x:xs) `permutation` ys     =  x `elem` ys  &&  xs `permutation` delete x ys
 
 
 allTypeable :: Bool

@@ -13,18 +13,18 @@ sort (x:xs)  =  sort (filter (< x) xs)
 
 -- some properties about it --
 prop_sortOrdered :: Ord a => [a] -> Bool
-prop_sortOrdered xs = ordered (sort xs)
+prop_sortOrdered xs  =  ordered (sort xs)
   where
   ordered (x:y:xs)  =  x <= y && ordered (y:xs)
   ordered _         =  True
 
 prop_sortCount :: Ord a => a -> [a] -> Bool
-prop_sortCount x xs = count x (sort xs) == count x xs
+prop_sortCount x xs  =  count x (sort xs) == count x xs
   where
-  count x = length . filter (== x)
+  count x  =  length . filter (== x)
 
 main :: IO ()
-main = do
+main  =  do
   check $ (prop_sortOrdered :: [Int] -> Bool)
   check $ (prop_sortCount :: Int -> [Int] -> Bool)
   check $ \xs -> sort (sort xs :: [Int]) == sort xs

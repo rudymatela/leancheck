@@ -107,25 +107,25 @@ tests n  =
   ]
 
 prop_sortMinE :: [Nat] -> Bool
-prop_sortMinE xs = head (sort xs) == minimum (xs::[Nat])
+prop_sortMinE xs  =  head (sort xs) == minimum (xs::[Nat])
 
 prop_sortMin :: [Nat] -> Bool
-prop_sortMin xs = not (null xs)
-              ==> head (sort xs) == minimum (xs::[Nat])
+prop_sortMin xs  =  not (null xs)
+                ==> head (sort xs) == minimum (xs::[Nat])
 
 someNumbers :: Int -> Bool
-someNumbers  2 = True
-someNumbers  3 = True
-someNumbers  5 = True
-someNumbers  7 = True
-someNumbers 11 = True
-someNumbers 13 = True
-someNumbers 17 = True
+someNumbers  2  =  True
+someNumbers  3  =  True
+someNumbers  5  =  True
+someNumbers  7  =  True
+someNumbers 11  =  True
+someNumbers 13  =  True
+someNumbers 17  =  True
 
 someOthers :: Int -> Int -> Bool
-someOthers = \x -> case x of 2 -> \y -> case y of 2 -> True
-                                                  4 -> True
-                                                  8 -> True
-                             3 -> \y -> case y of 3 -> True
-                                                  9 -> True
-                                                  27 -> True
+someOthers  =  \x -> case x of 2 -> \y -> case y of 2 -> True
+                                                    4 -> True
+                                                    8 -> True
+                               3 -> \y -> case y of 3 -> True
+                                                    9 -> True
+                                                    27 -> True

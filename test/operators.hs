@@ -144,7 +144,7 @@ tests n =
   , fails n $ isNeverIdentity negate -:> int
   ]
   where
-  m = 200
+  m  =  200
 
 --none :: (a -> Bool) -> [a] -> Bool
---none p = not . or . map p
+--none p  =  not . or . map p

@@ -33,7 +33,7 @@ put t n u  =  putStrLn
            ++ show ((list `asTypeOf` [u]) !! n)
 
 pick :: String -> Int -> IO ()
-pick t n = case t of
+pick t n  =  case t of
   "()"               -> put t n (u :: ()                   )
   "Int"              -> put t n (u :: Int                  )
   "Nat"              -> put t n (u :: Nat                  )

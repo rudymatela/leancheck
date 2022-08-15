@@ -18,7 +18,7 @@ evenOrOdd :: (Listable a, Show a, Integral a) => [a] -> Bool
 evenOrOdd xs  =  all (\x -> odd x || even x) xs
 
 main :: IO ()
-main = do
+main  =  do
 
   -- With just the following 10 lines
   -- this program consumes around 500 Mb of memory.

@@ -21,7 +21,7 @@ data T  =  T I I I I I
   deriving Show
 
 toList :: T -> [[Int16]]
-toList (T i j k l m) = [i,j,k,l,m]
+toList (T i j k l m)  =  [i,j,k,l,m]
 
 pre :: T -> Bool
 pre t  =  all ((< 256) . sum) (toList t)
@@ -33,10 +33,10 @@ prop :: T -> Bool
 prop t  =  pre t ==> post t
 
 instance Listable T where
-  tiers = cons5 makeT
+  tiers  =  cons5 makeT
     where
-    makeT (Xs i) (Xs j) (Xs k) (Xs l) (Xs m) = T i j k l m
+    makeT (Xs i) (Xs j) (Xs k) (Xs l) (Xs m)  =  T i j k l m
 
 main :: IO ()
-main = do
-  checkFor 10000 $ prop
+main  =  do
+  checkFor 10000 prop

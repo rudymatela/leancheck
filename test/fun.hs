@@ -37,7 +37,7 @@ prop_mapFilter :: (A -> A) -> (A -> Bool) -> [A] -> Bool
 prop_mapFilter f p xs  =  filter p (map f xs) == map f (filter p xs)
 
 prop_false :: (A -> A) -> (A -> A) -> Bool
-prop_false _ _ = False
+prop_false _ _  =  False
 
 prop_false' :: (A -> A) -> (A,A) -> Bool
-prop_false' _ _ = False
+prop_false' _ _  =  False

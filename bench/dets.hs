@@ -82,7 +82,7 @@ data Op  =  All                       -- all() -> [tab_name()]
 data Program  =  Program [Op] [[Op]]
   deriving (Eq, Ord, Show, Read)
 
-instance Listable Name where list = [A, B, C]
+instance Listable Name where  list  =  [A, B, C]
 
 -- This is an unoptimized generator as it will generate invalid programs like:
 --
@@ -108,7 +108,7 @@ instance Listable Program where
 -- -------------|-----------------
 -- insert(a,[]) | insert_new(a,[])
 bug1 :: Program
-bug1 = Program
+bug1  =  Program
   [Open A]           -- initialization
   [ [Insert A []]    -- thread 1
   , [InsertNew A []] -- thread 2
@@ -118,7 +118,7 @@ bug1 = Program
 -- ----------------|---------------------
 -- insert(a,{0,0}) | insert_new(a,{0,0})
 bug2 :: Program
-bug2 = Program
+bug2  =  Program
   [Open A]
   [ [Insert A [(0,0)]]
   , [InsertNew A [(0,0)]]
@@ -129,7 +129,7 @@ bug2 = Program
 -- open(a) | insert(a,{0,0})
 --         | get_contents(a)
 bug3 :: Program
-bug3 = Program
+bug3  =  Program
   [Open A]
   [ [Open A]
   , [ Insert A [(0,0)]
@@ -141,7 +141,7 @@ bug3 = Program
 -- challenged me to find using LeanCheck
 -- after my PhD examination.  (Rudy, 2017)
 bug4 :: Program
-bug4 = Program
+bug4  =  Program
   [ Open A
   , Close A
   , Open A
@@ -152,7 +152,7 @@ bug4 = Program
   ]
 
 bug5 :: Program
-bug5 = Program
+bug5  =  Program
   [ Open A
   , Insert A [(1,0)]
   ]
@@ -164,14 +164,14 @@ bug5 = Program
 
 
 prop1, prop2, prop3, prop4, prop5 :: Program -> Bool
-prop1 p = p /= bug1
-prop2 p = p /= bug2
-prop3 p = p /= bug3
-prop4 p = p /= bug4
-prop5 p = p /= bug5
+prop1 p  =  p /= bug1
+prop2 p  =  p /= bug2
+prop3 p  =  p /= bug3
+prop4 p  =  p /= bug4
+prop5 p  =  p /= bug5
 
 main :: IO ()
-main = do
+main  =  do
   checkFor   200000  prop1  -- bug found after    88 410 tests
   checkFor  4000000  prop2  -- bug found after 2 044 950 tests
   checkFor  2000000  prop3  -- bug not found, more tests and we go out of memory...
