@@ -71,8 +71,9 @@ data Op  =  All                       -- all() -> [tab_name()]
          |  GetContents Name          -- get_contents(Name) -> Objects
   deriving (Eq, Ord, Show, Read)
 
--- NOTE: I couldn't find get_contents on the dets documentation, but it is listed on Hughes paper
---       as one of the operations.  Perhaps he implemented it using first and next.
+-- NOTE: I couldn't find get_contents on the dets documentation, but it is
+--       listed on Hughes paper as one of the operations.
+--       Perhaps he implemented it using first and next.
 
 -- NOTE (2): I am admittedly cheating a bit
 --           by ommiting First and Next in
@@ -174,9 +175,9 @@ main :: IO ()
 main  =  do
   checkFor   200000  prop1  -- bug found after    88 410 tests
   checkFor  4000000  prop2  -- bug found after 2 044 950 tests
-  checkFor  2000000  prop3  -- bug not found, more tests and we go out of memory...
-  checkFor  2000000  prop4  -- bug not found, more tests and we go out of memory...
-  checkFor  2000000  prop5  -- bug not found, more tests and we go out of memory...
+  checkFor  2000000  prop3  -- bug not found, more tests and we go out of memory
+  checkFor  2000000  prop4  -- bug not found, more tests and we go out of memory
+  checkFor  2000000  prop5  -- bug not found, more tests and we go out of memory
 
 -- If I recall correcly, John Hughes mentioned that each test took 3 seconds to
 -- run.  That means LeanCheck would find the first bug after 3 days, and the

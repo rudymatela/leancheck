@@ -35,7 +35,8 @@ countRepetitions xs  =  length xs - length (nub xs)
 
 ratioRepetitions :: Eq a => [a] -> Rational
 ratioRepetitions []  =  0
-ratioRepetitions xs  =  fromIntegral (countRepetitions xs) % fromIntegral (length xs)
+ratioRepetitions xs  =  fromIntegral (countRepetitions xs)
+                     %  fromIntegral (length xs)
 
 showLengthT :: [[a]] -> String
 showLengthT xss  =  case lengthT xss of

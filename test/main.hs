@@ -52,9 +52,9 @@ tests n =
   , counterExample n (\x y -> x + y == (x::Double)) == Just ["0.0","1.0"]
   , holds          n (\x -> x + 1 /= (x::Int))
   , counterExample n (\x -> x + 1 /= (x::Float))  == Just ["Infinity"]
-    || counterExample n (\x -> x + 1 /= (x::Float)) == Just ["inf"] -- bug on Hugs 2006-09?
+ || counterExample n (\x -> x + 1 /= (x::Float))  == Just ["inf"] -- bug on Hugs
   , counterExample n (\x -> x + 1 /= (x::Double)) == Just ["Infinity"]
-    || counterExample n (\x -> x + 1 /= (x::Float)) == Just ["inf"] -- bug on Hugs 2006-09?
+ || counterExample n (\x -> x + 1 /= (x::Float))  == Just ["inf"] -- bug on Hugs
   , allUnique (take n list :: [Float])
   , allUnique (take n list :: [Double])
 
@@ -65,7 +65,8 @@ tests n =
   , orderedOn length (take n (list :: [[Ordering]]))
   , orderedOn length (take n (list :: [[Bool]]))
 
-  , strictlyOrderedOn (\xs -> (sum $ map (+1) xs, xs)) (take n (list :: [[Word]]))
+  , strictlyOrderedOn (\xs -> (sum $ map (+1) xs, xs))
+      (take n (list :: [[Word]]))
 
   , tPairEqParams n
   , tTripleEqParams n

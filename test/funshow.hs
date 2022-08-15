@@ -30,10 +30,11 @@ tests _ =
   -- partially defined --
   , showFunctionLine 2 (\x -> case x of True -> True)
                    == "\\x -> case x of True -> True"
-  , showFunctionLine 10 (\x -> case (x::Int) of 3 -> (4::Int); 5 -> 6)
-                    == "\\x -> case x of 3 -> 4; 5 -> 6"
-  , showFunctionLine 10 (\x y -> case (x::Int,y::Int) of (1,2) -> (3::Int); (2,1) -> 3)
-                    == "\\x y -> case (x,y) of (1,2) -> 3; (2,1) -> 3"
+  , showFunctionLine 10 ((\x -> case x of 3 -> 4; 5 -> 6) :: Int -> Int)
+                     == "\\x -> case x of 3 -> 4; 5 -> 6"
+  , showFunctionLine 10
+       ((\x y -> case (x,y) of (1,2) -> 3; (2,1) -> 3) :: Int->Int->Int)
+    == "\\x y -> case (x,y) of (1,2) -> 3; (2,1) -> 3"
 
   -- fully defined, infinite --
   , showFunction 3 ((+) -:> int)

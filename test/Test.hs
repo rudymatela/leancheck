@@ -134,8 +134,10 @@ tListsOfStrictlyOrderedBy n cmp  =  strictlyOrderedBy cmp . take n . concat
 infixr 9 `tListsOfStrictlyOrderedBy`
 
 tListsOfNatOrd :: Int -> Bool
-tListsOfNatOrd n  =  tListsOfStrictlyOrderedBy n (comparing sum' `thn` compare) tiers
-  where sum'  =  sum . map (+1) :: [Nat] -> Nat
+tListsOfNatOrd n  =
+  tListsOfStrictlyOrderedBy n (comparing sum' `thn` compare) tiers
+  where
+  sum'  =  sum . map (+1) :: [Nat] -> Nat
 
 tPairEqParams :: Int -> Bool
 tPairEqParams n  =  ces == srs
@@ -156,6 +158,8 @@ tTripleEqParams n  =  ces == srs
     fail x y z  =  False
 
 tProductsIsFilterByLength :: Eq a => [[a]] -> Int -> Int -> Bool
-tProductsIsFilterByLength values m n  =  concat (take m byProduct) `isPrefixOf` concat byFilter
-  where byProduct  =  products $ replicate n values
-        byFilter   =  ((==n) . length) `filterT` listsOf values
+tProductsIsFilterByLength values m n  =
+  concat (take m byProduct) `isPrefixOf` concat byFilter
+  where
+  byProduct  =  products $ replicate n values
+  byFilter   =  ((==n) . length) `filterT` listsOf values

@@ -130,7 +130,8 @@ tests n  =
   , (tiers :: [[ [Bool]     ]]) =| 6 |= $(deriveTiers ''[])
   , (tiers :: [[ Maybe Int  ]]) =| 6 |= $(deriveTiers ''Maybe)
   , (tiers :: [[ Maybe Bool ]]) =| 6 |= $(deriveTiers ''Maybe)
-  , ([]:tiers :: [[Either Bool Int]]) =$ map sort . take 6 $= $(deriveTiers ''Either)
+  , ([]:tiers :: [[Either Bool Int]])
+    =$ map sort . take 6 $= $(deriveTiers ''Either)
 
   , (list :: [ Bool       ]) =| n |= $(deriveList ''Bool)
   , (list :: [ [Int]      ]) =| n |= $(deriveList ''[])

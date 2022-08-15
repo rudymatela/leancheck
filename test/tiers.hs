@@ -33,7 +33,8 @@ tests n =
 
   , all (uncurry (/=)) . concat . take 200 $ distinctPairs (tiers :: [[Nat]])
 
-  , productMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]] == [[1],[2],[3],[4]]
+  , productMaybeWith ($) [[const Nothing, Just]] [[1],[2],[3],[4]]
+    == [[1],[2],[3],[4]]
   , productMaybeWith (flip ($))
                      [[1],[2],[3],[4]]
                      [[const Nothing],[Just]] == [[],[1],[2],[3],[4]]
