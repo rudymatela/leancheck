@@ -110,7 +110,7 @@ resultsIO n  =  zipWith torio [1..] . take n . results
 resultIO :: Testable a => Int -> a -> IO Result
 resultIO n  =  computeResult . resultsIO n
   where
-  computeResult []   =  error "resultIO: no results, empty Listable enumeration?"
+  computeResult []  =  error "resultIO: no results, empty Listable enumeration?"
   computeResult [r]  =  r
   computeResult (r:rs)  =  r >>= \r -> case r of
                                        (OK _) -> computeResult rs
@@ -118,11 +118,13 @@ resultIO n  =  computeResult . resultsIO n
 
 showResult :: Int -> Result -> String
 showResult m (OK n)              =  "+++ OK, passed " ++ show n ++ " tests"
-                                 ++ takeWhile (\_ -> n < m) " (exhausted)" ++ "."
+                                 ++ takeWhile (\_ -> n < m) " (exhausted)"
+                                 ++ "."
 showResult m (Falsified i ce)    =  "*** Failed! Falsifiable (after "
                                  ++ show i ++ " tests):\n" ++ joinArgs ce
-showResult m (Exception i ce e)  =  "*** Failed! Exception '" ++ e ++ "' (after "
-                                 ++ show i ++ " tests):\n" ++ joinArgs ce
+showResult m (Exception i ce e)  =  "*** Failed! Exception '" ++ e
+                                 ++ "' (after " ++ show i ++ " tests):\n"
+                                 ++ joinArgs ce
 
 -- joins the counter-example arguments
 joinArgs :: [String] -> String

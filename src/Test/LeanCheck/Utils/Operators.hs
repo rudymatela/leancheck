@@ -86,7 +86,12 @@ combine :: (b -> c -> d) -> (a -> b) -> (a -> c) -> (a -> d)
 combine (?) f g  =  \x -> f x ? g x
 
 -- Uneeded, just food for thought:
--- > combine2 :: (c -> d -> e) -> (a -> b -> c) -> (a -> b -> d) -> (a -> b -> e)
+--
+-- > combine2 :: (c -> d -> e)
+-- >          -> (a -> b -> c)
+-- >          -> (a -> b -> d)
+-- >          -> (a -> b -> e)
+--
 -- Two possible implementations:
 -- > combine2 op f g  =  \x y -> f x y `op` g x y
 -- > combine2  =  combine . combine
@@ -193,7 +198,9 @@ isAssociative (?)  =  \x y z -> x ? (y ? z) == (x ? y) ? z
 -- | Does the first operator, left-distributes over the second?
 --
 -- This is an alias to 'isLeftDistributiveOver'.
-isDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
+isDistributiveOver :: Eq a
+                   => (a -> a -> a) -> (a -> a -> a)
+                   -> a -> a -> a -> Bool
 isDistributiveOver  =  isLeftDistributiveOver
 
 -- | Does the first operator, left-distributes over the second?
@@ -205,7 +212,9 @@ isDistributiveOver  =  isLeftDistributiveOver
 -- > > check $ (+) `isLeftDistributiveOver` (*)
 -- > *** Failed! Falsifiable (after 8 tests):
 -- > 1 0 1
-isLeftDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
+isLeftDistributiveOver :: Eq a
+                       => (a -> a -> a) -> (a -> a -> a)
+                       -> a -> a -> a -> Bool
 (?) `isLeftDistributiveOver` (#)  =  \x y z -> x ? (y # z) == (x ? y) # (x ? z)
 
 -- | Does the first operator, right-distributes over the second?
@@ -217,7 +226,9 @@ isLeftDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a 
 -- > > check $ (+) `isRightDistributiveOver` (*)
 -- > *** Failed! Falsifiable (after 8 tests):
 -- > 1 0 1
-isRightDistributiveOver :: Eq a => (a -> a -> a) -> (a -> a -> a) -> a -> a -> a -> Bool
+isRightDistributiveOver :: Eq a
+                        => (a -> a -> a) -> (a -> a -> a)
+                        -> a -> a -> a -> Bool
 (?) `isRightDistributiveOver` (#)  =  \x y z -> (y # z) ? x == (y ? x) # (z ? x)
 
 -- | Are two operators 'flip'ped versions of each other?

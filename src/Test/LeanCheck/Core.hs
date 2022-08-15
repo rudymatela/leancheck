@@ -129,8 +129,9 @@ import Data.Maybe (listToMaybe)
 -- In this case, each sub-list in 'tiers' is a singleton list
 -- (each succeeding element of 'list' has +1 size).
 --
--- The function 'Test.LeanCheck.Derive.deriveListable' from "Test.LeanCheck.Derive"
--- can automatically derive instances of this typeclass.
+-- The function 'Test.LeanCheck.Derive.deriveListable'
+-- from "Test.LeanCheck.Derive" can automatically derive
+-- instances of this typeclass.
 --
 -- A 'Listable' instance for functions is also available but is not exported by
 -- default.  Import "Test.LeanCheck.Function" if you need to test higher-order
@@ -264,7 +265,7 @@ instance (Listable a) => Listable [a] where
 -- This also works for unsigned types that wrap around zero, yielding:
 --
 -- > listFractional :: [Ratio Word]  =
--- >   [0 % 1, 1 % 1, 1 % 2, 2 % 1, 1 % 3, 3 % 2, 2 % 3, 3 % 1, 1 % 4, 4 % 3, ...]
+-- >   [0 % 1, 1 % 1, 1 % 2, 2 % 1, 1 % 3, 3 % 2, 2 % 3, 3 % 1, 1 % 4, ...]
 listFractional :: (Ord a, Fractional a) => [a]
 listFractional  =  0 : positives +| negatives
   where

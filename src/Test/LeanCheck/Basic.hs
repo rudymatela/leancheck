@@ -100,7 +100,8 @@ instance (Listable a, Listable b, Listable c, Listable d,
                         tiers tiers
 
 -- | Returns tiers of applications of a 6-argument constructor.
-cons6 :: (Listable a, Listable b, Listable c, Listable d, Listable e, Listable f)
+cons6 :: (Listable a, Listable b, Listable c,
+          Listable d, Listable e, Listable f)
       => (a -> b -> c -> d -> e -> f -> g) -> [[g]]
 cons6 f  =  delay $ mapT (uncurry6 f) tiers
 
@@ -256,7 +257,8 @@ instance Listable CSUSeconds where  list  =  listIntegral
 --
 -- > > list :: [ExitCode]
 -- > [ExitSuccess, ExitFailure 1, ExitFailure 2, ..., ExitFailure 255]
-instance Listable ExitCode where  list  =  ExitSuccess : map ExitFailure [1..255]
+instance Listable ExitCode where
+  list  =  ExitSuccess : map ExitFailure [1..255]
 
 instance Listable GeneralCategory where  list  =  [minBound..maxBound]
 

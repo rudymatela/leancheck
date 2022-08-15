@@ -278,6 +278,10 @@ unD :: D -> Int;  unD (D n)  =  n
 unE :: E -> Int;  unE (E n)  =  n
 unF :: F -> Int;  unF (F n)  =  n
 
+negativeToZero :: (Ord a, Num a) => a -> a
+negativeToZero x  | x < 0      =  0
+                  | otherwise  =  x
+
 int1  :: Int -> Int1;   int1   =  Int1  . narrowS 1
 int2  :: Int -> Int2;   int2   =  Int2  . narrowS 2
 int3  :: Int -> Int3;   int3   =  Int3  . narrowS 3
@@ -293,8 +297,8 @@ nat4 :: Int -> Nat4;  nat4  =  Nat4 . (`mod` 4)
 nat5 :: Int -> Nat5;  nat5  =  Nat5 . (`mod` 5)
 nat6 :: Int -> Nat6;  nat6  =  Nat6 . (`mod` 6)
 nat7 :: Int -> Nat7;  nat7  =  Nat7 . (`mod` 7)
-nat  :: Int -> Nat;   nat   =  Nat  . (\x -> if x < 0 then 0 else x)
-natural :: Integer -> Natural;  natural  =  Natural . (\x -> if x < 0 then 0 else x)
+nat  :: Int -> Nat;   nat   =  Nat  . negativeToZero
+natural :: Integer -> Natural;  natural  =  Natural . negativeToZero
 mkA :: Int -> A;  mkA  =  A . (`mod` 6)
 mkB :: Int -> B;  mkB  =  B . (`mod` 6)
 mkC :: Int -> C;  mkC  =  C . (`mod` 6)
@@ -302,47 +306,49 @@ mkD :: Int -> D;  mkD  =  D . (`mod` 6)
 mkE :: Int -> E;  mkE  =  E . (`mod` 6)
 mkF :: Int -> F;  mkF  =  F . (`mod` 6)
 
-oInt1  ::(Int->Int->Int)->(Int1->Int1->Int1)   ;  oInt1   =  oNewtype int1  unInt1
-oInt2  ::(Int->Int->Int)->(Int2->Int2->Int2)   ;  oInt2   =  oNewtype int2  unInt2
-oInt3  ::(Int->Int->Int)->(Int3->Int3->Int3)   ;  oInt3   =  oNewtype int3  unInt3
-oInt4  ::(Int->Int->Int)->(Int4->Int4->Int4)   ;  oInt4   =  oNewtype int4  unInt4
-oWord1 ::(Int->Int->Int)->(Word1->Word1->Word1);  oWord1  =  oNewtype word1 unWord1
-oWord2 ::(Int->Int->Int)->(Word2->Word2->Word2);  oWord2  =  oNewtype word2 unWord2
-oWord3 ::(Int->Int->Int)->(Word3->Word3->Word3);  oWord3  =  oNewtype word3 unWord3
-oWord4 ::(Int->Int->Int)->(Word4->Word4->Word4);  oWord4  =  oNewtype word4 unWord4
-oNat   ::(Int->Int->Int)->(Nat->Nat->Nat)      ;  oNat    =  oNewtype nat   unNat
-oNat1  ::(Int->Int->Int)->(Nat1->Nat1->Nat1)   ;  oNat1   =  oNewtype nat1  unNat1
-oNat2  ::(Int->Int->Int)->(Nat2->Nat2->Nat2)   ;  oNat2   =  oNewtype nat2  unNat2
-oNat3  ::(Int->Int->Int)->(Nat3->Nat3->Nat3)   ;  oNat3   =  oNewtype nat3  unNat3
-oNat4  ::(Int->Int->Int)->(Nat4->Nat4->Nat4)   ;  oNat4   =  oNewtype nat4  unNat4
-oNat5  ::(Int->Int->Int)->(Nat5->Nat5->Nat5)   ;  oNat5   =  oNewtype nat5  unNat5
-oNat6  ::(Int->Int->Int)->(Nat6->Nat6->Nat6)   ;  oNat6   =  oNewtype nat6  unNat6
-oNat7  ::(Int->Int->Int)->(Nat7->Nat7->Nat7)   ;  oNat7   =  oNewtype nat7  unNat7
-oNatural :: (Integer->Integer->Integer) -> (Natural->Natural->Natural)
-oNatural  =  oNewtype natural unNatural
-oA :: (Int -> Int -> Int) -> (A -> A -> A);  oA  =  oNewtype mkA unA
-oB :: (Int -> Int -> Int) -> (B -> B -> B);  oB  =  oNewtype mkB unB
-oC :: (Int -> Int -> Int) -> (C -> C -> C);  oC  =  oNewtype mkC unC
-oD :: (Int -> Int -> Int) -> (D -> D -> D);  oD  =  oNewtype mkD unD
-oE :: (Int -> Int -> Int) -> (E -> E -> E);  oE  =  oNewtype mkE unE
-oF :: (Int -> Int -> Int) -> (F -> F -> F);  oF  =  oNewtype mkF unF
+type ONewtype a  =  (Int -> Int -> Int) -> (a -> a -> a)
 
-fInt1  :: (Int->Int) -> (Int1->Int1)   ;  fInt1   =  fNewtype int1  unInt1
-fInt2  :: (Int->Int) -> (Int2->Int2)   ;  fInt2   =  fNewtype int2  unInt2
-fInt3  :: (Int->Int) -> (Int3->Int3)   ;  fInt3   =  fNewtype int3  unInt3
-fInt4  :: (Int->Int) -> (Int4->Int4)   ;  fInt4   =  fNewtype int4  unInt4
-fWord1 :: (Int->Int) -> (Word1->Word1) ;  fWord1  =  fNewtype word1 unWord1
-fWord2 :: (Int->Int) -> (Word2->Word2) ;  fWord2  =  fNewtype word2 unWord2
-fWord3 :: (Int->Int) -> (Word3->Word3) ;  fWord3  =  fNewtype word3 unWord3
-fWord4 :: (Int->Int) -> (Word4->Word4) ;  fWord4  =  fNewtype word4 unWord4
-fNat   :: (Int->Int) -> (Nat->Nat)     ;  fNat    =  fNewtype Nat   unNat
-fNat1  :: (Int->Int) -> (Nat1->Nat1)   ;  fNat1   =  fNewtype nat1  unNat1
-fNat2  :: (Int->Int) -> (Nat2->Nat2)   ;  fNat2   =  fNewtype nat2  unNat2
-fNat3  :: (Int->Int) -> (Nat3->Nat3)   ;  fNat3   =  fNewtype nat3  unNat3
-fNat4  :: (Int->Int) -> (Nat4->Nat4)   ;  fNat4   =  fNewtype nat4  unNat4
-fNat5  :: (Int->Int) -> (Nat5->Nat5)   ;  fNat5   =  fNewtype nat5  unNat5
-fNat6  :: (Int->Int) -> (Nat6->Nat6)   ;  fNat6   =  fNewtype nat6  unNat6
-fNat7  :: (Int->Int) -> (Nat7->Nat7)   ;  fNat7   =  fNewtype nat7  unNat7
+oInt1  :: ONewtype Int1;   oInt1   =  oNewtype int1  unInt1
+oInt2  :: ONewtype Int2;   oInt2   =  oNewtype int2  unInt2
+oInt3  :: ONewtype Int3;   oInt3   =  oNewtype int3  unInt3
+oInt4  :: ONewtype Int4;   oInt4   =  oNewtype int4  unInt4
+oWord1 :: ONewtype Word1;  oWord1  =  oNewtype word1 unWord1
+oWord2 :: ONewtype Word2;  oWord2  =  oNewtype word2 unWord2
+oWord3 :: ONewtype Word3;  oWord3  =  oNewtype word3 unWord3
+oWord4 :: ONewtype Word4;  oWord4  =  oNewtype word4 unWord4
+oNat   :: ONewtype Nat;    oNat    =  oNewtype nat   unNat
+oNat1  :: ONewtype Nat1;   oNat1   =  oNewtype nat1  unNat1
+oNat2  :: ONewtype Nat2;   oNat2   =  oNewtype nat2  unNat2
+oNat3  :: ONewtype Nat3;   oNat3   =  oNewtype nat3  unNat3
+oNat4  :: ONewtype Nat4;   oNat4   =  oNewtype nat4  unNat4
+oNat5  :: ONewtype Nat5;   oNat5   =  oNewtype nat5  unNat5
+oNat6  :: ONewtype Nat6;   oNat6   =  oNewtype nat6  unNat6
+oNat7  :: ONewtype Nat7;   oNat7   =  oNewtype nat7  unNat7
+oNatural :: (Integer -> Integer -> Integer) -> (Natural -> Natural -> Natural)
+oNatural  =  oNewtype natural unNatural
+oA :: ONewtype A;  oA  =  oNewtype mkA unA
+oB :: ONewtype B;  oB  =  oNewtype mkB unB
+oC :: ONewtype C;  oC  =  oNewtype mkC unC
+oD :: ONewtype D;  oD  =  oNewtype mkD unD
+oE :: ONewtype E;  oE  =  oNewtype mkE unE
+oF :: ONewtype F;  oF  =  oNewtype mkF unF
+
+fInt1  :: (Int->Int) -> (Int1->Int1)  ;  fInt1   =  fNewtype int1  unInt1
+fInt2  :: (Int->Int) -> (Int2->Int2)  ;  fInt2   =  fNewtype int2  unInt2
+fInt3  :: (Int->Int) -> (Int3->Int3)  ;  fInt3   =  fNewtype int3  unInt3
+fInt4  :: (Int->Int) -> (Int4->Int4)  ;  fInt4   =  fNewtype int4  unInt4
+fWord1 :: (Int->Int) -> (Word1->Word1);  fWord1  =  fNewtype word1 unWord1
+fWord2 :: (Int->Int) -> (Word2->Word2);  fWord2  =  fNewtype word2 unWord2
+fWord3 :: (Int->Int) -> (Word3->Word3);  fWord3  =  fNewtype word3 unWord3
+fWord4 :: (Int->Int) -> (Word4->Word4);  fWord4  =  fNewtype word4 unWord4
+fNat   :: (Int->Int) -> (Nat->Nat)    ;  fNat    =  fNewtype Nat   unNat
+fNat1  :: (Int->Int) -> (Nat1->Nat1)  ;  fNat1   =  fNewtype nat1  unNat1
+fNat2  :: (Int->Int) -> (Nat2->Nat2)  ;  fNat2   =  fNewtype nat2  unNat2
+fNat3  :: (Int->Int) -> (Nat3->Nat3)  ;  fNat3   =  fNewtype nat3  unNat3
+fNat4  :: (Int->Int) -> (Nat4->Nat4)  ;  fNat4   =  fNewtype nat4  unNat4
+fNat5  :: (Int->Int) -> (Nat5->Nat5)  ;  fNat5   =  fNewtype nat5  unNat5
+fNat6  :: (Int->Int) -> (Nat6->Nat6)  ;  fNat6   =  fNewtype nat6  unNat6
+fNat7  :: (Int->Int) -> (Nat7->Nat7)  ;  fNat7   =  fNewtype nat7  unNat7
 fNatural :: (Integer->Integer) -> (Natural->Natural)
 fNatural  =  fNewtype Natural unNatural
 fA :: (Int -> Int) -> (A -> A);  fA  =  fNewtype mkA unA
@@ -401,98 +407,120 @@ instance Read E where  readsPrec  =  readsPrecNewtype mkE
 instance Read F where  readsPrec  =  readsPrecNewtype mkF
 
 
-instance Num Int1 where (+)  =  oInt1 (+);  abs     =  fInt1 abs
-                        (-)  =  oInt1 (-);  signum  =  fInt1 signum
-                        (*)  =  oInt1 (*);  fromInteger  =  int1 . fromInteger
+instance Num Int1 where
+  (+)  =  oInt1 (+);  abs     =  fInt1 abs
+  (-)  =  oInt1 (-);  signum  =  fInt1 signum
+  (*)  =  oInt1 (*);  fromInteger  =  int1 . fromInteger
 
-instance Num Int2 where (+)  =  oInt2 (+);  abs     =  fInt2 abs
-                        (-)  =  oInt2 (-);  signum  =  fInt2 signum
-                        (*)  =  oInt2 (*);  fromInteger  =  int2 . fromInteger
+instance Num Int2 where
+  (+)  =  oInt2 (+);  abs     =  fInt2 abs
+  (-)  =  oInt2 (-);  signum  =  fInt2 signum
+  (*)  =  oInt2 (*);  fromInteger  =  int2 . fromInteger
 
-instance Num Int3 where (+)  =  oInt3 (+);  abs     =  fInt3 abs
-                        (-)  =  oInt3 (-);  signum  =  fInt3 signum
-                        (*)  =  oInt3 (*);  fromInteger  =  int3 . fromInteger
+instance Num Int3 where
+  (+)  =  oInt3 (+);  abs     =  fInt3 abs
+  (-)  =  oInt3 (-);  signum  =  fInt3 signum
+  (*)  =  oInt3 (*);  fromInteger  =  int3 . fromInteger
 
-instance Num Int4 where (+)  =  oInt4 (+);  abs     =  fInt4 abs
-                        (-)  =  oInt4 (-);  signum  =  fInt4 signum
-                        (*)  =  oInt4 (*);  fromInteger  =  int4 . fromInteger
+instance Num Int4 where
+  (+)  =  oInt4 (+);  abs     =  fInt4 abs
+  (-)  =  oInt4 (-);  signum  =  fInt4 signum
+  (*)  =  oInt4 (*);  fromInteger  =  int4 . fromInteger
 
-instance Num Word1 where (+)  =  oWord1 (+);  abs     =  fWord1 abs
-                         (-)  =  oWord1 (-);  signum  =  fWord1 signum
-                         (*)  =  oWord1 (*);  fromInteger  =  word1 . fromInteger
+instance Num Word1 where
+  (+)  =  oWord1 (+);  abs     =  fWord1 abs
+  (-)  =  oWord1 (-);  signum  =  fWord1 signum
+  (*)  =  oWord1 (*);  fromInteger  =  word1 . fromInteger
 
-instance Num Word2 where (+)  =  oWord2 (+);  abs     =  fWord2 abs
-                         (-)  =  oWord2 (-);  signum  =  fWord2 signum
-                         (*)  =  oWord2 (*);  fromInteger  =  word2 . fromInteger
+instance Num Word2 where
+  (+)  =  oWord2 (+);  abs     =  fWord2 abs
+  (-)  =  oWord2 (-);  signum  =  fWord2 signum
+  (*)  =  oWord2 (*);  fromInteger  =  word2 . fromInteger
 
-instance Num Word3 where (+)  =  oWord3 (+);  abs     =  fWord3 abs
-                         (-)  =  oWord3 (-);  signum  =  fWord3 signum
-                         (*)  =  oWord3 (*);  fromInteger  =  word3 . fromInteger
+instance Num Word3 where
+  (+)  =  oWord3 (+);  abs     =  fWord3 abs
+  (-)  =  oWord3 (-);  signum  =  fWord3 signum
+  (*)  =  oWord3 (*);  fromInteger  =  word3 . fromInteger
 
-instance Num Word4 where (+)  =  oWord4 (+);  abs     =  fWord4 abs
-                         (-)  =  oWord4 (-);  signum  =  fWord4 signum
-                         (*)  =  oWord4 (*);  fromInteger  =  word4 . fromInteger
+instance Num Word4 where
+  (+)  =  oWord4 (+);  abs     =  fWord4 abs
+  (-)  =  oWord4 (-);  signum  =  fWord4 signum
+  (*)  =  oWord4 (*);  fromInteger  =  word4 . fromInteger
 
-instance Num Nat where (+)  =  oNat (+);  abs     =  fNat abs
-                       (-)  =  oNat (-);  signum  =  fNat signum
-                       (*)  =  oNat (*);  fromInteger  =  nat . fromInteger
+instance Num Nat where
+  (+)  =  oNat (+);  abs     =  fNat abs
+  (-)  =  oNat (-);  signum  =  fNat signum
+  (*)  =  oNat (*);  fromInteger  =  nat . fromInteger
 
-instance Num Nat1 where (+)  =  oNat1 (+);  abs     =  fNat1 abs
-                        (-)  =  oNat1 (-);  signum  =  fNat1 signum
-                        (*)  =  oNat1 (*);  fromInteger  =  nat1 . fromInteger
+instance Num Nat1 where
+  (+)  =  oNat1 (+);  abs     =  fNat1 abs
+  (-)  =  oNat1 (-);  signum  =  fNat1 signum
+  (*)  =  oNat1 (*);  fromInteger  =  nat1 . fromInteger
 
-instance Num Nat2 where (+)  =  oNat2 (+);  abs     =  fNat2 abs
-                        (-)  =  oNat2 (-);  signum  =  fNat2 signum
-                        (*)  =  oNat2 (*);  fromInteger  =  nat2 . fromInteger
+instance Num Nat2 where
+  (+)  =  oNat2 (+);  abs     =  fNat2 abs
+  (-)  =  oNat2 (-);  signum  =  fNat2 signum
+  (*)  =  oNat2 (*);  fromInteger  =  nat2 . fromInteger
 
-instance Num Nat3 where (+)  =  oNat3 (+);  abs     =  fNat3 abs
-                        (-)  =  oNat3 (-);  signum  =  fNat3 signum
-                        (*)  =  oNat3 (*);  fromInteger  =  nat3 . fromInteger
+instance Num Nat3 where
+  (+)  =  oNat3 (+);  abs     =  fNat3 abs
+  (-)  =  oNat3 (-);  signum  =  fNat3 signum
+  (*)  =  oNat3 (*);  fromInteger  =  nat3 . fromInteger
 
-instance Num Nat4 where (+)  =  oNat4 (+);  abs     =  fNat4 abs
-                        (-)  =  oNat4 (-);  signum  =  fNat4 signum
-                        (*)  =  oNat4 (*);  fromInteger  =  nat4 . fromInteger
+instance Num Nat4 where
+  (+)  =  oNat4 (+);  abs     =  fNat4 abs
+  (-)  =  oNat4 (-);  signum  =  fNat4 signum
+  (*)  =  oNat4 (*);  fromInteger  =  nat4 . fromInteger
 
-instance Num Nat5 where (+)  =  oNat5 (+);  abs     =  fNat5 abs
-                        (-)  =  oNat5 (-);  signum  =  fNat5 signum
-                        (*)  =  oNat5 (*);  fromInteger  =  nat5 . fromInteger
+instance Num Nat5 where
+  (+)  =  oNat5 (+);  abs     =  fNat5 abs
+  (-)  =  oNat5 (-);  signum  =  fNat5 signum
+  (*)  =  oNat5 (*);  fromInteger  =  nat5 . fromInteger
 
-instance Num Nat6 where (+)  =  oNat6 (+);  abs     =  fNat6 abs
-                        (-)  =  oNat6 (-);  signum  =  fNat6 signum
-                        (*)  =  oNat6 (*);  fromInteger  =  nat6 . fromInteger
+instance Num Nat6 where
+  (+)  =  oNat6 (+);  abs     =  fNat6 abs
+  (-)  =  oNat6 (-);  signum  =  fNat6 signum
+  (*)  =  oNat6 (*);  fromInteger  =  nat6 . fromInteger
 
-instance Num Nat7 where (+)  =  oNat7 (+);  abs     =  fNat7 abs
-                        (-)  =  oNat7 (-);  signum  =  fNat7 signum
-                        (*)  =  oNat7 (*);  fromInteger  =  nat7 . fromInteger
+instance Num Nat7 where
+  (+)  =  oNat7 (+);  abs     =  fNat7 abs
+  (-)  =  oNat7 (-);  signum  =  fNat7 signum
+  (*)  =  oNat7 (*);  fromInteger  =  nat7 . fromInteger
 
 instance Num Natural where
   (+)  =  oNatural (+);  abs     =  fNatural abs
   (-)  =  oNatural (-);  signum  =  fNatural signum
   (*)  =  oNatural (*);  fromInteger  =  natural . fromInteger
 
-instance Num A where (+)  =  oA (+);  abs     =  fA abs
-                     (-)  =  oA (-);  signum  =  fA signum
-                     (*)  =  oA (*);  fromInteger  =  mkA . fromInteger
+instance Num A where
+  (+)  =  oA (+);  abs     =  fA abs
+  (-)  =  oA (-);  signum  =  fA signum
+  (*)  =  oA (*);  fromInteger  =  mkA . fromInteger
 
-instance Num B where (+)  =  oB (+);  abs     =  fB abs
-                     (-)  =  oB (-);  signum  =  fB signum
-                     (*)  =  oB (*);  fromInteger  =  mkB . fromInteger
+instance Num B where
+  (+)  =  oB (+);  abs     =  fB abs
+  (-)  =  oB (-);  signum  =  fB signum
+  (*)  =  oB (*);  fromInteger  =  mkB . fromInteger
 
-instance Num C where (+)  =  oC (+);  abs     =  fC abs
-                     (-)  =  oC (-);  signum  =  fC signum
-                     (*)  =  oC (*);  fromInteger  =  mkC . fromInteger
+instance Num C where
+  (+)  =  oC (+);  abs     =  fC abs
+  (-)  =  oC (-);  signum  =  fC signum
+  (*)  =  oC (*);  fromInteger  =  mkC . fromInteger
 
-instance Num D where (+)  =  oD (+);  abs     =  fD abs
-                     (-)  =  oD (-);  signum  =  fD signum
-                     (*)  =  oD (*);  fromInteger  =  mkD . fromInteger
+instance Num D where
+  (+)  =  oD (+);  abs     =  fD abs
+  (-)  =  oD (-);  signum  =  fD signum
+  (*)  =  oD (*);  fromInteger  =  mkD . fromInteger
 
-instance Num E where (+)  =  oE (+);  abs     =  fE abs
-                     (-)  =  oE (-);  signum  =  fE signum
-                     (*)  =  oE (*);  fromInteger  =  mkE . fromInteger
+instance Num E where
+  (+)  =  oE (+);  abs     =  fE abs
+  (-)  =  oE (-);  signum  =  fE signum
+  (*)  =  oE (*);  fromInteger  =  mkE . fromInteger
 
-instance Num F where (+)  =  oF (+);  abs     =  fF abs
-                     (-)  =  oF (-);  signum  =  fF signum
-                     (*)  =  oF (*);  fromInteger  =  mkF . fromInteger
+instance Num F where
+  (+)  =  oF (+);  abs     =  fF abs
+  (-)  =  oF (-);  signum  =  fF signum
+  (*)  =  oF (*);  fromInteger  =  mkF . fromInteger
 
 
 instance Real Int1 where  toRational (Int1 x)  =  fromIntegral x % 1
@@ -704,39 +732,39 @@ instance Enum E where
 instance Enum F where toEnum    =  mkF;  enumFrom      =  boundedEnumFrom
                       fromEnum  =  unF;  enumFromThen  =  boundedEnumFromThen
 
-range' :: Enum a => (a,a) -> [a]
-range' (m,n)  =  [m..n]
+rng :: Enum a => (a,a) -> [a]
+rng (m,n)  =  [m..n]
 
-index' :: Integral a => (a,a) -> a -> Int
-index' b@(m,_) i  | inRange' b i  =  fromIntegral (i - m)
-                  | otherwise     =  error "Index out of range."
+idx :: Integral a => (a,a) -> a -> Int
+idx b@(m,_) i  | irng b i   =  fromIntegral (i - m)
+               | otherwise  =  error "Index out of range."
 
-inRange' :: Ord a => (a,a) -> a -> Bool
-inRange' (m,n) i  =  m <= i && i <= m
+irng :: Ord a => (a,a) -> a -> Bool
+irng (m,n) i  =  m <= i && i <= m
 
-instance Ix Int1 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Int2 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Int3 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Int4 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Word1 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Word2 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Word3 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Word4 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat1 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat2 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat3 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat4 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat5 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat6 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Nat7 where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix Natural where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix A where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix B where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix C where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix D where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix E where  range  =  range';  index  =  index';  inRange  =  inRange'
-instance Ix F where  range  =  range';  index  =  index';  inRange  =  inRange'
+instance Ix Int1    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Int2    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Int3    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Int4    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Word1   where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Word2   where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Word3   where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Word4   where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat     where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat1    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat2    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat3    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat4    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat5    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat6    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Nat7    where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix Natural where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix A       where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix B       where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix C       where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix D       where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix E       where  range  =  rng;  index  =  idx;  inRange  =  irng
+instance Ix F       where  range  =  rng;  index  =  idx;  inRange  =  irng
 
 instance Listable Int1 where  list  =  [0,minBound]
 instance Listable Int2 where  list  =  listIntegral
@@ -830,7 +858,8 @@ instance (Listable a, Listable b)
 -- > 9223372036854775807
 newtype X a  =  X {unX :: a}  deriving (Eq, Ord)
 instance Show a => Show (X a) where  show (X x)  =  show x
-instance (Integral a, Bounded a) => Listable (X a) where  list  =  map X listXIntegral
+instance (Integral a, Bounded a) => Listable (X a) where
+  list  =  map X listXIntegral
 -- ^ Extremily large integers are intercalated with small integers.
 --
 --   > list :: [X Int]  =  map X
@@ -975,13 +1004,26 @@ instance Show Digit where  show  =  show . unDigit
 instance Show AlphaNum where  show  =  show . unAlphaNum
 instance Show Letter   where  show  =  show . unLetter
 
-instance Listable Space where  list  =  map Space [' ', '\t', '\n', '\r', '\f', '\v']
-instance Listable Lower where  list  =  map Lower ['a'..'z']
-instance Listable Upper where  list  =  map Upper ['A'..'Z']
-instance Listable Alpha where  list  =  map Alpha $ ['a'..'z'] +| ['A'..'Z']
-instance Listable Digit where  list  =  map Digit ['0'..'9']
-instance Listable AlphaNum where  list  =  map AlphaNum $ ['0'..'9'] +| ['a'..'z'] +| ['A'..'Z']
-instance Listable Letter   where  list  =  map Letter $ ['a'..'z'] +| ['A'..'Z']
+instance Listable Space where
+  list  =  map Space [' ', '\t', '\n', '\r', '\f', '\v']
+
+instance Listable Lower where
+  list  =  map Lower ['a'..'z']
+
+instance Listable Upper where
+  list  =  map Upper ['A'..'Z']
+
+instance Listable Alpha where
+  list  =  map Alpha $ ['a'..'z'] +| ['A'..'Z']
+
+instance Listable Digit where
+  list  =  map Digit ['0'..'9']
+
+instance Listable AlphaNum where
+  list  =  map AlphaNum $ ['0'..'9'] +| ['a'..'z'] +| ['A'..'Z']
+
+instance Listable Letter where
+  list  =  map Letter $ ['a'..'z'] +| ['A'..'Z']
 
 -- | Strings of spaces.
 data Spaces  =  Spaces {unSpaces :: String}

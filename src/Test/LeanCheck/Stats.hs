@@ -155,7 +155,10 @@ conditionStats n  =  putStrLn . table " " . map show1
 -- >   total: 1 1 2 4 8 16 32 64 128 256
 -- > ordered: 1 1 2 3 5  7 11 15  22  30
 conditionStatsT :: Listable a => Int -> [(String,a->Bool)] -> IO ()
-conditionStatsT n  =  putStrLn . table " " . map show1 . (("total", const True):)
+conditionStatsT n  =  putStrLn
+                   .  table " "
+                   .  map show1
+                   .  (("total", const True):)
   where
   xss  =  take n tiers
   show1 (s,f)  =  (s ++ ":") : map (show . count f) xss

@@ -239,42 +239,50 @@ infixl 1 ->>>>>>>:>
 infixl 1 ->>>>>>>>:
 
 -- | Forces the 9th argument type.
-(->>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j) -> i -> (a->b->c->d->e->f->g->h->i->j)
+(->>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j) -> i
+              -> (a->b->c->d->e->f->g->h->i->j)
 (->>>>>>>>:>)  =  const
 infixl 1 ->>>>>>>>:>
 
 -- | Forces the result type of a 9-argument function.
-(->>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j) -> j -> (a->b->c->d->e->f->g->h->i->j)
+(->>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j) -> j
+              -> (a->b->c->d->e->f->g->h->i->j)
 (->>>>>>>>>:)  =  const
 infixl 1 ->>>>>>>>>:
 
 -- | Forces the type of the 10th argument.
-(->>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k) -> j -> (a->b->c->d->e->f->g->h->i->j->k)
+(->>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k) -> j
+               -> (a->b->c->d->e->f->g->h->i->j->k)
 (->>>>>>>>>:>)  =  const
 infixl 1 ->>>>>>>>>:>
 
 -- | Forces the result type of a 10-argument function.
-(->>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k) -> k -> (a->b->c->d->e->f->g->h->i->j->k)
+(->>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k) -> k
+               -> (a->b->c->d->e->f->g->h->i->j->k)
 (->>>>>>>>>>:)  =  const
 infixl 1 ->>>>>>>>>>:
 
 -- | Forces the type of the 11th argument.
-(->>>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k->l) -> k -> (a->b->c->d->e->f->g->h->i->j->k->l)
+(->>>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k->l) -> k
+                -> (a->b->c->d->e->f->g->h->i->j->k->l)
 (->>>>>>>>>>:>)  =  const
 infixl 1 ->>>>>>>>>>:>
 
 -- | Forces the result type of a 11-argument function.
-(->>>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k->l) -> l -> (a->b->c->d->e->f->g->h->i->j->k->l)
+(->>>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k->l) -> l
+                -> (a->b->c->d->e->f->g->h->i->j->k->l)
 (->>>>>>>>>>>:)  =  const
 infixl 1 ->>>>>>>>>>>:
 
 -- | Forces the type of the 12th argument.
-(->>>>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k->l->m) -> m -> (a->b->c->d->e->f->g->h->i->j->k->l->m)
+(->>>>>>>>>>>:>) :: (a->b->c->d->e->f->g->h->i->j->k->l->m) -> m
+                 -> (a->b->c->d->e->f->g->h->i->j->k->l->m)
 (->>>>>>>>>>>:>)  =  const
 infixl 1 ->>>>>>>>>>>:>
 
 -- | Forces the result type of a 12-argument function.
-(->>>>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k->l->m) -> m -> (a->b->c->d->e->f->g->h->i->j->k->l->m)
+(->>>>>>>>>>>>:) :: (a->b->c->d->e->f->g->h->i->j->k->l->m) -> m
+                 -> (a->b->c->d->e->f->g->h->i->j->k->l->m)
 (->>>>>>>>>>>>:)  =  const
 infixl 1 ->>>>>>>>>>>>:
 
