@@ -175,8 +175,8 @@ typeConArgs :: Name -> Q [Name]
 typeConArgs t  =  do
   is <- isTypeSynonym t
   if is
-    then liftM typeConTs $ typeSynonymType t
-    else liftM (nubMerges . map typeConTs . concat . map snd) $ typeConstructors t
+  then liftM typeConTs $ typeSynonymType t
+  else liftM (nubMerges . map typeConTs . concat . map snd) $ typeConstructors t
   where
   typeConTs :: Type -> [Name]
   typeConTs (AppT t1 t2)  =  typeConTs t1 `nubMerge` typeConTs t2
@@ -225,7 +225,7 @@ normalizeType t  =  do
     newNames  =  mapM newName
     newVarTs :: Int -> Q [Type]
     newVarTs n  =  liftM (map VarT)
-               $ newNames (take n . map (:[]) $ cycle ['a'..'z'])
+                $  newNames (take n . map (:[]) $ cycle ['a'..'z'])
 
 -- Normalizes a type by applying it to units (`()`) while possible.
 --
@@ -276,17 +276,17 @@ typeArity t  =  do
 -- Given a type name, returns a list of its type constructor names paired with
 -- the type arguments they take.
 --
--- > typeConstructors ''()    === Q [('(),[])]
+-- > typeConstructors ''()  =  Q [('(),[])]
 --
--- > typeConstructors ''(,)   === Q [('(,),[VarT a, VarT b])]
+-- > typeConstructors ''(,)  =  Q [('(,),[VarT a, VarT b])]
 --
--- > typeConstructors ''[]    === Q [('[],[]),('(:),[VarT a,AppT ListT (VarT a)])]
+-- > typeConstructors ''[]  =  Q [('[],[]),('(:),[VarT a,AppT ListT (VarT a)])]
 --
 -- > data Pair a  =  P a a
--- > typeConstructors ''Pair  === Q [('P,[VarT a, VarT a])]
+-- > typeConstructors ''Pair  =  Q [('P,[VarT a, VarT a])]
 --
 -- > data Point  =  Pt Int Int
--- > typeConstructors ''Point === Q [('Pt,[ConT Int, ConT Int])]
+-- > typeConstructors ''Point  =  Q [('Pt,[ConT Int, ConT Int])]
 typeConstructors :: Name -> Q [(Name,[Type])]
 typeConstructors t  =  do
   ti <- reify t
@@ -304,7 +304,7 @@ typeConstructors t  =  do
   simplify (NormalC n ts)   =  (n,map snd ts)
   simplify (RecC    n ts)   =  (n,map trd ts)
   simplify (InfixC  t1 n t2)  =  (n,[snd t1,snd t2])
-  simplify _  =  error "Test.LeanCheck.Derive.typeConstructors: unhandled case (see source)"
+  simplify _  =  error "typeConstructors: unexpected unhandled case"
   trd (x,y,z)  =  z
 
 isTypeSynonym :: Name -> Q Bool
