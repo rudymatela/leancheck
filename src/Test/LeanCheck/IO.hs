@@ -72,7 +72,7 @@ checkFor n p  =  checkResultFor n p >> return ()
 -- There is no option to silence this function:
 -- for silence, you should use 'Test.LeanCheck.holds'.
 checkResult :: Testable a => a -> IO Bool
-checkResult p  =  checkResultFor 200 p
+checkResult  =  checkResultFor 200
 
 -- | Check a property for a given number of tests
 --   printing results on 'System.IO.stdout' and
