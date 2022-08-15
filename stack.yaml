@@ -1,4 +1,4 @@
-resolver: lts-18.14 # or ghc-8.10.7
+resolver: lts-19.19 # or ghc-9.0.2
 
 packages:
 - .
