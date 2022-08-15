@@ -189,6 +189,53 @@ v0.6.5 (August 2017)
 * Improve tests.
 
 
+v0.6.4 (August 2017)
+--------------------
+
+* Add and export the `Xs` constructor in `Utils`;
+* Add type binding operators for up to 12 arguments.
+
+
+v0.6.3 (July 2017)
+------------------
+
+* `Test.LeanCheck`: Add the `delay` and `reset` functions;
+* `Test.LeanCheck.Tiers`: `normalizeT` stripping up to 12 empty tiers;
+* Some refactoring;
+* Add lots of new tests for LeanCheck itself.
+
+
+v0.6.2 (March 2017)
+-------------------
+
+* Improve documentation;
+* Improve tests of LeanCheck itself (including putting LeanCheck on CI).
+
+
+v0.6.1 (March 2017)
+-------------------
+
+* `Test.LeanCheck.Error`: export `fromError`;
+* `Test.LeanCheck.Tiers`: export `mapMaybeT`, `maybeConsN` and `catMaybesT`;
+* Some code refactoring and internal experiments with function enumeration.
+
+
+v0.6.0 (October 2016)
+---------------------
+
+* Add `deriveListableCascading`;
+* Add `Listable` instances for `Word` and `Ordering`;
+* Improve tests of LeanCheck itself.
+
+
+v0.5.0 (July 2016)
+------------------
+
+* Improve documentation;
+* Rename several functions;
+* Add several utilities in `Utils`.
+
+
 Earlier versions
 ----------------
 
