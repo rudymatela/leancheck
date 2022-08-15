@@ -26,9 +26,9 @@ import Test.LeanCheck.Tiers
 xss -->> yss
   | finite xss  =  mapT ((undefined `mutate`) . zip (concat xss))
                         (products $ replicate (length $ concat xss) yss)
-  | otherwise   =  concatMapT
-                     (\(r,yss) -> mapT (const r `mutate`) (exceptionPairs xss yss))
-                     (choices yss)
+  | otherwise   =  concatMapT (\(r,yss) -> mapT (const r `mutate`)
+                                                (exceptionPairs xss yss))
+                              (choices yss)
 
 
 mutate :: Eq a => (a -> b) -> [(a,b)] -> (a -> b)
