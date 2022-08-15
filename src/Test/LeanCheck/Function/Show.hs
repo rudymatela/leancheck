@@ -70,7 +70,7 @@
 -- > import Test.LeanCheck.Function.ShowFunction
 -- >
 -- > instance ShowFunction Ty where
--- >   bindtiers = bindtiersShow
+-- >   bindtiers  =  bindtiersShow
 module Test.LeanCheck.Function.Show () where
 
 import Test.LeanCheck.Function.Show.EightLines ()

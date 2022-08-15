@@ -271,9 +271,9 @@ listFractional  =  0 : positives +| negatives
   stern  =  map (fromInteger . fusc) [1..]
   positives  =  takeWhile (>0) $ zipWith (/) stern (tail stern)
   negatives  =  takeWhile (<0) $ map negate positives
-  fusc  =  fu 1 0  where  fu a b 0 = b
-                          fu a b n | even n    = fu (a + b) b (n `div` 2)
-                                   | otherwise = fu a (a + b) ((n-1) `div` 2)
+  fusc  =  fu 1 0  where  fu a b 0               =  b
+                          fu a b n  | even n     =  fu (a + b) b (n `div` 2)
+                                    | otherwise  =  fu a (a + b) ((n-1) `div` 2)
 
 -- | Listing of 'Floating' values.
 --   This can be used as the implementation of 'list' for 'Floating' types.

@@ -18,4 +18,4 @@ import Test.LeanCheck.Core
 import Test.LeanCheck.Function.ListsOfPairs
 
 instance (Eq a, Listable a, Listable b) => Listable (a -> b) where
-  tiers = tiers -->> tiers
+  tiers  =  tiers -->> tiers

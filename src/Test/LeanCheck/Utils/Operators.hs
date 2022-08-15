@@ -88,8 +88,8 @@ combine (?) f g  =  \x -> f x ? g x
 -- Uneeded, just food for thought:
 -- > combine2 :: (c -> d -> e) -> (a -> b -> c) -> (a -> b -> d) -> (a -> b -> e)
 -- Two possible implementations:
--- > combine2 op f g = \x y -> f x y `op` g x y
--- > combine2 = combine . combine
+-- > combine2 op f g  =  \x y -> f x y `op` g x y
+-- > combine2  =  combine . combine
 
 -- | Allows building equality properties between functions.
 --

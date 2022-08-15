@@ -16,7 +16,7 @@
 --
 -- > import Test.LeanCheck.ShowFunction
 -- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
--- >   show = showFunction 8
+-- >   show  =  showFunction 8
 --
 -- This shows functions as a case pattern with up to 8 cases.
 --
@@ -76,22 +76,22 @@ import Data.List (intercalate, sortBy)
 import Data.List (sortBy)
 
 intercalate :: [a] -> [[a]] -> [a]
-intercalate xs xss = concat (intersperse xs xss)
+intercalate xs xss  =  concat (intersperse xs xss)
   where
   intersperse             :: a -> [a] -> [a]
   intersperse _   []      = []
   intersperse sep (x:xs)  = x : prependToAll sep xs
     where
-    prependToAll            :: a -> [a] -> [a]
-    prependToAll _   []     = []
-    prependToAll sep (x:xs) = sep : x : prependToAll sep xs
+    prependToAll :: a -> [a] -> [a]
+    prependToAll _   []      =  []
+    prependToAll sep (x:xs)  =  sep : x : prependToAll sep xs
 #endif
 
 -- | A functional binding in a showable format.
 --   Argument values are represented as a list of strings.
 --   The result value is represented by 'Just' a 'String' when defined
 --   or by 'Nothing' when 'undefined'.
-type Binding = ([String], Maybe String)
+type Binding  =  ([String], Maybe String)
 
 -- | 'ShowFunction' values are those for which
 --   we can return a list of functional bindings.
@@ -99,7 +99,7 @@ type Binding = ([String], Maybe String)
 -- Instances for 'show'able algebraic datatypes are defined using
 -- 'bindtiersShow':
 --
--- > instance ShowFunction Ty where bindtiers = bindtiersShow
+-- > instance ShowFunction Ty where bindtiers  =  bindtiersShow
 class ShowFunction a where
   bindtiers :: a -> [[Binding]]
 
@@ -181,39 +181,43 @@ class ShowFunction a where
 --     > , ...
 --     > ]
 bindings :: ShowFunction a => a -> [Binding]
-bindings = concat . bindtiers
+bindings  =  concat . bindtiers
 
 
 -- | A drop-in implementation of 'bindtiers' for 'show'able types.
 --
 -- Define instances for 'show'able algebraic datatypes as:
 --
--- > instance ShowFunction Ty where bindtiers = bindtiersShow
+-- > instance ShowFunction Ty where bindtiers  =  bindtiersShow
 bindtiersShow :: Show a => a -> [[Binding]]
-bindtiersShow x = [[([],errorToNothing $ show x)]]
+bindtiersShow x  =  [[([],errorToNothing $ show x)]]
 
-instance ShowFunction ()       where bindtiers = bindtiersShow
-instance ShowFunction Bool     where bindtiers = bindtiersShow
-instance ShowFunction Int      where bindtiers = bindtiersShow
-instance ShowFunction Word     where bindtiers = bindtiersShow
-instance ShowFunction Integer  where bindtiers = bindtiersShow
-instance ShowFunction Char     where bindtiers = bindtiersShow
-instance ShowFunction Float    where bindtiers = bindtiersShow
-instance ShowFunction Double   where bindtiers = bindtiersShow
-instance ShowFunction Ordering where bindtiers = bindtiersShow
-instance Show a => ShowFunction [a]       where bindtiers = bindtiersShow
-instance Show a => ShowFunction (Maybe a) where bindtiers = bindtiersShow
-instance (Show a, Show b) => ShowFunction (Either a b) where bindtiers = bindtiersShow
-instance (Show a, Show b) => ShowFunction (a,b) where bindtiers = bindtiersShow
+instance ShowFunction ()       where  bindtiers  =  bindtiersShow
+instance ShowFunction Bool     where  bindtiers  =  bindtiersShow
+instance ShowFunction Int      where  bindtiers  =  bindtiersShow
+instance ShowFunction Word     where  bindtiers  =  bindtiersShow
+instance ShowFunction Integer  where  bindtiers  =  bindtiersShow
+instance ShowFunction Char     where  bindtiers  =  bindtiersShow
+instance ShowFunction Float    where  bindtiers  =  bindtiersShow
+instance ShowFunction Double   where  bindtiers  =  bindtiersShow
+instance ShowFunction Ordering where  bindtiers  =  bindtiersShow
+instance Show a => ShowFunction [a]       where  bindtiers  =  bindtiersShow
+instance Show a => ShowFunction (Maybe a) where  bindtiers  =  bindtiersShow
+
+instance (Show a, Show b) => ShowFunction (Either a b) where
+  bindtiers  =  bindtiersShow
+
+instance (Show a, Show b) => ShowFunction (a,b) where
+  bindtiers  =  bindtiersShow
 
 -- instance for functional value type --
 instance (Show a, Listable a, ShowFunction b) => ShowFunction (a->b) where
-  bindtiers f = concatMapT bindtiersFor tiers
-    where bindtiersFor x = mapFst (show x:) `mapT` bindtiers (f x)
-          mapFst f (x,y) = (f x, y)
+  bindtiers f  =  concatMapT bindtiersFor tiers
+    where bindtiersFor x  =  mapFst (show x:) `mapT` bindtiers (f x)
+          mapFst f (x,y)  =  (f x, y)
 
 paren :: String -> String
-paren s = "(" ++ s ++ ")"
+paren s  =  "(" ++ s ++ ")"
 
 showTuple :: [String] -> String
 showTuple [x]  =  x
@@ -221,20 +225,20 @@ showTuple xs | all (== "_") xs  =  "_"
              | otherwise        =  paren $ intercalate "," xs
 
 showBindings :: [Binding] -> [String]
-showBindings bs = [ showTuple as ++ " -> " ++ r | (as, Just r) <- bs ]
+showBindings bs  =  [ showTuple as ++ " -> " ++ r | (as, Just r) <- bs ]
 
 showNBindings :: Bool -> Int -> [Binding] -> [String]
-showNBindings infinite n bs' = take n bs ++ ["..." | infinite || length bs > n]
+showNBindings infinite n bs'  =  take n bs ++ ["..." | infinite || length bs > n]
   where
-  bs = showBindings bs'
+  bs  =  showBindings bs'
 
 isValue :: ShowFunction a => a -> Bool
-isValue f = case bindings f of
+isValue f  =  case bindings f of
               [([],_)] -> True
               _        -> False
 
 showValueOf :: ShowFunction a => a -> String
-showValueOf x = case snd . head . bindings $ x of
+showValueOf x  =  case snd . head . bindings $ x of
                   Nothing -> "undefined"
                   Just x' -> x'
 
@@ -261,11 +265,11 @@ showValueOf x = case snd . head . bindings $ x of
 -- This can be used as an implementation of 'show' for functions:
 --
 -- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
--- >   show = showFunction 8
+-- >   show  =  showFunction 8
 --
 -- See 'showFunctionLine' for an alternative without line breaks.
 showFunction :: ShowFunction a => Int -> a -> String
-showFunction n = showFunctionL False (n*n+1) n
+showFunction n  =  showFunctionL False (n*n+1) n
 
 -- | Same as 'showFunction', but has no line breaks.
 --
@@ -277,178 +281,182 @@ showFunction n = showFunctionL False (n*n+1) n
 -- This can be used as an implementation of 'show' for functions:
 --
 -- > instance (Show a, Listable a, ShowFunction b) => Show (a->b) where
--- >   show = showFunction 8
+-- >   show  =  showFunction 8
 showFunctionLine :: ShowFunction a => Int -> a -> String
-showFunctionLine n = showFunctionL True (n*n+1) n
+showFunctionLine n  =  showFunctionL True (n*n+1) n
 
 -- | isUndefined checks if a function is totally undefined
 --   for the given maximum number of values
 isUndefined :: ShowFunction a => Int -> a -> Bool
-isUndefined m = all (isNothing . snd) . take m . bindings
+isUndefined m  =  all (isNothing . snd) . take m . bindings
 
 -- | checks if a function is constant
 --   for the given maximum number of values
 isConstant :: ShowFunction a => Int -> a -> Bool
-isConstant m f = case take m $ bindings f of
-                 []          -> False -- uninhabited type?
-                 ((_,r'):bs) -> all (\(_,r) -> r == r') bs
+isConstant m f  =  case take m $ bindings f of
+                   []          -> False -- uninhabited type?
+                   ((_,r'):bs) -> all (\(_,r) -> r == r') bs
 
 -- | shows a constant function
 showConstant :: ShowFunction a => Int -> a -> String
-showConstant m f = "\\" ++ unwords vs ++ " -> " ++ fromMaybe "undefined" r
+showConstant m f  =  "\\" ++ unwords vs ++ " -> " ++ fromMaybe "undefined" r
   where
-  (as,r) = head $ bindings f
-  vs = replicate (length as) "_"
+  (as,r)  =  head $ bindings f
+  vs  =  replicate (length as) "_"
 
 -- The first boolean parameter tells if we are showing
 -- the function on a single line
 showFunctionL :: ShowFunction a => Bool -> Int -> Int -> a -> String
-showFunctionL singleLine m n f | isValue f = showValueOf f
-showFunctionL singleLine m n f | isConstant m f = showConstant m f
---showFunctionL singleLine m n f | canName m f = showName m f
-showFunctionL singleLine m n f | otherwise = lambdaPat ++ caseExp
+showFunctionL singleLine m n f | isValue f  =  showValueOf f
+showFunctionL singleLine m n f | isConstant m f  =  showConstant m f
+--showFunctionL singleLine m n f | canName m f  =  showName m f
+showFunctionL singleLine m n f | otherwise  =  lambdaPat ++ caseExp
   where
-    lambdaPat = "\\" ++ unwords vs ++ " -> "
-    casePat = "case " ++ showTuple (filter (/= "_") vs) ++ " of"
-    (vs, bindings) = clarifiedBindings m n f
-    bs = showNBindings (length bindings >= m) n bindings
-    sep | singleLine = " "
-        | otherwise = "\n"
-    cases | singleLine = intercalate "; " bs
-          | otherwise  = unlines
+    lambdaPat  =  "\\" ++ unwords vs ++ " -> "
+    casePat  =  "case " ++ showTuple (filter (/= "_") vs) ++ " of"
+    (vs, bindings)  =  clarifiedBindings m n f
+    bs  =  showNBindings (length bindings >= m) n bindings
+    sep | singleLine  =  " "
+        | otherwise  =  "\n"
+    cases | singleLine  =  intercalate "; " bs
+          | otherwise   =  unlines
                        $ (replicate (length lambdaPat) ' ' ++) `map` bs
-    caseExp = if isUndefined m f
+    caseExp  =  if isUndefined m f
                 then "undefined"
                 else casePat ++ sep ++ cases
 
 -- instances for further tuple arities --
 instance (Show a, Show b, Show c)
-      => ShowFunction (a,b,c) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c) where  bindtiers  =  bindtiersShow
 instance (Show a, Show b, Show c, Show d)
-      => ShowFunction (a,b,c,d) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d) where  bindtiers  =  bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e)
-      => ShowFunction (a,b,c,d,e) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e) where  bindtiers  =  bindtiersShow
 #ifndef __HUGS__
 instance (Show a, Show b, Show c, Show d, Show e, Show f)
-      => ShowFunction (a,b,c,d,e,f) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e,f) where  bindtiers  =  bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g)
-      => ShowFunction (a,b,c,d,e,f,g) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e,f,g) where  bindtiers  =  bindtiersShow
 instance (Show a, Show b, Show c, Show d, Show e, Show f, Show g, Show h)
-      => ShowFunction (a,b,c,d,e,f,g,h) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e,f,g,h) where  bindtiers  =  bindtiersShow
 instance ( Show a, Show b, Show c, Show d
          , Show e, Show f, Show g, Show h
          , Show i )
-      => ShowFunction (a,b,c,d,e,f,g,h,i) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e,f,g,h,i) where  bindtiers  =  bindtiersShow
 instance ( Show a, Show b, Show c, Show d
          , Show e, Show f, Show g, Show h
          , Show i, Show j )
-      => ShowFunction (a,b,c,d,e,f,g,h,i,j) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e,f,g,h,i,j) where  bindtiers  =  bindtiersShow
 instance ( Show a, Show b, Show c, Show d
          , Show e, Show f, Show g, Show h
          , Show i, Show j, Show k )
-      => ShowFunction (a,b,c,d,e,f,g,h,i,j,k) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e,f,g,h,i,j,k) where  bindtiers  =  bindtiersShow
 instance ( Show a, Show b, Show c, Show d
          , Show e, Show f, Show g, Show h
          , Show i, Show j, Show k, Show l )
-      => ShowFunction (a,b,c,d,e,f,g,h,i,j,k,l) where bindtiers = bindtiersShow
+      => ShowFunction (a,b,c,d,e,f,g,h,i,j,k,l) where
+  bindtiers  =  bindtiersShow
 #endif
 
 -- Data.Ratio
-instance (Integral a, Show a) => ShowFunction (Ratio a) where bindtiers = bindtiersShow
+instance (Integral a, Show a) => ShowFunction (Ratio a) where
+  bindtiers  =  bindtiersShow
 
 -- Data.Complex
-instance (RealFloat a, Show a) => ShowFunction (Complex a) where bindtiers = bindtiersShow
+instance (RealFloat a, Show a) => ShowFunction (Complex a) where
+  bindtiers  =  bindtiersShow
 
 -- instance for types from Data.Int and Data.Word
-instance ShowFunction Int8  where bindtiers = bindtiersShow
-instance ShowFunction Int16 where bindtiers = bindtiersShow
-instance ShowFunction Int32 where bindtiers = bindtiersShow
-instance ShowFunction Int64 where bindtiers = bindtiersShow
-instance ShowFunction Word8  where bindtiers = bindtiersShow
-instance ShowFunction Word16 where bindtiers = bindtiersShow
-instance ShowFunction Word32 where bindtiers = bindtiersShow
-instance ShowFunction Word64 where bindtiers = bindtiersShow
+instance ShowFunction Int8  where  bindtiers  =  bindtiersShow
+instance ShowFunction Int16 where  bindtiers  =  bindtiersShow
+instance ShowFunction Int32 where  bindtiers  =  bindtiersShow
+instance ShowFunction Int64 where  bindtiers  =  bindtiersShow
+instance ShowFunction Word8  where  bindtiers  =  bindtiersShow
+instance ShowFunction Word16 where  bindtiers  =  bindtiersShow
+instance ShowFunction Word32 where  bindtiers  =  bindtiersShow
+instance ShowFunction Word64 where  bindtiers  =  bindtiersShow
 
 -- instance for types from Test.LeanCheck.Utils.Types
-instance ShowFunction Nat   where bindtiers = bindtiersShow
-instance ShowFunction Nat1  where bindtiers = bindtiersShow
-instance ShowFunction Nat2  where bindtiers = bindtiersShow
-instance ShowFunction Nat3  where bindtiers = bindtiersShow
-instance ShowFunction Nat4  where bindtiers = bindtiersShow
-instance ShowFunction Nat5  where bindtiers = bindtiersShow
-instance ShowFunction Nat6  where bindtiers = bindtiersShow
-instance ShowFunction Nat7  where bindtiers = bindtiersShow
-instance ShowFunction Int1  where bindtiers = bindtiersShow
-instance ShowFunction Int2  where bindtiers = bindtiersShow
-instance ShowFunction Int3  where bindtiers = bindtiersShow
-instance ShowFunction Int4  where bindtiers = bindtiersShow
-instance ShowFunction Word1 where bindtiers = bindtiersShow
-instance ShowFunction Word2 where bindtiers = bindtiersShow
-instance ShowFunction Word3 where bindtiers = bindtiersShow
-instance ShowFunction Word4 where bindtiers = bindtiersShow
+instance ShowFunction Nat   where  bindtiers  =  bindtiersShow
+instance ShowFunction Nat1  where  bindtiers  =  bindtiersShow
+instance ShowFunction Nat2  where  bindtiers  =  bindtiersShow
+instance ShowFunction Nat3  where  bindtiers  =  bindtiersShow
+instance ShowFunction Nat4  where  bindtiers  =  bindtiersShow
+instance ShowFunction Nat5  where  bindtiers  =  bindtiersShow
+instance ShowFunction Nat6  where  bindtiers  =  bindtiersShow
+instance ShowFunction Nat7  where  bindtiers  =  bindtiersShow
+instance ShowFunction Int1  where  bindtiers  =  bindtiersShow
+instance ShowFunction Int2  where  bindtiers  =  bindtiersShow
+instance ShowFunction Int3  where  bindtiers  =  bindtiersShow
+instance ShowFunction Int4  where  bindtiers  =  bindtiersShow
+instance ShowFunction Word1 where  bindtiers  =  bindtiersShow
+instance ShowFunction Word2 where  bindtiers  =  bindtiersShow
+instance ShowFunction Word3 where  bindtiers  =  bindtiersShow
+instance ShowFunction Word4 where  bindtiers  =  bindtiersShow
 
-instance ShowFunction Natural where bindtiers = bindtiersShow
+instance ShowFunction Natural where  bindtiers  =  bindtiersShow
 
-instance ShowFunction Letter    where bindtiers = bindtiersShow
-instance ShowFunction AlphaNum  where bindtiers = bindtiersShow
-instance ShowFunction Digit     where bindtiers = bindtiersShow
-instance ShowFunction Alpha     where bindtiers = bindtiersShow
-instance ShowFunction Upper     where bindtiers = bindtiersShow
-instance ShowFunction Lower     where bindtiers = bindtiersShow
-instance ShowFunction Space     where bindtiers = bindtiersShow
+instance ShowFunction Letter    where  bindtiers  =  bindtiersShow
+instance ShowFunction AlphaNum  where  bindtiers  =  bindtiersShow
+instance ShowFunction Digit     where  bindtiers  =  bindtiersShow
+instance ShowFunction Alpha     where  bindtiers  =  bindtiersShow
+instance ShowFunction Upper     where  bindtiers  =  bindtiersShow
+instance ShowFunction Lower     where  bindtiers  =  bindtiersShow
+instance ShowFunction Space     where  bindtiers  =  bindtiersShow
 
-instance ShowFunction Spaces    where bindtiers = bindtiersShow
-instance ShowFunction Lowers    where bindtiers = bindtiersShow
-instance ShowFunction Uppers    where bindtiers = bindtiersShow
-instance ShowFunction Alphas    where bindtiers = bindtiersShow
-instance ShowFunction Digits    where bindtiers = bindtiersShow
-instance ShowFunction AlphaNums where bindtiers = bindtiersShow
-instance ShowFunction Letters   where bindtiers = bindtiersShow
+instance ShowFunction Spaces    where  bindtiers  =  bindtiersShow
+instance ShowFunction Lowers    where  bindtiers  =  bindtiersShow
+instance ShowFunction Uppers    where  bindtiers  =  bindtiersShow
+instance ShowFunction Alphas    where  bindtiers  =  bindtiersShow
+instance ShowFunction Digits    where  bindtiers  =  bindtiersShow
+instance ShowFunction AlphaNums where  bindtiers  =  bindtiersShow
+instance ShowFunction Letters   where  bindtiers  =  bindtiersShow
 
-instance Show a => ShowFunction (X a) where bindtiers = bindtiersShow
-instance Show a => ShowFunction (Xs a) where bindtiers = bindtiersShow
-instance Show a => ShowFunction (Set a) where bindtiers = bindtiersShow
-instance Show a => ShowFunction (Bag a) where bindtiers = bindtiersShow
-instance Show a => ShowFunction (NoDup a) where bindtiers = bindtiersShow
-instance (Show a, Show b) => ShowFunction (Map a b) where bindtiers = bindtiersShow
+instance Show a => ShowFunction (X a) where  bindtiers  =  bindtiersShow
+instance Show a => ShowFunction (Xs a) where  bindtiers  =  bindtiersShow
+instance Show a => ShowFunction (Set a) where  bindtiers  =  bindtiersShow
+instance Show a => ShowFunction (Bag a) where  bindtiers  =  bindtiersShow
+instance Show a => ShowFunction (NoDup a) where  bindtiers  =  bindtiersShow
+instance (Show a, Show b) => ShowFunction (Map a b) where
+  bindtiers  =  bindtiersShow
 
 -- misc instances
-instance ShowFunction ExitCode   where bindtiers = bindtiersShow
-instance ShowFunction SeekMode   where bindtiers = bindtiersShow
-instance ShowFunction IOMode     where bindtiers = bindtiersShow
-instance ShowFunction BufferMode where bindtiers = bindtiersShow
-instance ShowFunction GeneralCategory where bindtiers = bindtiersShow
+instance ShowFunction ExitCode   where  bindtiers  =  bindtiersShow
+instance ShowFunction SeekMode   where  bindtiers  =  bindtiersShow
+instance ShowFunction IOMode     where  bindtiers  =  bindtiersShow
+instance ShowFunction BufferMode where  bindtiers  =  bindtiersShow
+instance ShowFunction GeneralCategory where  bindtiers  =  bindtiersShow
 
 -- instances for Foreign.C types
-instance ShowFunction CChar      where bindtiers = bindtiersShow
-instance ShowFunction CSChar     where bindtiers = bindtiersShow
-instance ShowFunction CUChar     where bindtiers = bindtiersShow
-instance ShowFunction CShort     where bindtiers = bindtiersShow
-instance ShowFunction CUShort    where bindtiers = bindtiersShow
-instance ShowFunction CInt       where bindtiers = bindtiersShow
-instance ShowFunction CUInt      where bindtiers = bindtiersShow
-instance ShowFunction CLong      where bindtiers = bindtiersShow
-instance ShowFunction CULong     where bindtiers = bindtiersShow
-instance ShowFunction CPtrdiff   where bindtiers = bindtiersShow
-instance ShowFunction CSize      where bindtiers = bindtiersShow
-instance ShowFunction CWchar     where bindtiers = bindtiersShow
-instance ShowFunction CSigAtomic where bindtiers = bindtiersShow
-instance ShowFunction CLLong     where bindtiers = bindtiersShow
-instance ShowFunction CULLong    where bindtiers = bindtiersShow
-instance ShowFunction CIntPtr    where bindtiers = bindtiersShow
-instance ShowFunction CUIntPtr   where bindtiers = bindtiersShow
-instance ShowFunction CIntMax    where bindtiers = bindtiersShow
-instance ShowFunction CUIntMax   where bindtiers = bindtiersShow
-instance ShowFunction CClock     where bindtiers = bindtiersShow
-instance ShowFunction CTime      where bindtiers = bindtiersShow
-instance ShowFunction CFloat     where bindtiers = bindtiersShow
-instance ShowFunction CDouble    where bindtiers = bindtiersShow
+instance ShowFunction CChar      where  bindtiers  =  bindtiersShow
+instance ShowFunction CSChar     where  bindtiers  =  bindtiersShow
+instance ShowFunction CUChar     where  bindtiers  =  bindtiersShow
+instance ShowFunction CShort     where  bindtiers  =  bindtiersShow
+instance ShowFunction CUShort    where  bindtiers  =  bindtiersShow
+instance ShowFunction CInt       where  bindtiers  =  bindtiersShow
+instance ShowFunction CUInt      where  bindtiers  =  bindtiersShow
+instance ShowFunction CLong      where  bindtiers  =  bindtiersShow
+instance ShowFunction CULong     where  bindtiers  =  bindtiersShow
+instance ShowFunction CPtrdiff   where  bindtiers  =  bindtiersShow
+instance ShowFunction CSize      where  bindtiers  =  bindtiersShow
+instance ShowFunction CWchar     where  bindtiers  =  bindtiersShow
+instance ShowFunction CSigAtomic where  bindtiers  =  bindtiersShow
+instance ShowFunction CLLong     where  bindtiers  =  bindtiersShow
+instance ShowFunction CULLong    where  bindtiers  =  bindtiersShow
+instance ShowFunction CIntPtr    where  bindtiers  =  bindtiersShow
+instance ShowFunction CUIntPtr   where  bindtiers  =  bindtiersShow
+instance ShowFunction CIntMax    where  bindtiers  =  bindtiersShow
+instance ShowFunction CUIntMax   where  bindtiers  =  bindtiersShow
+instance ShowFunction CClock     where  bindtiers  =  bindtiersShow
+instance ShowFunction CTime      where  bindtiers  =  bindtiersShow
+instance ShowFunction CFloat     where  bindtiers  =  bindtiersShow
+instance ShowFunction CDouble    where  bindtiers  =  bindtiersShow
 #if __GLASGOW_HASKELL__ >= 802
-instance ShowFunction CBool      where bindtiers = bindtiersShow
+instance ShowFunction CBool      where  bindtiers  =  bindtiersShow
 #endif
 #if __GLASGOW_HASKELL__
-instance ShowFunction CUSeconds  where bindtiers = bindtiersShow
-instance ShowFunction CSUSeconds where bindtiers = bindtiersShow
+instance ShowFunction CUSeconds  where  bindtiers  =  bindtiersShow
+instance ShowFunction CSUSeconds where  bindtiers  =  bindtiersShow
 #endif
 
 -- | Returns a set of variables and a set of bindings
@@ -482,24 +490,24 @@ instance ShowFunction CSUSeconds where bindtiers = bindtiersShow
 --     > ( ["_", "y"], [ (["1"],Just "True")
 --     >               , (["_"],Just "False") ] )
 clarifiedBindings :: ShowFunction a => Int -> Int -> a -> ([String],[Binding])
-clarifiedBindings m n = clarifyBindings . describedBindings m n
+clarifiedBindings m n  =  clarifyBindings . describedBindings m n
 
 clarifyBindings :: [Binding] -> ([String],[Binding])
 clarifyBindings bs  =  (varnamesByUsage used, map (mapFst $ select used) bs)
   where
-  mapFst f (x,y) = (f x, y)
-  used = usedArgs bs
+  mapFst f (x,y)  =  (f x, y)
+  used  =  usedArgs bs
 
 varnamesByUsage :: [Bool] -> [String]
-varnamesByUsage = zipWith used varnames
+varnamesByUsage  =  zipWith used varnames
   where
-  used s False = "_"
-  used s True  = s
-  varnames = ["x","y","z","w"] ++ map (++"'") varnames
+  used s False  =  "_"
+  used s True   =  s
+  varnames  =  ["x","y","z","w"] ++ map (++"'") varnames
 
 usedArgs :: [Binding] -> [Bool]
-usedArgs = foldr1 (zipWith (||))
-         . map (map (/= "_") . fst)
+usedArgs  =  foldr1 (zipWith (||))
+          .  map (map (/= "_") . fst)
 
 -- | Returns a set of bindings describing how a function works.
 -- Some argument values are generalized to "@_@" when possible.
@@ -555,7 +563,7 @@ describedBindings m n f
   bs1  =  describeBindings bs0
 
 describeBindings :: [Binding] -> [Binding]
-describeBindings bs = head $ sortOn length $
+describeBindings bs  =  head $ sortOn length $
   [ bs
   , explainBindings bs
   , explainBindings . concat . sortOn length $ classifyOn snd bs
@@ -615,24 +623,24 @@ describeBindings bs = head $ sortOn length $
 --     > , (["_","1"],Just "True")
 --     > , (["_","_"],Just "False") ]
 explainedBindings :: ShowFunction a => Int -> a -> [Binding]
-explainedBindings m = explainBindings . take m . bindings
+explainedBindings m  =  explainBindings . take m . bindings
 
 explainBindings :: [Binding] -> [Binding]
-explainBindings = explain []
+explainBindings  =  explain []
   where
   explain :: [Binding] -> [Binding] -> [Binding]
   explain bs' []           =  reverse bs'
   explain bs' ((as,r):bs)  =  explain (bs''++bs') [b | b <- bs, none (b <~~) bs'']
     where
-    bs'' = discardLater (<~~)
-         [ (gas,r) | gas <- generalizations as
-                   , and [r' == r | (as',r') <- bs, as' <~ gas] ]
+    bs''  =  discardLater (<~~)
+          [ (gas,r) | gas <- generalizations as
+                    , and [r' == r | (as',r') <- bs, as' <~ gas] ]
 
 generalizations :: [String] -> [[String]]
-generalizations []     = [[]]
-generalizations (v:vs) = map ("_":) gvs ++ map (v:) gvs
+generalizations []      =  [[]]
+generalizations (v:vs)  =  map ("_":) gvs ++ map (v:) gvs
   where
-  gvs = generalizations vs
+  gvs  =  generalizations vs
 
 -- | Should be read as "is generalized by":
 --
@@ -645,35 +653,35 @@ generalizations (v:vs) = map ("_":) gvs ++ map (v:) gvs
 -- > > ["_","3"] <~ ["_","4"]
 -- > False
 (<~) :: [String] -> [String] -> Bool
-[]     <~ []       =  True
-(v:vs) <~ ("_":ws) =  vs <~ ws
-(v:vs) <~ (w:ws)   =  v == w && vs <~ ws
-_      <~ _        =  False
+[]     <~ []        =  True
+(v:vs) <~ ("_":ws)  =  vs <~ ws
+(v:vs) <~ (w:ws)    =  v == w && vs <~ ws
+_      <~ _         =  False
 
 -- | Should be read as "is generalized by".
 (<~~) :: Binding -> Binding -> Bool
-(as,r) <~~ (as',r') = as <~ as' && r == r'
+(as,r) <~~ (as',r')  =  as <~ as' && r == r'
 
 
 -- general auxiliary functions
 
 discard :: (a -> Bool) -> [a] -> [a]
-discard p = filter (not . p)
+discard p  =  filter (not . p)
 
 discardLater :: (a -> a -> Bool) -> [a] -> [a]
-discardLater (?>) = dl
+discardLater (?>)  =  dl
   where
-  dl []     = []
-  dl (x:xs) = x : discard (?> x) (dl xs)
+  dl []      =  []
+  dl (x:xs)  =  x : discard (?> x) (dl xs)
 
 none :: (a -> Bool) -> [a] -> Bool
-none p = not . any p
+none p  =  not . any p
 
 -- sortOn is only available on GHC > 7.8
 sortOn :: Ord b => (a -> b) -> [a] -> [a]
-sortOn f = sortBy (compare `on` f)
+sortOn f  =  sortBy (compare `on` f)
 
 select :: [Bool] -> [a] -> [a]
-select [] _ = []
-select _ [] = []
-select (p:ps) (x:xs) = if p then x : xs' else xs' where xs' = select ps xs
+select [] _  =  []
+select _ []  =  []
+select (p:ps) (x:xs)  =  if p then x : xs' else xs'  where  xs' = select ps xs

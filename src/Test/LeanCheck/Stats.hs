@@ -132,10 +132,10 @@ conditionStats n  =  putStrLn . table " " . map show1
   where
   xs  =  take n list
   len  =  length xs
-  show1 (s,f)  =  let c = count f xs
-                  in [ s ++ ":"
-                     , show c ++ "/" ++ show len
-                     , show (100 * c `div` len) ++ "%" ]
+  show1 (s,f)  =  [ s ++ ":"
+                  , show c ++ "/" ++ show len
+                  , show (100 * c `div` len) ++ "%"
+                  ]  where  c = count f xs
   count f  =  length . filter f
 
 -- | Same as 'conditionStats' but by tier.

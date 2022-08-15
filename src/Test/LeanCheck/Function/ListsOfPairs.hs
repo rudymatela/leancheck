@@ -24,17 +24,17 @@ import Test.LeanCheck.Tiers
 --   return tiers of functional values.
 (-->>) :: Eq a => [[a]] -> [[b]] -> [[a->b]]
 xss -->> yss
-  | finite xss = mapT ((undefined `mutate`) . zip (concat xss))
-                      (products $ replicate (length $ concat xss) yss)
-  | otherwise  = concatMapT
-                   (\(r,yss) -> mapT (const r `mutate`) (exceptionPairs xss yss))
-                   (choices yss)
+  | finite xss  =  mapT ((undefined `mutate`) . zip (concat xss))
+                        (products $ replicate (length $ concat xss) yss)
+  | otherwise   =  concatMapT
+                     (\(r,yss) -> mapT (const r `mutate`) (exceptionPairs xss yss))
+                     (choices yss)
 
 
 mutate :: Eq a => (a -> b) -> [(a,b)] -> (a -> b)
-mutate f ms = foldr mut f ms
+mutate f ms  =  foldr mut f ms
   where
-  mut (x',fx') f x = if x == x' then fx' else f x
+  mut (x',fx') f x  =  if x == x' then fx' else f x
 
 
 -- | Given tiers of input values and tiers of output values,
@@ -44,10 +44,10 @@ mutate f ms = foldr mut f ms
 -- they represent exceptions to a constant function,
 -- hence the name 'exceptionPairs'.
 exceptionPairs :: [[a]] -> [[b]] -> [[ [(a,b)] ]]
-exceptionPairs xss yss = concatMapT exceptionsFor (incompleteSetsOf xss)
+exceptionPairs xss yss  =  concatMapT exceptionsFor (incompleteSetsOf xss)
   where
 --exceptionsFor :: [a] -> [[ [(a,b)] ]]
-  exceptionsFor xs = zip xs `mapT` products (const yss `map` xs)
+  exceptionsFor xs  =  zip xs `mapT` products (const yss `map` xs)
 -- incompleteSetsOf is needed, instead of setsOf, because mutating *all* values
 -- of a constant function makes no sense (we would have already enumerated that
 -- function anyway).  As of 2c23c1a, it makes no difference whether
