@@ -2,8 +2,8 @@ Changelog for LeanCheck
 =======================
 
 
-upcoming
---------
+v0.9.12 (August 2022)
+---------------------
 
 * replace enumeration of `Fractional` and `Floating` types
   by the Calkin-Wilf sequence:
