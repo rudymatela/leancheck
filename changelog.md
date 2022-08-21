@@ -1,12 +1,27 @@
 Changelog for LeanCheck
 =======================
 
+
+upcoming
+--------
+
+* replace enumeration of `Fractional` and `Floating` types
+  by the Calkin-Wilf sequence:
+	- add `listFloating` and `listFractional`;
+	- deprecate `tiersFloating` and `tiersFractional`;
+* improve the changelog with timestamps and history down to v0.5.0;
+* normalize code formatting throughout: indentation, spacing and width;
+* improve testing of LeanCheck itself;
+* test on GHC 9.2 and 9.4 (works with no changes).
+
+
 v0.9.10 (June 2021)
 -------------------
 
 * `Test.LeanCheck.Utils.Type`: derive Typeable instances on GHC 7.8.
   Behaviour on newer GHCs (>= 7.10) versions is unaffected
   as they automatically derive Typeable instances for all types.
+
 
 v0.9.8 (June 2021)
 ------------------
@@ -17,6 +32,7 @@ v0.9.8 (June 2021)
   _Update:_ these instances were already present on v0.9.6.
   LeanCheck v0.9.8 is essentially the same as v0.9.6.
 
+
 v0.9.6 (May 2021)
 -----------------
 
@@ -25,6 +41,7 @@ v0.9.6 (May 2021)
 * slightly improve README
 * improve Makefile and tests
 * replace Travis by GitHub Actions as the CI system
+
 
 v0.9.4 (April 2021)
 -------------------
@@ -38,12 +55,14 @@ v0.9.4 (April 2021)
 * add FAQ
 * improve Makefile and test scripts
 
+
 v0.9.3 (March 2020)
 -------------------
 
 * improve Haddock documentation
 * use consistent code format
 * improve CI scripts and Makefile
+
 
 v0.9.2 (March 2020)
 -------------------
