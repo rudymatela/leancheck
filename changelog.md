@@ -2,6 +2,15 @@ Changelog for LeanCheck
 =======================
 
 
+v1.0.0 (August 2022)
+--------------------
+
+This release indicates that the `Test.LeanCheck` API is now stable.
+This is the same as v0.9.12 with just the version number change,
+the major bump here serves just to indicate stability.
+If your project works with the 0.9 series, it will work with the 1.0 series.
+
+
 v0.9.12 (August 2022)
 ---------------------
 
