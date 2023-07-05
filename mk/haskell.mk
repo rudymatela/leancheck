@@ -21,7 +21,7 @@ GHCFLAGS ?=
 GHC ?= ghc
 GHCCMD = $(GHC) -i$(GHCIMPORTDIRS) $(GHCFLAGS)
 HADDOCK ?= haddock
-CABAL_INSTALL = $(shell cabal --version | grep -q "version [0-2]\." && echo 'cabal install' || echo 'cabal install --lib base')
+CABAL_INSTALL = $(shell cabal --version | grep -q "version [0-2]\." && echo 'cabal install' || echo 'cabal install --lib')
 
 # Hugs Parameters
 HUGSIMPORTDIRS ?= "/usr/lib/hugs/packages/*"
