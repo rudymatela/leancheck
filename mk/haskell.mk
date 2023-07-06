@@ -90,7 +90,10 @@ depend:
 	find $(ALL_HSS) | ./mk/ghcdeps -i$(GHCIMPORTDIRS) $(GHCFLAGS) > $(DEPMK)
 
 install-dependencies:
-	[ -n "$(INSTALL_DEPS)" ] && cabal update && $(CABAL_INSTALL) $(INSTALL_DEPS)
+	if [ -n "$(INSTALL_DEPS)" ]; then \
+		cabal update && \
+		$(CABAL_INSTALL) $(INSTALL_DEPS); \
+	fi
 
 # haddock rules
 haddock: doc/index.html
