@@ -44,16 +44,13 @@ jobs:
 
       - run: git --version
 
-      # Skipping temporarily for ghc 9.6
-      #- run: cabal update
-      #- run: make install-dependencies
+      - run: make install-dependencies
 
-      # GHCFLAGS need to be set for ghc 9.6
-      - run: make GHCFLAGS="-package base -package template-haskell"
-      - run: make GHCFLAGS="-package base -package template-haskell" test
-      - run: make GHCFLAGS="-package base -package template-haskell" haddock
-      - run: make GHCFLAGS="-package base -package template-haskell" test-sdist
-      - run: make GHCFLAGS="-package base -package template-haskell" test-via-cabal
+      - run: make
+      - run: make test
+      - run: make haddock
+      - run: make test-sdist
+      - run: make test-via-cabal
 
 
   test-with-ghc:
@@ -104,7 +101,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - run: cabal update
       - run: make install-dependencies
 
       - run: make
