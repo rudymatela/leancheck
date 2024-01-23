@@ -1,8 +1,8 @@
 # Builds and tests this Haskell project on "GitHub Actions"
 #
-# 2021-2023  Rudy Matela
+# 2021-2024  Rudy Matela
 #
-# some docs: https://github.com/haskell/actions/tree/main/setup
+# some docs: https://github.com/haskell-actions/setup
 #
 # The official haskell docker image: https://hub.docker.com/_/haskell
 name: build
@@ -120,7 +120,7 @@ jobs:
     needs: build-and-test
     steps:
       - name: Setup Haskell's GHC and Cabal as required by current Stackage LTS
-        uses: haskell/actions/setup@v2
+        uses: haskell-actions/setup@v2
         with: # lts-19.19
           ghc-version: '9.0.2'
           cabal-version: '3.4'
