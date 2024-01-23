@@ -270,7 +270,7 @@ listFractional :: (Ord a, Fractional a) => [a]
 listFractional  =  0 : positives +| negatives
   where
   stern  =  map (fromInteger . fusc) [1..]
-  positives  =  takeWhile (>0) $ zipWith (/) stern (drop 1 stern)
+  positives  =  takeWhile (>0) $ zipWith (/) stern (tail stern)
   negatives  =  takeWhile (<0) $ map negate positives
   fusc  =  fu 1 0  where  fu a b 0               =  b
                           fu a b n  | even n     =  fu (a + b) b (n `div` 2)
