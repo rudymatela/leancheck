@@ -270,8 +270,8 @@ typeArity t  =  do
     TyConI (NewtypeD _ _ ks _ _ _) -> ks
 #endif
     TyConI (TySynD _ ks _) -> ks
-    _ -> error $ "error (typeArity): symbol " ++ show t
-              ++ " is not a newtype, data or type synonym"
+    _ -> errorOn "typeArity"
+       $ "neither newtype nor data nor type synonym: " ++ show t
 
 -- Given a type name, returns a list of its type constructor names paired with
 -- the type arguments they take.
@@ -298,13 +298,14 @@ typeConstructors t  =  do
     TyConI (DataD    _ _ _ _ cs _) -> cs
     TyConI (NewtypeD _ _ _ _ c  _) -> [c]
 #endif
-    _ -> error $ "error (typeConstructors): symbol " ++ show t
-              ++ " is neither newtype nor data"
+    _ -> errorOn "typeConstructors"
+       $ "neither newtype nor data: " ++ show t
   where
   simplify (NormalC n ts)   =  (n,map snd ts)
   simplify (RecC    n ts)   =  (n,map trd ts)
   simplify (InfixC  t1 n t2)  =  (n,[snd t1,snd t2])
-  simplify _  =  error "typeConstructors: unexpected unhandled case"
+  simplify _  =  errorOn "typeConstructors"
+              $  "unexpected unhandled case when called with " ++ show t
   trd (x,y,z)  =  z
 
 isTypeSynonym :: Name -> Q Bool
@@ -319,8 +320,8 @@ typeSynonymType t  =  do
   ti <- reify t
   return $ case ti of
     TyConI (TySynD _ _ t') -> t'
-    _ -> error $ "error (typeSynonymType): symbol " ++ show t
-              ++ " is not a type synonym"
+    _ -> errorOn "typeSynonymType"
+       $ "not a type synonym: " ++ show t
 
 -- Append to instance contexts in a declaration.
 --
@@ -372,3 +373,6 @@ deriveList  =  errorNotGHC
 
 -- closing #ifdef __GLASGOW_HASKELL__
 #endif
+
+errorOn :: String -> String -> a
+errorOn fn msg  =  error $ "Test.LeanCheck.Derive." ++ fn ++ ": " ++ msg
