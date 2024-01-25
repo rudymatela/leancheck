@@ -117,7 +117,7 @@ where
 import Test.LeanCheck.Utils.Types
 
 undefinedOf :: String -> a
-undefinedOf fn  =  error $ "Test.LeanCheck.TypeBinding." ++ fn
+undefinedOf fn  =  error $ "Test.LeanCheck.Utils.undefinedOf " ++ fn
 
 -- | Type restricted version of const
 -- that forces its first argument
