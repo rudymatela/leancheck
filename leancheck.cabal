@@ -58,6 +58,7 @@ extra-source-files: .gitignore
                   , eg/test-float.hs
                   , eg/test-list.hs
                   , eg/test-sort.hs
+                  , eg/*.txt
                   , etc/hugs-backports/Data/Function.hs
                   , mk/All.hs
                   , mk/Toplibs.hs
@@ -68,7 +69,6 @@ extra-source-files: .gitignore
                   , mk/install-on
                   , stack.yaml
                   , test/diff/*.out
-                  , test/diff/eg/*.out
                   , test/sdist
 tested-with: GHC==9.8
            , GHC==9.6
