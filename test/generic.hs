@@ -10,7 +10,7 @@ import Data.List (sort)
 import GHC.Generics (Generic)
 
 data D0        =  D0                     deriving (Eq, Show, Generic)
-data D1 a      =  D1 a                   deriving (Eq, Show, Generic)
+newtype D1 a   =  D1 a                   deriving (Eq, Show, Generic)
 data D2 a b    =  D2 a b                 deriving (Eq, Show, Generic)
 data D3 a b c  =  D3 a b c               deriving (Eq, Show, Generic)
 data C1 a      =            C11 a | C10  deriving (Eq, Show, Generic)

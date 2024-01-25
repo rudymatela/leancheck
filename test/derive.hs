@@ -8,7 +8,7 @@ import Test.LeanCheck.Utils
 import Data.List (sort)
 
 data D0        =  D0                     deriving Show
-data D1 a      =  D1 a                   deriving Show
+newtype D1 a   =  D1 a                   deriving Show
 data D2 a b    =  D2 a b                 deriving Show
 data D3 a b c  =  D3 a b c               deriving Show
 data C1 a      =            C11 a | C10  deriving Show
@@ -37,7 +37,7 @@ deriveListable ''Tree
 -- Nested datatype cascade
 data Nested  =  Nested N0 (N1 Int) (N2 Int Int)
 data N0      =  R0 Int
-data N1 a    =  R1 a
+newtype N1 a =  R1 a
 data N2 a b  =  R2 a b
 deriveListableCascading ''Nested
 
