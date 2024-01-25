@@ -51,6 +51,7 @@ extra-source-files: .gitignore
                   , bench/memory-usage.hs
                   , bench/pick.hs
                   , bench/tiers.hs
+                  , bench/tiers-txt/*.txt
                   , bench/time-and-memory
                   , eg/higher-order.hs
                   , eg/overflow.hs
@@ -68,7 +69,6 @@ extra-source-files: .gitignore
                   , mk/haskell.mk
                   , mk/install-on
                   , stack.yaml
-                  , test/diff/*.out
                   , test/sdist
 tested-with: GHC==9.8
            , GHC==9.6

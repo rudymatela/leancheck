@@ -42,9 +42,9 @@ all-all: mk/All.o
 
 test: $(patsubst %,%.run,$(TESTS)) diff-test test-sdist
 
-diff-test: diff-test-tiers diff-test-funtiers $(patsubst %,%.diff,$(EGS))
+diff-test: diff-tiers diff-funtiers $(patsubst %,%.diff,$(EGS))
 
-txt: update-diff-test-tiers update-diff-test-funtiers $(patsubst %,%.txt,$(EGS))
+txt: txt-tiers txt-funtiers $(patsubst %,%.txt,$(EGS))
 
 test-10000: $(patsubst %,%.run-10000,$(TESTS)) diff-test test-sdist
 
@@ -176,141 +176,141 @@ list-missing-copyright:
 
 include mk/haskell.mk
 
-diff-test-tiers: bench/tiers
+diff-tiers: bench/tiers
 	# simple types
-	./bench/tiers "()"               | diff -rud test/diff/tiers.out             -
-	./bench/tiers "Int"              | diff -rud test/diff/tiers-Int.out         -
-	./bench/tiers "Nat"              | diff -rud test/diff/tiers-Nat.out         -
-	./bench/tiers "Integer"          | diff -rud test/diff/tiers-Integer.out     -
-	./bench/tiers "Bool"             | diff -rud test/diff/tiers-Bool.out        -
-	./bench/tiers "Char"             | diff -rud test/diff/tiers-Char.out        -
-	./bench/tiers "Float"            | diff -rud test/diff/tiers-Float.out       -
-	./bench/tiers "Double"           | diff -rud test/diff/tiers-Double.out      -
-	./bench/tiers "Rational"         | diff -rud test/diff/tiers-Rational.out    -
+	$< "()"              | diff -rud bench/tiers-txt/U.txt           -
+	$< "Int"             | diff -rud bench/tiers-txt/Int.txt         -
+	$< "Nat"             | diff -rud bench/tiers-txt/Nat.txt         -
+	$< "Integer"         | diff -rud bench/tiers-txt/Integer.txt     -
+	$< "Bool"            | diff -rud bench/tiers-txt/Bool.txt        -
+	$< "Char"            | diff -rud bench/tiers-txt/Char.txt        -
+	$< "Float"           | diff -rud bench/tiers-txt/Float.txt       -
+	$< "Double"          | diff -rud bench/tiers-txt/Double.txt      -
+	$< "Rational"        | diff -rud bench/tiers-txt/Rational.txt    -
 	# fixed width integer types
-	./bench/tiers "Nat2"             | diff -rud test/diff/tiers-Nat2.out        -
-	./bench/tiers "Nat3"             | diff -rud test/diff/tiers-Nat3.out        -
-	./bench/tiers "Nat4"             | diff -rud test/diff/tiers-Nat4.out        -
-	./bench/tiers "Word2"            | diff -rud test/diff/tiers-Word2.out       -
-	./bench/tiers "Word3"            | diff -rud test/diff/tiers-Word3.out       -
-	./bench/tiers "Word4"         64 | diff -rud test/diff/tiers-Word4.out       -
-	./bench/tiers "Word8"        256 | diff -rud test/diff/tiers-Word8.out       -
-	./bench/tiers "Int2"             | diff -rud test/diff/tiers-Int2.out        -
-	./bench/tiers "Int3"             | diff -rud test/diff/tiers-Int3.out        -
-	./bench/tiers "Int4"          64 | diff -rud test/diff/tiers-Int4.out        -
-	./bench/tiers "Int8"         256 | diff -rud test/diff/tiers-Int8.out        -
+	$< "Nat2"            | diff -rud bench/tiers-txt/Nat2.txt        -
+	$< "Nat3"            | diff -rud bench/tiers-txt/Nat3.txt        -
+	$< "Nat4"            | diff -rud bench/tiers-txt/Nat4.txt        -
+	$< "Word2"           | diff -rud bench/tiers-txt/Word2.txt       -
+	$< "Word3"           | diff -rud bench/tiers-txt/Word3.txt       -
+	$< "Word4"        64 | diff -rud bench/tiers-txt/Word4.txt       -
+	$< "Word8"       256 | diff -rud bench/tiers-txt/Word8.txt       -
+	$< "Int2"            | diff -rud bench/tiers-txt/Int2.txt        -
+	$< "Int3"            | diff -rud bench/tiers-txt/Int3.txt        -
+	$< "Int4"         64 | diff -rud bench/tiers-txt/Int4.txt        -
+	$< "Int8"        256 | diff -rud bench/tiers-txt/Int8.txt        -
 	# complex numbers
-	./bench/tiers "Complex Double"   | diff -rud test/diff/tiers-ComplexDouble.out -
+	$< "Complex Double"  | diff -rud bench/tiers-txt/ComplexDouble.txt -
 	# list s
-	./bench/tiers "[()]"             | diff -rud test/diff/tiers-Us.out          -
-	./bench/tiers "[Int]"          6 | diff -rud test/diff/tiers-Ints.out        -
-	./bench/tiers "[Nat]"          6 | diff -rud test/diff/tiers-Nats.out        -
-	./bench/tiers "[Bool]"         6 | diff -rud test/diff/tiers-Bools.out       -
-	./bench/tiers "String"         6 | diff -rud test/diff/tiers-String.out      -
+	$< "[()]"            | diff -rud bench/tiers-txt/Us.txt          -
+	$< "[Int]"         6 | diff -rud bench/tiers-txt/Ints.txt        -
+	$< "[Nat]"         6 | diff -rud bench/tiers-txt/Nats.txt        -
+	$< "[Bool]"        6 | diff -rud bench/tiers-txt/Bools.txt       -
+	$< "String"        6 | diff -rud bench/tiers-txt/String.txt      -
 	# pairs
-	./bench/tiers "(Int,Int)"        | diff -rud test/diff/tiers-Int,Int.out     -
-	./bench/tiers "(Nat,Nat)"        | diff -rud test/diff/tiers-Nat,Nat.out     -
-	./bench/tiers "(Int,Int,Int)"  6 | diff -rud test/diff/tiers-Int,Int,Int.out -
-	./bench/tiers "(Nat,Nat,Nat)"  6 | diff -rud test/diff/tiers-Nat,Nat,Nat.out -
+	$< "(Int,Int)"       | diff -rud bench/tiers-txt/Int,Int.txt     -
+	$< "(Nat,Nat)"       | diff -rud bench/tiers-txt/Nat,Nat.txt     -
+	$< "(Int,Int,Int)" 6 | diff -rud bench/tiers-txt/Int,Int,Int.txt -
+	$< "(Nat,Nat,Nat)" 6 | diff -rud bench/tiers-txt/Nat,Nat,Nat.txt -
 	# lists & pairs
-	./bench/tiers "[((),())]"        | diff -rud test/diff/tiers-U,Us.out        -
-	./bench/tiers "([()],[()])"      | diff -rud test/diff/tiers-Us,Us.out       -
+	$< "[((),())]"       | diff -rud bench/tiers-txt/U,Us.txt        -
+	$< "([()],[()])"     | diff -rud bench/tiers-txt/Us,Us.txt       -
 	# special lists
-	./bench/tiers "Set Bool"         | diff -rud test/diff/tiers-SetBool.out     -
-	./bench/tiers "Set ()"           | diff -rud test/diff/tiers-SetU.out        -
-	./bench/tiers "Set Nat"          | diff -rud test/diff/tiers-SetNat.out      -
-	./bench/tiers "Set Nat2"         | diff -rud test/diff/tiers-SetNat2.out     -
-	./bench/tiers "Set Nat3"         | diff -rud test/diff/tiers-SetNat3.out     -
-	./bench/tiers "Bag Bool"         | diff -rud test/diff/tiers-BagBool.out     -
-	./bench/tiers "Bag ()"           | diff -rud test/diff/tiers-BagU.out        -
-	./bench/tiers "Bag Nat"          | diff -rud test/diff/tiers-BagNat.out      -
-	./bench/tiers "Bag Nat2"         | diff -rud test/diff/tiers-BagNat2.out     -
-	./bench/tiers "Bag Nat3"         | diff -rud test/diff/tiers-BagNat3.out     -
-	./bench/tiers "NoDup Bool"       | diff -rud test/diff/tiers-NoDupBool.out   -
-	./bench/tiers "NoDup ()"         | diff -rud test/diff/tiers-NoDupU.out      -
-	./bench/tiers "NoDup Nat"        | diff -rud test/diff/tiers-NoDupNat.out    -
-	./bench/tiers "NoDup Nat2"       | diff -rud test/diff/tiers-NoDupNat2.out   -
-	./bench/tiers "NoDup Nat3"       | diff -rud test/diff/tiers-NoDupNat3.out   -
-	./bench/tiers "Map Bool Bool"    | diff -rud test/diff/tiers-MapBoolBool.out -
-	./bench/tiers "Map () ()"        | diff -rud test/diff/tiers-MapUU.out       -
-	./bench/tiers "Map Nat Nat"      | diff -rud test/diff/tiers-MapNatNat.out   -
-	./bench/tiers "Map Nat2 Nat2"    | diff -rud test/diff/tiers-MapNat2Nat2.out -
-	./bench/tiers "Map Nat3 Nat3"    | diff -rud test/diff/tiers-MapNat3Nat3.out -
+	$< "Set Bool"        | diff -rud bench/tiers-txt/SetBool.txt     -
+	$< "Set ()"          | diff -rud bench/tiers-txt/SetU.txt        -
+	$< "Set Nat"         | diff -rud bench/tiers-txt/SetNat.txt      -
+	$< "Set Nat2"        | diff -rud bench/tiers-txt/SetNat2.txt     -
+	$< "Set Nat3"        | diff -rud bench/tiers-txt/SetNat3.txt     -
+	$< "Bag Bool"        | diff -rud bench/tiers-txt/BagBool.txt     -
+	$< "Bag ()"          | diff -rud bench/tiers-txt/BagU.txt        -
+	$< "Bag Nat"         | diff -rud bench/tiers-txt/BagNat.txt      -
+	$< "Bag Nat2"        | diff -rud bench/tiers-txt/BagNat2.txt     -
+	$< "Bag Nat3"        | diff -rud bench/tiers-txt/BagNat3.txt     -
+	$< "NoDup Bool"      | diff -rud bench/tiers-txt/NoDupBool.txt   -
+	$< "NoDup ()"        | diff -rud bench/tiers-txt/NoDupU.txt      -
+	$< "NoDup Nat"       | diff -rud bench/tiers-txt/NoDupNat.txt    -
+	$< "NoDup Nat2"      | diff -rud bench/tiers-txt/NoDupNat2.txt   -
+	$< "NoDup Nat3"      | diff -rud bench/tiers-txt/NoDupNat3.txt   -
+	$< "Map Bool Bool"   | diff -rud bench/tiers-txt/MapBoolBool.txt -
+	$< "Map () ()"       | diff -rud bench/tiers-txt/MapUU.txt       -
+	$< "Map Nat Nat"     | diff -rud bench/tiers-txt/MapNatNat.txt   -
+	$< "Map Nat2 Nat2"   | diff -rud bench/tiers-txt/MapNat2Nat2.txt -
+	$< "Map Nat3 Nat3"   | diff -rud bench/tiers-txt/MapNat3Nat3.txt -
 	# extreme integers
-	./bench/tiers "X Int4"           | diff -rud test/diff/tiers-XInt4.out       -
-	./bench/tiers "X Word4"          | diff -rud test/diff/tiers-XWord4.out      -
-	./bench/tiers "X Nat7"           | diff -rud test/diff/tiers-XNat7.out       -
-	./bench/tiers "Xs Int4"          | diff -rud test/diff/tiers-XsInt4.out      -
-	./bench/tiers "Xs Word4"         | diff -rud test/diff/tiers-XsWord4.out     -
-	./bench/tiers "Xs Nat7"          | diff -rud test/diff/tiers-XsNat7.out      -
+	$< "X Int4"          | diff -rud bench/tiers-txt/XInt4.txt       -
+	$< "X Word4"         | diff -rud bench/tiers-txt/XWord4.txt      -
+	$< "X Nat7"          | diff -rud bench/tiers-txt/XNat7.txt       -
+	$< "Xs Int4"         | diff -rud bench/tiers-txt/XsInt4.txt      -
+	$< "Xs Word4"        | diff -rud bench/tiers-txt/XsWord4.txt     -
+	$< "Xs Nat7"         | diff -rud bench/tiers-txt/XsNat7.txt      -
 
-update-diff-test-tiers: bench/tiers
+txt-tiers: bench/tiers
 	# simple types
-	./bench/tiers "()"               > test/diff/tiers.out
-	./bench/tiers "Int"              > test/diff/tiers-Int.out
-	./bench/tiers "Nat"              > test/diff/tiers-Nat.out
-	./bench/tiers "Integer"          > test/diff/tiers-Integer.out
-	./bench/tiers "Bool"             > test/diff/tiers-Bool.out
-	./bench/tiers "Char"             > test/diff/tiers-Char.out
-	./bench/tiers "Float"            > test/diff/tiers-Float.out
-	./bench/tiers "Double"           > test/diff/tiers-Double.out
-	./bench/tiers "Rational"         > test/diff/tiers-Rational.out
+	$< "()"              > bench/tiers-txt/U.txt
+	$< "Int"             > bench/tiers-txt/Int.txt
+	$< "Nat"             > bench/tiers-txt/Nat.txt
+	$< "Integer"         > bench/tiers-txt/Integer.txt
+	$< "Bool"            > bench/tiers-txt/Bool.txt
+	$< "Char"            > bench/tiers-txt/Char.txt
+	$< "Float"           > bench/tiers-txt/Float.txt
+	$< "Double"          > bench/tiers-txt/Double.txt
+	$< "Rational"        > bench/tiers-txt/Rational.txt
 	# fixed width integer types
-	./bench/tiers "Nat2"             > test/diff/tiers-Nat2.out
-	./bench/tiers "Nat3"             > test/diff/tiers-Nat3.out
-	./bench/tiers "Nat4"             > test/diff/tiers-Nat4.out
-	./bench/tiers "Word2"            > test/diff/tiers-Word2.out
-	./bench/tiers "Word3"            > test/diff/tiers-Word3.out
-	./bench/tiers "Word4"         64 > test/diff/tiers-Word4.out
-	./bench/tiers "Word8"        256 > test/diff/tiers-Word8.out
-	./bench/tiers "Int2"             > test/diff/tiers-Int2.out
-	./bench/tiers "Int3"             > test/diff/tiers-Int3.out
-	./bench/tiers "Int4"          64 > test/diff/tiers-Int4.out
-	./bench/tiers "Int8"         256 > test/diff/tiers-Int8.out
+	$< "Nat2"            > bench/tiers-txt/Nat2.txt
+	$< "Nat3"            > bench/tiers-txt/Nat3.txt
+	$< "Nat4"            > bench/tiers-txt/Nat4.txt
+	$< "Word2"           > bench/tiers-txt/Word2.txt
+	$< "Word3"           > bench/tiers-txt/Word3.txt
+	$< "Word4"        64 > bench/tiers-txt/Word4.txt
+	$< "Word8"       256 > bench/tiers-txt/Word8.txt
+	$< "Int2"            > bench/tiers-txt/Int2.txt
+	$< "Int3"            > bench/tiers-txt/Int3.txt
+	$< "Int4"         64 > bench/tiers-txt/Int4.txt
+	$< "Int8"        256 > bench/tiers-txt/Int8.txt
 	# complex numbers
-	./bench/tiers "Complex Double"   > test/diff/tiers-ComplexDouble.out
+	$< "Complex Double"  > bench/tiers-txt/ComplexDouble.txt
 	# lists
-	./bench/tiers "[()]"             > test/diff/tiers-Us.out
-	./bench/tiers "[Int]"          6 > test/diff/tiers-Ints.out
-	./bench/tiers "[Nat]"          6 > test/diff/tiers-Nats.out
-	./bench/tiers "[Bool]"         6 > test/diff/tiers-Bools.out
-	./bench/tiers "String"         6 > test/diff/tiers-String.out
+	$< "[()]"            > bench/tiers-txt/Us.txt
+	$< "[Int]"         6 > bench/tiers-txt/Ints.txt
+	$< "[Nat]"         6 > bench/tiers-txt/Nats.txt
+	$< "[Bool]"        6 > bench/tiers-txt/Bools.txt
+	$< "String"        6 > bench/tiers-txt/String.txt
 	# pairs
-	./bench/tiers "(Int,Int)"        > test/diff/tiers-Int,Int.out
-	./bench/tiers "(Nat,Nat)"        > test/diff/tiers-Nat,Nat.out
-	./bench/tiers "(Int,Int,Int)"  6 > test/diff/tiers-Int,Int,Int.out
-	./bench/tiers "(Nat,Nat,Nat)"  6 > test/diff/tiers-Nat,Nat,Nat.out
+	$< "(Int,Int)"       > bench/tiers-txt/Int,Int.txt
+	$< "(Nat,Nat)"       > bench/tiers-txt/Nat,Nat.txt
+	$< "(Int,Int,Int)" 6 > bench/tiers-txt/Int,Int,Int.txt
+	$< "(Nat,Nat,Nat)" 6 > bench/tiers-txt/Nat,Nat,Nat.txt
 	# lists & pairs
-	./bench/tiers "[((),())]"        > test/diff/tiers-U,Us.out
-	./bench/tiers "([()],[()])"      > test/diff/tiers-Us,Us.out
+	$< "[((),())]"       > bench/tiers-txt/U,Us.txt
+	$< "([()],[()])"     > bench/tiers-txt/Us,Us.txt
 	# special lists
-	./bench/tiers "Set Bool"         > test/diff/tiers-SetBool.out
-	./bench/tiers "Set ()"           > test/diff/tiers-SetU.out
-	./bench/tiers "Set Nat"          > test/diff/tiers-SetNat.out
-	./bench/tiers "Set Nat2"         > test/diff/tiers-SetNat2.out
-	./bench/tiers "Set Nat3"         > test/diff/tiers-SetNat3.out
-	./bench/tiers "Bag Bool"         > test/diff/tiers-BagBool.out
-	./bench/tiers "Bag ()"           > test/diff/tiers-BagU.out
-	./bench/tiers "Bag Nat"          > test/diff/tiers-BagNat.out
-	./bench/tiers "Bag Nat2"         > test/diff/tiers-BagNat2.out
-	./bench/tiers "Bag Nat3"         > test/diff/tiers-BagNat3.out
-	./bench/tiers "NoDup Bool"       > test/diff/tiers-NoDupBool.out
-	./bench/tiers "NoDup ()"         > test/diff/tiers-NoDupU.out
-	./bench/tiers "NoDup Nat"        > test/diff/tiers-NoDupNat.out
-	./bench/tiers "NoDup Nat2"       > test/diff/tiers-NoDupNat2.out
-	./bench/tiers "NoDup Nat3"       > test/diff/tiers-NoDupNat3.out
-	./bench/tiers "Map Bool Bool"    > test/diff/tiers-MapBoolBool.out
-	./bench/tiers "Map () ()"        > test/diff/tiers-MapUU.out
-	./bench/tiers "Map Nat Nat"      > test/diff/tiers-MapNatNat.out
-	./bench/tiers "Map Nat2 Nat2"    > test/diff/tiers-MapNat2Nat2.out
-	./bench/tiers "Map Nat3 Nat3"    > test/diff/tiers-MapNat3Nat3.out
+	$< "Set Bool"        > bench/tiers-txt/SetBool.txt
+	$< "Set ()"          > bench/tiers-txt/SetU.txt
+	$< "Set Nat"         > bench/tiers-txt/SetNat.txt
+	$< "Set Nat2"        > bench/tiers-txt/SetNat2.txt
+	$< "Set Nat3"        > bench/tiers-txt/SetNat3.txt
+	$< "Bag Bool"        > bench/tiers-txt/BagBool.txt
+	$< "Bag ()"          > bench/tiers-txt/BagU.txt
+	$< "Bag Nat"         > bench/tiers-txt/BagNat.txt
+	$< "Bag Nat2"        > bench/tiers-txt/BagNat2.txt
+	$< "Bag Nat3"        > bench/tiers-txt/BagNat3.txt
+	$< "NoDup Bool"      > bench/tiers-txt/NoDupBool.txt
+	$< "NoDup ()"        > bench/tiers-txt/NoDupU.txt
+	$< "NoDup Nat"       > bench/tiers-txt/NoDupNat.txt
+	$< "NoDup Nat2"      > bench/tiers-txt/NoDupNat2.txt
+	$< "NoDup Nat3"      > bench/tiers-txt/NoDupNat3.txt
+	$< "Map Bool Bool"   > bench/tiers-txt/MapBoolBool.txt
+	$< "Map () ()"       > bench/tiers-txt/MapUU.txt
+	$< "Map Nat Nat"     > bench/tiers-txt/MapNatNat.txt
+	$< "Map Nat2 Nat2"   > bench/tiers-txt/MapNat2Nat2.txt
+	$< "Map Nat3 Nat3"   > bench/tiers-txt/MapNat3Nat3.txt
 	# extreme integers
-	./bench/tiers "X Int4"           > test/diff/tiers-XInt4.out
-	./bench/tiers "X Word4"          > test/diff/tiers-XWord4.out
-	./bench/tiers "X Nat7"           > test/diff/tiers-XNat7.out
-	./bench/tiers "Xs Int4"          > test/diff/tiers-XsInt4.out
-	./bench/tiers "Xs Word4"         > test/diff/tiers-XsWord4.out
-	./bench/tiers "Xs Nat7"          > test/diff/tiers-XsNat7.out
+	$< "X Int4"          > bench/tiers-txt/XInt4.txt
+	$< "X Word4"         > bench/tiers-txt/XWord4.txt
+	$< "X Nat7"          > bench/tiers-txt/XNat7.txt
+	$< "Xs Int4"         > bench/tiers-txt/XsInt4.txt
+	$< "Xs Word4"        > bench/tiers-txt/XsWord4.txt
+	$< "Xs Nat7"         > bench/tiers-txt/XsNat7.txt
 
 prepare-depend: bench/tiers-default.hs \
                 bench/tiers-4cases.hs
@@ -330,75 +330,75 @@ bench/tiers-default: bench/tiers-default.hs src/Test/LeanCheck/Function/Listable
 
 bench/tiers-4cases: bench/tiers-4cases.hs
 
-diff-test-funtiers: bench/tiers-default.diff-test \
-                    bench/tiers-4cases.diff-test
+diff-funtiers: bench/tiers-default.diff \
+               bench/tiers-4cases.diff
 
-update-diff-test-funtiers: bench/tiers-default.update-diff-test \
-                           bench/tiers-4cases.update-diff-test
+txt-funtiers: bench/tiers-default.txt \
+              bench/tiers-4cases.txt
 
-bench/tiers-%.diff-test: bench/tiers-%
+bench/tiers-%.diff: bench/tiers-%
 	# functions
-	$< "()->()"           | diff -rud test/diff/tiers-$*-U-U.out         -
-	$< "Bool->Bool"       | diff -rud test/diff/tiers-$*-Bool-Bool.out   -
-	$< "Bool->Bool->Bool" | diff -rud test/diff/tiers-$*-Bool-Bool-Bool.out -
-	$< "Bool->()"         | diff -rud test/diff/tiers-$*-Bool-U.out      -
-	$< "()->Bool"         | diff -rud test/diff/tiers-$*-U-Bool.out      -
-	$< "Int->Int"       9 | diff -rud test/diff/tiers-$*-Int-Int.out     -
-	$< "Nat->Nat"       9 | diff -rud test/diff/tiers-$*-Nat-Nat.out     -
-	$< "()->Nat"        6 | diff -rud test/diff/tiers-$*-U-Nat.out       -
-	$< "Nat->()"        6 | diff -rud test/diff/tiers-$*-Nat-U.out       -
-	$< "Int->Int->Int"  6 | diff -rud test/diff/tiers-$*-Int-Int-Int.out -
-	$< "Nat->Nat->Nat"  6 | diff -rud test/diff/tiers-$*-Nat-Nat-Nat.out -
-	$< "(Nat,Nat)->Nat" 6 | diff -rud test/diff/tiers-$*-Nat,Nat-Nat.out -
-	$< "Maybe Bool->Bool" | diff -rud test/diff/tiers-$*-MBool-Bool.out  -
-	$< "Bool->Maybe Bool" | diff -rud test/diff/tiers-$*-Bool-MBool.out  -
-	$< "Maybe Bool->Maybe Bool" | diff -rud test/diff/tiers-$*-MBool-MBool.out -
+	$< "()->()"           | diff -rud bench/tiers-txt/$*-U-U.txt         -
+	$< "Bool->Bool"       | diff -rud bench/tiers-txt/$*-Bool-Bool.txt   -
+	$< "Bool->Bool->Bool" | diff -rud bench/tiers-txt/$*-Bool-Bool-Bool.txt -
+	$< "Bool->()"         | diff -rud bench/tiers-txt/$*-Bool-U.txt      -
+	$< "()->Bool"         | diff -rud bench/tiers-txt/$*-U-Bool.txt      -
+	$< "Int->Int"       9 | diff -rud bench/tiers-txt/$*-Int-Int.txt     -
+	$< "Nat->Nat"       9 | diff -rud bench/tiers-txt/$*-Nat-Nat.txt     -
+	$< "()->Nat"        6 | diff -rud bench/tiers-txt/$*-U-Nat.txt       -
+	$< "Nat->()"        6 | diff -rud bench/tiers-txt/$*-Nat-U.txt       -
+	$< "Int->Int->Int"  6 | diff -rud bench/tiers-txt/$*-Int-Int-Int.txt -
+	$< "Nat->Nat->Nat"  6 | diff -rud bench/tiers-txt/$*-Nat-Nat-Nat.txt -
+	$< "(Nat,Nat)->Nat" 6 | diff -rud bench/tiers-txt/$*-Nat,Nat-Nat.txt -
+	$< "Maybe Bool->Bool" | diff -rud bench/tiers-txt/$*-MBool-Bool.txt  -
+	$< "Bool->Maybe Bool" | diff -rud bench/tiers-txt/$*-Bool-MBool.txt  -
+	$< "Maybe Bool->Maybe Bool" | diff -rud bench/tiers-txt/$*-MBool-MBool.txt -
 	# functions with mixed arguments
-	$< "Bool->Int->Bool" 6 | diff -rud test/diff/tiers-$*-Bool-Int-Bool.out -
-	$< "Int->Bool->Bool" 6 | diff -rud test/diff/tiers-$*-Int-Bool-Bool.out -
+	$< "Bool->Int->Bool" 6 | diff -rud bench/tiers-txt/$*-Bool-Int-Bool.txt -
+	$< "Int->Bool->Bool" 6 | diff -rud bench/tiers-txt/$*-Int-Bool-Bool.txt -
 	# functions with 3 arguments
-	$< "Int->Int->Int->Int"     4 | diff -rud test/diff/tiers-$*-Int-Int-Int-Int.out -
-	$< "Bool->Bool->Bool->Bool"   | diff -rud test/diff/tiers-$*-Bool-Bool-Bool-Bool.out -
+	$< "Int->Int->Int->Int"     4 | diff -rud bench/tiers-txt/$*-Int-Int-Int-Int.txt -
+	$< "Bool->Bool->Bool->Bool"   | diff -rud bench/tiers-txt/$*-Bool-Bool-Bool-Bool.txt -
 	# functions of lists
-	$< "[Bool]->[Bool]" 5 | diff -rud test/diff/tiers-$*-Bools-Bools.out -
-	$< "[Nat]->[Nat]"   6 | diff -rud test/diff/tiers-$*-Nats-Nats.out   -
-	$< "[Int]->[Int]"   6 | diff -rud test/diff/tiers-$*-Ints-Ints.out   -
+	$< "[Bool]->[Bool]" 5 | diff -rud bench/tiers-txt/$*-Bools-Bools.txt -
+	$< "[Nat]->[Nat]"   6 | diff -rud bench/tiers-txt/$*-Nats-Nats.txt   -
+	$< "[Int]->[Int]"   6 | diff -rud bench/tiers-txt/$*-Ints-Ints.txt   -
 	# more functions
-	$< "Nat2->Nat2"       | diff -rud test/diff/tiers-$*-Nat2-Nat2.out   -
-	$< "Nat2->Nat3"       | diff -rud test/diff/tiers-$*-Nat2-Nat3.out   -
-	$< "Nat3->Nat2"       | diff -rud test/diff/tiers-$*-Nat3-Nat2.out   -
-	$< "Nat3->Nat3"       | diff -rud test/diff/tiers-$*-Nat3-Nat3.out   -
+	$< "Nat2->Nat2"       | diff -rud bench/tiers-txt/$*-Nat2-Nat2.txt   -
+	$< "Nat2->Nat3"       | diff -rud bench/tiers-txt/$*-Nat2-Nat3.txt   -
+	$< "Nat3->Nat2"       | diff -rud bench/tiers-txt/$*-Nat3-Nat2.txt   -
+	$< "Nat3->Nat3"       | diff -rud bench/tiers-txt/$*-Nat3-Nat3.txt   -
 
-bench/tiers-%.update-diff-test: bench/tiers-%
+bench/tiers-%.txt: bench/tiers-%
 	# functions
-	$< "()->()"           > test/diff/tiers-$*-U-U.out
-	$< "Bool->Bool"       > test/diff/tiers-$*-Bool-Bool.out
-	$< "Bool->Bool->Bool" > test/diff/tiers-$*-Bool-Bool-Bool.out
-	$< "Bool->()"         > test/diff/tiers-$*-Bool-U.out
-	$< "()->Bool"         > test/diff/tiers-$*-U-Bool.out
-	$< "Int->Int"       9 > test/diff/tiers-$*-Int-Int.out
-	$< "Nat->Nat"       9 > test/diff/tiers-$*-Nat-Nat.out
-	$< "Nat->()"        6 > test/diff/tiers-$*-Nat-U.out
-	$< "()->Nat"        6 > test/diff/tiers-$*-U-Nat.out
-	$< "Int->Int->Int"  6 > test/diff/tiers-$*-Int-Int-Int.out
-	$< "Nat->Nat->Nat"  6 > test/diff/tiers-$*-Nat-Nat-Nat.out
-	$< "(Nat,Nat)->Nat" 6 > test/diff/tiers-$*-Nat,Nat-Nat.out
-	$< "Maybe Bool->Bool" > test/diff/tiers-$*-MBool-Bool.out
-	$< "Bool->Maybe Bool" > test/diff/tiers-$*-Bool-MBool.out
-	$< "Maybe Bool->Maybe Bool" > test/diff/tiers-$*-MBool-MBool.out
+	$< "()->()"           > bench/tiers-txt/$*-U-U.txt
+	$< "Bool->Bool"       > bench/tiers-txt/$*-Bool-Bool.txt
+	$< "Bool->Bool->Bool" > bench/tiers-txt/$*-Bool-Bool-Bool.txt
+	$< "Bool->()"         > bench/tiers-txt/$*-Bool-U.txt
+	$< "()->Bool"         > bench/tiers-txt/$*-U-Bool.txt
+	$< "Int->Int"       9 > bench/tiers-txt/$*-Int-Int.txt
+	$< "Nat->Nat"       9 > bench/tiers-txt/$*-Nat-Nat.txt
+	$< "Nat->()"        6 > bench/tiers-txt/$*-Nat-U.txt
+	$< "()->Nat"        6 > bench/tiers-txt/$*-U-Nat.txt
+	$< "Int->Int->Int"  6 > bench/tiers-txt/$*-Int-Int-Int.txt
+	$< "Nat->Nat->Nat"  6 > bench/tiers-txt/$*-Nat-Nat-Nat.txt
+	$< "(Nat,Nat)->Nat" 6 > bench/tiers-txt/$*-Nat,Nat-Nat.txt
+	$< "Maybe Bool->Bool" > bench/tiers-txt/$*-MBool-Bool.txt
+	$< "Bool->Maybe Bool" > bench/tiers-txt/$*-Bool-MBool.txt
+	$< "Maybe Bool->Maybe Bool" > bench/tiers-txt/$*-MBool-MBool.txt
 	# functions with mixed arguments
-	$< "Bool->Int->Bool" 6 > test/diff/tiers-$*-Bool-Int-Bool.out
-	$< "Int->Bool->Bool" 6 > test/diff/tiers-$*-Int-Bool-Bool.out
+	$< "Bool->Int->Bool" 6 > bench/tiers-txt/$*-Bool-Int-Bool.txt
+	$< "Int->Bool->Bool" 6 > bench/tiers-txt/$*-Int-Bool-Bool.txt
 	# functions with 3 arguments
-	$< "Int->Int->Int->Int"     4 > test/diff/tiers-$*-Int-Int-Int-Int.out
-	$< "Bool->Bool->Bool->Bool"   > test/diff/tiers-$*-Bool-Bool-Bool-Bool.out
+	$< "Int->Int->Int->Int"     4 > bench/tiers-txt/$*-Int-Int-Int-Int.txt
+	$< "Bool->Bool->Bool->Bool"   > bench/tiers-txt/$*-Bool-Bool-Bool-Bool.txt
 	# functions of lists
-	$< "[()]->[()]"     6 > test/diff/tiers-$*-Us-Us.out
-	$< "[Bool]->[Bool]" 5 > test/diff/tiers-$*-Bools-Bools.out
-	$< "[Nat]->[Nat]"   6 > test/diff/tiers-$*-Nats-Nats.out
-	$< "[Int]->[Int]"   6 > test/diff/tiers-$*-Ints-Ints.out
+	$< "[()]->[()]"     6 > bench/tiers-txt/$*-Us-Us.txt
+	$< "[Bool]->[Bool]" 5 > bench/tiers-txt/$*-Bools-Bools.txt
+	$< "[Nat]->[Nat]"   6 > bench/tiers-txt/$*-Nats-Nats.txt
+	$< "[Int]->[Int]"   6 > bench/tiers-txt/$*-Ints-Ints.txt
 	# more functions
-	$< "Nat2->Nat2"       > test/diff/tiers-$*-Nat2-Nat2.out
-	$< "Nat2->Nat3"       > test/diff/tiers-$*-Nat2-Nat3.out
-	$< "Nat3->Nat2"       > test/diff/tiers-$*-Nat3-Nat2.out
-	$< "Nat3->Nat3"       > test/diff/tiers-$*-Nat3-Nat3.out
+	$< "Nat2->Nat2"       > bench/tiers-txt/$*-Nat2-Nat2.txt
+	$< "Nat2->Nat3"       > bench/tiers-txt/$*-Nat2-Nat3.txt
+	$< "Nat3->Nat2"       > bench/tiers-txt/$*-Nat3-Nat2.txt
+	$< "Nat3->Nat3"       > bench/tiers-txt/$*-Nat3-Nat3.txt
