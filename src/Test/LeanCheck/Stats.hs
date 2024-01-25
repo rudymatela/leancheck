@@ -240,8 +240,7 @@ unquote s  =  s
 table :: String -> [[String]] -> String
 table s []   =  ""
 table s sss  =  unlines
-             .  map (removeTrailing ' ')
-             .  map (intercalate s)
+             .  map (removeTrailing ' ' . intercalate s)
              .  transpose
              .  map (normalize ' ')
              .  foldr1 (zipWith (++))
