@@ -220,7 +220,9 @@ countsBy (==)  =  map headLength . classifyBy (==)
 -- > > countsOn length ["sheep", "chip", "ship", "cheap", "Mississippi"]
 -- > [(5,2),(4,2),(11,1)]
 countsOn :: Eq b => (a -> b) -> [a] -> [(b,Int)]
-countsOn f  =  map (\xs -> (f $ head xs, length xs)) . classifyOn f
+countsOn f  =  map (first f . headLength) . classifyOn f
+  where
+  first f (x,y)  =  (f x, y)
 
 countsT :: Eq a => [[a]] -> [(a,Int,[Int])]
 countsT xss  =  [(x,n,map (count x) xss) | (x,n) <- counts (concat xss)]
@@ -231,7 +233,8 @@ countsTOn :: Eq b => (a -> b) -> [[a]] -> [(b,Int,[Int])]
 countsTOn f  =  countsT . mapT f
 
 headLength :: [a] -> (a,Int)
-headLength xs  =  (head xs, length xs)
+headLength []  =  (error "Test.LeanCheck.Stats.headLength: empty list", 0)
+headLength xs@(x:_)  =  (x, length xs)
 
 unquote :: String -> String
 unquote ('"':s) | last s == '"'  =  init s
