@@ -11,6 +11,8 @@
 module Test
   ( module Test.LeanCheck
 
+  , mainTest
+  , reportTests
   , getMaxTestsFromArgs
 
   , tNatPairOrd
@@ -37,21 +39,29 @@ where
 import Test.LeanCheck
 import Data.List
 import Data.Ord
-import Data.Maybe
-import System.Environment
+import System.Exit (exitFailure)
+import System.Environment (getArgs, getProgName)
 import Test.LeanCheck.Utils.Types (Nat(..))
 
-readMaybe :: Read a => String -> Maybe a
-readMaybe s  =  case readsPrec 0 s of
-                [(x,"")] -> Just x
-                _ -> Nothing
+reportTests :: String -> [Bool] -> IO ()
+reportTests s tests = do
+  case elemIndices False tests of
+    [] -> putStrLn $ s ++ ": tests passed"
+    is -> do putStrLn (s ++ ": failed tests: " ++ show is)
+             exitFailure
 
 getMaxTestsFromArgs :: Int -> IO Int
 getMaxTestsFromArgs n  =  do
   as <- getArgs
   return $ case as of
-           (s:_) -> fromMaybe n $ readMaybe s
+           (s:_) -> read s
            _     -> n
+
+mainTest :: (Int -> [Bool]) -> Int -> IO ()
+mainTest tests n' = do
+  pn <- getProgName
+  n <- getMaxTestsFromArgs n'
+  reportTests pn (tests n)
 
 -- | check if a list is ordered
 ordered :: Ord a => [a] -> Bool

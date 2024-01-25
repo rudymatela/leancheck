@@ -5,9 +5,8 @@ import Test
 -- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Generic
 import Test.LeanCheck.Derive (deriveTiers)
-import System.Exit (exitFailure)
-import Data.List (elemIndices,sort)
 import Test.LeanCheck.Utils
+import Data.List (sort)
 import GHC.Generics (Generic)
 
 data D0        =  D0                     deriving (Eq, Show, Generic)
@@ -49,12 +48,7 @@ instance Listable a => Listable (Tree a) where  tiers  =  genericTiers
 
 
 main :: IO ()
-main  =  do
-  max <- getMaxTestsFromArgs 200
-  case elemIndices False (tests max) of
-    [] -> putStrLn "Tests passed!"
-    is -> do putStrLn ("Failed tests:" ++ show is)
-             exitFailure
+main  =  mainTest tests 200
 
 tests :: Int -> [Bool]
 tests n  =

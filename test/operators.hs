@@ -2,20 +2,14 @@
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test
 
-import System.Exit (exitFailure)
 -- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Utils
 
-import Data.List (elemIndices, sort, isPrefixOf)
 import Data.Function (on)
+import Data.List (sort, isPrefixOf)
 
 main :: IO ()
-main  =  do
-  max <- getMaxTestsFromArgs 200
-  case elemIndices False (tests max) of
-    [] -> putStrLn "Tests passed!"
-    is -> do putStrLn ("Failed tests:" ++ show is)
-             exitFailure
+main  =  mainTest tests 200
 
 tests :: Int -> [Bool]
 tests n =

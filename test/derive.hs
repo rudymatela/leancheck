@@ -4,9 +4,8 @@
 import Test
 -- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Derive
-import System.Exit (exitFailure)
-import Data.List (elemIndices,sort)
 import Test.LeanCheck.Utils
+import Data.List (sort)
 
 data D0        =  D0                     deriving Show
 data D1 a      =  D1 a                   deriving Show
@@ -75,12 +74,7 @@ deriveListableIfNeeded ''Maybe
 deriveListableIfNeeded ''Either
 
 main :: IO ()
-main  =  do
-  max <- getMaxTestsFromArgs 200
-  case elemIndices False (tests max) of
-    [] -> putStrLn "Tests passed!"
-    is -> do putStrLn ("Failed tests:" ++ show is)
-             exitFailure
+main  =  mainTest tests 200
 
 tests :: Int -> [Bool]
 tests n  =

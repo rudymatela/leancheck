@@ -2,9 +2,8 @@
 -- Copyright (c) 2015-2020 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test
-import System.Exit (exitFailure)
-import Data.List (elemIndices,delete,isPrefixOf)
 import Test.LeanCheck.Utils.Types
+import Data.List (delete,isPrefixOf)
 import Data.Word
 import Data.Int
 import Data.Char hiding (Space)
@@ -13,12 +12,7 @@ import Data.Typeable (typeOf)
 #endif
 
 main :: IO ()
-main  =  do
-  max <- getMaxTestsFromArgs 200
-  case elemIndices False (tests max) of
-    [] -> putStrLn "Tests passed!"
-    is -> do putStrLn ("Failed tests:" ++ show is)
-             exitFailure
+main  =  mainTest tests 200
 
 
 -- | Given the number of bits, generates a range for signed/unsigned integers
