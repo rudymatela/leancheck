@@ -737,7 +737,7 @@ rng (m,n)  =  [m..n]
 
 idx :: Integral a => (a,a) -> a -> Int
 idx b@(m,_) i  | irng b i   =  fromIntegral (i - m)
-               | otherwise  =  error "Index out of range."
+               | otherwise  =  error "Test.LeanCheck.Utils.Types.idx: index out of range"
 
 irng :: Ord a => (a,a) -> a -> Bool
 irng (m,n) i  =  m <= i && i <= m
