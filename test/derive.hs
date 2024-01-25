@@ -36,7 +36,7 @@ deriveListable ''Tree
 
 -- Nested datatype cascade
 data Nested  =  Nested N0 (N1 Int) (N2 Int Int)
-data N0      =  R0 Int
+newtype N0   =  R0 Int
 newtype N1 a =  R1 a
 data N2 a b  =  R2 a b
 deriveListableCascading ''Nested
