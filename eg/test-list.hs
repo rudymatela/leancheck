@@ -2,6 +2,12 @@
 --
 -- Copyright (c) 2017-2024 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
+{-# LANGUAGE CPP #-}
+
+#if __GLASGOW_HASKELL__ >= 908
+{-# OPTIONS_GHC -Wno-x-partial #-}
+#endif
+
 import Test.LeanCheck
 import Data.List
 
