@@ -310,7 +310,6 @@ showFunctionL :: ShowFunction a => Bool -> Int -> Int -> a -> String
 showFunctionL singleLine m n f
   | isValue f  =  showValueOf f
   | isConstant m f  =  showConstant m f
-  -- | canName m f  =  showName m f
   | otherwise  =  lambdaPat ++ caseExp
   where
     lambdaPat  =  "\\" ++ unwords vs ++ " -> "
