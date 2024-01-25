@@ -3,7 +3,7 @@
 -- Copyright (c) 2020 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 --
--- Many thanks to Jonas Duregard for providing this example.
+-- Many thanks to Jonas Duregård for providing this example.
 --
 -- If we set the test limit to millions of values, memory consumption may be
 -- too high.  This is aggravated depending on how tests are ordered.
