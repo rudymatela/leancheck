@@ -15,7 +15,7 @@ import Data.Word
 
 -- dummy property that is always 'True' for a correct 'Num' instance.
 evenOrOdd :: (Listable a, Show a, Integral a) => [a] -> Bool
-evenOrOdd xs  =  all (\x -> odd x || even x) xs
+evenOrOdd  =  all (\x -> odd x || even x)
 
 main :: IO ()
 main  =  do
