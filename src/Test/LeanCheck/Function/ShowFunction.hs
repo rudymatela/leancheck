@@ -308,10 +308,11 @@ showConstant m f  =  "\\" ++ unwords vs ++ " -> " ++ fromMaybe "undefined" r
 -- The first boolean parameter tells if we are showing
 -- the function on a single line
 showFunctionL :: ShowFunction a => Bool -> Int -> Int -> a -> String
-showFunctionL singleLine m n f | isValue f  =  showValueOf f
-showFunctionL singleLine m n f | isConstant m f  =  showConstant m f
---showFunctionL singleLine m n f | canName m f  =  showName m f
-showFunctionL singleLine m n f | otherwise  =  lambdaPat ++ caseExp
+showFunctionL singleLine m n f
+  | isValue f  =  showValueOf f
+  | isConstant m f  =  showConstant m f
+  -- | canName m f  =  showName m f
+  | otherwise  =  lambdaPat ++ caseExp
   where
     lambdaPat  =  "\\" ++ unwords vs ++ " -> "
     casePat  =  "case " ++ showTuple (filter (/= "_") vs) ++ " of"
