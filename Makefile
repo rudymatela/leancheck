@@ -42,9 +42,9 @@ all-all: mk/All.o
 
 test: $(patsubst %,%.run,$(TESTS)) diff-test test-sdist
 
-diff-test: diff-test-tiers diff-test-funtiers $(patsubst %,%.diff-test,$(EGS))
+diff-test: diff-test-tiers diff-test-funtiers $(patsubst %,%.diff,$(EGS))
 
-update-diff-test: update-diff-test-tiers update-diff-test-funtiers $(patsubst %,%.update-diff-test,$(EGS))
+txt: update-diff-test-tiers update-diff-test-funtiers $(patsubst %,%.txt,$(EGS))
 
 test-10000: $(patsubst %,%.run-10000,$(TESTS)) diff-test test-sdist
 
@@ -54,20 +54,20 @@ test-10000: $(patsubst %,%.run-10000,$(TESTS)) diff-test test-sdist
 %.run-10000: %
 	./$< 10000
 
-eg/%.diff-test: eg/%
-	./$< | diff -rud test/diff/$<.out -
+%.txt: %
+	./$< >$@
 
-eg/%.update-diff-test: eg/%
-	./$< >           test/diff/$<.out
+%.diff: %
+	./$< | diff $<.txt -
 
 # Evaluation order changed from GHC 8.4 to GHC 8.6, so we need to skip the
 # contents of the exception for test-list.diff-test.
 # Exception is multiline starting with GHC 9.4, hence the 'tr' trick
-eg/test-list.diff-test: eg/test-list
-	./$< | tr '\n' '\0' | sed -e "s/Exception '[^']*'/Exception '...'/" | tr '\0' '\n' | diff -rud test/diff/$<.out -
+eg/test-list.txt: eg/test-list
+	./$< | tr '\n' '\0' | sed -e "s/Exception '[^']*'/Exception '...'/" | tr '\0' '\n' > $@
 
-eg/test-list.update-diff-test: eg/test-list
-	./$< | tr '\n' '\0' | sed -e "s/Exception '[^']*'/Exception '...'/" | tr '\0' '\n' >           test/diff/$<.out
+eg/test-list.diff: eg/test-list
+	./$< | tr '\n' '\0' | sed -e "s/Exception '[^']*'/Exception '...'/" | tr '\0' '\n' | diff $<.txt -
 
 clean: clean-hi-o clean-haddock
 	rm -f bench/tiers-default.hs
