@@ -31,10 +31,10 @@ tests n =
                      [[1],[2],[3],[4]]
                      [[const Nothing],[Just]] == [[],[1],[2],[3],[4]]
 
-  , holds n $ deleteT_is_map_delete 10 -:> nat
-  , holds n $ deleteT_is_map_delete 10 -:> int
-  , holds n $ deleteT_is_map_delete 10 -:> bool
-  , holds n $ deleteT_is_map_delete 10 -:> int2
+  , holds n $ deleteTIsMapDelete 10 -:> nat
+  , holds n $ deleteTIsMapDelete 10 -:> int
+  , holds n $ deleteTIsMapDelete 10 -:> bool
+  , holds n $ deleteTIsMapDelete 10 -:> int2
 
   , finite (tiers :: [[ Bool ]])  == True
   , finite (tiers :: [[ (Bool,Bool) ]]) == True
@@ -66,8 +66,8 @@ tests n =
   , holds n $ \xss -> nub (concat xss) == concat (nubT xss :: [[Int]])
   ]
 
-deleteT_is_map_delete :: (Eq a, Listable a) => Int -> a -> Bool
-deleteT_is_map_delete n x  =
+deleteTIsMapDelete :: (Eq a, Listable a) => Int -> a -> Bool
+deleteTIsMapDelete n x  =
   deleteT x tiers =| n |= normalizeT (map (delete x) tiers)
 
 checkNoDup :: Int -> Bool
