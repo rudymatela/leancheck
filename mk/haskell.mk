@@ -1,6 +1,6 @@
 # Implicit rules for compiling Haskell code.
 #
-# Copyright (c) 2015-2023 Rudy Matela.
+# Copyright (c) 2015-2024 Rudy Matela.
 # Distributed under the 3-Clause BSD licence.
 #
 # You can optionally configure the "Configuration variables" below in your main

@@ -1,6 +1,6 @@
 -- pick.hs -- picks the n-th value in a LeanCheck enumeration
 --
--- Copyright (c) 2020 Rudy Matela.
+-- Copyright (c) 2020-2024 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
 import Test.LeanCheck.Utils

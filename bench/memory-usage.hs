@@ -1,6 +1,6 @@
 -- memory-usage.hs -- example program illustrating a limitation of LeanCheck
 --
--- Copyright (c) 2020 Rudy Matela.
+-- Copyright (c) 2020-2024 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 --
 -- Many thanks to Jonas Duregård for providing this example.

@@ -1,6 +1,6 @@
 -- higher-order.hs -- example: testing higher-order properties using LeanCheck
 --
--- Copyright (c) 2017-2020 Rudy Matela.
+-- Copyright (c) 2017-2024 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
 import Test.LeanCheck.Function ()

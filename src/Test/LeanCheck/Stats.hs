@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 -- |
 -- Module      : Test.LeanCheck.Stats
--- Copyright   : (c) 2017-2020 Rudy Matela
+-- Copyright   : (c) 2017-2024 Rudy Matela
 -- License     : 3-Clause BSD  (see the file LICENSE)
 -- Maintainer  : Rudy Matela <rudy@matela.com.br>
 --

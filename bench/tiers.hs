@@ -1,6 +1,6 @@
 -- tiers.hs -- prints tiers of values up to a certain point
 --
--- Copyright (c) 2015-2020 Rudy Matela.
+-- Copyright (c) 2015-2024 Rudy Matela.
 -- Distributed under the 3-Clause BSD licence (see the file LICENSE).
 import Test.LeanCheck
 import Test.LeanCheck.Utils.Types
