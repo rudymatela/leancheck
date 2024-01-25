@@ -942,7 +942,7 @@ instance (Integral a, Bounded a) => Listable (Xs a) where
 --
 -- > > check $ \(Space c) -> isSpace c
 -- > +++ OK, passed 6 tests (exhausted).
-data Space  =  Space {unSpace :: Char}
+newtype Space  =  Space {unSpace :: Char}
 
 -- | Lowercase characters.
 --
@@ -950,7 +950,7 @@ data Space  =  Space {unSpace :: Char}
 --
 -- > > check $ \(Lower c) -> isLower c
 -- > +++ OK, passed 26 tests (exhausted).
-data Lower  =  Lower {unLower :: Char}
+newtype Lower  =  Lower {unLower :: Char}
 
 -- | Uppercase characters.
 --
@@ -958,7 +958,7 @@ data Lower  =  Lower {unLower :: Char}
 --
 -- > > check $ \(Upper c) -> isUpper c
 -- > +++ OK, passed 26 tests (exhausted).
-data Upper  =  Upper {unUpper :: Char}
+newtype Upper  =  Upper {unUpper :: Char}
 
 -- | Alphabetic characters.
 --
@@ -968,7 +968,7 @@ data Upper  =  Upper {unUpper :: Char}
 -- > +++ OK, passed 52 tests (exhausted).
 --
 -- Equivalent to 'Letter'.
-data Alpha  =  Alpha {unAlpha :: Char}
+newtype Alpha  =  Alpha {unAlpha :: Char}
 
 -- | Digits.
 --
@@ -976,7 +976,7 @@ data Alpha  =  Alpha {unAlpha :: Char}
 --
 -- > > check $ \(Digit c) -> isDigit c
 -- > +++ OK, passed 10 tests (exhausted).
-data Digit  =  Digit {unDigit :: Char}
+newtype Digit  =  Digit {unDigit :: Char}
 
 -- | Alphanumeric characters.
 --
@@ -984,7 +984,7 @@ data Digit  =  Digit {unDigit :: Char}
 --
 -- > > check $ \(AlphaNum c) -> isAlphaNum c
 -- > +++ OK, passed 62 tests (exhausted).
-data AlphaNum  =  AlphaNum {unAlphaNum :: Char}
+newtype AlphaNum  =  AlphaNum {unAlphaNum :: Char}
 
 -- | Alphabetic characters.
 --
@@ -994,7 +994,7 @@ data AlphaNum  =  AlphaNum {unAlphaNum :: Char}
 -- > +++ OK, passed 52 tests (exhausted).
 --
 -- Equivalent to 'Alpha'.
-data Letter    =  Letter   {unLetter   :: Char}
+newtype Letter    =  Letter   {unLetter   :: Char}
 
 instance Show Space where  show  =  show . unSpace
 instance Show Lower where  show  =  show . unLower
@@ -1026,25 +1026,25 @@ instance Listable Letter where
   list  =  map Letter $ ['a'..'z'] +| ['A'..'Z']
 
 -- | Strings of spaces.
-data Spaces  =  Spaces {unSpaces :: String}
+newtype Spaces  =  Spaces {unSpaces :: String}
 
 -- | Strings of lowercase characters.
-data Lowers  =  Lowers {unLowers :: String}
+newtype Lowers  =  Lowers {unLowers :: String}
 
 -- | Strings of uppercase characters
-data Uppers  =  Uppers {unUppers :: String}
+newtype Uppers  =  Uppers {unUppers :: String}
 
 -- | Strings of alphabetic characters
-data Alphas  =  Alphas {unAlphas :: String}
+newtype Alphas  =  Alphas {unAlphas :: String}
 
 -- | Strings of digits.
-data Digits  =  Digits {unDigits :: String}
+newtype Digits  =  Digits {unDigits :: String}
 
 -- | Strings of alphanumeric characters
-data AlphaNums  =  AlphaNums {unAlphaNums :: String}
+newtype AlphaNums  =  AlphaNums {unAlphaNums :: String}
 
 -- | Strings of letters
-data Letters    =  Letters   {unLetters   :: String}
+newtype Letters    =  Letters   {unLetters   :: String}
 
 instance Show Spaces where  show  =  show . unSpaces
 instance Show Lowers where  show  =  show . unLowers
