@@ -3,11 +3,10 @@
 import Test
 
 import System.Exit (exitFailure)
-import Data.List (elemIndices,sort)
 -- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Utils
 
-import Data.List (isPrefixOf)
+import Data.List (elemIndices, sort, isPrefixOf)
 import Data.Function (on)
 
 main :: IO ()
