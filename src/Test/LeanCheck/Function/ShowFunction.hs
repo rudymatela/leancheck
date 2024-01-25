@@ -301,7 +301,7 @@ isConstant m f  =  case take m $ bindings f of
 showConstant :: ShowFunction a => Int -> a -> String
 showConstant m f  =  "\\" ++ unwords vs ++ " -> " ++ fromMaybe "undefined" r
   where
-  (as,r)  =  head $ bindings f
+  (as,r):_  =  bindings f
   vs  =  replicate (length as) "_"
 
 -- The first boolean parameter tells if we are showing
