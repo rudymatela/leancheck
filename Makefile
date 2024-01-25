@@ -132,11 +132,15 @@ legacy-test-via-cabal: # needs similarly named cabal wrappers
 	cabal clean  &&  cabal-ghc-7.8  configure  &&  cabal-ghc-7.8  test
 	cabal clean  &&  cabal test
 
-hlint:
+hlint: src.hlint eg.hlint test.hlint bench.hlint # ..hlint
+
+# use "make src.hlint" to run hlint only on the src folder
+%.hlint:
 	hlint \
 	  --ignore "Use import/export shortcut" \
 	  --ignore "Redundant bracket" \
-	  .
+	  --ignore "Redundant lambda" \
+	  $*
 
 markdown: \
   README.html \
