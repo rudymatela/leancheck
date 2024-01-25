@@ -25,6 +25,6 @@ prop_sortCount x xs  =  count x (sort xs) == count x xs
 
 main :: IO ()
 main  =  do
-  check $ (prop_sortOrdered :: [Int] -> Bool)
-  check $ (prop_sortCount :: Int -> [Int] -> Bool)
+  check (prop_sortOrdered :: [Int] -> Bool)
+  check (prop_sortCount :: Int -> [Int] -> Bool)
   check $ \xs -> sort (sort xs :: [Int]) == sort xs
