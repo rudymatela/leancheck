@@ -239,9 +239,9 @@ isValue f  =  case bindings f of
               _        -> False
 
 showValueOf :: ShowFunction a => a -> String
-showValueOf x  =  case snd . head . bindings $ x of
-                  Nothing -> "undefined"
-                  Just x' -> x'
+showValueOf x  =  case bindings x of
+                  (_,Just x'):_ -> x'
+                  _ -> "undefined"
 
 -- | Given the number of patterns to show, shows a 'ShowFunction' value.
 --
