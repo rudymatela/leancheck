@@ -71,9 +71,9 @@ import System.Exit (ExitCode)
 import System.IO (IOMode, BufferMode, SeekMode)
 import Foreign.C
 #ifndef __HUGS__
-import Data.List (intercalate, sortBy)
+import Data.List (intercalate, sortBy, minimumBy)
 #else
-import Data.List (sortBy)
+import Data.List (sortBy, minimumBy)
 
 intercalate :: [a] -> [[a]] -> [a]
 intercalate xs xss  =  concat (intersperse xs xss)
@@ -564,7 +564,7 @@ describedBindings m n f
   bs1  =  describeBindings bs0
 
 describeBindings :: [Binding] -> [Binding]
-describeBindings bs  =  head $ sortOn length $
+describeBindings bs  =  minimumOn length
   [ bs
   , explainBindings bs
   , explainBindings . concat . sortOn length $ classifyOn snd bs
@@ -683,6 +683,10 @@ none p  =  not . any p
 -- sortOn is only available on GHC > 7.8
 sortOn :: Ord b => (a -> b) -> [a] -> [a]
 sortOn f  =  sortBy (compare `on` f)
+
+-- likewise...
+minimumOn :: Ord b => (a -> b) -> [a] -> a
+minimumOn f  =  minimumBy (compare `on` f)
 
 select :: [Bool] -> [a] -> [a]
 select [] _  =  []
