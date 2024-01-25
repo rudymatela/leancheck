@@ -161,7 +161,7 @@ maybeCons2 f  =  delay $ mapMaybeT (uncurry f) tiers
 
 -- | Like '><', but over 3 lists of tiers.
 product3 :: [[a]] -> [[b]]-> [[c]] -> [[(a,b,c)]]
-product3  =  product3With (\x y z -> (x,y,z))
+product3  =  product3With (,,)
 
 -- | Like 'productWith', but over 3 lists of tiers.
 product3With :: (a->b->c->d) -> [[a]] -> [[b]] -> [[c]] -> [[d]]
@@ -191,7 +191,7 @@ distinctPairs  =  distinctPairsWith (,)
 --
 -- > distinctPairsWith f  =  mapT (uncurry f) . distinctPairs
 distinctPairsWith :: (a -> a -> b) -> [[a]] -> [[b]]
-distinctPairsWith f  =  concatT . choicesWith (\e -> mapT (f e))
+distinctPairsWith f  =  concatT . choicesWith (mapT . f)
 
 -- | Takes as argument tiers of element values;
 --   returns tiers of unordered pairs where, in enumeration order,
@@ -214,7 +214,7 @@ unorderedPairs  =  unorderedPairsWith (,)
 --
 -- > unorderedPairsWith f  =  mapT (uncurry f) . unorderedPairs
 unorderedPairsWith :: (a -> a -> b) -> [[a]] -> [[b]]
-unorderedPairsWith f  =  concatT . bagChoicesWith (\e -> mapT (f e))
+unorderedPairsWith f  =  concatT . bagChoicesWith (mapT . f)
 
 -- | Takes as argument tiers of element values;
 --   returns tiers of unordered pairs where, in enumeration order,
@@ -232,7 +232,7 @@ unorderedDistinctPairs  =  unorderedDistinctPairsWith (,)
 --
 -- > unorderedDistinctPairsWith f  =  mapT (uncurry f) . unorderedDistinctPairs
 unorderedDistinctPairsWith :: (a -> a -> b) -> [[a]] -> [[b]]
-unorderedDistinctPairsWith f  =  concatT . setChoicesWith (\e -> mapT (f e))
+unorderedDistinctPairsWith f  =  concatT . setChoicesWith (mapT . f)
 
 -- | Takes as argument tiers of element values;
 --   returns tiers of lists of elements.
@@ -505,15 +505,15 @@ listLines :: [String] -> String
 listLines []  =  "[]"
 listLines [s] | '\n' `notElem` s  =  "[" ++ s ++ "]"
 listLines ss  =  (++ "]")
-              . unlines
-              . zipWith beside (["[ "] ++ repeat ", ")
-              $ ss
+              .  unlines
+              .  zipWith beside ("[ " : repeat ", ")
+              $  ss
   where
   beside :: String -> String -> String
   beside s  =  init
-            . unlines
-            . zipWith (++) ([s] ++ repeat (replicate (length s) ' '))
-            . lines
+            .  unlines
+            .  zipWith (++) (s : repeat (replicate (length s) ' '))
+            .  lines
 
 
 -- | Shows a list, one element per line.
