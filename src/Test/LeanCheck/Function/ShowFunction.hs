@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 -- |
 -- Module      : Test.LeanCheck.Function.ShowFunction
 -- Copyright   : (c) 2015-2020 Rudy Matela
