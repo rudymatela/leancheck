@@ -143,6 +143,8 @@ hlint: ..hlint # src.hlint eg.hlint test.hlint bench.hlint
 	  --ignore "Redundant bracket" \
 	  --ignore "Redundant lambda" \
 	  --ignore "Use lambda-case" \
+	  --ignore "Redundant ==" \
+	  --ignore "Use isNothing" \
 	  $*
 
 markdown: \
