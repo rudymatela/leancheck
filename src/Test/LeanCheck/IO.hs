@@ -116,7 +116,8 @@ resultsIO n  =  zipWith torio [1..] . take n . results
 resultIO :: Testable a => Int -> a -> IO Result
 resultIO n  =  computeResult . resultsIO n
   where
-  computeResult []  =  error "resultIO: no results, empty Listable enumeration?"
+  computeResult []  =  return $ OK 0  -- empty Listable enumeration
+                                      -- no tests are reported as a "success"
   computeResult [r]  =  r
   computeResult (r:rs)  =  r >>= \r -> case r of
                                        (OK _) -> computeResult rs
