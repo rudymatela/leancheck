@@ -39,9 +39,7 @@ ratioRepetitions xs  =  fromIntegral (countRepetitions xs)
                      %  fromIntegral (length xs)
 
 showLengthT :: [[a]] -> String
-showLengthT xss  =  case lengthT xss of
-                    Nothing -> "Infinity"
-                    Just x  -> show x
+showLengthT  =  maybe "Infinity" show . lengthT
 
 showDotsLongerThan :: Show a => Int -> [a] -> String
 showDotsLongerThan n xs  =  "["
