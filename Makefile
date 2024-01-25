@@ -140,6 +140,7 @@ hlint: ..hlint # src.hlint eg.hlint test.hlint bench.hlint
 	  --ignore "Use import/export shortcut" \
 	  --ignore "Redundant bracket" \
 	  --ignore "Redundant lambda" \
+	  --ignore "Use lambda-case" \
 	  $*
 
 markdown: \
