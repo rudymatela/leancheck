@@ -353,23 +353,23 @@ nubMerges  =  foldr nubMerge []
 #else
 -- When using Hugs or other compiler without Template Haskell
 
-errorNotGHC :: a
-errorNotGHC  =  error "Only defined when using GHC"
+errorNotGHC :: String -> a
+errorNotGHC fn  =  errorOn fn "only defined when using GHC"
 
 deriveListable :: a
-deriveListable  =  errorNotGHC
+deriveListable  =  errorNotGHC "deriveListable"
 
 deriveListableIfNeeded :: a
-deriveListableIfNeeded  =  errorNotGHC
+deriveListableIfNeeded  =  errorNotGHC "deriveListableIfNeeded"
 
 deriveListableCascading :: a
-deriveListableCascading  =  errorNotGHC
+deriveListableCascading  =  errorNotGHC "deriveListableCascading"
 
 deriveTiers :: a
-deriveTiers  =  errorNotGHC
+deriveTiers  =  errorNotGHC "deriveTiers"
 
 deriveList :: a
-deriveList  =  errorNotGHC
+deriveList  =  errorNotGHC "deriveList"
 
 -- closing #ifdef __GLASGOW_HASKELL__
 #endif
