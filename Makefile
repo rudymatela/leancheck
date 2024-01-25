@@ -30,7 +30,7 @@ BENCHS = \
 	bench/tiers
 GHCIMPORTDIRS = src:test
 GHCFLAGS = -v0 -O2 $(shell grep -q "Arch Linux" /etc/lsb-release && echo -dynamic) \
-  -W -fno-warn-unused-matches
+  -W -fno-warn-unused-matches -Werror
 HUGSIMPORTDIRS = .:./src:./test:./etc/hugs-backports:/usr/lib/hugs/packages/*
 HUGSFLAGS = -98 -h32M
 
