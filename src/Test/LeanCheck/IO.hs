@@ -22,6 +22,7 @@ import Prelude hiding (catch)
 #endif
 
 import Test.LeanCheck.Core
+
 #ifdef __GLASGOW_HASKELL__
 import Control.Exception (SomeException, catch, evaluate)
 #else
@@ -29,6 +30,11 @@ import Control.Exception (SomeException, catch, evaluate)
 import Control.Exception (Exception, catch, evaluate)
 type SomeException  =  Exception
 #endif
+
+-- we redeclare void for backwards compatibility with old compilers
+-- e.g.: hugs
+void :: Functor f => f a -> f ()
+void  =  fmap (const ())
 
 -- | Checks a property printing results on 'System.IO.stdout'
 --
@@ -39,7 +45,7 @@ type SomeException  =  Exception
 -- > *** Failed! Falsifiable (after 4 tests):
 -- > [] [0,0]
 check :: Testable a => a -> IO ()
-check p  =  checkResult p >> return ()
+check  =  void . checkResult
 
 -- | Check a property for a given number of tests
 --   printing results on 'System.IO.stdout'
@@ -53,7 +59,7 @@ check p  =  checkResult p >> return ()
 -- > > checkFor 3 $ \p -> p == not (not p)
 -- > +++ OK, passed 2 tests (exhausted).
 checkFor :: Testable a => Int -> a -> IO ()
-checkFor n p  =  checkResultFor n p >> return ()
+checkFor n  =  void . checkResultFor n
 
 -- | Check a property
 --   printing results on 'System.IO.stdout' and
