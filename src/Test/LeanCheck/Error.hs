@@ -57,7 +57,6 @@ import qualified Test.LeanCheck as C
   , results
   )
 
-import Control.Monad (liftM)
 import System.IO.Unsafe (unsafePerformIO)
 import Data.Maybe (listToMaybe, fromMaybe)
 import Data.Function (on)
@@ -130,14 +129,14 @@ anyErrorToNothing  =  etom . anyErrorToLeft
 errorToLeft :: a -> Either String a
 errorToLeft x  =  unsafePerformIO $
 #if __GLASGOW_HASKELL__
-  (Right `liftM` evaluate x) `catches`
+  (Right `fmap` evaluate x) `catches`
     [ Handler $ \e -> return . Left $ show1st (e :: ArithException)
     , Handler $ \e -> return . Left $ show1st (e :: ArrayException)
     , Handler $ \e -> return . Left $ show1st (e :: ErrorCall)
     , Handler $ \e -> return . Left $ show1st (e :: PatternMatchFail)
     ]
 #else
-  (Right `liftM` evaluate x) `catch` (return . Left . show1st)
+  (Right `fmap` evaluate x) `catch` (return . Left . show1st)
 #endif
 
 -- | Transforms a value into 'Right' that value or 'Left String' on error.
@@ -148,10 +147,10 @@ errorToLeft x  =  unsafePerformIO $
 anyErrorToLeft :: a -> Either String a
 anyErrorToLeft x  =  unsafePerformIO $
 #if __GLASGOW_HASKELL__
-  (Right `liftM` evaluate x)
+  (Right `fmap` evaluate x)
     `catch` (\e -> return . Left $ show1st (e :: SomeException))
 #else
-  (Right `liftM` evaluate x) `catch` (return . Left . show1st)
+  (Right `fmap` evaluate x) `catch` (return . Left . show1st)
 #endif
 
 show1st :: Show a => a -> String
