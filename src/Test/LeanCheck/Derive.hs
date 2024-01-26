@@ -196,7 +196,7 @@ t `typeConArgsThat` p  =  filterM p =<< typeConArgs t
 typeConCascadingArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
 t `typeConCascadingArgsThat` p  =  do
   ts <- t `typeConArgsThat` p
-  let p' t'  =  do is <- p t'; return $ t' `notElem` (t:ts) && is
+  let p' t'  =  (t' `notElem` t:ts &&) `fmap` p t'
   tss <- mapM (`typeConCascadingArgsThat` p') ts
   return $ nubMerges (ts:tss)
 
