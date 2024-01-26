@@ -200,17 +200,22 @@ t `typeConCascadingArgsThat` p  =  do
   tss <- mapM (`typeConCascadingArgsThat` p') ts
   return $ nubMerges (ts:tss)
 
--- Normalizes a type by applying it to necessary type variables, making it
--- accept "zero" parameters.  The normalized type is tupled with a list of
--- necessary type variables.
+-- |
+-- Normalizes a type by applying it to necessary type variables
+-- making it accept zero type parameters.
+-- The normalized type is paired with a list of necessary type variables.
 --
--- Suppose:
+-- > > putStrLn $(stringE . show =<< normalizeType ''Int)
+-- > (ConT ''Int, [])
 --
--- > data DT a b c ...  =  ...
+-- > > putStrLn $(stringE . show =<< normalizeType ''Maybe)
+-- > (AppT (ConT ''Maybe) (VarT ''a),[VarT ''a])
 --
--- Then, in pseudo-TH:
+-- > > putStrLn $(stringE . show =<< normalizeType ''Either)
+-- > (AppT (AppT (ConT ''Either) (VarT ''a)) (VarT ''b),[VarT ''a,VarT ''b])
 --
--- > normalizeType [t|DT|] == Q (DT a b c ..., [a, b, c, ...])
+-- > > putStrLn $(stringE . show =<< normalizeType ''[])
+-- > (AppT (ConT ''[]) (VarT a),[VarT a])
 normalizeType :: Name -> Q (Type, [Type])
 normalizeType t  =  do
   ar <- typeArity t
@@ -223,7 +228,9 @@ normalizeType t  =  do
     newVarTs n  =  map VarT
             `fmap` newNames (take n . map (:[]) $ cycle ['a'..'z'])
 
--- Normalizes a type by applying it to units (`()`) while possible.
+-- |
+-- Normalizes a type by applying it to units to make it star-kinded.
+-- (cf. 'normalizeType')
 --
 -- > normalizeTypeUnits ''Int    === [t| Int |]
 -- > normalizeTypeUnits ''Maybe  === [t| Maybe () |]
@@ -233,27 +240,53 @@ normalizeTypeUnits t  =  do
   ar <- typeArity t
   return (foldl AppT (ConT t) (replicate ar (TupleT 0)))
 
+-- |
 -- Given a type name and a class name,
 -- returns whether the type is an instance of that class.
+-- The given type must be star-kinded (@ * @)
+-- and the given class double-star-kinded (@ * -> * @.
+--
+-- > > putStrLn $(stringE . show =<< ''Int `isInstanceOf` ''Num)
+-- > True
+--
+-- > > putStrLn $(stringE . show =<< ''Int `isInstanceOf` ''Fractional)
+-- > False
 isInstanceOf :: Name -> Name -> Q Bool
 isInstanceOf tn cl  =  do
   ty <- normalizeTypeUnits tn
   isInstance cl [ty]
 
+-- |
+-- The negation of 'isInstanceOf'.
 isntInstanceOf :: Name -> Name -> Q Bool
 isntInstanceOf tn  =  fmap not . isInstanceOf tn
 
 -- | Given a type name, return the number of arguments taken by that type.
 -- Examples in partially broken TH:
 --
--- > arity ''Int        === Q 0
--- > arity ''Int->Int   === Q 0
--- > arity ''Maybe      === Q 1
--- > arity ''Either     === Q 2
--- > arity ''Int->      === Q 1
+-- > > putStrLn $(stringE . show =<< typeArity ''Int)
+-- > 0
 --
--- This works for Data's and Newtype's and it is useful when generating
--- typeclass instances.
+-- > > putStrLn $(stringE . show =<< typeArity ''Maybe)
+-- > 1
+--
+-- > > putStrLn $(stringE . show =<< typeArity ''Either)
+-- > 2
+--
+-- > > putStrLn $(stringE . show =<< typeArity ''[])
+-- > 1
+--
+-- > > putStrLn $(stringE . show =<< typeArity ''(,))
+-- > 2
+--
+-- > > putStrLn $(stringE . show =<< typeArity ''(,,))
+-- > 3
+--
+-- > > putStrLn $(stringE . show =<< typeArity ''String)
+-- > 0
+--
+-- This works for data and newtype declarations and
+-- it is useful when generating typeclass instances.
 typeArity :: Name -> Q Int
 typeArity t  =  fmap arity $ reify t
   where
@@ -269,20 +302,28 @@ typeArity t  =  fmap arity $ reify t
   args _  =  errorOn "typeArity"
           $  "neither newtype nor data nor type synonym: " ++ show t
 
--- Given a type name, returns a list of its type constructor names paired with
+-- |
+-- Given a type 'Name',
+-- returns a list of its type constructor 'Name's
+-- paired with the type arguments they take.
 -- the type arguments they take.
 --
--- > typeConstructors ''()  =  Q [('(),[])]
+-- > > putStrLn $(stringE . show =<< typeConstructors ''Bool)
+-- > [ ('False, [])
+-- > , ('True, [])
+-- > ]
 --
--- > typeConstructors ''(,)  =  Q [('(,),[VarT a, VarT b])]
+-- > > putStrLn $(stringE . show =<< typeConstructors ''[])
+-- > [ ('[], [])
+-- > , ('(:), [VarT ''a, AppT ListT (VarT ''a)])
+-- > ]
 --
--- > typeConstructors ''[]  =  Q [('[],[]),('(:),[VarT a,AppT ListT (VarT a)])]
+-- > > putStrLn $(stringE . show =<< typeConstructors ''(,))
+-- > [('(,), [VarT (mkName "a"), VarT (mkName "b")])]
 --
--- > data Pair a  =  P a a
--- > typeConstructors ''Pair  =  Q [('P,[VarT a, VarT a])]
---
--- > data Point  =  Pt Int Int
--- > typeConstructors ''Point  =  Q [('Pt,[ConT Int, ConT Int])]
+-- > > data Point  =  Pt Int Int
+-- > > putStrLn $(stringE . show =<< typeConstructors ''Point)
+-- > [('Pt,[ConT ''Int, ConT ''Int])]
 typeConstructors :: Name -> Q [(Name,[Type])]
 typeConstructors t  =  fmap (map normalize . cons) $ reify t
   where
@@ -302,12 +343,28 @@ typeConstructors t  =  fmap (map normalize . cons) $ reify t
                $  "unexpected unhandled case when called with " ++ show t
   trd (x,y,z)  =  z
 
+-- |
+-- Is the given 'Name' a type synonym?
+--
+-- > > putStrLn $(stringE . show =<< isTypeSynonym 'show)
+-- > False
+--
+-- > > putStrLn $(stringE . show =<< isTypeSynonym ''Char)
+-- > False
+--
+-- > > putStrLn $(stringE . show =<< isTypeSynonym ''String)
+-- > True
 isTypeSynonym :: Name -> Q Bool
 isTypeSynonym  =  fmap is . reify
   where
   is (TyConI (TySynD _ _ _))  =  True
   is _                        =  False
 
+-- |
+-- Resolves a type synonym.
+--
+-- > > putStrLn $(stringE . show =<< typeSynonymType ''String)
+-- > AppT ListT (ConT ''Char)
 typeSynonymType :: Name -> Q Type
 typeSynonymType t  =  fmap typ $ reify t
   where
