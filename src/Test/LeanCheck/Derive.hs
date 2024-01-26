@@ -321,15 +321,14 @@ typeSynonymType t  =  fmap typ $ reify t
 -- > sequence [[|Eq b|],[|Eq c|]] |=>| [t|instance Eq a => Cl (Ty a) where f=g|]
 -- > == [t| instance (Eq a, Eq b, Eq c) => Cl (Ty a) where f  =  g |]
 (|=>|) :: Cxt -> DecsQ -> DecsQ
-c |=>| qds  =  do ds <- qds
-                  return $ map (`ac` c) ds
+c |=>| qds  =  map (=>++ c) `fmap` qds
+  where
 #if __GLASGOW_HASKELL__ < 800
-  where ac (InstanceD c ts ds) c'  =  InstanceD (c++c') ts ds
-        ac d                   _   =  d
+  (InstanceD   c ts ds) =>++ c'  =  InstanceD   (c++c') ts ds
 #else
-  where ac (InstanceD o c ts ds) c'  =  InstanceD o (c++c') ts ds
-        ac d                     _   =  d
+  (InstanceD o c ts ds) =>++ c'  =  InstanceD o (c++c') ts ds
 #endif
+  d                     =>++ _   =  d
 
 -- > nubMerge xs ys == nub (merge xs ys)
 -- > nubMerge xs ys == nub (sort (xs ++ ys))
