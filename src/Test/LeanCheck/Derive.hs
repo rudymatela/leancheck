@@ -284,24 +284,22 @@ typeArity t  =  fmap arity $ reify t
 -- > data Point  =  Pt Int Int
 -- > typeConstructors ''Point  =  Q [('Pt,[ConT Int, ConT Int])]
 typeConstructors :: Name -> Q [(Name,[Type])]
-typeConstructors t  =  do
-  ti <- reify t
-  return . map simplify $ case ti of
-#if __GLASGOW_HASKELL__ < 800
-    TyConI (DataD    _ _ _ cs _) -> cs
-    TyConI (NewtypeD _ _ _ c  _) -> [c]
-#else
-    TyConI (DataD    _ _ _ _ cs _) -> cs
-    TyConI (NewtypeD _ _ _ _ c  _) -> [c]
-#endif
-    _ -> errorOn "typeConstructors"
-       $ "neither newtype nor data: " ++ show t
+typeConstructors t  =  fmap (map normalize . cons) $ reify t
   where
-  simplify (NormalC n ts)   =  (n,map snd ts)
-  simplify (RecC    n ts)   =  (n,map trd ts)
-  simplify (InfixC  t1 n t2)  =  (n,[snd t1,snd t2])
-  simplify _  =  errorOn "typeConstructors"
-              $  "unexpected unhandled case when called with " ++ show t
+#if __GLASGOW_HASKELL__ < 800
+  cons (TyConI (DataD    _ _ _   cs _))  =  cs
+  cons (TyConI (NewtypeD _ _ _   c  _))  =  [c]
+#else
+  cons (TyConI (DataD    _ _ _ _ cs _))  =  cs
+  cons (TyConI (NewtypeD _ _ _ _ c  _))  =  [c]
+#endif
+  cons _  =  errorOn "typeConstructors"
+          $  "neither newtype nor data: " ++ show t
+  normalize (NormalC n ts)   =  (n,map snd ts)
+  normalize (RecC    n ts)   =  (n,map trd ts)
+  normalize (InfixC  t1 n t2)  =  (n,[snd t1,snd t2])
+  normalize _  =  errorOn "typeConstructors"
+               $  "unexpected unhandled case when called with " ++ show t
   trd (x,y,z)  =  z
 
 isTypeSynonym :: Name -> Q Bool
