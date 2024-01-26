@@ -255,19 +255,19 @@ isntInstanceOf tn  =  fmap not . isInstanceOf tn
 -- This works for Data's and Newtype's and it is useful when generating
 -- typeclass instances.
 typeArity :: Name -> Q Int
-typeArity t  =  do
-  ti <- reify t
-  return . length $ case ti of
+typeArity t  =  fmap arity $ reify t
+  where
+  arity  =  length . args
 #if __GLASGOW_HASKELL__ < 800
-    TyConI (DataD    _ _ ks _ _) -> ks
-    TyConI (NewtypeD _ _ ks _ _) -> ks
+  args (TyConI (DataD    _ _ ks   _ _))  =  ks
+  args (TyConI (NewtypeD _ _ ks   _ _))  =  ks
 #else
-    TyConI (DataD    _ _ ks _ _ _) -> ks
-    TyConI (NewtypeD _ _ ks _ _ _) -> ks
+  args (TyConI (DataD    _ _ ks _ _ _))  =  ks
+  args (TyConI (NewtypeD _ _ ks _ _ _))  =  ks
 #endif
-    TyConI (TySynD _ ks _) -> ks
-    _ -> errorOn "typeArity"
-       $ "neither newtype nor data nor type synonym: " ++ show t
+  args (TyConI (TySynD _ ks _))          =  ks
+  args _  =  errorOn "typeArity"
+          $  "neither newtype nor data nor type synonym: " ++ show t
 
 -- Given a type name, returns a list of its type constructor names paired with
 -- the type arguments they take.
