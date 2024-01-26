@@ -108,6 +108,10 @@ test-via-cabal:
 test-via-stack:
 	stack test leancheck:test:main --ghc-options="$(GHCFLAGS) -O0" --system-ghc --no-install-ghc --no-terminal
 
+test-with-ghc-7.6:
+	make clean
+	make GHC=ghc-7.6 GHCFLAGS=-dynamic test/{main,fun,funshow,io,operators,stats,tiers,types,error}.run -j9
+
 legacy-test: # needs ghc-9.4 .. ghc-7.8 installed as such
 	make clean  &&  make test -j GHC=ghc-9.4
 	make clean  &&  make test -j GHC=ghc-9.2
