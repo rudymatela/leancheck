@@ -29,7 +29,7 @@ where
 
 import Language.Haskell.TH
 import Test.LeanCheck.Basic
-import Control.Monad (unless, liftM, filterM)
+import Control.Monad (unless, filterM)
 import Data.List (delete)
 
 #if __GLASGOW_HASKELL__ < 706
@@ -165,7 +165,7 @@ reallyDeriveListableCascading :: Name -> DecsQ
 reallyDeriveListableCascading t =
       return . concat
   =<< mapM reallyDeriveListable
-  =<< filterM (liftM not . isTypeSynonym)
+  =<< filterM (fmap not . isTypeSynonym)
   =<< return . (t:) . delete t
   =<< t `typeConCascadingArgsThat` (`isntInstanceOf` ''Listable)
 
@@ -175,8 +175,8 @@ typeConArgs :: Name -> Q [Name]
 typeConArgs t  =  do
   is <- isTypeSynonym t
   if is
-  then liftM typeConTs $ typeSynonymType t
-  else liftM (nubMerges . map typeConTs . concat . map snd) $ typeConstructors t
+  then typeConTs `fmap` typeSynonymType t
+  else (nubMerges . map typeConTs . concatMap snd) `fmap` typeConstructors t
   where
   typeConTs :: Type -> [Name]
   typeConTs (AppT t1 t2)  =  typeConTs t1 `nubMerge` typeConTs t2
@@ -224,8 +224,8 @@ normalizeType t  =  do
     newNames :: [String] -> Q [Name]
     newNames  =  mapM newName
     newVarTs :: Int -> Q [Type]
-    newVarTs n  =  liftM (map VarT)
-                $  newNames (take n . map (:[]) $ cycle ['a'..'z'])
+    newVarTs n  =  map VarT
+            `fmap` newNames (take n . map (:[]) $ cycle ['a'..'z'])
 
 -- Normalizes a type by applying it to units (`()`) while possible.
 --
@@ -245,7 +245,7 @@ isInstanceOf tn cl  =  do
   isInstance cl [ty]
 
 isntInstanceOf :: Name -> Name -> Q Bool
-isntInstanceOf tn cl  =  liftM not (isInstanceOf tn cl)
+isntInstanceOf tn  =  fmap not . isInstanceOf tn
 
 -- | Given a type name, return the number of arguments taken by that type.
 -- Examples in partially broken TH:
