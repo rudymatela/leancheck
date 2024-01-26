@@ -305,19 +305,16 @@ typeConstructors t  =  do
   trd (x,y,z)  =  z
 
 isTypeSynonym :: Name -> Q Bool
-isTypeSynonym t  =  do
-  ti <- reify t
-  return $ case ti of
-    TyConI (TySynD _ _ _) -> True
-    _                     -> False
+isTypeSynonym  =  fmap is . reify
+  where
+  is (TyConI (TySynD _ _ _))  =  True
+  is _                        =  False
 
 typeSynonymType :: Name -> Q Type
-typeSynonymType t  =  do
-  ti <- reify t
-  return $ case ti of
-    TyConI (TySynD _ _ t') -> t'
-    _ -> errorOn "typeSynonymType"
-       $ "not a type synonym: " ++ show t
+typeSynonymType t  =  fmap typ $ reify t
+  where
+  typ (TyConI (TySynD _ _ t'))  =  t'
+  typ _  =  errorOn "typeSynonymType" $ "not a type synonym: " ++ show t
 
 -- Append to instance contexts in a declaration.
 --
