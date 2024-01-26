@@ -2,6 +2,14 @@ Changelog for LeanCheck
 =======================
 
 
+upcoming (January 2024)
+-----------------------
+
+* improve error messages
+* some code linting, refactoring and cleanup
+* improve testing of LeanCheck itself
+
+
 v1.0.0 (August 2022)
 --------------------
 
