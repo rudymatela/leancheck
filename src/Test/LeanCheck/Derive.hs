@@ -191,10 +191,7 @@ typeConArgs t  =  do
   typeConTs _  =  []
 
 typeConArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
-typeConArgsThat t p  =  do
-  targs <- typeConArgs t
-  tbs   <- mapM (\t' -> do is <- p t'; return (t',is)) targs
-  return [t' | (t',p) <- tbs, p]
+t `typeConArgsThat` p  =  filterM p =<< typeConArgs t
 
 typeConCascadingArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
 t `typeConCascadingArgsThat` p  =  do
