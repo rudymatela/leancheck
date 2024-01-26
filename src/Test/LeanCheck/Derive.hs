@@ -106,14 +106,13 @@ deriveListableX :: Bool -> Bool -> Name -> DecsQ
 deriveListableX warnExisting cascade t  =  do
   is <- t `isInstanceOf` ''Listable
   if is
-    then do
-      unless (not warnExisting)
-        (reportWarning $ "Instance Listable " ++ show t
-                      ++ " already exists, skipping derivation")
-      return []
-    else if cascade
-           then reallyDeriveListableCascading t
-           else reallyDeriveListable t
+  then do unless (not warnExisting) $
+            reportWarning $ "Instance Listable " ++ show t
+                         ++ " already exists, skipping derivation"
+          return []
+  else if cascade
+       then reallyDeriveListableCascading t
+       else reallyDeriveListable t
 
 reallyDeriveListable :: Name -> DecsQ
 reallyDeriveListable t  =  do
