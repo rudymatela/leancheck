@@ -15,12 +15,12 @@
 --   * a 'Listable' 'Word' instance;
 --   * a 'Listable' 'Ratio' instance (consequently 'Listable' 'Rational');
 --   * a 'Listable' 'Complex' instance;
---   * 'Listable' 'Int8/16/32/64' instances;
---   * 'Listable' 'Word8/16/32/64' instances;
+--   * 'Listable' 'Int8', 'Int16', 'Int32' and 'Int64' instances;
+--   * 'Listable' 'Word8', 'Word16', 'Word32' and 'Word64' instances;
 --   * 'Listable' instances for "Foreign.C" types;
 --   * a 'Listable' 'ExitCode' instance;
 --   * a 'Listable' 'GeneralCategory' instance;
---   * 'Listable' 'Buffer/IO/SeekMode' instances;
+--   * 'Listable' 'Buffer', 'IO' and 'SeekMode' instances;
 --   * the operators 'addWeight' and 'ofWeight'.
 --
 -- The above includes all types defined in the Haskell 2010 Report
