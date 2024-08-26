@@ -54,6 +54,7 @@ jobs:
       - run: make test-sdist
       #- run: make test-via-cabal
       - run: cabal configure --enable-tests --enable-benchmarks --ghc-options="-O0"
+      - run: cabal update # latest version of cabal requires a package list to run...
       - run: cabal build
       - run: cabal test
       - run: cabal haddock
