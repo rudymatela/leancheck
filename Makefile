@@ -101,6 +101,7 @@ test-sdist:
 	./test/sdist
 
 test-via-cabal:
+	cabal update # recent (2024) cabal refuses to build without a package list
 	cabal configure --enable-tests --enable-benchmarks --ghc-options="$(GHCFLAGS) -O0"
 	cabal build
 	cabal test main
