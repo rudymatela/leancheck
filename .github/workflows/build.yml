@@ -68,7 +68,9 @@ jobs:
     strategy:
       max-parallel: 6
       matrix:
+        # starting with 9.10, docker/_/haskell requires -bullseye as suffix
         ghc:
+          - '9.10-bullseye'
           - '9.8'
           - '9.6'
           - '9.4'
