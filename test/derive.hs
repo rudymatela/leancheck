@@ -25,12 +25,12 @@ deriveListable ''I
 
 -- recursive datatypes
 data Peano  =  Zero | Succ Peano  deriving Show
-data List a  =  a :- List a | Nil  deriving Show
+data Lst a  =  a :- Lst a | Nil  deriving Show
 data Bush a  =  Bush a :-: Bush a | Leaf a  deriving (Show, Eq)
 data Tree a  =  Node (Tree a) a (Tree a) | Null  deriving (Show, Eq)
 
 deriveListable ''Peano
-deriveListable ''List
+deriveListable ''Lst
 deriveListable ''Bush
 deriveListable ''Tree
 
@@ -94,12 +94,12 @@ tests n  =
   , map unD3 list == (list :: [(Bool,Bool,Bool)])
 
   , map peanoToNat list =| n |= list
-  , map listToList list =| n |= (list :: [[Bool]])
-  , map listToList list =| n |= (list :: [[Int]])
+  , map listLst list =| n |= (list :: [[Bool]])
+  , map listLst list =| n |= (list :: [[Int]])
 
   , mapT peanoToNat tiers =| 6 |= tiers
-  , mapT listToList tiers =| 6 |= (tiers :: [[ [Bool] ]])
-  , mapT listToList tiers =| 6 |= (tiers :: [[ [Int] ]])
+  , mapT listLst tiers =| 6 |= (tiers :: [[ [Bool] ]])
+  , mapT listLst tiers =| 6 |= (tiers :: [[ [Int] ]])
 
   , take 6 (list :: [Bush Bool])
     == [ Leaf False
@@ -150,8 +150,8 @@ tests n  =
   , map length (take 6 $ tiers :: [[ [D2 Int Int] ]]) == [1,0,1,2,4,8]
   , map length (take 6 $ tiers :: [[ [D2 Int Bool] ]]) == [1,0,2,2,6,10]
 
-  , map length (take 6 $ tiers :: [[ List Int ]]) == [1,1,2,4,8,16]
-  , map length (take 6 $ tiers :: [[ List Bool ]]) == [1,2,4,8,16,32]
+  , map length (take 6 $ tiers :: [[ Lst Int ]]) == [1,1,2,4,8,16]
+  , map length (take 6 $ tiers :: [[ Lst Bool ]]) == [1,2,4,8,16,32]
   ]
   where
   unD0 (D0)        =  ()
@@ -163,6 +163,6 @@ peanoToNat :: Peano -> Nat
 peanoToNat Zero  =  0
 peanoToNat (Succ n)  =  1 + peanoToNat n
 
-listToList :: List a -> [a]
-listToList Nil  =  []
-listToList (x :- xs)  =  x : listToList xs
+listLst :: Lst a -> [a]
+listLst Nil  =  []
+listLst (x :- xs)  =  x : listLst xs
