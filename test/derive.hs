@@ -132,6 +132,23 @@ tests n  =
   , (list :: [ [Bool]     ]) =| n |= $(deriveList ''[])
   , (list :: [ Maybe Int  ]) =| n |= $(deriveList ''Maybe)
   , (list :: [ Maybe Bool ]) =| n |= $(deriveList ''Maybe)
+
+  , map length (take 6 $ tiers :: [[D0]]) == [1]
+
+  -- TODO: eliminate empty tiers below
+  , map length (take 6 $ tiers :: [[D1 Int]]) == [0,1,1,1,1,1]
+  , map length (take 6 $ tiers :: [[D2 Int Int]]) == [0,1,2,3,4,5]
+  , map length (take 6 $ tiers :: [[D3 Int Int Int]]) == [0,1,3,6,10,15]
+  , map length (take 6 $ tiers :: [[D1 Bool]]) == [0,2]
+  , map length (take 6 $ tiers :: [[D2 Bool Bool]]) == [0,4]
+
+  , map length (take 6 $ tiers :: [[C1 Int]]) == [1,1,1,1,1,1]
+  , map length (take 6 $ tiers :: [[C2 Int Int]]) == [1,2,3,4,5,6]
+
+  , map length (take 6 $ tiers :: [[ [D1 Int] ]]) == [1,0,1,1,2,3]
+  , map length (take 6 $ tiers :: [[ [D1 Bool] ]]) == [1,0,2,0,4,0]
+  , map length (take 6 $ tiers :: [[ [D2 Int Int] ]]) == [1,0,1,2,4,8]
+  , map length (take 6 $ tiers :: [[ [D2 Int Bool] ]]) == [1,0,2,2,6,10]
   ]
   where
   unD0 (D0)        =  ()
