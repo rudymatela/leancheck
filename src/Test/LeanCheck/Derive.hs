@@ -144,12 +144,25 @@ reallyDeriveListable t  =  do
 -- > instance Listable MyType where
 -- >   tiers  =  $(deriveTiers)
 deriveTiers :: Name -> ExpQ
-deriveTiers t  =  conse =<< typeConstructors t
+deriveTiers t  =  conse =<< typeConstructorsWithArityAndRecursiveness t
   where
-  cone n as  =  do
-    (Just consN) <- lookupValueName $ "cons" ++ show (length as)
-    [| $(varE consN) $(conE n) |]
-  conse  =  foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map (uncurry cone)
+  cone (n,arity,shouldReset) =  do
+    (Just consN) <- lookupValueName $ "cons" ++ show arity
+    -- the shouldReset switch is necessary to avoid derivations
+    -- where we end with an empty tier at the head of the tiers list
+    -- such as a type homomorphic to Either
+    -- on earlier LeanCheck versions, we never reset
+    if shouldReset
+    then [| reset ($(varE consN) $(conE n)) |]
+    else [|        $(varE consN) $(conE n)  |]
+  conse  =  foldr1 (\e1 e2 -> [| $e1 \/ $e2 |]) . map cone . arityReset
+  -- computes whether we should reset some constructors and which
+  arityReset nars
+    -- if there's a constructor with 0 arguments, we don't need to reset
+    | or [arity == 0 | (_,arity,_) <- nars]  =  [(name,arity,False) | (name,arity,_) <- nars]
+    -- otherwise we reset constructors that are not recursive to avoid infinite loops
+    | otherwise  =  [(name, arity, arity > 0 && not isRecursive) | (name,arity,isRecursive) <- nars]
+    -- by reset here of course we mean removing the preceding empty tiers
 
 -- | Given a type 'Name', derives an expression to be placed as the result of
 --   'list':
@@ -189,6 +202,13 @@ subtypeNames (UInfixT t1 n t2)  =  subtypeNames t1 `nubMerge` subtypeNames t2
 subtypeNames (ParensT t)  =  subtypeNames t
 #endif
 subtypeNames _  =  []
+
+cascadingSubtypeNames :: [Type] -> Q [Name]
+cascadingSubtypeNames t  =  do
+  nss <- mapM (`typeConCascadingArgsThat` (\t -> return $ t `notElem` ns)) ns
+  return $ nubMerges (ns:nss)
+  where
+  ns  =  nubMerges $ map subtypeNames t
 
 typeConArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
 t `typeConArgsThat` p  =  filterM p =<< typeConArgs t
@@ -308,6 +328,7 @@ typeArity t  =  fmap arity $ reify t
 -- paired with the type arguments they take.
 -- the type arguments they take.
 --
+-- > > :set -XTemplateHaskell
 -- > > putStrLn $(stringE . show =<< typeConstructors ''Bool)
 -- > [ ('False, [])
 -- > , ('True, [])
@@ -334,14 +355,41 @@ typeConstructors t  =  fmap (map normalize . cons) $ reify t
   cons (TyConI (DataD    _ _ _ _ cs _))  =  cs
   cons (TyConI (NewtypeD _ _ _ _ c  _))  =  [c]
 #endif
-  cons _  =  errorOn "typeConstructors"
-          $  "neither newtype nor data: " ++ show t
+  cons _  =  []
   normalize (NormalC n ts)   =  (n,map snd ts)
   normalize (RecC    n ts)   =  (n,map trd ts)
   normalize (InfixC  t1 n t2)  =  (n,[snd t1,snd t2])
   normalize _  =  errorOn "typeConstructors"
                $  "unexpected unhandled case when called with " ++ show t
   trd (x,y,z)  =  z
+
+-- |
+-- Given a type 'Name',
+-- returns a list of its type constructors 'Name's
+-- tupled with its arity and whether the constructor is recursive.
+--
+-- > > :set -XTemplateHaskell
+-- > > data Lst a  =  a :- Lst a | Nil  deriving Show
+-- > > putStrLn $(stringE . show =<< typeConstructorsWithArityAndRecursiveness ''Lst)
+-- > [ ('(:-),2,True)
+-- > , ('Nil,0,False)
+-- > ]
+--
+-- The recursive item does not work properly for some built-in types such as list
+-- as they have special representations within TH.
+--
+-- > > putStrLn $(stringE . show =<< typeConstructorsWithArityAndRecursiveness ''[])
+-- > [ ('[],0,False)
+-- > , ('(:),2,False)
+-- > ]
+typeConstructorsWithArityAndRecursiveness :: Name -> Q [(Name,Int,Bool)]
+typeConstructorsWithArityAndRecursiveness t  =  do
+  cs <- typeConstructors t
+  mapM ar cs
+  where
+  ar (n,ts)  =  do
+    ns <- cascadingSubtypeNames ts
+    return (n, length ts, t `elem` ns)
 
 -- |
 -- Is the given 'Name' a type synonym?

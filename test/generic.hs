@@ -112,7 +112,7 @@ tests n  =
   , (genericTiers :: [[ [Bool]     ]])       =| 6 |=  $(deriveTiers ''[])
   , (genericTiers :: [[ Maybe Int  ]])       =| 6 |=  $(deriveTiers ''Maybe)
   , (genericTiers :: [[ Maybe Bool ]])       =| 6 |=  $(deriveTiers ''Maybe)
-  , (genericTiers :: [[ Either Bool Int ]])  =| 6 |=  $(deriveTiers ''Either)
+  , (genericTiers :: [[ Either Bool Int ]])  =| 6 |=  ([] : $(deriveTiers ''Either))
   ]
   where
   unD0 (D0)        =  ()
