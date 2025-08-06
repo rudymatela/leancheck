@@ -174,21 +174,21 @@ typeConArgs :: Name -> Q [Name]
 typeConArgs t  =  do
   is <- isTypeSynonym t
   if is
-  then typeConTs `fmap` typeSynonymType t
-  else (nubMerges . map typeConTs . concatMap snd) `fmap` typeConstructors t
-  where
-  typeConTs :: Type -> [Name]
-  typeConTs (AppT t1 t2)  =  typeConTs t1 `nubMerge` typeConTs t2
-  typeConTs (SigT t _)  =  typeConTs t
-  typeConTs (VarT _)  =  []
-  typeConTs (ConT n)  =  [n]
+  then subtypeNames `fmap` typeSynonymType t
+  else (nubMerges . map subtypeNames . concatMap snd) `fmap` typeConstructors t
+
+subtypeNames :: Type -> [Name]
+subtypeNames (AppT t1 t2)  =  subtypeNames t1 `nubMerge` subtypeNames t2
+subtypeNames (SigT t _)  =  subtypeNames t
+subtypeNames (VarT _)  =  []
+subtypeNames (ConT n)  =  [n]
 #if __GLASGOW_HASKELL__ >= 800
-  -- typeConTs (PromotedT n)  =  [n] ?
-  typeConTs (InfixT  t1 n t2)  =  typeConTs t1 `nubMerge` typeConTs t2
-  typeConTs (UInfixT t1 n t2)  =  typeConTs t1 `nubMerge` typeConTs t2
-  typeConTs (ParensT t)  =  typeConTs t
+-- subtypeNames (PromotedT n)  =  [n] ?
+subtypeNames (InfixT  t1 n t2)  =  subtypeNames t1 `nubMerge` subtypeNames t2
+subtypeNames (UInfixT t1 n t2)  =  subtypeNames t1 `nubMerge` subtypeNames t2
+subtypeNames (ParensT t)  =  subtypeNames t
 #endif
-  typeConTs _  =  []
+subtypeNames _  =  []
 
 typeConArgsThat :: Name -> (Name -> Q Bool) -> Q [Name]
 t `typeConArgsThat` p  =  filterM p =<< typeConArgs t
