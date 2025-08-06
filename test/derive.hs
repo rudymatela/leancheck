@@ -149,6 +149,9 @@ tests n  =
   , map length (take 6 $ tiers :: [[ [D1 Bool] ]]) == [1,0,2,0,4,0]
   , map length (take 6 $ tiers :: [[ [D2 Int Int] ]]) == [1,0,1,2,4,8]
   , map length (take 6 $ tiers :: [[ [D2 Int Bool] ]]) == [1,0,2,2,6,10]
+
+  , map length (take 6 $ tiers :: [[ List Int ]]) == [1,1,2,4,8,16]
+  , map length (take 6 $ tiers :: [[ List Bool ]]) == [1,2,4,8,16,32]
   ]
   where
   unD0 (D0)        =  ()
