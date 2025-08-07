@@ -87,40 +87,36 @@ tests :: Int -> [Bool]
 tests n  =
   [ True
 
-  , list `hasPrefix`
-      [ Zero
-      , Succ Zero
-      , Succ (Succ Zero)
-      , Succ (Succ (Succ Zero))
-      ]
+  , [ Zero
+    , Succ Zero
+    , Succ (Succ Zero)
+    , Succ (Succ (Succ Zero))
+    ] `isPrefixOf` list
 
-  , list == [Yes, No]
+  , [Yes, No] == list
 
-  , list `hasPrefix`
-      [ Nil
-      , Unit :- Nil
-      , Unit :- Unit :- Nil
-      , Unit :- Unit :- Unit :- Nil
-      ]
+  , [ Nil
+    , Unit :- Nil
+    , Unit :- Unit :- Nil
+    , Unit :- Unit :- Unit :- Nil
+    ] `isPrefixOf` list
 
-  , list `hasPrefix`
-      [ Nil
-      , Zero :- Nil
-      , Zero :- (Zero :- Nil)
-      , Succ Zero :- Nil
-      , Zero :- (Zero :- (Zero :- Nil))
-      , Zero :- (Succ Zero :- Nil)
-      ]
+  , [ Nil
+    , Zero :- Nil
+    , Zero :- (Zero :- Nil)
+    , Succ Zero :- Nil
+    , Zero :- (Zero :- (Zero :- Nil))
+    , Zero :- (Succ Zero :- Nil)
+    ] `isPrefixOf` list
 
   , list == [Yes :+ Yes, Yes :+ No, No :+ Yes, No :+ No]
 
-  , list `hasPrefix`
-      [ Zero :+ Zero
-      , Zero :+ Succ Zero
-      , Succ Zero :+ Zero
-      , Zero :+ Succ (Succ Zero)
-      , Succ Zero :+ Succ Zero
-      ]
+  , [ Zero :+ Zero
+    , Zero :+ Succ Zero
+    , Succ Zero :+ Zero
+    , Zero :+ Succ (Succ Zero)
+    , Succ Zero :+ Succ Zero
+    ] `isPrefixOf` list
 
   , list == [Unit]
 
@@ -130,45 +126,41 @@ tests n  =
 
   , list == [Sinister Yes, Sinister No, Dexter Yes, Dexter No]
 
-  , list `hasPrefix`
-      [ Sinister Zero
-      , Dexter Zero
-      , Sinister (Succ Zero)
-      , Dexter (Succ Zero)
-      , Sinister (Succ (Succ Zero))
-      , Dexter (Succ (Succ Zero))
-      ]
+  , [ Sinister Zero
+    , Dexter Zero
+    , Sinister (Succ Zero)
+    , Dexter (Succ Zero)
+    , Sinister (Succ (Succ Zero))
+    , Dexter (Succ (Succ Zero))
+    ] `isPrefixOf` list
 
   , list == [Smaller, Same, Bigger]
 
   , list == [Trio Unit Unit Unit]
 
-  , list `hasPrefix`
-      [ Null
-      , Node Null False Null
-      , Node Null True Null
-      , Node Null False (Node Null False Null)
-      , Node Null False (Node Null True Null)
-      , Node Null True (Node Null False Null)
-      ]
+  , [ Null
+    , Node Null False Null
+    , Node Null True Null
+    , Node Null False (Node Null False Null)
+    , Node Null False (Node Null True Null)
+    , Node Null True (Node Null False Null)
+    ] `isPrefixOf` list
 
-  , list `hasPrefix`
-      [ Leaf False
-      , Leaf True
-      , Leaf False :-: Leaf False
-      , Leaf False :-: Leaf True
-      , Leaf True :-: Leaf False
-      , Leaf True :-: Leaf True
-      ]
+  , [ Leaf False
+    , Leaf True
+    , Leaf False :-: Leaf False
+    , Leaf False :-: Leaf True
+    , Leaf True :-: Leaf False
+    , Leaf True :-: Leaf True
+    ] `isPrefixOf` list
 
-  , list `hasPrefix`
-      [ Munil
-      , Mutual CoMunil
-      , Mutual (CoMutual Munil)
-      , Mutual (CoMutual (Mutual CoMunil))
-      , Mutual (CoMutual (Mutual (CoMutual Munil)))
-      , Mutual (CoMutual (Mutual (CoMutual (Mutual CoMunil))))
-      ]
+  , [ Munil
+    , Mutual CoMunil
+    , Mutual (CoMutual Munil)
+    , Mutual (CoMutual (Mutual CoMunil))
+    , Mutual (CoMutual (Mutual (CoMutual Munil)))
+    , Mutual (CoMutual (Mutual (CoMutual (Mutual CoMunil))))
+    ] `isPrefixOf` list
 
 
   , map (\Unit -> ()) list =| n |= list
@@ -235,6 +227,3 @@ peanoToNat (Succ n)  =  1 + peanoToNat n
 listLst :: Lst a -> [a]
 listLst Nil  =  []
 listLst (x :- xs)  =  x : listLst xs
-
-hasPrefix :: Eq a => [a] -> [a] -> Bool
-hasPrefix  =  flip isPrefixOf
