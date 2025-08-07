@@ -11,15 +11,15 @@ import Data.List (sort, isPrefixOf)
 -- in the order of the Haskell98 standard
 -- https://www.haskell.org/onlinereport/basic.html
 -- with Peanos as a numeric type.
-data  Peano  =  Zero | Succ Peano  deriving (Show, Eq)
-data  Choice  =  Yes | No  deriving (Show, Eq)
-data  Lst a  =  a :- Lst a | Nil  deriving (Show, Eq)
-data  Duo a b  =  a :+ b  deriving (Show, Eq)
-data  Unit  =  Unit  deriving (Show, Eq)
-data  Perhaps a  =  Naught | Precisely a  deriving (Show, Eq)
-data  Alternatively a b  =  Sinister a | Dexter b  deriving (Show, Eq)
-data  Relation  =  Smaller | Same | Bigger  deriving (Show, Eq)
-data  Trio a b c  =  Trio a b c  deriving (Show, Eq)
+data  Peano  =  Zero | Succ Peano  deriving (Eq, Ord, Show)
+data  Choice  =  Yes | No  deriving (Eq, Ord, Show)
+data  Lst a  =  a :- Lst a | Nil  deriving (Eq, Ord, Show)
+data  Duo a b  =  a :+ b  deriving (Eq, Ord, Show)
+data  Unit  =  Unit  deriving (Eq, Ord, Show)
+data  Perhaps a  =  Naught | Precisely a  deriving (Eq, Ord, Show)
+data  Alternatively a b  =  Sinister a | Dexter b  deriving (Eq, Ord, Show)
+data  Relation  =  Smaller | Same | Bigger  deriving (Eq, Ord, Show)
+data  Trio a b c  =  Trio a b c  deriving (Eq, Ord, Show)
 
 infixr 5 :-
 
@@ -34,15 +34,15 @@ deriveListable ''Relation
 deriveListable ''Trio
 
 -- tree types
-data Tree a  =  Node (Tree a) a (Tree a) | Null  deriving (Show, Eq)
-data Bush a  =  Bush a :-: Bush a | Leaf a  deriving (Show, Eq)
+data Tree a  =  Node (Tree a) a (Tree a) | Null  deriving (Eq, Ord, Show)
+data Bush a  =  Bush a :-: Bush a | Leaf a  deriving (Eq, Ord, Show)
 
 deriveListable ''Tree
 deriveListable ''Bush
 
 -- mutually recursive types
-data Mutual    =  Munil | Mutual CoMutual  deriving (Eq, Show)
-data CoMutual  =  CoMunil | CoMutual Mutual  deriving (Eq, Show)
+data Mutual    =  Munil | Mutual CoMutual  deriving (Eq, Ord, Show)
+data CoMutual  =  CoMunil | CoMutual Mutual  deriving (Eq, Ord, Show)
 
 deriveListableCascading ''Mutual
 
