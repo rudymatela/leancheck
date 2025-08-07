@@ -5,7 +5,7 @@ import Test
 -- import Test.LeanCheck -- already exported by Test
 import Test.LeanCheck.Derive
 import Test.LeanCheck.Utils
-import Data.List (sort)
+import Data.List (sort, isPrefixOf)
 
 -- replication of Haskell's built-in data types
 -- in the order of the Haskell98 standard
@@ -20,6 +20,8 @@ data  Perhaps a  =  Naught | Precisely a  deriving (Show, Eq)
 data  Alternatively a b  =  Sinister a | Dexter b  deriving (Show, Eq)
 data  Relation  =  Smaller | Same | Bigger  deriving (Show, Eq)
 data  Trio a b c  =  Trio a b c  deriving (Show, Eq)
+
+infixr 5 :-
 
 deriveListable ''Peano
 deriveListable ''Choice
@@ -84,6 +86,62 @@ main  =  mainTest tests 200
 tests :: Int -> [Bool]
 tests n  =
   [ True
+
+  , list `hasPrefix`
+      [ Zero
+      , Succ Zero
+      , Succ (Succ Zero)
+      , Succ (Succ (Succ Zero))
+      ]
+
+  , list == [Yes, No]
+
+  , list `hasPrefix`
+      [ Nil
+      , Unit :- Nil
+      , Unit :- Unit :- Nil
+      , Unit :- Unit :- Unit :- Nil
+      ]
+
+  , list `hasPrefix`
+      [ Nil
+      , Zero :- Nil
+      , Zero :- (Zero :- Nil)
+      , Succ Zero :- Nil
+      , Zero :- (Zero :- (Zero :- Nil))
+      , Zero :- (Succ Zero :- Nil)
+      ]
+
+  , list == [Yes :+ Yes, Yes :+ No, No :+ Yes, No :+ No]
+
+  , list `hasPrefix`
+      [ Zero :+ Zero
+      , Zero :+ Succ Zero
+      , Succ Zero :+ Zero
+      , Zero :+ Succ (Succ Zero)
+      , Succ Zero :+ Succ Zero
+      ]
+
+  , list == [Unit]
+
+  , list == [Naught, Precisely Unit]
+
+  , list == [Naught, Precisely Yes, Precisely No]
+
+  , list == [Sinister Yes, Sinister No, Dexter Yes, Dexter No]
+
+  , list `hasPrefix`
+      [ Sinister Zero
+      , Dexter Zero
+      , Sinister (Succ Zero)
+      , Dexter (Succ Zero)
+      , Sinister (Succ (Succ Zero))
+      , Dexter (Succ (Succ Zero))
+      ]
+
+  , list == [Smaller, Same, Bigger]
+
+  , list == [Trio Unit Unit Unit]
 
   , map (\Unit -> ()) list =| n |= list
 
@@ -167,3 +225,6 @@ peanoToNat (Succ n)  =  1 + peanoToNat n
 listLst :: Lst a -> [a]
 listLst Nil  =  []
 listLst (x :- xs)  =  x : listLst xs
+
+hasPrefix :: Eq a => [a] -> [a] -> Bool
+hasPrefix  =  flip isPrefixOf
