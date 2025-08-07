@@ -143,6 +143,34 @@ tests n  =
 
   , list == [Trio Unit Unit Unit]
 
+  , list `hasPrefix`
+      [ Null
+      , Node Null False Null
+      , Node Null True Null
+      , Node Null False (Node Null False Null)
+      , Node Null False (Node Null True Null)
+      , Node Null True (Node Null False Null)
+      ]
+
+  , list `hasPrefix`
+      [ Leaf False
+      , Leaf True
+      , Leaf False :-: Leaf False
+      , Leaf False :-: Leaf True
+      , Leaf True :-: Leaf False
+      , Leaf True :-: Leaf True
+      ]
+
+  , list `hasPrefix`
+      [ Munil
+      , Mutual CoMunil
+      , Mutual (CoMutual Munil)
+      , Mutual (CoMutual (Mutual CoMunil))
+      , Mutual (CoMutual (Mutual (CoMutual Munil)))
+      , Mutual (CoMutual (Mutual (CoMutual (Mutual CoMunil))))
+      ]
+
+
   , map (\Unit -> ()) list =| n |= list
 
   , map (\(Novel x) -> x) list == (list :: [()])
@@ -164,24 +192,6 @@ tests n  =
   , mapT peanoToNat tiers =| 6 |= tiers
   , mapT listLst tiers =| 6 |= (tiers :: [[ [Bool] ]])
   , mapT listLst tiers =| 6 |= (tiers :: [[ [Int] ]])
-
-  , take 6 (list :: [Bush Bool])
-    == [ Leaf False
-       , Leaf True
-       , Leaf False :-: Leaf False
-       , Leaf False :-: Leaf True
-       , Leaf True :-: Leaf False
-       , Leaf True :-: Leaf True
-       ]
-
-  , take 6 (list :: [Tree Bool])
-    == [ Null
-       , Node Null False Null
-       , Node Null True Null
-       , Node Null False (Node Null False Null)
-       , Node Null False (Node Null True Null)
-       , Node Null True (Node Null False Null)
-       ]
 
   , (tiers :: [[ Bool       ]]) =| 6 |= $(deriveTiers ''Bool)
   , (tiers :: [[ [Int]      ]]) =| 6 |= $(deriveTiers ''[])
