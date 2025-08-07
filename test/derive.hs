@@ -162,6 +162,9 @@ tests n  =
     , Mutual (CoMutual (Mutual (CoMutual (Mutual CoMunil))))
     ] `isPrefixOf` list
 
+  , list == [I]
+  , list == [O I]
+  , list == [Novel (O I) :: Nouter]
 
   , map (\Unit -> ()) list =| n |= list
 
